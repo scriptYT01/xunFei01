@@ -1,1 +1,10 @@
-scriptS
+scriptS/
+srcXF/include/
+srcXF/samples/iat_record_sample/
+srcXF/samples/asr_sample
+srcXF/samples/iat_record_sample
+srcXF/samples/iat_sample
+srcXF/samples/ise_sample
+srcXF/samples/sch_speak_sample
+srcXF/samples/sch_text_sample
+srcXF/samples/tts_sample
