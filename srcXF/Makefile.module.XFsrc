@@ -1,11 +1,11 @@
 
 ifneq ($(VV13838311),$(strip $(VV)))
-$(info 193981 : loading Makefile.module.XFsrc $(makePATHsYM) . begin)
+$(info 193981 : loading Makefile.module.XFsrc $(makePATHsXF) . begin)
 endif
 
-define YMdateHtempale
-#ifndef    __YMGENDATE_H
-#define    __YMGENDATE_H
+define XFdateHtempale
+#ifndef    __XFGENDATE_H
+#define    __XFGENDATE_H
 
 #define    time_called    "$(time_called)" 
 #define    dir_called     "$(dir_called)"  
@@ -14,59 +14,65 @@ define YMdateHtempale
 #endif
 
 endef
-export YMdateHtempale
+export XFdateHtempale
 
-YMdateH:=srcYMC03/include/_build_info.h
-YMgenDate:
-	 echo "$${YMdateHtempale}"     > 	$(YMdateH)
-#	 echo > 							$(YMdateH)
+XFdateH:=srcXFC03/include/_build_info.h
+XFgenDate:
+	 echo "$${XFdateHtempale}"     > 	$(XFdateH)
+#	 echo > 							$(XFdateH)
 
-export YMsrc1:=$(makePATH1)/srcYMC01
-export YMdst1:=$(shell readlink -m patchDIR__x1000/YMclient01)
-export YMsrc3:=$(makePATH1)/srcYMC03
-export YMdst3:=$(shell readlink -m patchDIR__x1000/YMclient03)
+export XFsrc1:=$(makePATH1)/srcXFC01
+export XFdst1:=$(shell readlink -m patchDIR__x1000/XFclient01)
+export XFsrc3:=$(makePATH1)/srcXFC03
+export XFdst3:=$(shell readlink -m patchDIR__x1000/XFclient03)
 
 login:=ljl@ljl_machine
-export YMremoteDIR1=$(login):/home/ljl/ViomiClient__src/
-export YMremoteDIR3=$(login):/home/ljl/YMclient03/
-export YMbinDIR3=ymClientDST/
+export XFremoteDIR1=$(login):/home/ljl/ViomiClient__src/
+export XFremoteDIR3=$(login):/home/ljl/XFclient03/
+export XFbinDIR3=ymClientDST/
 
 ssh login:
 	ssh $(login)
 
-YMrsyncDown1 : 
+XFrsyncDown1 : 
 	@echo
-	$(rsync1)    $(YMremoteDIR1) $(YMsrc1)/
-	dos2unix $(YMsrc1)/*
-	unix2dos $(YMsrc1)/*
-	dos2unix $(YMsrc1)/*
+	$(rsync1)    $(XFremoteDIR1) $(XFsrc1)/
+	dos2unix $(XFsrc1)/*
+	unix2dos $(XFsrc1)/*
+	dos2unix $(XFsrc1)/*
 	@echo
-YMrsyncUp1 : 
+XFrsyncUp1 : 
 	@echo
 	@[ "$(force)" = 1 ] || ( echo ; echo 'ERROR , you should use force=1' ; echo ; exit 34 )
-	$(rsync1)    $(YMsrc1)/       $(YMremoteDIR1)/
+	$(rsync1)    $(XFsrc1)/       $(XFremoteDIR1)/
 	@echo
-YMrsyncUp3 : 
+XFrsyncUp3 : 
 	@echo
-	$(rsync1)    $(YMsrc3)/       			$(YMremoteDIR3)/
-	$(rsync1)    $(YMbinDIR3)/ymClient*     $(YMremoteDIR3)/
+	$(rsync1)    $(XFsrc3)/       			$(XFremoteDIR3)/
+	$(rsync1)    $(XFbinDIR3)/ymClient*     $(XFremoteDIR3)/
 	@echo
-YMu_only_cmd1:= echo kk | nc 127.0.0.1 58111
-YMu_only_cmd2:= $(adbViomi) shell killall ymClient13001_tty.bin 
-YMu YMupdate : YMgenDate
+XFu_only_cmd1:= echo kk | nc 127.0.0.1 58111
+XFu_only_cmd2:= $(adbViomi) shell killall ymClient13001_tty.bin 
+XFu XFupdate : XFgenDate
 	@echo
-	rm -fr $(YMdst1)/*
-	$(rsync1)    $(YMsrc1)/  $(YMdst1)/
-	$(rsync1)    $(YMsrc3)/  $(YMdst3)/
+	rm -fr $(XFdst1)/*
+	$(rsync1)    $(XFsrc1)/  $(XFdst1)/
+	$(rsync1)    $(XFsrc3)/  $(XFdst3)/
 	@echo ' try to start the build prog . '
-	@echo 'if NOT start , chroot to $(shell realpath  nowDIR_x1000__) and "make YMb3" '
+	@echo 'if NOT start , chroot to $(shell realpath  nowDIR_x1000__) and "make XFb3" '
 	@echo
-	$(YMu_only_cmd1)
+	$(XFu_only_cmd1)
 	@echo
-YMu_only_cmd1:
-	$(YMu_only_cmd1)
-YMu_only_cmd2:
-	$(YMu_only_cmd2)
+XFu_only_cmd1:
+	$(XFu_only_cmd1)
+XFu_only_cmd2:
+	$(XFu_only_cmd2)
+
+XFso:=srcXF/libs/mipsX1000/libmsc.so
+
+XFsym    : $(XFso)
+	objdump  -T $< |grep '\.text' 	> srcXF/libmsc.sym.txt
+	objdump  -T $< |grep '\*UND\*' 	> srcXF/libmsc.call.txt
 
 XF01:=srcXF/samples/tts_sample/Makefile
 XF02:=srcXF/samples/sch_text_sample/Makefile
@@ -93,17 +99,18 @@ XFlist+= XF11 XF12 XF13 XF14 XF15 XF16 XF17 XF18 XF19
 
 $(call VIMobj,$(XFlist))
 
-help_OBJs+= help_obj__sYM
-help_obj__sYM:
+help_OBJs+= help_obj__sXF
+help_obj__sXF:
 	@echo
-	@echo '         [$(makePATHsYM)]'
-	@echo ' YMrsyncDown1  rsync form origin-untrace-Server --- > Warn , Warn , Warn '
-	@echo ' YMrsyncUp1    rsync $(shel basename $(YMsrc1)) to origin-untrace-Server --- > Warn , Warn , Warn '
-	@echo ' YMrsyncUp3    rsync $(shel basename $(YMsrc3)) to origin-untrace-Server '
-	@echo ' YMu      YMupdate -> $(shell basename $(YMsrc1))/ $(shell basename $(YMsrc3))/ -->  $(YMdst1)/'
+	@echo '         [$(makePATHsXF)]'
+	@echo ' XFrsyncDown1  rsync form origin-untrace-Server --- > Warn , Warn , Warn '
+	@echo ' XFrsyncUp1    rsync $(shel basename $(XFsrc1)) to origin-untrace-Server --- > Warn , Warn , Warn '
+	@echo ' XFrsyncUp3    rsync $(shel basename $(XFsrc3)) to origin-untrace-Server '
+	@echo ' XFu      XFupdate -> $(shell basename $(XFsrc1))/ $(shell basename $(XFsrc3))/ -->  $(XFdst1)/'
+	@echo ' XFsym    --> libmsc.txt'
 	$(call VIMhelp,$(XFlist))
 
 ifneq ($(VV13838311),$(strip $(VV)))
-$(info 193981 : loading Makefile.module.XFsrc $(makePATHsYM) . end)
+$(info 193981 : loading Makefile.module.XFsrc $(makePATHsXF) . end)
 endif
 
