@@ -6,3 +6,4 @@ _vim/cscope.tmp
 date.now.txt
 ?.txt
 *.bak
+srcXF/include/_build_info.h
