@@ -65,6 +65,7 @@ XFu XFupdate : XFgenDate
 	@echo 'if NOT start , chroot to $(shell realpath  nowDIR_x1000__) and "make XFb3" '
 	@echo
 	$(XFu_only_cmd1)
+	@echo ' dst -->     $(XFdst1)'
 	@echo
 XFu_only_cmd1:
 	$(XFu_only_cmd1)
