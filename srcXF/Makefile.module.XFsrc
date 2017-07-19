@@ -95,11 +95,13 @@ XF16:=srcXF/samples/ise_sample/ise_sample.c
 XF17:=srcXF/samples/sch_speak_sample/sch_speak_sample.c
 XF18:=srcXF/samples/sch_text_sample/sch_text_sample.c
 XF19:=srcXF/samples/tts_sample/tts_sample.c
+vb:=srcXF/Build.mk
 
 
 XFlist:= 
 XFlist+= XF01 XF02 XF03 XF04 XF05 XF06 XF07 
 XFlist+= XF11 XF12 XF13 XF14 XF15 XF16 XF17 XF18 XF19   
+XFlist+= vb
 
 $(call VIMobj,$(XFlist))
 
