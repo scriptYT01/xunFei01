@@ -26,8 +26,8 @@ export XFdst1:=$(shell readlink -m patchDIR__x1000/XFclient01)
 export XFdelete1:= \
 	libmsc.call.txt libmsc.sym.txt README.md \
 	samples/doc samples/README.md \
-	doc x86 x64 \
-	Makefile.module.XFsrc
+	libs/x86 libs/x64 \
+	doc Makefile.module.XFsrc
 
 login:=ljl@ljl_machine
 export XFremoteDIR1=$(login):/home/ljl/ViomiClient__src/
