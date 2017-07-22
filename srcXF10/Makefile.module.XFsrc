@@ -3,6 +3,21 @@ ifneq ($(VV13838311),$(strip $(VV)))
 $(info 193981 : loading Makefile.module.XFsrc $(makePATHsXF) . begin)
 endif
 
+# ### http://www.xfyun.cn/doccenter/faq?go=contitle66
+# Q：10114错误
+# A：查看网络环境是否正常，查看是否使用的是公司网络（很多公司网络会将一些网络地址和端口屏蔽掉），
+# 查看讯飞的服务器地址和端口是不是被屏蔽（服务器地址dev.voicecloud.cn 端口号是1028和80）。
+
+define rm_log01
+#!/bin/sh
+
+msc/msc.log
+msc/waiter.log
+msc/ctts1PdHHBHMhJ4m8zjFaa1euwoLB1SHir.log
+
+endef
+export rm_log01
+
 define XFdateHtempale
 #ifndef    __XFGENDATE_H
 #define    __XFGENDATE_H
@@ -22,7 +37,7 @@ XFgenDate:
 #	 echo > 							$(XFdateH)
 
 export XFsrc1:=$(makePATH1)/srcXF10/
-export XFdst1:=$(shell readlink -m patchDIR__x1000/XFclient01)
+export XFdst1:=$(shell readlink -m patchDIR__x1000/XFclient10)
 export XFdelete1:= \
 	libmsc.call.txt libmsc.sym.txt README.md \
 	samples/doc samples/README.md \
@@ -31,7 +46,7 @@ export XFdelete1:= \
 
 login:=ljl@ljl_machine
 export XFremoteDIR1=$(login):/home/ljl/ViomiClient__src/
-export XFremoteDIR3=$(login):/home/ljl/XFclient03/
+export XFremoteDIR3=$(login):/home/ljl/XFclient10/
 export XFbinDIR3=ymClientDST/
 
 ssh login:
@@ -77,6 +92,8 @@ XFso:=srcXF10/libs/mipsX1000/libmsc.so
 XFsym    : $(XFso)
 	objdump  -T $< |grep '\.text' 	> srcXF10/libmsc.sym.txt
 	objdump  -T $< |grep '\*UND\*' 	> srcXF10/libmsc.call.txt
+	echo "$${rm_log01}" > srcXF10/bin/rm_log.sh
+
 
 XF01:=srcXF10/samples/tts_sample/Makefile
 XF02:=srcXF10/samples/sch_text_sample/Makefile
