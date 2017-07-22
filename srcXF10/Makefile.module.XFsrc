@@ -11,9 +11,9 @@ endif
 define rm_log01
 #!/bin/sh
 
-msc/msc.log
-msc/waiter.log
-msc/ctts1PdHHBHMhJ4m8zjFaa1euwoLB1SHir.log
+echo > msc/msc.log
+echo > msc/waiter.log
+echo > msc/ctts1PdHHBHMhJ4m8zjFaa1euwoLB1SHir.log
 
 endef
 export rm_log01
@@ -92,7 +92,8 @@ XFso:=srcXF10/libs/mipsX1000/libmsc.so
 XFsym    : $(XFso)
 	objdump  -T $< |grep '\.text' 	> srcXF10/libmsc.sym.txt
 	objdump  -T $< |grep '\*UND\*' 	> srcXF10/libmsc.call.txt
-	echo "$${rm_log01}" > srcXF10/bin/rm_log.sh
+	echo "$${rm_log01}" > 	srcXF10/bin/rm_log.sh
+	chmod 755 				srcXF10/bin/rm_log.sh
 
 
 XF01:=srcXF10/samples/tts_sample/Makefile
