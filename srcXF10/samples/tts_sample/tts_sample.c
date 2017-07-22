@@ -150,7 +150,19 @@ int main(int argc, char* argv[])
 	*/
 	const char* session_begin_params = "voice_name = xiaoyan, text_encoding = utf8, sample_rate = 16000, speed = 50, volume = 50, pitch = 50, rdn = 2";
 	const char* filename             = "tts_sample.wav"; //合成的语音文件名称
-	const char* text                 = "亲爱的用户，您好，这是一个语音合成示例，感谢您对科大讯飞语音技术的支持！科大讯飞是亚太地区最大的语音上市公司，股票代码：002230"; //合成文本
+	//const char* text                 = "亲爱的用户，您好，这是一个语音合成示例，感谢您对科大讯飞语音技术的支持！科大讯飞是亚太地区最大的语音上市公司，股票代码：002230"; //合成文本
+	const char* text                 = \
+                                       "讯飞MSC开发指南1,1234567890,合成完毕 " 
+                                       "讯飞MSC开发指南2,1234567890,合成完毕 " 
+                                       "讯飞MSC开发指南3,1234567890,合成完毕 " 
+                                       "讯飞MSC开发指南4,1234567890,合成完毕 " 
+                                       "讯飞MSC开发指南5,1234567890,合成完毕 " 
+                                       "讯飞MSC开发指南6,1234567890,合成完毕 " 
+                                       "讯飞MSC开发指南7,1234567890,合成完毕 " 
+                                       "讯飞MSC开发指南8,1234567890,合成完毕 " 
+                                       "讯飞MSC开发指南9,1234567890,合成完毕 " 
+                                       "讯飞MSC开发指南0,1234567890,合成完毕 " 
+                                       ;
 
 	/* 用户登录 */
 	ret = MSPLogin(NULL, NULL, login_params);//第一个参数是用户名，第二个参数是密码，第三个参数是登录参数，用户名和密码可在http://www.xfyun.cn注册获取

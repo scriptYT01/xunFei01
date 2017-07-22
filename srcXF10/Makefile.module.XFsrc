@@ -16,12 +16,12 @@ define XFdateHtempale
 endef
 export XFdateHtempale
 
-XFdateH:=srcXF/include/_build_info.h
+XFdateH:=srcXF10/include/_build_info.h
 XFgenDate:
 	 echo "$${XFdateHtempale}"     > 	$(XFdateH)
 #	 echo > 							$(XFdateH)
 
-export XFsrc1:=$(makePATH1)/srcXF/
+export XFsrc1:=$(makePATH1)/srcXF10/
 export XFdst1:=$(shell readlink -m patchDIR__x1000/XFclient01)
 export XFdelete1:= \
 	libmsc.call.txt libmsc.sym.txt README.md \
@@ -72,30 +72,30 @@ XFu_only_cmd1:
 XFu_only_cmd2:
 	$(XFu_only_cmd2)
 
-XFso:=srcXF/libs/mipsX1000/libmsc.so
+XFso:=srcXF10/libs/mipsX1000/libmsc.so
 
 XFsym    : $(XFso)
-	objdump  -T $< |grep '\.text' 	> srcXF/libmsc.sym.txt
-	objdump  -T $< |grep '\*UND\*' 	> srcXF/libmsc.call.txt
+	objdump  -T $< |grep '\.text' 	> srcXF10/libmsc.sym.txt
+	objdump  -T $< |grep '\*UND\*' 	> srcXF10/libmsc.call.txt
 
-XF01:=srcXF/samples/tts_sample/Makefile
-XF02:=srcXF/samples/sch_text_sample/Makefile
-XF03:=srcXF/samples/sch_speak_sample/Makefile
-XF04:=srcXF/samples/ise_sample/Makefile
-XF05:=srcXF/samples/iat_sample/Makefile
-XF06:=srcXF/samples/iat_record_sample/Makefile
-XF07:=srcXF/samples/asr_sample/Makefile
+XF01:=srcXF10/samples/tts_sample/Makefile
+XF02:=srcXF10/samples/sch_text_sample/Makefile
+XF03:=srcXF10/samples/sch_speak_sample/Makefile
+XF04:=srcXF10/samples/ise_sample/Makefile
+XF05:=srcXF10/samples/iat_sample/Makefile
+XF06:=srcXF10/samples/iat_record_sample/Makefile
+XF07:=srcXF10/samples/asr_sample/Makefile
 
-XF11:=srcXF/samples/asr_sample/asr_sample.c
-XF12:=srcXF/samples/iat_record_sample/iat_record_sample.c
-XF13:=srcXF/samples/iat_record_sample/linuxrec.c
-XF14:=srcXF/samples/iat_record_sample/speech_recognizer.c
-XF15:=srcXF/samples/iat_sample/iat_sample.c
-XF16:=srcXF/samples/ise_sample/ise_sample.c
-XF17:=srcXF/samples/sch_speak_sample/sch_speak_sample.c
-XF18:=srcXF/samples/sch_text_sample/sch_text_sample.c
-XF19:=srcXF/samples/tts_sample/tts_sample.c
-vb:=srcXF/Build.mk
+XF11:=srcXF10/samples/asr_sample/asr_sample.c
+XF12:=srcXF10/samples/iat_record_sample/iat_record_sample.c
+XF13:=srcXF10/samples/iat_record_sample/linuxrec.c
+XF14:=srcXF10/samples/iat_record_sample/speech_recognizer.c
+XF15:=srcXF10/samples/iat_sample/iat_sample.c
+XF16:=srcXF10/samples/ise_sample/ise_sample.c
+XF17:=srcXF10/samples/sch_speak_sample/sch_speak_sample.c
+XF18:=srcXF10/samples/sch_text_sample/sch_text_sample.c
+XF19:=srcXF10/samples/tts_sample/tts_sample.c
+vb:=srcXF10/Build.mk
 
 
 XFlist:= 

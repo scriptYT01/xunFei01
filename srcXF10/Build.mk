@@ -6,7 +6,7 @@ LOCAL_MODULE := tts_sample.bin
 LOCAL_MODULE_TAGS := tts_sample
 LOCAL_MODULE_PATH:=$(TARGET_FS_BUILD)/$(TARGET_TESTSUIT_DIR)/network
 LOCAL_SRC_FILES := samples/tts_sample/tts_sample.c
-LOCAL_LDLIBS := -lmsc -lrt -ldl -lpthread 
+LOCAL_LDLIBS := -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc -lrt -ldl -lpthread -lm -lc
 include $(BUILD_EXECUTABLE)
 
 #==== miio_wifi ==========================================

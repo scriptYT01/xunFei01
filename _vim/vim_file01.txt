@@ -1,3 +1,3 @@
-srcXF/libmsc.call.txt
-srcXF/libmsc.sym.txt
-srcXF/Build.mk
+srcXF10/libmsc.call.txt
+srcXF10/libmsc.sym.txt
+srcXF10/Build.mk
