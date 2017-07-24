@@ -1,6 +1,6 @@
 
 ifneq ($(VV13838311),$(strip $(VV)))
-$(info 193981 : loading Makefile.module.XFsrc $(makePATHsXF) . begin)
+$(info 193981 : loading Makefile.module.XFsrc $(makePATHxf1) . begin)
 endif
 
 # ### http://www.xfyun.cn/doccenter/faq?go=contitle66
@@ -91,6 +91,10 @@ XFu_only_cmd1:
 XFu_only_cmd2:
 	$(XFu_only_cmd2)
 
+mXF21:
+	mkdir -p midXF21
+	rsync -a srcXF20/samples/tts_sample/ midXF21/
+
 XFso:=srcXF10/libs/mipsX1000/libmsc.so
 
 XFsym    : $(XFso)
@@ -135,15 +139,16 @@ $(call VIMobj,$(XFlist))
 help_OBJs+= help_obj__sXF
 help_obj__sXF:
 	@echo
-	@echo '         [$(makePATHsXF)]'
+	@echo '         [$(makePATHxf1)]'
 	@echo ' XFrsyncDown1  rsync form origin-untrace-Server --- > Warn , Warn , Warn '
-	@echo ' XFrsyncUp1    rsync $(shel basename $(XFsrc1)) to origin-untrace-Server --- > Warn , Warn , Warn '
-	@echo ' XFrsyncUp3    rsync $(shel basename $(XFsrc3)) to origin-untrace-Server '
-	@echo ' XFu      XFupdate -> $(shell basename $(XFsrc1))/ $(shell basename $(XFsrc3))/ -->  $(XFdst1)/'
+#	@echo ' XFrsyncUp1    rsync $(shell basename $(XFsrc1)) to origin-untrace-Server --- > Warn , Warn , Warn '
+#	@echo ' XFrsyncUp3    rsync $(shell basename $(XFsrc3)) to origin-untrace-Server '
+#	@echo ' XFu      XFupdate -> $(shell basename $(XFsrc1))/ $(shell basename $(XFsrc3))/ -->  $(XFdst1)/'
 	@echo ' XFsym    --> libmsc.txt'
+	@echo ' mXF21    ---> cretate test21 for i386'
 	$(call VIMhelp,$(XFlist))
 
 ifneq ($(VV13838311),$(strip $(VV)))
-$(info 193981 : loading Makefile.module.XFsrc $(makePATHsXF) . end)
+$(info 193981 : loading Makefile.module.XFsrc $(makePATHxf1) . end)
 endif
 
