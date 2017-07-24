@@ -113,13 +113,18 @@ XF16:=srcXF10/samples/ise_sample/ise_sample.c
 XF17:=srcXF10/samples/sch_speak_sample/sch_speak_sample.c
 XF18:=srcXF10/samples/sch_text_sample/sch_text_sample.c
 XF19:=srcXF10/samples/tts_sample/tts_sample.c
-vb:=srcXF10/Build.mk
+
+XF20:=srcXF20/samples/tts_sample/tts_sample.c
+
+vb1:=srcXF10/Build.mk
+vb2:=srcXF20/Build.mk
 
 
 XFlist:= 
-XFlist+= XF01 XF02 XF03 XF04 XF05 XF06 XF07 
+#XFlist+= XF01 XF02 XF03 XF04 XF05 XF06 XF07 
 XFlist+= XF11 XF12 XF13 XF14 XF15 XF16 XF17 XF18 XF19   
-XFlist+= vb
+XFlist+= XF20
+XFlist+= vb1 vb2
 
 $(call VIMobj,$(XFlist))
 
