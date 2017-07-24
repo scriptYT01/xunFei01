@@ -37,7 +37,10 @@ XFgenDate:
 #	 echo > 							$(XFdateH)
 
 export XFsrc1:=$(makePATH1)/srcXF10/
+export XFsrc2:=$(makePATH1)/srcXF20/
 export XFdst1:=$(shell readlink -m patchDIR__x1000/XFclient10)
+export XFdst2:=$(shell readlink -m patchDIR__x1000/XFclient20)
+
 export XFdelete1:= \
 	libmsc.call.txt libmsc.sym.txt README.md \
 	samples/doc samples/README.md \
@@ -75,6 +78,7 @@ XFu XFupdate : XFgenDate
 	@echo
 	rm -fr $(XFdst1)/*
 	$(rsync1)    $(XFsrc1)/  $(XFdst1)/
+	$(rsync1)    $(XFsrc2)/  $(XFdst2)/
 	rm -fr $(foreach aa1,$(XFdelete1), $(XFdst1)/$(aa1))
 	@echo ' try to start the build prog . '
 	@echo 'if NOT start , chroot to $(shell realpath  nowDIR_x1000__) and "make XFb3" '
