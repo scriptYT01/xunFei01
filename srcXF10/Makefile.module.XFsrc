@@ -47,31 +47,10 @@ export XFdelete1:= \
 	libs/x86 libs/x64 \
 	doc Makefile.module.XFsrc
 
-login:=ljl@ljl_machine
-export XFremoteDIR1=$(login):/home/ljl/ViomiClient__src/
-export XFremoteDIR3=$(login):/home/ljl/XFclient10/
-export XFbinDIR3=ymClientDST/
 
 ssh login:
 	ssh $(login)
 
-XFrsyncDown1 : 
-	@echo
-	$(rsync1)    $(XFremoteDIR1) $(XFsrc1)/
-	dos2unix $(XFsrc1)/*
-	unix2dos $(XFsrc1)/*
-	dos2unix $(XFsrc1)/*
-	@echo
-XFrsyncUp1 : 
-	@echo
-	@[ "$(force)" = 1 ] || ( echo ; echo 'ERROR , you should use force=1' ; echo ; exit 34 )
-	$(rsync1)    $(XFsrc1)/       $(XFremoteDIR1)/
-	@echo
-XFrsyncUp3 : 
-	@echo
-	$(rsync1)    $(XFsrc3)/       			$(XFremoteDIR3)/
-	$(rsync1)    $(XFbinDIR3)/ymClient*     $(XFremoteDIR3)/
-	@echo
 XFu_only_cmd1:= echo kk | nc 127.0.0.1 58111
 XFu_only_cmd2:= $(adbViomi) shell killall ymClient13001_tty.bin 
 XFu XFupdate : XFgenDate
@@ -81,7 +60,7 @@ XFu XFupdate : XFgenDate
 	$(rsync1)    $(XFsrc2)/  $(XFdst2)/
 	rm -fr $(foreach aa1,$(XFdelete1), $(XFdst1)/$(aa1))
 	@echo ' try to start the build prog . '
-	@echo 'if NOT start , chroot to $(shell realpath  nowDIR_x1000__) and "make XFb3" '
+	@echo 'if NOT start , chroot to $(shell realpath  nowDIR_x1000__) and "make l" '
 	@echo
 	$(XFu_only_cmd1)
 	@echo ' dst -->     $(XFdst1)'
@@ -140,10 +119,7 @@ help_OBJs+= help_obj__sXF
 help_obj__sXF:
 	@echo
 	@echo '         [$(makePATHxf1)]'
-	@echo ' XFrsyncDown1  rsync form origin-untrace-Server --- > Warn , Warn , Warn '
-#	@echo ' XFrsyncUp1    rsync $(shell basename $(XFsrc1)) to origin-untrace-Server --- > Warn , Warn , Warn '
-#	@echo ' XFrsyncUp3    rsync $(shell basename $(XFsrc3)) to origin-untrace-Server '
-#	@echo ' XFu      XFupdate -> $(shell basename $(XFsrc1))/ $(shell basename $(XFsrc3))/ -->  $(XFdst1)/'
+	@echo ' XFu      XFupdate -> $(shell basename $(XFsrc1))/ $(shell basename $(XFsrc2))/ -->  $(XFdst1)/'
 	@echo ' XFsym    --> libmsc.txt'
 	@echo ' mXF21    ---> cretate test21 for i386'
 	$(call VIMhelp,$(XFlist))
