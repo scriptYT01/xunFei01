@@ -45,6 +45,7 @@ export XFi386S10:=$(makePATH1)/srcXF20/libs/x86/libmsc.so
 export XFi386S11:=$(makePATH1)/srcXF20/samples/tts_sample/tts_sample.c
 export XFi386S12:=$(makePATH1)/srcXF20/Makefile.i386.21
 export XFi386S13:=$(makePATH1)/srcXF20/include/
+export XFi386S14:=$(makePATH1)/srcXF20/bin/
 export XFi386DST1:=$(shell readlink -m patchDIR__x1000/XFi386DST1)
 
 export XFdelete1:= \
@@ -64,10 +65,13 @@ XFu XFupdate : XFgenDate
 	rm -fr $(XFdst1)/*
 	$(rsync1)    $(XFsrc1)/  	$(XFdst1)/
 	$(rsync1)    $(XFsrc2)/  	$(XFdst2)/
+	rm -fr $(XFi386DST1)/
 	rsync -a    	$(XFi386S10)  	$(XFi386DST1)/
-	rsync -a    	$(XFi386S11)  	$(XFi386DST1)/
 	rsync -a    	$(XFi386S12)  	$(XFi386DST1)/
-	rsync -a    	$(XFi386S13)  	$(XFi386DST1)/
+	cd $(XFi386DST1)/ && rm -f Makefile && ln -s `basename $(XFi386S12)`  	Makefile
+	rsync -a    	$(XFi386S13)  	$(XFi386DST1)/include/
+	rsync -a    	$(XFi386S14)  	$(XFi386DST1)/bin/
+	rsync -a    	$(XFi386S11)  	$(XFi386DST1)/
 	rm -fr $(foreach aa1,$(XFdelete1), $(XFdst1)/$(aa1))
 	@echo ' try to start the build prog . '
 	@echo 'if NOT start , chroot to $(shell realpath  nowDIR_x1000__) and "make l" '

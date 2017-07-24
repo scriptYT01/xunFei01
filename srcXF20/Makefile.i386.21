@@ -2,10 +2,25 @@
 
 DIR_INC = ./
 DIR_BIN = ./
+DIR_BIN = bin/
 DIR_LIB = ./
 
 TARGET	= tts_sample21.i386.bin
 BIN_TARGET = $(DIR_BIN)/$(TARGET)
+
+define  RUN01
+#!/bin/sh
+
+if [ -f ./$(TARGET) ]
+then
+	LD_LIBRARY_PATH=./:../ ./$(TARGET)
+else
+	LD_LIBRARY_PATH=./:../ ../$(TARGET)
+fi
+
+
+endef
+export  RUN01
 
 CROSS_COMPILE = 
 CFLAGS = -g -Wall -I$(DIR_INC)
@@ -23,8 +38,10 @@ OBJECTS := $(patsubst %.c,%.o,$(wildcard *.c))
 
 $(BIN_TARGET) : $(OBJECTS)
 	$(CROSS_COMPILE)gcc $(CFLAGS) $^ -o $@ $(LDFLAGS)
+	echo "$${RUN01}" > run.sh
 
 %.o : %.c
+	sed -i -e 's;\.\./\.\./;./;g'   $<
 	$(CROSS_COMPILE)gcc -c $(CFLAGS) $< -o $@
 clean:
 	@rm -f *.o $(BIN_TARGET)
