@@ -164,7 +164,7 @@ int main(int argc, char* argv[])
 	printf("###########################################################################\n\n");
 
 	/* 文本合成 */
-	printf("开始合成 ...\n");
+	printf("开始合成 ... %s \n" , text );
 	ret = text_to_speech(text, filename, session_begin_params);
 	if (MSP_SUCCESS != ret)
 	{
@@ -173,8 +173,10 @@ int main(int argc, char* argv[])
 	printf("合成完毕\n");
 
 exit:
-	printf("按任意键退出 ...\n");
-	getchar();
+    if ( 0 ) {
+	    printf("按任意键退出 ...\n");
+	    getchar();
+    }
 	MSPLogout(); //退出登录
 
 	return 0;

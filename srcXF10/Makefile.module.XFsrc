@@ -41,23 +41,23 @@ XFsrc2:=$(makePATH1)/srcXF20/
 XFdst1:=$(shell readlink -m patchDIR__x1000/XFclient10)
 XFdst2:=$(shell readlink -m patchDIR__x1000/XFclient20)
 
-XFi386S10:=$(makePATH1)/srcXF20/
+XFi386S10:=$(makePATH1)/srcXF10/
 XFi386SrcList11:= 				\
-Makefile.i386.21				\
-libs/x86/libmsc.so				\
-include/						\
-bin/							\
-samples/tts_sample/tts_sample.c				
-XFi386SrcList12:=$(foreach aa1,$(XFi386SrcList11),$(XFi386S10)/$(aa1))
-XFi386DST1:=$(shell readlink -m patchDIR__x1000/XFi386DST1)
-
-XFi386S20:=$(makePATH1)/srcXF10/
-XFi386SrcList21:= 				\
 Makefile.i386.11				\
 libs/x86/libmsc.so				\
 include/						\
 bin/							\
 samples/asr_sample/asr_sample.c				
+XFi386SrcList12:=$(foreach aa1,$(XFi386SrcList11),$(XFi386S10)/$(aa1))
+XFi386DST1:=$(shell readlink -m patchDIR__x1000/XFi386DST1)
+
+XFi386S20:=$(makePATH1)/srcXF20/
+XFi386SrcList21:= 				\
+Makefile.i386.21				\
+libs/x86/libmsc.so				\
+include/						\
+bin/							\
+samples/tts_sample/tts_sample.c				
 XFi386SrcList22:=$(foreach aa1,$(XFi386SrcList21),$(XFi386S20)/$(aa1))
 XFi386DST2:=$(shell readlink -m patchDIR__x1000/XFi386DST2)
 

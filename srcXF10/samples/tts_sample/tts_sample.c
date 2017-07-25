@@ -177,7 +177,7 @@ int main(int argc, char* argv[])
 	printf("## 高效便捷手段，非常符合信息时代海量数据、动态更新和个性化查询的需求。  ##\n");
 	printf("###########################################################################\n\n");
 	/* 文本合成 */
-	printf("开始合成 ...\n");
+	printf("开始合成 ...%s \n" , text );
 	ret = text_to_speech(text, filename, session_begin_params);
 	if (MSP_SUCCESS != ret)
 	{
@@ -187,8 +187,8 @@ int main(int argc, char* argv[])
 
 exit:
     if ( 0 ) {
-	printf("按任意键退出 ...\n");
-	getchar();
+	    printf("按任意键退出 ...\n");
+	    getchar();
     }
 	MSPLogout(); //退出登录
 

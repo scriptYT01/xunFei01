@@ -17,6 +17,7 @@
 #define FRAME_LEN	640 
  
 const char _wav01[]="wav/iflytek01.wav" ;
+//const char _wav01[]="wav/iflytek02.wav" ;
 
 int _get_grammar_id(char* grammar_id, unsigned int id_len)
 {
@@ -239,10 +240,12 @@ int main(int argc, char* argv[])
 		goto exit; //登录失败，退出登录
 	}
 
-	printf("\n##################################################\n");
-	printf("## 语音识别（Automatic Speech Recognition）技术 ##\n");
-	printf("## 能够从语音中识别出特定的命令词或语句模式。   ##\n");
-	printf("##################################################\n\n");
+	printf( "\n"
+            "##################################################\n"
+            "## 语音识别（Automatic Speech Recognition）技术 ##\n"
+            "## 能够从语音中识别出特定的命令词或语句模式。   ##\n"
+            "##################################################\n"
+            "\n" );
 
 	grammar_id = (char*)malloc(GRAMID_LEN);
 	if (NULL == grammar_id)
@@ -252,7 +255,7 @@ int main(int argc, char* argv[])
 	}
 	memset(grammar_id, 0, GRAMID_LEN);
 
-	printf("上传语法 ... %d , %d \n", grammar_id , GRAMID_LEN );
+	printf("上传语法 ... %d , %d : %s \n", grammar_id , GRAMID_LEN , session_begin_params );
 	ret = _get_grammar_id(grammar_id, GRAMID_LEN);
 	if (MSP_SUCCESS != ret) {
 	    printf("上传语法 failed \n");
@@ -269,8 +272,10 @@ exit:
 		free(grammar_id);
 		grammar_id = NULL;
 	}
-	printf("按任意键退出 ...\n");
-	getchar();
+    if ( 0 ) {
+	    printf("按任意键退出 ...\n");
+	    getchar();
+    }
 	MSPLogout(); //退出登录
 
 	return 0;
