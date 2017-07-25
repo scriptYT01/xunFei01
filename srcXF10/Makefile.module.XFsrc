@@ -42,12 +42,13 @@ XFdst1:=$(shell readlink -m patchDIR__x1000/XFclient10)
 XFdst2:=$(shell readlink -m patchDIR__x1000/XFclient20)
 
 XFi386S10:=$(makePATH1)/srcXF20/
-XFi386S11:=$(XFi386S10)/Makefile.i386.21
-XFi386S12:=$(XFi386S10)/samples/tts_sample/tts_sample.c
-XFi386S13:=$(XFi386S10)/include/
-XFi386S14:=$(XFi386S10)/bin/
-XFi386S15:=$(XFi386S10)/libs/x86/libmsc.so
-XFi386SrcList:= XFi386S11 XFi386S12 XFi386S13 XFi386S14 XFi386S15
+XFi386SrcList1:= 				\
+Makefile.i386.21				\
+libs/x86/libmsc.so				\
+include/						\
+bin/							\
+samples/tts_sample/tts_sample.c				
+XFi386SrcList2:=$(foreach aa1,$(XFi386SrcList1),$(XFi386S10)/$(aa1))
 XFi386DST1:=$(shell readlink -m patchDIR__x1000/XFi386DST1)
 
 export XFdelete1:= \
@@ -70,15 +71,9 @@ XFu XFupdate : XFgenDate
 	@#
 	rm -fr $(XFi386DST1)/
 	mkdir -p $(XFi386DST1)
-	$(foreach aa1,$(XFi386SrcList)\
-		, rsync -a $($(aa1)) $(XFi386DST1)/`basename $($(aa1))`$(EOL))
-	cd $(XFi386DST1)/ && rm -f Makefile && ln -s `basename $(XFi386S11)`  	Makefile
-	#rsync -a    	$(XFi386S10)  	$(XFi386DST1)/
-	#rsync -a    	$(XFi386S12)  	$(XFi386DST1)/
-	#rsync -a    	$(XFi386S13)  	$(XFi386DST1)/include/
-	#rsync -a    	$(XFi386S14)  	$(XFi386DST1)/bin/
-	#rsync -a    	$(XFi386S11)  	$(XFi386DST1)/
-	#cd $(XFi386DST1)/ && rm -f Makefile && ln -s `basename $(XFi386S12)`  	Makefile
+	$(foreach aa1,$(XFi386SrcList2)\
+		, rsync -a $(aa1) $(XFi386DST1)/`basename $(aa1)`$(EOL))
+	cd $(XFi386DST1)/ && rm -f Makefile && ln -s `basename $(firstword $(XFi386SrcList2))`  	Makefile
 	@#
 	rm -fr $(foreach aa1,$(XFdelete1), $(XFdst1)/$(aa1))
 	@echo ' try to start the build prog . '
