@@ -32,7 +32,7 @@ int upload_userwords()
 	}
 
 	fseek(fp, 0, SEEK_END);
-	len = ftell(fp); //获取音频文件大小
+	len = ftell(fp); //获取音频文件大小 // upload_userwords
 	fseek(fp, 0, SEEK_SET);  					
 	
 	userwords = (char*)malloc(len + 1);
@@ -42,7 +42,7 @@ int upload_userwords()
 		goto upload_exit;
 	}
 
-	read_len = fread((void*)userwords, 1, len, fp); //读取用户词表内容
+	read_len = fread((void*)userwords, 1, len, fp); //读取用户词表内容 // upload_userwords
 	if (read_len != len)
 	{
 		printf("\nread [userwords.txt] failed!\n");
@@ -50,7 +50,7 @@ int upload_userwords()
 	}
 	userwords[len] = '\0';
 	
-	MSPUploadData("userwords", userwords, len, "sub = uup, dtt = userword", &ret); //上传用户词表
+	MSPUploadData("userwords", userwords, len, "sub = uup, dtt = userword", &ret); //上传用户词表 // upload_userwords
 	if (MSP_SUCCESS != ret)
 	{
 		printf("\nMSPUploadData failed ! errorCode: %d \n", ret);
@@ -58,7 +58,7 @@ int upload_userwords()
 	}
 	
 upload_exit:
-	if (NULL != fp)
+	if (NULL != fp) // upload_userwords
 	{
 		fclose(fp);
 		fp = NULL;
@@ -70,7 +70,7 @@ upload_exit:
 	}
 	
 	return ret;
-}
+} // upload_userwords
 
 void run_iat(const char* audio_file, const char* session_begin_params)
 {
@@ -83,20 +83,20 @@ void run_iat(const char* audio_file, const char* session_begin_params)
 	int				rec_stat					=	MSP_REC_STATUS_SUCCESS ;			//识别状态
 	int				errcode						=	MSP_SUCCESS ;
 
-	FILE*			f_pcm						=	NULL;
+	FILE*			f_pcm						=	NULL; // run_iat
 	char*			p_pcm						=	NULL;
 	long			pcm_count					=	0;
 	long			pcm_size					=	0;
 	long			read_size					=	0;
 
 	
-	if (NULL == audio_file)
+	if (NULL == audio_file) // run_iat
 		goto iat_exit;
 
 	f_pcm = fopen(audio_file, "rb");
 	if (NULL == f_pcm) 
 	{
-		printf("\nopen [%s] failed! \n", audio_file);
+		printf("\nopen [%s] failed! \n", audio_file); // run_iat
 		goto iat_exit;
 	}
 	
@@ -104,7 +104,7 @@ void run_iat(const char* audio_file, const char* session_begin_params)
 	pcm_size = ftell(f_pcm); //获取音频文件大小 
 	fseek(f_pcm, 0, SEEK_SET);		
 
-	p_pcm = (char *)malloc(pcm_size);
+	p_pcm = (char *)malloc(pcm_size); // run_iat
 	if (NULL == p_pcm)
 	{
 		printf("\nout of memory! \n");
@@ -114,7 +114,7 @@ void run_iat(const char* audio_file, const char* session_begin_params)
 	read_size = fread((void *)p_pcm, 1, pcm_size, f_pcm); //读取音频文件内容
 	if (read_size != pcm_size)
 	{
-		printf("\nread [%s] error!\n", audio_file);
+		printf("\nread [%s] error!\n", audio_file); // run_iat
 		goto iat_exit;
 	}
 	
@@ -122,7 +122,7 @@ void run_iat(const char* audio_file, const char* session_begin_params)
 	session_id = QISRSessionBegin(NULL, session_begin_params, &errcode); //听写不需要语法，第一个参数为NULL
 	if (MSP_SUCCESS != errcode)
 	{
-		printf("\nQISRSessionBegin failed! error code:%d\n", errcode);
+		printf("\nQISRSessionBegin failed! error code:%d\n", errcode); // run_iat
 		goto iat_exit;
 	}
 	
@@ -138,7 +138,7 @@ void run_iat(const char* audio_file, const char* session_begin_params)
 
 		aud_stat = MSP_AUDIO_SAMPLE_CONTINUE;
 		if (0 == pcm_count)
-			aud_stat = MSP_AUDIO_SAMPLE_FIRST;
+			aud_stat = MSP_AUDIO_SAMPLE_FIRST; // run_iat
 
 		printf(">");
 		ret = QISRAudioWrite(session_id, (const void *)&p_pcm[pcm_count], len, aud_stat, &ep_stat, &rec_stat);
@@ -153,7 +153,7 @@ void run_iat(const char* audio_file, const char* session_begin_params)
 		
 		if (MSP_REC_STATUS_SUCCESS == rec_stat) //已经有部分听写结果
 		{
-			const char *rslt = QISRGetResult(session_id, &rec_stat, 0, &errcode);
+			const char *rslt = QISRGetResult(session_id, &rec_stat, 0, &errcode); // run_iat
 			if (MSP_SUCCESS != errcode)
 			{
 				printf("\nQISRGetResult failed! error code: %d\n", errcode);
@@ -165,7 +165,7 @@ void run_iat(const char* audio_file, const char* session_begin_params)
 				total_len += rslt_len;
 				if (total_len >= BUFFER_SIZE)
 				{
-					printf("\nno enough buffer for rec_result !\n");
+					printf("\nno enough buffer for rec_result !\n"); // run_iat
 					goto iat_exit;
 				}
 				strncat(rec_result, rslt, rslt_len);
@@ -176,31 +176,31 @@ void run_iat(const char* audio_file, const char* session_begin_params)
 			break;
 		usleep(200*1000); //模拟人说话时间间隙。200ms对应10帧的音频
 	}
-	errcode = QISRAudioWrite(session_id, NULL, 0, MSP_AUDIO_SAMPLE_LAST, &ep_stat, &rec_stat);
+	errcode = QISRAudioWrite(session_id, NULL, 0, MSP_AUDIO_SAMPLE_LAST, &ep_stat, &rec_stat); // run_iat
 	if (MSP_SUCCESS != errcode)
 	{
 		printf("\nQISRAudioWrite failed! error code:%d \n", errcode);
 		goto iat_exit;	
 	}
 
-	while (MSP_REC_STATUS_COMPLETE != rec_stat) 
+	while (MSP_REC_STATUS_COMPLETE != rec_stat)  // run_iat
 	{
 		const char *rslt = QISRGetResult(session_id, &rec_stat, 0, &errcode);
 		if (MSP_SUCCESS != errcode)
 		{
-			printf("\nQISRGetResult failed, error code: %d\n", errcode);
+			printf("\nQISRGetResult failed, error code: %d\n", errcode); // run_iat
 			goto iat_exit;
 		}
 		if (NULL != rslt)
 		{
 			unsigned int rslt_len = strlen(rslt);
 			total_len += rslt_len;
-			if (total_len >= BUFFER_SIZE)
+			if (total_len >= BUFFER_SIZE) // run_iat
 			{
 				printf("\nno enough buffer for rec_result !\n");
 				goto iat_exit;
 			}
-			strncat(rec_result, rslt, rslt_len);
+			strncat(rec_result, rslt, rslt_len); // run_iat
 		}
 		usleep(150*1000); //防止频繁占用CPU
 	}
@@ -210,7 +210,7 @@ void run_iat(const char* audio_file, const char* session_begin_params)
 	printf("=============================================================\n");
 
 iat_exit:
-	if (NULL != f_pcm)
+	if (NULL != f_pcm) // run_iat
 	{
 		fclose(f_pcm);
 		f_pcm = NULL;
@@ -221,7 +221,7 @@ iat_exit:
 	}
 
 	QISRSessionEnd(session_id, hints);
-}
+} // run_iat
 
 int main(int argc, char* argv[])
 {
@@ -238,7 +238,7 @@ int main(int argc, char* argv[])
 	* result_type:		识别结果格式
 	* result_encoding:	结果编码格式
 	*
-	* 详细参数说明请参阅《讯飞语音云MSC--API文档》
+	* 详细参数说明请参阅《讯飞语音云MSC--API文档》// main
 	*/
 	const char* session_begin_params	=	"sub = iat, domain = iat, language = zh_cn, accent = mandarin, sample_rate = 16000, result_type = plain, result_encoding = utf8";
 
@@ -246,7 +246,7 @@ int main(int argc, char* argv[])
 	ret = MSPLogin(NULL, NULL, login_params); //第一个参数是用户名，第二个参数是密码，均传NULL即可，第三个参数是登录参数	
 	if (MSP_SUCCESS != ret)
 	{
-		printf("MSPLogin failed , Error code %d.\n",ret);
+		printf("MSPLogin failed , Error code %d.\n",ret);// main
 		goto exit; //登录失败，退出登录
 	}
 
@@ -255,21 +255,21 @@ int main(int argc, char* argv[])
 	printf("########################################################################\n\n");
 	printf("演示示例选择:是否上传用户词表？\n0:不使用\n1:使用\n");
 
-	scanf("%d", &upload_on);
+	scanf("%d", &upload_on);// main
 	if (upload_on)
 	{
 		printf("上传用户词表 ...\n");
 		ret = upload_userwords();
 		if (MSP_SUCCESS != ret)
 			goto exit;	
-		printf("上传用户词表成功\n");
+		printf("上传用户词表成功\n");// main
 	}
 	run_iat("wav/iflytek02.wav", session_begin_params); //iflytek02音频内容为“中美数控”；如果上传了用户词表，识别结果为：“中美速控”。
 exit:
-	printf("按任意键退出 ...\n");
+	printf("按任意键退出 ...\n");// main
 	getchar();
 	MSPLogout(); //退出登录
 
 	return 0;
-}
+} // main
 

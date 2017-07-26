@@ -49,7 +49,7 @@ int main(int argc, char* argv[])
 	case read_syllable_cn:
 		ise_ssb_param = "sub=ise,category=read_syllable,language=zh_cn,aue=speex-wb;7,auf=audio/L16;rate=16000";
 		//f_txt = fopen("./ise_cn/cn_syll.txt", "rb+");
-		f_txt = fopen("./ise_cn/cn_syll2.txt", "rb+");//ÎŞÆ´Òô±ê×¢
+		f_txt = fopen("./ise_cn/cn_syll2.txt", "rb+");//æ— æ‹¼éŸ³æ ‡æ³¨
 		f_pcm = fopen("./ise_cn/cn_syll.wav", "rb+");
 		break;
 	case read_word_cn:
@@ -112,7 +112,7 @@ int main(int argc, char* argv[])
 
 	while (1) 
 	{
-		unsigned int len = 10 * FRAME_LEN;// Ã¿´ÎĞ´Èë200msÒôÆµ(16k£¬16bit)£º1Ö¡ÒôÆµ20ms£¬10Ö¡=200ms¡£16k²ÉÑùÂÊµÄ16Î»ÒôÆµ£¬Ò»Ö¡µÄ´óĞ¡Îª640Byte
+		unsigned int len = 10 * FRAME_LEN;// æ¯æ¬¡å†™å…¥200mséŸ³é¢‘(16kï¼Œ16bit)ï¼š1å¸§éŸ³é¢‘20msï¼Œ10å¸§=200msã€‚16ké‡‡æ ·ç‡çš„16ä½éŸ³é¢‘ï¼Œä¸€å¸§çš„å¤§å°ä¸º640Byte
 		int ret;
 
 		if (pcmSize <= 2*len) 
