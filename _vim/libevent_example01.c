@@ -16,23 +16,23 @@
 
 #define MAX_LINE 16384
 
-void do_read(evutil_socket_t fd, short events, void *arg);
-void do_write(evutil_socket_t fd, short events, void *arg);
+void _do_read(evutil_socket_t __fd, short events, void *___arg);
+void _do_write(evutil_socket_t __fd, short events, void *___arg);
 
     char
-rot13_char(char c)
+_rot13_char(char ___c)
 {
     /* We don't want to use isalpha here; setting the locale would change
      * * which characters are considered alphabetical. */
-    if ((c >= 'a' && c <= 'm') || (c >= 'A' && c <= 'M'))
-        return c + 13;
-    else if ((c >= 'n' && c <= 'z') || (c >= 'N' && c <= 'Z'))
-        return c - 13;
+    if ((___c >= 'a' && ___c <= 'm') || (___c >= 'A' && ___c <= 'M'))
+        return ___c + 13;
+    else if ((___c >= 'n' && ___c <= 'z') || (___c >= 'N' && ___c <= 'Z'))
+        return ___c - 13;
     else
-        return c;
-}
+        return ___c;
+} // _rot13_char
 
-struct fd_state {
+struct _STfd_state {
     char buffer[MAX_LINE];
     size_t buffer_used;
 
@@ -41,173 +41,173 @@ struct fd_state {
 
     struct event *read_event;
     struct event *write_event;
-};
+}; // _STfd_state 
 
-    struct fd_state *
-alloc_fd_state(struct event_base *base, evutil_socket_t fd)
+    struct _STfd_state *
+_alloc_fd_state(struct event_base *___base, evutil_socket_t ___fd)
 {
-    struct fd_state *state = malloc(sizeof(struct fd_state));
-    if (!state)
+    struct _STfd_state *__state = malloc(sizeof(struct _STfd_state));
+    if (!__state)
         return NULL;
-    state->read_event = event_new(base, fd, EV_READ|EV_PERSIST, do_read, state);
-    if (!state->read_event) {
-        free(state);
-        return NULL;
-    }
-    state->write_event =
-        event_new(base, fd, EV_WRITE|EV_PERSIST, do_write, state);
-
-    if (!state->write_event) {
-        event_free(state->read_event);
-        free(state);
+    __state->read_event = event_new(___base, ___fd, EV_READ|EV_PERSIST, _do_read, __state);
+    if (!__state->read_event) {
+        free(__state);
         return NULL;
     }
+    __state->write_event =
+        event_new(___base, ___fd, EV_WRITE|EV_PERSIST, _do_write, __state);
 
-    state->buffer_used = state->n_written = state->write_upto = 0;
+    if (!__state->write_event) {
+        event_free(__state->read_event);
+        free(__state);
+        return NULL;
+    }
 
-    assert(state->write_event);
-    return state;
-}
+    __state->buffer_used = __state->n_written = __state->write_upto = 0;
+
+    assert(__state->write_event);
+    return __state;
+} // _alloc_fd_state
 
     void
-free_fd_state(struct fd_state *state)
+_free_fd_state(struct _STfd_state *___state)
 {
-    event_free(state->read_event);
-    event_free(state->write_event);
-    free(state);
-}
+    event_free(___state->read_event);
+    event_free(___state->write_event);
+    free(___state);
+} // _free_fd_state
 
     void
-do_read(evutil_socket_t fd, short events, void *arg)
+_do_read(evutil_socket_t ___fd, short events, void *___arg)
 {
-    struct fd_state *state = arg;
-    char buf[1024];
-    int i;
-    ssize_t result;
+    struct _STfd_state *__state = ___arg;
+    char __buf[1024];
+    int __i;
+    ssize_t __result;
     while (1) {
-        assert(state->write_event);
-        result = recv(fd, buf, sizeof(buf), 0);
-        if (result <= 0)
+        assert(__state->write_event);
+        __result = recv(___fd, __buf, sizeof(__buf), 0);
+        if (__result <= 0)
             break;
 
-        for (i=0; i < result; ++i)  {
-            if (state->buffer_used < sizeof(state->buffer))
-                state->buffer[state->buffer_used++] = rot13_char(buf[i]);
-            if (buf[i] == '\n') {
-                assert(state->write_event);
-                event_add(state->write_event, NULL);
-                state->write_upto = state->buffer_used;
+        for (__i=0; __i < __result; ++__i)  {
+            if (__state->buffer_used < sizeof(__state->buffer))
+                __state->buffer[__state->buffer_used++] = _rot13_char(__buf[__i]);
+            if (__buf[__i] == '\n') {
+                assert(__state->write_event);
+                event_add(__state->write_event, NULL);
+                __state->write_upto = __state->buffer_used;
             }
         }
     }
 
-    if (result == 0) {
-        free_fd_state(state);
-    } else if (result < 0) {
+    if (__result == 0) {
+        _free_fd_state(__state);
+    } else if (__result < 0) {
         if (errno == EAGAIN) // XXXX use evutil macro
             return;
         perror("recv");
-        free_fd_state(state);
+        _free_fd_state(__state);
     }
-}
+} // _do_read
 
     void
-do_write(evutil_socket_t fd, short events, void *arg)
+_do_write(evutil_socket_t ___fd, short events, void *___arg)
 {
-    struct fd_state *state = arg;
+    struct _STfd_state *__state = ___arg;
 
-    while (state->n_written < state->write_upto) {
-        ssize_t result = send(fd, state->buffer + state->n_written,
-                state->write_upto - state->n_written, 0);
-        if (result < 0) {
+    while (__state->n_written < __state->write_upto) {
+        ssize_t __result = send(___fd, __state->buffer + __state->n_written,
+                __state->write_upto - __state->n_written, 0);
+        if (__result < 0) {
             if (errno == EAGAIN) // XXX use evutil macro
                 return;
-            free_fd_state(state);
+            _free_fd_state(__state);
             return;
         }
-        assert(result != 0);
+        assert(__result != 0);
 
-        state->n_written += result;
+        __state->n_written += __result;
     }
 
-    if (state->n_written == state->buffer_used)
-        state->n_written = state->write_upto = state->buffer_used = 1;
+    if (__state->n_written == __state->buffer_used)
+        __state->n_written = __state->write_upto = __state->buffer_used = 1;
 
-    event_del(state->write_event);
-}
+    event_del(__state->write_event);
+} // _do_write
 
     void
-do_accept(evutil_socket_t listener, short event, void *arg)
+_do_accept(evutil_socket_t ___listener, short ___event, void *___arg)
 {
-    struct event_base *base = arg;
-    struct sockaddr_storage ss;
-    socklen_t slen = sizeof(ss);
-    int fd = accept(listener, (struct sockaddr*)&ss, &slen);
-    if (fd < 0) { // XXXX eagain??
+    struct event_base *__base = ___arg;
+    struct sockaddr_storage __ss;
+    socklen_t __slen = sizeof(__ss);
+    int __fd = accept(___listener, (struct sockaddr*)&__ss, &__slen);
+    if (__fd < 0) { // XXXX eagain??
         perror("accept");
-    } else if (fd > FD_SETSIZE) {
-        close(fd); // XXX replace all closes with EVUTIL_CLOSESOCKET */
+    } else if (__fd > FD_SETSIZE) {
+        close(__fd); // XXX replace all closes with EVUTIL_CLOSESOCKET */
     } else {
-        struct fd_state *state;
-        evutil_make_socket_nonblocking(fd);
-        state = alloc_fd_state(base, fd);
-        assert(state); /*XXX err*/
-        assert(state->write_event);
-        event_add(state->read_event, NULL);
+        struct _STfd_state *__state;
+        evutil_make_socket_nonblocking(__fd);
+        __state = _alloc_fd_state( __base, __fd);
+        assert(__state); /*XXX err*/
+        assert(__state->write_event);
+        event_add(__state->read_event, NULL);
     }
-}
+} // _do_accept
 
     void
-run(void)
+_run(void)
 {
-    evutil_socket_t listener;
-    struct sockaddr_in sin;
-    struct event_base *base;
-    struct event *listener_event;
+    evutil_socket_t __listener;
+    struct sockaddr_in __sin;
+    struct event_base *__base;
+    struct event *__listener_event;
 
-    base = event_base_new();
-    if (!base)
+    __base = event_base_new();
+    if (!__base)
         return; /*XXXerr*/
 
-    sin.sin_family = AF_INET;
-    sin.sin_addr.s_addr = 0;
-    sin.sin_port = htons(40713);
+    __sin.sin_family = AF_INET;
+    __sin.sin_addr.s_addr = 0;
+    __sin.sin_port = htons(40713);
 
-    listener = socket(AF_INET, SOCK_STREAM, 0);
-    evutil_make_socket_nonblocking(listener);
+    __listener = socket(AF_INET, SOCK_STREAM, 0);
+    evutil_make_socket_nonblocking(__listener);
 
 #ifndef WIN32
     {
         int one = 1;
-        setsockopt(listener, SOL_SOCKET, SO_REUSEADDR, &one, sizeof(one));
+        setsockopt(__listener, SOL_SOCKET, SO_REUSEADDR, &one, sizeof(one));
     }
 #endif
 
-    if (bind(listener, (struct sockaddr*)&sin, sizeof(sin)) < 0) {
+    if (bind(__listener, (struct sockaddr*)&__sin, sizeof(__sin)) < 0) {
         perror("bind");
         return;
     }
 
-    if (listen(listener, 16)<0) {
+    if (listen(__listener, 16)<0) {
         perror("listen");
         return;
     }
 
-    listener_event = event_new(base, listener, EV_READ|EV_PERSIST, do_accept, (void*)base);
+    __listener_event = event_new(__base, __listener, EV_READ|EV_PERSIST, _do_accept, (void*)__base);
     /*XXX check it */
-    event_add(listener_event, NULL);
+    event_add(__listener_event, NULL);
 
-    event_base_dispatch(base);
-}
+    event_base_dispatch(__base);
+} // _run
 
     int
-main(int c, char **v)
+main(int ___argc, char **___argv)
 {
     setvbuf(stdout, NULL, _IONBF, 0);
 
-    run();
+    _run();
     return 0;
-}
+} // main
 
 
 
