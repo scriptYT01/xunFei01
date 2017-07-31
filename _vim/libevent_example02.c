@@ -18,142 +18,142 @@
 
 #define MAX_LINE 16384
 
-void do_read(evutil_socket_t fd, short events, void *arg);
-void do_write(evutil_socket_t fd, short events, void *arg);
+void do_read(evutil_socket_t __fd, short events, void *___arg);
+void do_write(evutil_socket_t __fd, short events, void *___arg);
 
     char
-rot13_char(char c)
+_rot13_char(char ___c)
 {
     /* We don't want to use isalpha here; setting the locale would change
      * * which characters are considered alphabetical. */
-    if ((c >= 'a' && c <= 'm') || (c >= 'A' && c <= 'M'))
-        return c + 13;
-    else if ((c >= 'n' && c <= 'z') || (c >= 'N' && c <= 'Z'))
-        return c - 13;
+    if ((___c >= 'a' && ___c <= 'm') || (___c >= 'A' && ___c <= 'M'))
+        return ___c + 13;
+    else if ((___c >= 'n' && ___c <= 'z') || (___c >= 'N' && ___c <= 'Z'))
+        return ___c - 13;
     else
-        return c;
-}
+        return ___c;
+} // _rot13_char
 
     void
-readcb(struct bufferevent *bev, void *ctx)
+_readcb(struct bufferevent *___bev, void *___ctx)
 {
-    struct evbuffer *input, *output;
-    char *line;
-    size_t n;
+    struct evbuffer *__input, *__output;
+    char *__line;
+    size_t __n;
     int i;
-    input = bufferevent_get_input(bev);
-    output = bufferevent_get_output(bev);
+    __input = bufferevent_get_input(___bev);
+    __output = bufferevent_get_output(___bev); // _readcb
 
-    while ((line = evbuffer_readln(input, &n, EVBUFFER_EOL_LF))) {
-        for (i = 0; i < n; ++i)
-            line[i] = rot13_char(line[i]);
-        evbuffer_add(output, line, n);
-        evbuffer_add(output, "\n", 1);
-        free(line);
+    while ((__line = evbuffer_readln(__input, &__n, EVBUFFER_EOL_LF))) {
+        for (i = 0; i < __n; ++i)
+            __line[i] = _rot13_char(__line[i]);
+        evbuffer_add(__output, __line, __n); // _readcb
+        evbuffer_add(__output, "\n", 1);
+        free(__line);
     }
 
-    if (evbuffer_get_length(input) >= MAX_LINE) {
+    if (evbuffer_get_length(__input) >= MAX_LINE) { // _readcb
         /* Too long; just process what there is and go on so that the buffer
          * * doesn't grow infinitely long. */
-        char buf[1024];
-        while (evbuffer_get_length(input)) {
-            int n = evbuffer_remove(input, buf, sizeof(buf));
-            for (i = 0; i < n; ++i)
-                buf[i] = rot13_char(buf[i]);
-            evbuffer_add(output, buf, n);
+        char __buf[1024];
+        while (evbuffer_get_length(__input)) {
+            int __n = evbuffer_remove(__input, __buf, sizeof(__buf)); // _readcb
+            for (i = 0; i < __n; ++i)
+                __buf[i] = _rot13_char(__buf[i]);
+            evbuffer_add(__output, __buf, __n); // _readcb
         }
-        evbuffer_add(output, "\n", 1);
+        evbuffer_add(__output, "\n", 1);
     }
-}
+} // _readcb
 
     void
-errorcb(struct bufferevent *bev, short error, void *ctx)
+_errorcb(struct bufferevent *___bev, short ___error, void *___ctx)
 {
-    if (error & BEV_EVENT_EOF) {
+    if (___error & BEV_EVENT_EOF) {
         /* connection has been closed, do any clean up here */
         /* ... */
-    } else if (error & BEV_EVENT_ERROR) {
-        /* check errno to see what error occurred */
+    } else if (___error & BEV_EVENT_ERROR) { // _errorcb
+        /* check errno to see what ___error occurred */
         /* ... */
-    } else if (error & BEV_EVENT_TIMEOUT) {
+    } else if (___error & BEV_EVENT_TIMEOUT) { // _errorcb
         /* must be a timeout event handle, handle it */
         /* ... */
     }
-    bufferevent_free(bev);
-}
+    bufferevent_free(___bev); // _errorcb
+} // _errorcb
 
     void
-do_accept(evutil_socket_t listener, short event, void *arg)
+_do_accept(evutil_socket_t ___listener, short event, void *___arg)
 {
-    struct event_base *base = arg;
-    struct sockaddr_storage ss;
-    socklen_t slen = sizeof(ss);
-    int fd = accept(listener, (struct sockaddr*)&ss, &slen);
-    if (fd < 0) {
+    struct event_base *__base = ___arg;
+    struct sockaddr_storage __ss;
+    socklen_t __slen = sizeof(__ss);
+    int __fd = accept(___listener, (struct sockaddr*)&__ss, &__slen);
+    if (__fd < 0) {
         perror("accept");
-    } else if (fd > FD_SETSIZE) {
-        close(fd);
+    } else if (__fd > FD_SETSIZE) { // _do_accept
+        close(__fd);
     } else {
-        struct bufferevent *bev;
-        evutil_make_socket_nonblocking(fd);
-        bev = bufferevent_socket_new(base, fd, BEV_OPT_CLOSE_ON_FREE);
-        bufferevent_setcb(bev, readcb, NULL, errorcb, NULL);
-        bufferevent_setwatermark(bev, EV_READ, 0, MAX_LINE);
-        bufferevent_enable(bev, EV_READ|EV_WRITE);
-    }
-}
+        struct bufferevent *___bev;
+        evutil_make_socket_nonblocking(__fd);
+        ___bev = bufferevent_socket_new(__base, __fd, BEV_OPT_CLOSE_ON_FREE);
+        bufferevent_setcb(___bev, _readcb, NULL, _errorcb, NULL); // _do_accept
+        bufferevent_setwatermark(___bev, EV_READ, 0, MAX_LINE);
+        bufferevent_enable(___bev, EV_READ|EV_WRITE);
+    } // _do_accept
+} // _do_accept
 
     void
-run(void)
+_run(void)
 {
-    evutil_socket_t listener;
-    struct sockaddr_in sin;
-    struct event_base *base;
-    struct event *listener_event;
+    evutil_socket_t __listener;
+    struct sockaddr_in __sin;
+    struct event_base *__base;
+    struct event *__listener_event;
 
-    base = event_base_new();
-    if (!base)
+    __base = event_base_new();
+    if (!__base)
         return; /*XXXerr*/
 
-    sin.sin_family = AF_INET;
-    sin.sin_addr.s_addr = 0;
-    sin.sin_port = htons(40713);
+    __sin.sin_family = AF_INET;
+    __sin.sin_addr.s_addr = 0;
+    __sin.sin_port = htons(40713); // _run()
 
-    listener = socket(AF_INET, SOCK_STREAM, 0);
-    evutil_make_socket_nonblocking(listener);
+    __listener = socket(AF_INET, SOCK_STREAM, 0);
+    evutil_make_socket_nonblocking(__listener);
 
 #ifndef WIN32
     {
         int one = 1;
-        setsockopt(listener, SOL_SOCKET, SO_REUSEADDR, &one, sizeof(one));
+        setsockopt(__listener, SOL_SOCKET, SO_REUSEADDR, &one, sizeof(one)); // _run()
     }
 #endif
 
-    if (bind(listener, (struct sockaddr*)&sin, sizeof(sin)) < 0) {
+    if (bind(__listener, (struct sockaddr*)&__sin, sizeof(__sin)) < 0) {
         perror("bind");
         return;
     }
 
-    if (listen(listener, 16)<0) {
+    if (listen(__listener, 16)<0) { // _run()
         perror("listen");
         return;
     }
 
-    listener_event = event_new(base, listener, EV_READ|EV_PERSIST, do_accept, (void*)base);
+    __listener_event = event_new(__base, __listener, EV_READ|EV_PERSIST, _do_accept, (void*)__base);
     /*XXX check it */
-    event_add(listener_event, NULL);
+    event_add(__listener_event, NULL);
 
-    event_base_dispatch(base);
-}
+    event_base_dispatch(__base);
+} // _run()
 
     int
-main(int c, char **v)
+main(int ___argc, char **___argv)
 {
     setvbuf(stdout, NULL, _IONBF, 0);
 
-    run();
+    _run();
     return 0;
-}
+} // main
 
 
 
