@@ -218,7 +218,7 @@ asr_exit:
 	QISRSessionEnd(session_id, hints);
 } // _run_asr
 
-int main(int argc, char* argv[])
+int main(int ___argc, char* ___argv[])
 {	
 	int			ret						=	MSP_SUCCESS;
 	const char* login_params			=	"appid = 58f4654e, work_dir = ."; //登录参数,appid与msc库绑定,请勿随意改动
@@ -261,10 +261,17 @@ int main(int argc, char* argv[])
 	    printf("上传语法 failed \n");
 		goto exit;
     }
-	printf("上传语法成功\n");
+	printf("上传语法成功 %d \n" , ___argc );
 
- 	printf("\n reading %s\n" ,  _wav01 ) ;
- 	_run_asr( _wav01 ,  session_begin_params, grammar_id); //iflytek01对应的音频内容：“18012345678”
+    char          * __fname          = NULL ;
+    if ( ___argc > 1 ) { // 0 para -> 1 , 1 para -> 2 
+        __fname = ___argv[0] ; // use the parameter 1 
+    } else {
+        __fname = _wav01 ;
+    }
+
+ 	printf("\n reading %s\n" ,  __fname ) ;
+ 	_run_asr( __fname ,  session_begin_params, grammar_id); //iflytek01对应的音频内容：“18012345678”
 
 exit:
 	if (NULL != grammar_id)
