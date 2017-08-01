@@ -265,7 +265,7 @@ int main(int ___argc, char* ___argv[])
 
     char          * __fname          = NULL ;
     if ( ___argc > 1 ) { // 0 para -> 1 , 1 para -> 2 
-        __fname = ___argv[0] ; // use the parameter 1 
+        __fname = ___argv[1] ; // use the parameter 1 
     } else {
         __fname = _wav01 ;
     }
