@@ -57,6 +57,7 @@ int _get_grammar_id(char* grammar_id, unsigned int id_len)
 		goto grammar_exit;
 	}
 	grammar[grammar_len] = '\0';
+	printf("grammar: <%s> \n", grammar); 
 
 	ret_id = MSPUploadData("usergram", grammar, grammar_len, "dtt = abnf, sub = asr", &ret); //上传语法
 	if (MSP_SUCCESS != ret)
