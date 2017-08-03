@@ -237,7 +237,7 @@ int main(int ___argc, char* ___argv[])
 {
 	int			ret						=	MSP_SUCCESS;
 	//int			upload_on				=	1; //是否上传用户词表
-	int			upload_on				=	USE_dict_0dis_1ena ; //是否上传用户词表
+	int			upload_on				=	1 ; //是否上传用户词表
 	const char* login_params			=	"appid = 58f4654e, work_dir = ."; // 登录参数，appid与msc库绑定,请勿随意改动
 
     char          * __fname          = NULL ;
