@@ -137,6 +137,7 @@ XF06:=srcXF10/samples/iat_record_sample/Makefile
 XF07:=srcXF10/samples/asr_sample/Makefile
 
 XF11:=srcXF10/samples/asr_sample/asr_sample.c
+
 XF12:=srcXF10/samples/iat_record_sample/iat_record_sample.c
 XF13:=srcXF10/samples/iat_record_sample/linuxrec.c
 XF14:=srcXF10/samples/iat_record_sample/speech_recognizer.c
@@ -148,6 +149,12 @@ XF19:=srcXF10/samples/tts_sample/tts_sample.c
 
 XF20:=srcXF20/samples/tts_sample/tts_sample.c
 
+XF72:=srcXF10/samples/iat_record_sample/iat_record_sample.c
+XF73:=srcXF10/samples/iat_sample/iat_sample.c
+XF74:=srcXF10/samples/ise_sample/ise_sample.c
+XF75:=srcXF10/samples/sch_speak_sample/sch_speak_sample.c
+XF76:=srcXF10/samples/sch_text_sample/sch_text_sample.c
+
 vb1:=srcXF10/Build.mk
 vb2:=srcXF20/Build.mk
 
@@ -156,6 +163,7 @@ XFlist:=
 #XFlist+= XF01 XF02 XF03 XF04 XF05 XF06 XF07 
 XFlist+= XF11 XF12 XF13 XF14 XF15 XF16 XF17 XF18 XF19   
 XFlist+= XF20
+XFlist+= XF72 XF73 XF74 XF75 XF76 
 XFlist+= vb1 vb2
 
 $(call VIMobj,$(XFlist))
