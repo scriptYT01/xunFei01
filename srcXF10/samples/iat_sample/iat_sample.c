@@ -236,7 +236,8 @@ iat_exit:
 int main(int ___argc, char* ___argv[])
 {
 	int			ret						=	MSP_SUCCESS;
-	int			upload_on				=	1; //是否上传用户词表
+	//int			upload_on				=	1; //是否上传用户词表
+	int			upload_on				=	USE_dict_0dis_1ena ; //是否上传用户词表
 	const char* login_params			=	"appid = 58f4654e, work_dir = ."; // 登录参数，appid与msc库绑定,请勿随意改动
 
     char          * __fname          = NULL ;
@@ -277,11 +278,10 @@ int main(int ___argc, char* ___argv[])
 	printf("\n########################################################################\n");
 	printf("## 语音听写(iFly Auto Transform)技术能够实时地将语音转换成对应的文字。##\n");
 	printf("########################################################################\n\n");
-	printf("演示示例选择:是否上传用户词表？\n0:不使用\n1:使用\n");
+	printf("演示示例选择:是否上传用户词表？ %d \n0:不使用\n1:使用 \n", upload_on);
 
 	//scanf("%d", &upload_on);// main
 
-	upload_on = USE_dict_0dis_1ena ;
 
 	if (upload_on)
 	{ //iflytek02音频内容为“中美数控”；如果上传了用户词表，识别结果为：“中美速控”。
