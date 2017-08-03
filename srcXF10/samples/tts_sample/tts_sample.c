@@ -9,6 +9,10 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+        #include <sys/types.h>
+        #include <sys/stat.h>
+        #include <fcntl.h>
+
 #include "qtts.h"
 #include "msp_cmn.h"
 #include "msp_errors.h"
@@ -133,7 +137,7 @@ int text_to_speech(const char* src_text, const char* des_path, const char* param
 	return ret;
 }
 
-int main(int argc, char* argv[])
+int main(int ___argc, char* ___argv[])
 {
 	int         ret                  = MSP_SUCCESS;
 	const char* login_params         = "appid = 58f4654e, work_dir = .";//登录参数,appid与msc库绑定,请勿随意改动
@@ -150,9 +154,9 @@ int main(int argc, char* argv[])
 	*/
 	const char* session_begin_params = "voice_name = xiaoyan, text_encoding = utf8, sample_rate = 16000, speed = 50, volume = 50, pitch = 50, rdn = 2";
 	const char* filename             = "tts_sample.wav"; //合成的语音文件名称
-	//const char* text                 = "亲爱的用户，您好，这是一个语音合成示例，感谢您对科大讯飞语音技术的支持！科大讯飞是亚太地区最大的语音上市公司，股票代码：002230"; //合成文本
-	const char* text                 = 
-#if 1 
+	//const char* __text                 = "亲爱的用户，您好，这是一个语音合成示例，感谢您对科大讯飞语音技术的支持！科大讯飞是亚太地区最大的语音上市公司，股票代码：002230"; //合成文本
+	const char* __text                 = 
+#if 0 
                                        "讯飞MSC开发指南1,1234567890,合成完毕 " 
                                        "讯飞MSC开发指南2,1234567890,合成完毕 " 
                                        "讯飞MSC开发指南3,1234567890,合成完毕 " 
@@ -179,8 +183,37 @@ int main(int argc, char* argv[])
 	printf("## 高效便捷手段，非常符合信息时代海量数据、动态更新和个性化查询的需求。  ##\n");
 	printf("###########################################################################\n\n");
 	/* 文本合成 */
-	printf("开始合成 ...%s \n" , text );
-	ret = text_to_speech(text, filename, session_begin_params);
+
+    char          * __bufTEXT        = NULL ;
+    if ( ___argc > 1 ) { // 0 para -> 1 , 1 para -> 2 
+        char * __fname      = NULL ;
+        int   __fd          ;
+        int   __len          ;
+        __fname = ___argv[1] ; // use the parameter 1 
+        __bufTEXT        = malloc( 4096 ) ;
+        if ( 0 == __bufTEXT ) {
+	        printf(" error : malloc buffer \n" ) ;
+            exit( 32 ) ;
+        }
+        __fd = open( __fname , O_RDONLY ) ;
+        if ( 0 > __fd ) {
+	        printf(" error : open <%s> \n" , __fname ) ;
+            exit( 33 ) ;
+        }
+        __len = read( __fd , __bufTEXT , 4095 ) ;
+        if ( __len < 0 ) {
+	        printf(" error : read <%s> \n" , __fname ) ;
+            exit( 34 ) ;
+        }
+        __bufTEXT[4095] = 0 ;
+        __bufTEXT[__len] = 0 ;
+
+    } else {
+        __bufTEXT        = (char*) __text ;
+    }
+
+	printf("开始合成 ...%s \n" , __text );
+	ret = text_to_speech(__text, filename, session_begin_params);
 	if (MSP_SUCCESS != ret)
 	{
 		printf("text_to_speech failed, error code: %d.\n", ret);
