@@ -56,5 +56,6 @@ LOCAL_MODULE_TAGS := iat_sample15
 LOCAL_MODULE_PATH:=$(TARGET_FS_BUILD)/ch/xf10
 LOCAL_SRC_FILES := samples/iat_sample/iat_sample.c
 LOCAL_LDLIBS := -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc -lc 
+LOCAL_CFLAGS := -DUSE_dict_0dis_1ena=0
 include $(BUILD_EXECUTABLE)
 

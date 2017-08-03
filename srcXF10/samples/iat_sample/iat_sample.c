@@ -15,6 +15,8 @@
 #define FRAME_LEN	640 
 #define HINTS_SIZE  100
 
+const char _wav02[]= "wav/iflytek02.wav" ;
+
 /* 上传用户词表 */
 int upload_userwords()
 {
@@ -206,7 +208,7 @@ void run_iat(const char* audio_file, const char* session_begin_params)
 	}
 	printf("\n语音听写结束\n");
 	printf("=============================================================\n");
-	printf("%s\n",rec_result);
+	printf("succee_iat_result:%s\n",rec_result);
 	printf("=============================================================\n");
 
 iat_exit:
@@ -223,7 +225,7 @@ iat_exit:
 	QISRSessionEnd(session_id, hints);
 } // run_iat
 
-int main(int argc, char* argv[])
+int main(int ___argc, char* ___argv[])
 {
 	int			ret						=	MSP_SUCCESS;
 	int			upload_on				=	1; //是否上传用户词表
@@ -255,20 +257,41 @@ int main(int argc, char* argv[])
 	printf("########################################################################\n\n");
 	printf("演示示例选择:是否上传用户词表？\n0:不使用\n1:使用\n");
 
-	scanf("%d", &upload_on);// main
+	//scanf("%d", &upload_on);// main
+
+	upload_on = USE_dict_0dis_1ena ;
+
 	if (upload_on)
-	{
-		printf("上传用户词表 ...\n");
+	{ //iflytek02音频内容为“中美数控”；如果上传了用户词表，识别结果为：“中美速控”。
+		printf("yes上传用户词表 ...\n");
 		ret = upload_userwords();
 		if (MSP_SUCCESS != ret)
 			goto exit;	
 		printf("上传用户词表成功\n");// main
-	}
-	run_iat("wav/iflytek02.wav", session_begin_params); //iflytek02音频内容为“中美数控”；如果上传了用户词表，识别结果为：“中美速控”。
+	} else {
+		printf("no不上传用户词表 ...\n");
+    }
+
+    char          * __fname          = NULL ;
+    if ( ___argc > 1 ) { // 0 para -> 1 , 1 para -> 2 
+        __fname = ___argv[1] ; // use the parameter 1 
+    } else {
+        __fname = _wav02 ;
+    }
+
+    printf(" use file <%s>\n" , __fname );
+
+	//run_iat("wav/iflytek02.wav", session_begin_params); 
+	run_iat( __fname ,  session_begin_params); 
+
 exit:
-	printf("按任意键退出 ...\n");// main
-	getchar();
+    if ( 0 ) {
+	    printf("按任意键退出 ...\n");// main
+	    getchar();
+    }
 	MSPLogout(); //退出登录
+
+	printf("退出 ...\n");// main
 
 	return 0;
 } // main
