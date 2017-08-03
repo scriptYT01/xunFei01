@@ -19,8 +19,8 @@ nohup ./iat_sample15.x1000.bin /tmp/wav01.wav > /tmp/w1.txt
 aa12=$(date +%s)
 echo '# end recognize '  "$((${aa12}-${aa11})) , ${aa12}"
 
-cat /tmp/w1.txt |grep ^confidence= |head -n 1 > /tmp/w2.txt
-cat /tmp/w2.txt |sed -e 's;^.*input=;;g' |tr -d '\r' |tr -d '\n' > /tmp/w3.txt
+cat /tmp/w1.txt |grep ^succee_iat_result: |head -n 1 > /tmp/w2.txt
+cat /tmp/w2.txt |sed -e 's;^succee_iat_result:;;g' |tr -d '\r' |tr -d '\n' > /tmp/w3.txt
 cat /tmp/w1.txt |grep ^'QISRGetResult failed' |tr -d '\r' |tr -d '\n' > /tmp/w4.txt
 ll1=$(cat /tmp/w3.txt  |wc -c)
 ll2=$(cat /tmp/w3.txt)
