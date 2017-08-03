@@ -16,6 +16,10 @@
 #define HINTS_SIZE  100
 
 const char _wav02[]= "wav/iflytek02.wav" ;
+//const char _userWordFile11[]= "yunMi01.txt" ;
+const char _userWordFile11[]= "yunMi01.json" ;
+
+char          * _UWname          = NULL ;
 
 /* 上传用户词表 */
 int upload_userwords()
@@ -26,10 +30,14 @@ int upload_userwords()
 	FILE*			fp			=	NULL;
 	int				ret			=	-1;
 
-	fp = fopen("userwords.txt", "rb");
+    printf("\n user userword 1: <%s> ! \n", _UWname );
+
+
+
+	fp = fopen( _UWname , "rb");
 	if (NULL == fp)										
 	{
-		printf("\nopen [userwords.txt] failed! \n");
+		printf("\n open [%s] failed! \n", _UWname );
 		goto upload_exit;
 	}
 
@@ -47,7 +55,7 @@ int upload_userwords()
 	read_len = fread((void*)userwords, 1, len, fp); //读取用户词表内容 // upload_userwords
 	if (read_len != len)
 	{
-		printf("\nread [userwords.txt] failed!\n");
+		printf("\nread [%s] failed!\n", _UWname );
 		goto upload_exit;
 	}
 	userwords[len] = '\0';
@@ -231,6 +239,20 @@ int main(int ___argc, char* ___argv[])
 	int			upload_on				=	1; //是否上传用户词表
 	const char* login_params			=	"appid = 58f4654e, work_dir = ."; // 登录参数，appid与msc库绑定,请勿随意改动
 
+    char          * __fname          = NULL ;
+    if ( ___argc > 1 ) { // 0 para -> 1 , 1 para -> 2 
+        __fname = ___argv[1] ; // use the parameter 1 
+    } else {
+        __fname = _wav02 ;
+    }
+
+    if ( ___argc > 2 ) { // 0 para -> 1 , 1 para -> 2 
+        _UWname = ___argv[2] ; // use the parameter 2 
+    } else {
+        _UWname = _userWordFile11 ;
+    }
+
+
 	/*
 	* sub:				请求业务类型
 	* domain:			领域
@@ -265,18 +287,13 @@ int main(int ___argc, char* ___argv[])
 	{ //iflytek02音频内容为“中美数控”；如果上传了用户词表，识别结果为：“中美速控”。
 		printf("yes上传用户词表 ...\n");
 		ret = upload_userwords();
-		if (MSP_SUCCESS != ret)
+		if (MSP_SUCCESS != ret) {
+		    printf("上传用户词表failed\n");// main
 			goto exit;	
+        }
 		printf("上传用户词表成功\n");// main
 	} else {
 		printf("no不上传用户词表 ...\n");
-    }
-
-    char          * __fname          = NULL ;
-    if ( ___argc > 1 ) { // 0 para -> 1 , 1 para -> 2 
-        __fname = ___argv[1] ; // use the parameter 1 
-    } else {
-        __fname = _wav02 ;
     }
 
     printf(" use file <%s>\n" , __fname );

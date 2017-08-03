@@ -45,8 +45,6 @@ else
     exit 22
 fi
 
-exit
-
 aa11=$(date +%s)
 echo '# before tts ' ${aa11}
 nohup ./tts_sample11.x1000.bin /tmp/w3.txt > /tmp/logW4.tts.recognize.txt
