@@ -59,3 +59,14 @@ LOCAL_LDLIBS := -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc -lc
 #LOCAL_CFLAGS := -DUSE_dict_0dis_1ena=0
 include $(BUILD_EXECUTABLE)
 
+# ise_sample/ise_sample.c
+#==== ise_sample17 ==========================================
+include $(CLEAR_VARS)
+LOCAL_MODULE := ise_sample17.x1000.bin
+LOCAL_MODULE_TAGS := ise_sample17
+LOCAL_MODULE_PATH:=$(TARGET_FS_BUILD)/ch/xf10
+LOCAL_SRC_FILES := samples/ise_sample/ise_sample.c
+LOCAL_LDLIBS := -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc -lc 
+#LOCAL_CFLAGS := -DUSE_dict_0dis_1ena=0
+include $(BUILD_EXECUTABLE)
+
