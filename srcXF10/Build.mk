@@ -70,3 +70,14 @@ LOCAL_LDLIBS := -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc -lc
 #LOCAL_CFLAGS := -DUSE_dict_0dis_1ena=0
 include $(BUILD_EXECUTABLE)
 
+# iat_record_sample/iat_record_sample.c
+#==== iat_record_sample18 ==========================================
+include $(CLEAR_VARS)
+LOCAL_MODULE := iat_record_sample18.x1000.bin
+LOCAL_MODULE_TAGS := iat_record_sample18
+LOCAL_MODULE_PATH:=$(TARGET_FS_BUILD)/ch/xf10
+LOCAL_SRC_FILES := samples/iat_record_sample/iat_record_sample.c
+LOCAL_LDLIBS := -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc -lc 
+#LOCAL_CFLAGS := -DUSE_dict_0dis_1ena=0
+include $(BUILD_EXECUTABLE)
+
