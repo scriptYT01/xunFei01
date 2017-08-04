@@ -1,13 +1,18 @@
 {
-    "userword":
-    [
+    "userword": [
         {
-            "words":
-            [
-                "烟机烟机","小鲜冰箱","云米烟机","小鲜小鲜"
+            "words": [
+                "烟机烟机",
+                "云米烟机"
             ],
-            "name":
-            "常用命令"
+            "name": "YunMiYanJi"
+        },
+        {
+            "words": [
+                "小鲜冰箱",
+                "小鲜小鲜"
+            ],
+            "name": "XiaoXianBingXiang"
         }
     ]
 }
