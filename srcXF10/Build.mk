@@ -81,7 +81,9 @@ LOCAL_SRC_FILES := \
 	samples/iat_record_sample/speech_recognizer.c                    \
 	samples/iat_record_sample/iat_record_sample.c
 
-LOCAL_LDLIBS := -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc -lc 
-#LOCAL_CFLAGS := -DUSE_dict_0dis_1ena=0
+LOCAL_LDLIBS := -Ldevice/common/system/usr/lib -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc -lc -lpthread -lasound
+#LOCAL_CFLAGS := -I../tinyalsa/include
+#LOCAL_CFLAGS := -I../alsa-lib/include
+LOCAL_CFLAGS := -Iexternal/alsa-lib/include
 include $(BUILD_EXECUTABLE)
 

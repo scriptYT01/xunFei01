@@ -9,7 +9,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <fcntl.h>
-#include <alsa/asoundlib.h>
+
+//#include <alsa/asoundlib.h>
+//#include <tinyalsa/asoundlib.h>
+#include <asoundlib.h>
+
+
+
 #include <signal.h>
 #include <sys/stat.h>
 #include <pthread.h>
