@@ -19,18 +19,19 @@ const char _wav02[]= "wav/iflytek02.wav" ;
 //const char _userWordFile11[]= "yunMi01.txt" ;
 const char _userWordFile11[]= "yunMi01.json" ;
 
-char          * _UWname          = NULL ;
+char          * _UWname         = NULL ;
+char          * _procName       = NULL ;
 
 /* 上传用户词表 */
 int upload_userwords()
 {
-	char*			userwords	=	NULL;
+	char*			__userwords	=	NULL;
 	unsigned int	len			=	0;
 	unsigned int	read_len	=	0;
 	FILE*			fp			=	NULL;
 	int				ret			=	-1;
 
-    printf("\n user userword 1: <%s> ! \n", _UWname );
+    printf("\n user userword file: <%s> ! \n", _UWname );
 
 
 
@@ -45,22 +46,24 @@ int upload_userwords()
 	len = ftell(fp); //获取音频文件大小 // upload_userwords
 	fseek(fp, 0, SEEK_SET);  					
 	
-	userwords = (char*)malloc(len + 1);
-	if (NULL == userwords)
+	__userwords = (char*)malloc(len + 1);
+	if (NULL == __userwords)
 	{
 		printf("\nout of memory! \n");
 		goto upload_exit;
 	}
 
-	read_len = fread((void*)userwords, 1, len, fp); //读取用户词表内容 // upload_userwords
+	read_len = fread((void*)__userwords, 1, len, fp); //读取用户词表内容 // upload_userwords
 	if (read_len != len)
 	{
 		printf("\nread [%s] failed!\n", _UWname );
 		goto upload_exit;
 	}
-	userwords[len] = '\0';
+	__userwords[len] = '\0';
+
+    printf("\nnow userword is <%s> !\n", __userwords );
 	
-	MSPUploadData("userwords", userwords, len, "sub = uup, dtt = userword", &ret); //上传用户词表 // upload_userwords
+	MSPUploadData("__userwords", __userwords, len, "sub = uup, dtt = userword", &ret); //上传用户词表 // upload_userwords
 	if (MSP_SUCCESS != ret)
 	{
 		printf("\nMSPUploadData failed ! errorCode: %d \n", ret);
@@ -73,10 +76,10 @@ upload_exit:
 		fclose(fp);
 		fp = NULL;
 	}	
-	if (NULL != userwords)
+	if (NULL != __userwords)
 	{
-		free(userwords);
-		userwords = NULL;
+		free(__userwords);
+		__userwords = NULL;
 	}
 	
 	return ret;
@@ -233,24 +236,35 @@ iat_exit:
 	QISRSessionEnd(session_id, hints);
 } // run_iat
 
+void _print_usage( void ) {
+
+    printf( "\n\n" " usage : %s <recorde.wav> [userword.txt]" "\n\n" , _procName ) ;
+
+    exit(33) ;
+} // _print_usage
+
 int main(int ___argc, char* ___argv[])
 {
 	int			ret						=	MSP_SUCCESS;
-	//int			upload_on				=	1; //是否上传用户词表
-	int			upload_on				=	1 ; //是否上传用户词表
+	//int			__upload_on				=	1; //是否上传用户词表
+	int			__upload_on				=	1 ; //是否上传用户词表
 	const char* login_params			=	"appid = 58f4654e, work_dir = ."; // 登录参数，appid与msc库绑定,请勿随意改动
 
+    _procName = ___argv[0] ;
     char          * __fname          = NULL ;
-    if ( ___argc > 1 ) { // 0 para -> 1 , 1 para -> 2 
-        __fname = ___argv[1] ; // use the parameter 1 
-    } else {
-        __fname = _wav02 ;
+    if ( ___argc <= 1 ) { // 0 para -> 1 , 1 para -> 2 
+        _print_usage() ;
+        //__fname = _wav02 ;
     }
 
+    __fname = ___argv[1] ; // use the parameter 1 
+
     if ( ___argc > 2 ) { // 0 para -> 1 , 1 para -> 2 
-        _UWname = ___argv[2] ; // use the parameter 2 
+        _UWname     = ___argv[2] ; // use the parameter 2 
+	    __upload_on =	1 ; //是否上传用户词表
     } else {
         _UWname = _userWordFile11 ;
+	    __upload_on =	0 ; //是否上传用户词表
     }
 
 
@@ -278,12 +292,12 @@ int main(int ___argc, char* ___argv[])
 	printf("\n########################################################################\n");
 	printf("## 语音听写(iFly Auto Transform)技术能够实时地将语音转换成对应的文字。##\n");
 	printf("########################################################################\n\n");
-	printf("演示示例选择:是否上传用户词表？ %d \n0:不使用\n1:使用 \n", upload_on);
+	printf("演示示例选择:是否上传用户词表？ %d \n0:不使用\n1:使用 \n", __upload_on);
 
-	//scanf("%d", &upload_on);// main
+	//scanf("%d", &__upload_on);// main
 
 
-	if (upload_on)
+	if (__upload_on)
 	{ //iflytek02音频内容为“中美数控”；如果上传了用户词表，识别结果为：“中美速控”。
 		printf("yes上传用户词表 ...\n");
 		ret = upload_userwords();
