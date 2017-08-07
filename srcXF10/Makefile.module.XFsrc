@@ -38,8 +38,10 @@ XFgenDate:
 
 XFsrc1:=$(makePATH1)/srcXF10/
 XFsrc2:=$(makePATH1)/srcXF20/
+XFsrc3:=$(makePATH1)/srcXF30/
 XFdst1:=$(shell readlink -m patchDIR__x1000/XFclient10)
 XFdst2:=$(shell readlink -m patchDIR__x1000/XFclient20)
+XFdst3:=$(shell readlink -m patchDIR__x1000/XFclient30)
 
 XFi386S10:=$(makePATH1)/srcXF10/
 
@@ -88,6 +90,7 @@ XFu XFupdate : XFgenDate
 	rm -fr $(XFdst1)/*
 	$(rsync1)    $(XFsrc1)/  	$(XFdst1)/
 	$(rsync1)    $(XFsrc2)/  	$(XFdst2)/
+	$(rsync1)    $(XFsrc3)/  	$(XFdst3)/
 	@#
 	rm -fr $(XFi386DST11)/
 	mkdir -p $(XFi386DST11)
@@ -149,11 +152,10 @@ XF19:=srcXF10/samples/tts_sample/tts_sample.c
 
 XF20:=srcXF20/samples/tts_sample/tts_sample.c
 
-XF72:=srcXF10/samples/iat_record_sample/iat_record_sample.c
-XF73:=srcXF10/samples/iat_sample/iat_sample.c
-XF74:=srcXF10/samples/ise_sample/ise_sample.c
-XF75:=srcXF10/samples/sch_speak_sample/sch_speak_sample.c
-XF76:=srcXF10/samples/sch_text_sample/sch_text_sample.c
+XF31:=srcXF30/Build.mk
+XF32:=srcXF30/samples/aiui_sample/src/AIUITest.cpp
+XF33:=srcXF30/samples/aiui_sample/src/demo.cpp
+XF34:=srcXF30/samples/aiui_sample/src/FileUtil.cpp
 
 vb1:=srcXF10/Build.mk
 vb2:=srcXF20/Build.mk
@@ -163,7 +165,7 @@ XFlist:=
 #XFlist+= XF01 XF02 XF03 XF04 XF05 XF06 XF07 
 XFlist+= XF11 XF12 XF13 XF14 XF15 XF16 XF17 XF18 XF19   
 XFlist+= XF20
-XFlist+= XF72 XF73 XF74 XF75 XF76 
+XFlist+= XF31 XF32 XF33 XF34
 XFlist+= vb1 vb2
 
 $(call VIMobj,$(XFlist))
