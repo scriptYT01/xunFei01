@@ -1,0 +1,69 @@
+#common makefile header
+
+DIR_INC = ./
+DIR_INC = ./include
+
+DIR_BIN = ./
+DIR_BIN = bin/
+DIR_LIB = ./
+
+TARGET	= tts_sample31.i386.bin
+BIN_TARGET = $(DIR_BIN)/$(TARGET)
+
+define  RUN01
+#!/bin/sh
+
+if [ -d bin ]
+then
+	echo '... deep in ... '
+	cd bin && exec ../$$(basename $$0)
+	exit
+fi
+
+if [ -f ./$(TARGET) ]
+then
+	LD_LIBRARY_PATH=./:../      ./$(TARGET)
+else
+	LD_LIBRARY_PATH=./:../      ../$(TARGET)
+fi
+
+echo
+echo "`pwd`/$(TARGET)"
+echo
+
+chmod -R a+w . 2>/dev/null
+
+endef
+export  RUN01
+
+CROSS_COMPILE = 
+CFLAGS = -g -Wall -I$(DIR_INC)
+
+ifdef LINUX64
+LDFLAGS := -L$(DIR_LIB)/x64
+else
+LDFLAGS := -L$(DIR_LIB)/x86 
+endif
+LDFLAGS := -L./
+
+#LDFLAGS += -lmsc -lrt -ldl -lpthread
+#LDFLAGS += -lmsc 
+LDFLAGS += -lmsc -Werror
+
+OBJECTS := $(patsubst %.c,%.o,$(wildcard *.c))
+
+$(BIN_TARGET) : $(OBJECTS)
+	$(CROSS_COMPILE)gcc $(CFLAGS) $^ -o $@ $(LDFLAGS)
+	echo "$${RUN01}" > run.sh
+	chmod 555 run.sh
+	chmod -R a+w bin/
+
+%.o : %.c
+	sed -i -e 's;\.\./\.\./;./;g'   $<
+	$(CROSS_COMPILE)gcc -c $(CFLAGS) $< -o $@
+clean:
+	@rm -f *.o $(BIN_TARGET)
+
+.PHONY:clean
+
+#common makefile foot

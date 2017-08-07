@@ -73,6 +73,29 @@ samples/tts_sample/tts_sample.c
 XFi386SrcList21:=$(foreach aa1,$(XFi386SrcList21x),$(XFi386S20)/$(aa1))
 XFi386DST21:=$(shell readlink -m patchDIR__x1000/XFi386DST21)
 
+XFi386S30:=$(makePATH1)/srcXF30/
+XFi386SrcList31x:= 				\
+Makefile.i386.31				\
+libs/x86/libmsc.so				\
+include/						\
+bin/							\
+samples/tts_sample/tts_sample.c				
+XFi386SrcList31:=$(foreach aa1,$(XFi386SrcList31x),$(XFi386S30)/$(aa1))
+XFi386DST31:=$(shell readlink -m patchDIR__x1000/XFi386DST31)
+XFi386SrcList32x:= 				\
+Makefile.i386.32				\
+libs/x86/libmsc.so				\
+include/						\
+bin/							\
+samples/aiui_sample/src/AIUITest.cpp                      \
+samples/aiui_sample/src/FileUtil.cpp                      \
+samples/aiui_sample/src/demo.cpp                          \
+samples/aiui_sample/src/jsoncpp/json_reader.cpp           \
+samples/aiui_sample/src/jsoncpp/json_value.cpp            \
+samples/aiui_sample/src/jsoncpp/json_writer.cpp
+XFi386SrcList32:=$(foreach aa1,$(XFi386SrcList32x),$(XFi386S30)/$(aa1))
+XFi386DST32:=$(shell readlink -m patchDIR__x1000/XFi386DST32)
+
 export XFdelete1:= \
 	libmsc.call.txt libmsc.sym.txt README.md \
 	samples/doc samples/README.md \
@@ -109,6 +132,18 @@ XFu XFupdate : XFgenDate
 	$(foreach aa1,$(XFi386SrcList21)\
 		, rsync -a $(aa1) $(XFi386DST21)/`basename $(aa1)`$(EOL))
 	cd $(XFi386DST21)/ && rm -f Makefile && ln -s `basename $(firstword $(XFi386SrcList21))`  	Makefile
+	@#
+	rm -fr $(XFi386DST31)/
+	mkdir -p $(XFi386DST31)
+	$(foreach aa1,$(XFi386SrcList31)\
+		, rsync -a $(aa1) $(XFi386DST31)/`basename $(aa1)`$(EOL))
+	cd $(XFi386DST31)/ && rm -f Makefile && ln -s `basename $(firstword $(XFi386SrcList31))`  	Makefile
+	@#
+	rm -fr $(XFi386DST32)/
+	mkdir -p $(XFi386DST32)
+	$(foreach aa1,$(XFi386SrcList32)\
+		, rsync -a $(aa1) $(XFi386DST32)/`basename $(aa1)`$(EOL))
+	cd $(XFi386DST32)/ && rm -f Makefile && ln -s `basename $(firstword $(XFi386SrcList32))`  	Makefile
 	@#
 	rm -fr $(foreach aa1,$(XFdelete1), $(XFdst1)/$(aa1))
 	@echo ' try to start the build prog . '
