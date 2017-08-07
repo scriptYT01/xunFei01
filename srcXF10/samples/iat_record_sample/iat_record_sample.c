@@ -14,6 +14,8 @@
 #define FRAME_LEN	640 
 #define	BUFFER_SIZE	4096
 
+//#define _prSF( fmt , ... ) printf( "--debuging: %s %d %s : " fmt "\n" , basename(__FILE__), __LINE__, __func__ , ## __VA_ARGS__ )
+
 /* Upload User words */
 static int upload_userwords()
 {
