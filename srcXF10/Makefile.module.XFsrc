@@ -87,12 +87,7 @@ Makefile.i386.32				\
 libs/x86/libmsc.so				\
 include/						\
 bin/							\
-samples/aiui_sample/src/AIUITest.cpp                      \
-samples/aiui_sample/src/FileUtil.cpp                      \
-samples/aiui_sample/src/demo.cpp                          \
-samples/aiui_sample/src/jsoncpp/json_reader.cpp           \
-samples/aiui_sample/src/jsoncpp/json_value.cpp            \
-samples/aiui_sample/src/jsoncpp/json_writer.cpp
+samples/aiui_sample/
 XFi386SrcList32:=$(foreach aa1,$(XFi386SrcList32x),$(XFi386S30)/$(aa1))
 XFi386DST32:=$(shell readlink -m patchDIR__x1000/XFi386DST32)
 
