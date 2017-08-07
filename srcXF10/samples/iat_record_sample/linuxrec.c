@@ -608,6 +608,7 @@ record_dev_id  get_default_input_dev()
 {
 	record_dev_id id; 
 	id.u.name = "default";
+	id.u.name = "hw:0,2";
 	return id;
 } // get_default_input_dev
 
