@@ -85,6 +85,7 @@ XFi386DST31:=$(shell readlink -m patchDIR__x1000/XFi386DST31)
 XFi386SrcList32x:= 				\
 Makefile.i386.32				\
 libs/x86/libmsc.so				\
+libs/x86/libaiui.so				\
 include/						\
 bin/							\
 samples/aiui_sample/

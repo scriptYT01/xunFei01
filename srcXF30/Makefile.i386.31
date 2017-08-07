@@ -48,7 +48,8 @@ LDFLAGS := -L./
 
 #LDFLAGS += -lmsc -lrt -ldl -lpthread
 #LDFLAGS += -lmsc 
-LDFLAGS += -lmsc -Werror
+#LDFLAGS += -lmsc -Werror
+LDFLAGS += -lmsc -Werror -lc
 
 OBJECTS := $(patsubst %.c,%.o,$(wildcard *.c))
 
