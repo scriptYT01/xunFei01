@@ -262,10 +262,10 @@ static void _demo_mic(const char* session_begin_params)
 int main(int argc, char* argv[])
 {
 	int __ret = MSP_SUCCESS;
-	int upload_on =	1; /* whether upload the user word */
+	int __upload_on =	0; /* whether upload the user word */
 	/* login params, please do keep the appid correct */
 	const char* login_params = "appid = 58f4654e, work_dir = .";
-	int aud_src = 0; /* from mic or file */
+	int __aud_src_0file_1mic = 1; /* from mic or file */
 
 	/*
 	* See "iFlytek MSC Reference Manual"
@@ -285,8 +285,10 @@ int main(int argc, char* argv[])
 	}
 
 	printf("Want to upload the user words ? \n0: No.\n1: Yes\n"); // main
-	scanf("%d", &upload_on);
-	if (upload_on)
+    if ( 0 ) {
+	    scanf("%d", &__upload_on);
+    }
+	if (__upload_on)
 	{
 		printf("Uploading the user words ...\n"); // main
 		__ret = upload_userwords();
@@ -297,8 +299,10 @@ int main(int argc, char* argv[])
 
 	printf("Where the audio comes from?\n"
 			"0: From a audio file.\n1: From microphone.\n"); // main
-	scanf("%d", &aud_src);
-	if(aud_src != 0) {
+    if ( 0 ) {
+	    scanf("%d", &__aud_src_0file_1mic);
+    } 
+	if(__aud_src_0file_1mic != 0) {
 		printf("Demo recognizing the speech from microphone\n"); // main
 		printf("Speak in 15 seconds\n");
 
