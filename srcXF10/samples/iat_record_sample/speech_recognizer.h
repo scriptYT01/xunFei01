@@ -50,13 +50,13 @@ extern "C" {
 
 /* must init before start . is aud_src is SR_MIC, the default capture device
  * will be used. see sr_init_ex */
-int sr_init(struct speech_rec * sr, const char * session_begin_params, enum sr_audsrc aud_src, struct speech_rec_notifier * notifier);
-int sr_start_listening(struct speech_rec *sr);
-int sr_stop_listening(struct speech_rec *sr);
+int _sr_init(struct speech_rec * sr, const char * session_begin_params, enum sr_audsrc aud_src, struct speech_rec_notifier * notifier);
+int _sr_start_listening(struct speech_rec *sr);
+int _sr_stop_listening(struct speech_rec *sr);
 /* only used for the manual write way. */
-int sr_write_audio_data(struct speech_rec *sr, char *data, unsigned int len);
+int _sr_write_audio_data(struct speech_rec *sr, char *data, unsigned int len);
 /* must call uninit after you don't use it */
-void sr_uninit(struct speech_rec * sr);
+void _sr_uninit(struct speech_rec * sr);
 
 #ifdef __cplusplus
 } /* extern "C" */	

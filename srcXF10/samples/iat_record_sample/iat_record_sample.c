@@ -21,7 +21,7 @@ static int upload_userwords()
 	size_t			len			=	0;
 	size_t			read_len	=	0;
 	FILE*			fp			=	NULL;
-	int				ret			=	-1;
+	int				__ret			=	-1;
 
 	fp = fopen("userwords.txt", "rb");
 	if (NULL == fp)										
@@ -49,10 +49,10 @@ static int upload_userwords()
 	}
 	userwords[len] = '\0';
 	
-	MSPUploadData("userwords", userwords, len, "sub = uup, dtt = userword", &ret); //ÉÏ´«ÓÃ»§´Ê±í
-	if (MSP_SUCCESS != ret)
+	MSPUploadData("userwords", userwords, len, "sub = uup, dtt = userword", &__ret); //ÉÏ´«ÓÃ»§´Ê±í
+	if (MSP_SUCCESS != __ret)
 	{
-		printf("\nMSPUploadData failed ! errorCode: %d \n", ret);
+		printf("\nMSPUploadData failed ! errorCode: %d \n", __ret);
 		goto upload_exit;
 	}
 	
@@ -68,7 +68,7 @@ upload_exit:
 		userwords = NULL;
 	}
 	
-	return ret;
+	return __ret;
 }
 
 
@@ -164,13 +164,13 @@ static void demo_file(const char* audio_file, const char* session_begin_params)
 		goto iat_exit;
 	}
 
-	errcode = sr_init(&iat, session_begin_params, SR_USER, &recnotifier);
+	errcode = _sr_init(&iat, session_begin_params, SR_USER, &recnotifier);
 	if (errcode) {
 		printf("speech recognizer init failed : %d\n", errcode);
 		goto iat_exit;
 	}
 
-	errcode = sr_start_listening(&iat);
+	errcode = _sr_start_listening(&iat);
 	if (errcode) {
 		printf("\nsr_start_listening failed! error code:%d\n", errcode);
 		goto iat_exit;
@@ -179,18 +179,18 @@ static void demo_file(const char* audio_file, const char* session_begin_params)
 	while (1)
 	{
 		unsigned int len = 10 * FRAME_LEN; /* 200ms audio */
-		int ret = 0;
+		int __ret = 0;
 
 		if (pcm_size < 2 * len)
 			len = pcm_size;
 		if (len <= 0)
 			break;
 
-		ret = sr_write_audio_data(&iat, &p_pcm[pcm_count], len);
+		__ret = _sr_write_audio_data(&iat, &p_pcm[pcm_count], len);
 
-		if (0 != ret)
+		if (0 != __ret)
 		{
-			printf("\nwrite audio data failed! error code:%d\n", ret);
+			printf("\nwrite audio data failed! error code:%d\n", __ret);
 			goto iat_exit;
 		}
 
@@ -198,9 +198,9 @@ static void demo_file(const char* audio_file, const char* session_begin_params)
 		pcm_size -= (long)len;		
 	}
 
-	errcode = sr_stop_listening(&iat);
+	errcode = _sr_stop_listening(&iat);
 	if (errcode) {
-		printf("\nsr_stop_listening failed! error code:%d \n", errcode);
+		printf("\n_sr_stop_listening failed! error code:%d \n", errcode);
 		goto iat_exit;
 	}
 
@@ -216,43 +216,43 @@ iat_exit:
 		p_pcm = NULL;
 	}
 
-	sr_stop_listening(&iat);
-	sr_uninit(&iat);
+	_sr_stop_listening(&iat);
+	_sr_uninit(&iat);
 }
 
 /* demo recognize the audio from microphone */
-static void demo_mic(const char* session_begin_params)
+static void _demo_mic(const char* session_begin_params)
 {
 	int errcode;
 	int i = 0;
 
 	struct speech_rec iat;
 
-	struct speech_rec_notifier recnotifier = {
+	struct speech_rec_notifier recnotifier = {// _demo_mic
 		on_result,
 		on_speech_begin,
 		on_speech_end
 	};
 
-	errcode = sr_init(&iat, session_begin_params, SR_MIC, &recnotifier);
+	errcode = _sr_init(&iat, session_begin_params, SR_MIC, &recnotifier);// _demo_mic
 	if (errcode) {
 		printf("speech recognizer init failed\n");
 		return;
 	}
-	errcode = sr_start_listening(&iat);
+	errcode = _sr_start_listening(&iat);
 	if (errcode) {
-		printf("start listen failed %d\n", errcode);
+		printf("start listen failed %d\n", errcode);// _demo_mic
 	}
 	/* demo 15 seconds recording */
 	while(i++ < 15)
 		sleep(1);
-	errcode = sr_stop_listening(&iat);
+	errcode = _sr_stop_listening(&iat);// _demo_mic
 	if (errcode) {
 		printf("stop listening failed %d\n", errcode);
 	}
 
-	sr_uninit(&iat);
-}
+	_sr_uninit(&iat);
+} // _demo_mic
 
 
 /* main thread: start/stop record ; query the result of recgonization.
@@ -261,7 +261,7 @@ static void demo_mic(const char* session_begin_params)
  */
 int main(int argc, char* argv[])
 {
-	int ret = MSP_SUCCESS;
+	int __ret = MSP_SUCCESS;
 	int upload_on =	1; /* whether upload the user word */
 	/* login params, please do keep the appid correct */
 	const char* login_params = "appid = 58f4654e, work_dir = .";
@@ -270,7 +270,7 @@ int main(int argc, char* argv[])
 	/*
 	* See "iFlytek MSC Reference Manual"
 	*/
-	const char* session_begin_params =
+	const char* session_begin_params = // main
 		"sub = iat, domain = iat, language = zh_cn, "
 		"accent = mandarin, sample_rate = 16000, "
 		"result_type = plain, result_encoding = utf8";
@@ -278,39 +278,39 @@ int main(int argc, char* argv[])
 	/* Login first. the 1st arg is username, the 2nd arg is password
 	 * just set them as NULL. the 3rd arg is login paramertes 
 	 * */
-	ret = MSPLogin(NULL, NULL, login_params);
-	if (MSP_SUCCESS != ret)	{
-		printf("MSPLogin failed , Error code %d.\n",ret);
+	__ret = MSPLogin(NULL, NULL, login_params); // main
+	if (MSP_SUCCESS != __ret)	{
+		printf("MSPLogin failed , Error code %d.\n",__ret);
 		goto exit; // login fail, exit the program
 	}
 
-	printf("Want to upload the user words ? \n0: No.\n1: Yes\n");
+	printf("Want to upload the user words ? \n0: No.\n1: Yes\n"); // main
 	scanf("%d", &upload_on);
 	if (upload_on)
 	{
-		printf("Uploading the user words ...\n");
-		ret = upload_userwords();
-		if (MSP_SUCCESS != ret)
+		printf("Uploading the user words ...\n"); // main
+		__ret = upload_userwords();
+		if (MSP_SUCCESS != __ret)
 			goto exit;	
-		printf("Uploaded successfully\n");
+		printf("Uploaded successfully\n"); // main
 	}
 
 	printf("Where the audio comes from?\n"
-			"0: From a audio file.\n1: From microphone.\n");
+			"0: From a audio file.\n1: From microphone.\n"); // main
 	scanf("%d", &aud_src);
 	if(aud_src != 0) {
-		printf("Demo recognizing the speech from microphone\n");
+		printf("Demo recognizing the speech from microphone\n"); // main
 		printf("Speak in 15 seconds\n");
 
-		demo_mic(session_begin_params);
+		_demo_mic(session_begin_params); // main
 
 		printf("15 sec passed\n");
 	} else {
-		printf("Demo recgonizing the speech from a recorded audio file\n");
+		printf("Demo recgonizing the speech from a recorded audio file\n"); // main
 		demo_file("wav/iflytek02.wav", session_begin_params); 
 	}
 exit:
 	MSPLogout(); // Logout...
 
 	return 0;
-}
+} // main
