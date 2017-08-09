@@ -37,6 +37,20 @@ OBJECTDIR  = $(BUILDDIR)/objs
 BUILDOBJS  = $(foreach obj, $(OBJS), $(subst $(dir $(obj)), $(OBJECTDIR)/, $(obj)))
 BUILDDEPS  = $(BUILDOBJS:.o=.d)
 
+all : clean
+ifeq ($(shell uname -m),i686)
+	make build 
+else
+	make build "LINUX64=1"
+endif
+
+run : 
+ifeq ($(shell uname -m),i686)
+	cd build && LD_LIBRARY_PATH=../../../libs/x86/ ./demo
+else
+	cd build && LD_LIBRARY_PATH=../../../libs/x64/ ./demo
+endif
+
 test:
 	@echo ${PWD}
 

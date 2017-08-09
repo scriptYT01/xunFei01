@@ -1,7 +1,7 @@
 srcXF10/libmsc.call.txt
 srcXF10/libmsc.sym.txt
 srcXF10/Build.mk
-srcXF20/libs/mipsX1000/libmsc.so.hex.txt
+#srcXF20/libs/mipsX1000/libmsc.so.hex.txt
 _vim/libevent_example01.c
 _vim/libevent_example02.c
 srcXF10/scripTs/yunMi01.json

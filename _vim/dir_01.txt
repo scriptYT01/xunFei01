@@ -8,3 +8,6 @@ srcXF10/samples/ise_sample
 srcXF10/samples/sch_speak_sample
 srcXF10/samples/sch_text_sample
 srcXF10/samples/tts_sample
+srcXF30/samples/aiui_sample/src/
+srcXF30/samples/aiui_sample/src/jsoncpp/
+srcXF30/samples/aiui_sample/src/jsoncpp/json/

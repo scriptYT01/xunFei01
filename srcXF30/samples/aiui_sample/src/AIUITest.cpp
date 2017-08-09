@@ -1,7 +1,9 @@
 #include "AIUITest.h"
+
 #include <string.h>
 #include <stdlib.h>
 #include "jsoncpp/json/json.h"
+
 
 bool WriteAudioThread::threadLoop()
 {
@@ -346,7 +348,7 @@ void AIUITester::readCmd()
 		} else if (cmd == "wrr") {
 			cout << "write repeatly" << endl;
 			write(true);
-		} else if (cmd == "swrt") {
+		} else if (cmd == "swrt" || cmd == "S") {
 			cout << "stopWriteThread" << endl;
 			stopWriteThread();
 		} else if (cmd == "wrt") {
@@ -355,6 +357,36 @@ void AIUITester::readCmd()
 		} else if (cmd == "q") {
 			destory();
 			break;
+		} else if (cmd == "ww") {
+			cout << "stop-wakeup-write" << endl;
+			stopWriteThread();
+			//cout << "111" << endl;
+            //usleep(1000);
+            //sleep(5);
+			//cout << "222" << endl;
+			wakeup();
+			//cout << "333" << endl;
+            //usleep(1000000);
+            //sleep(10);
+			//cout << "444" << endl;
+			write(false);
+			//cout << "555" << endl;
+			;
+		} else if (cmd == "h") {
+			cout 
+			<< "c    : createAgent"         << endl 
+			<< "w    : wakeup"              << endl 
+			<< "s    : start"               << endl 
+			<< "st   : stop"                << endl 
+			<< "d    : destroy"             << endl 
+			<< "r    : reset"               << endl 
+			<< "e    : exit"                << endl 
+			<< "wr   : write"               << endl 
+			<< "wrr  : write repeatly"      << endl 
+			<< "swrt : stopWriteThread"     << endl 
+			<< "wrt  : writeText"           << endl 
+			<< "ww   : stop-wakeup-write"   << endl
+            ;
 		} else {
 			cout << "invalid cmd, input again." << endl;
 		}

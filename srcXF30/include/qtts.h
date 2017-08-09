@@ -1,19 +1,33 @@
 /** 
  * @file	qtts.h
  * @brief   iFLY Speech Synthesizer Header File
+
  * 
+
  *  This file contains the quick application programming interface (API) declarations 
+
  *  of TTS. Developer can include this file in your project to build applications.
+
  *  For more information, please read the developer guide.
+
  
+
  *  Use of this software is subject to certain restrictions and limitations set
+
  *  forth in a license agreement entered into between iFLYTEK, Co,LTD.
+
  *  and the licensee of this software.  Please refer to the license
+
  *  agreement for license use rights and restrictions.
+
  *
+
  *  Copyright (C)    1999 - 2009 by ANHUI USTC iFLYTEK, Co,LTD.
+
  *                   All rights reserved.
+
  * 
+
  * @author	Speech Dept.
  * @version	1.0
  * @date	2009/11/26
@@ -30,19 +44,33 @@
 #ifndef __QTTS_H__
 #define __QTTS_H__
 
+
 #if !defined(MSPAPI)
+
 #if defined(WIN32)
+
 	#define MSPAPI __stdcall
+
 #else
+
 	#define MSPAPI
+
 #endif /* WIN32 */
+
 #endif /* MSPAPI */
 
+
+
 #ifdef __cplusplus
+
 extern "C" {
+
 #endif /* C++ */
 
+
+
 #include "msp_types.h"
+
 
 /** 
  * @fn		QTTSSessionBegin
@@ -56,11 +84,16 @@ extern "C" {
  * @see		
  */
 const char* MSPAPI QTTSSessionBegin(const char* params, int* errorCode);
+
 typedef const char* (MSPAPI *Proc_QTTSSessionBegin)(const char* params, int* errorCode);
+
 #ifdef MSP_WCHAR_SUPPORT
 const wchar_t* MSPAPI QTTSSessionBeginW(const wchar_t* params, int* errorCode);
+
 typedef const wchar_t* (MSPAPI *Proc_QTTSSessionBeginW)(const wchar_t* params, int* errorCode);
+
 #endif
+
 
 /** 
  * @fn		QTTSTextPut
@@ -75,11 +108,17 @@ typedef const wchar_t* (MSPAPI *Proc_QTTSSessionBeginW)(const wchar_t* params, i
  * @see		
  */
 int MSPAPI QTTSTextPut(const char* sessionID, const char* textString, unsigned int textLen, const char* params);
+
 typedef int (MSPAPI *Proc_QTTSTextPut)(const char* sessionID, const char* textString, unsigned int textLen, const char* params);
+
 #ifdef MSP_WCHAR_SUPPORT
 int MSPAPI QTTSTextPutW(const wchar_t* sessionID, const wchar_t* textString, unsigned int textLen, const wchar_t* params);
+
 typedef int (MSPAPI *Proc_QTTSTextPutW)(const wchar_t* sessionID, const wchar_t* textString, unsigned int textLen, const wchar_t* params);
+
 #endif
+
+
 
 /** 
  * @fn		QTTSAudioGet
@@ -95,11 +134,17 @@ typedef int (MSPAPI *Proc_QTTSTextPutW)(const wchar_t* sessionID, const wchar_t*
  * @see		
  */
 const void* MSPAPI QTTSAudioGet(const char* sessionID, unsigned int* audioLen, int* synthStatus, int* errorCode);
+
 typedef const void* (MSPAPI *Proc_QTTSAudioGet)(const char* sessionID, unsigned int* audioLen, int* synthStatus, int* errorCode);
+
 #ifdef MSP_WCHAR_SUPPORT
 const void* MSPAPI QTTSAudioGetW(const wchar_t* sessionID, unsigned int* audioLen, int* synthStatus, int* errorCode);
+
 typedef const void* (MSPAPI *Proc_QTTSAudioGetW)(const wchar_t* sessionID, unsigned int* audioLen, int* synthStatus, int* errorCode);
+
 #endif
+
+
 
 /** 
  * @fn		QTTSAudioInfo
@@ -112,10 +157,14 @@ typedef const void* (MSPAPI *Proc_QTTSAudioGetW)(const wchar_t* sessionID, unsig
  * @see		
  */
 const char* MSPAPI QTTSAudioInfo(const char* sessionID);
+
 typedef const char* (MSPAPI *Proc_QTTSAudioInfo)(const char* sessionID);
+
 #ifdef MSP_WCHAR_SUPPORT
 const wchar_t* MSPAPI QTTSAudioInfoW(const wchar_t* sessionID);
+
 typedef const wchar_t* (MSPAPI *Proc_QTTSAudioInfoW)(const wchar_t* sessionID);
+
 #endif
 
 /** 
@@ -181,7 +230,10 @@ typedef void ( *tts_error_ntf_handler)(const char *sessionID, int errorCode,	con
 int MSPAPI QTTSRegisterNotify(const char *sessionID, tts_result_ntf_handler rsltCb, tts_status_ntf_handler statusCb, tts_error_ntf_handler errCb, void *userData);
 
 #ifdef __cplusplus
+
 } /* extern "C" */
+
 #endif /* C++ */
+
 
 #endif /* __QTTS_H__ */
