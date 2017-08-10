@@ -29,6 +29,7 @@ LOCAL_SRC_FILES := \
 #LOCAL_LDLIBS := -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc -lrt -ldl -lpthread -lm -lc
 #LOCAL_LDLIBS := -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc -lc
 #LOCAL_LDLIBS := -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc -lc -lpthread
-LOCAL_LDLIBS := -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc -lc -lpthread -lstdc++
+#LOCAL_LDLIBS := -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc -lc -lpthread -lstdc++
+LOCAL_LDLIBS := -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc -laiui -lc -lpthread -lstdc++
 include $(BUILD_EXECUTABLE)
 
