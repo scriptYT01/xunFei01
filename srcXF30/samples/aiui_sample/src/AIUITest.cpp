@@ -104,29 +104,35 @@ void TestListener::onEvent(IAIUIEvent& event)
 			case AIUIConstant::STATE_IDLE:
 				{
 					cout << "EVENT_STATE:" << "IDLE" << endl;
-				} break;
+				} 
+                break;
 
 			case AIUIConstant::STATE_READY:
 				{
 					cout << "EVENT_STATE:" << "READY" << endl;
-				} break;
+				} 
+                break;
 
 			case AIUIConstant::STATE_WORKING:
 				{
 					cout << "EVENT_STATE:" << "WORKING" << endl;
-				} break;
+				} 
+                break;
 			}
-		} break;
+		} 
+        break;
 
 	case AIUIConstant::EVENT_WAKEUP:
 		{
 			cout << "EVENT_WAKEUP:" << event.getInfo() << endl;
-		} break;
+		} 
+        break;
 
 	case AIUIConstant::EVENT_SLEEP:
 		{
 			cout << "EVENT_SLEEP:arg1=" << event.getArg1() << endl;
-		} break;
+		} 
+        break;
 
 	case AIUIConstant::EVENT_VAD:
 		{
@@ -134,19 +140,23 @@ void TestListener::onEvent(IAIUIEvent& event)
 			case AIUIConstant::VAD_BOS:
 				{
 					cout << "EVENT_VAD:" << "BOS" << endl;
-				} break;
+				} 
+                break;
 
 			case AIUIConstant::VAD_EOS:
 				{
 					cout << "EVENT_VAD:" << "EOS" << endl;
-				} break;
+				} 
+                break;
 
 			case AIUIConstant::VAD_VOL:
 				{
 					//						cout << "EVENT_VAD:" << "VOL" << endl;
-				} break;
+				} 
+                break;
 			}
-		} break;
+		} 
+        break;
 
 	case AIUIConstant::EVENT_RESULT:
 		{
@@ -162,7 +172,7 @@ void TestListener::onEvent(IAIUIEvent& event)
 			Json::Value params = data["params"];
 			Json::Value content = (data["content"])[0];
 			string sub = params["sub"].asString();
-			cout << "EVENT_RESULT:" << sub << endl;
+			cout << "EVENT_RESULT:start:" << sub << __func__ << " " << __LINE__ << endl;
 
 			if (sub == "nlp")
 			{
@@ -186,6 +196,7 @@ void TestListener::onEvent(IAIUIEvent& event)
 					cout << resultStr << endl;
 				}
 			}
+			cout << "EVENT_RESULT:end:" << sub << __func__ << " " << __LINE__ << endl;
 
 		}
 		break;
@@ -193,9 +204,10 @@ void TestListener::onEvent(IAIUIEvent& event)
 	case AIUIConstant::EVENT_ERROR:
 		{
 			cout << "EVENT_ERROR:" << event.getArg1() << endl;
-		} break;
+		} 
+        break;
 	}
-}
+} // TestListener::onEvent
 
 AIUITester::AIUITester() : agent(NULL), writeThread(NULL)
 {
