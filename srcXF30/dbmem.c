@@ -57,6 +57,12 @@ void *malloc(size_t ___size) {
     } else {
         _cntMalloc03    ++ ;
         _cntMalloc04    += ___size;
+        if ( 1 ) {
+            printf ( "\n" " error found " "\n" );
+            dbmem_Dump_inSO() ;
+            printf ( "\n" " error found . exit." "\n" );
+            exit (45) ;
+        }
     }
     return __v01 ;
 } // malloc
