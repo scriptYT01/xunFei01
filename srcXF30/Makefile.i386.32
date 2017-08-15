@@ -13,25 +13,30 @@ BIN_TARGET = $(DIR_BIN)/$(TARGET)
 define  RUN01
 #!/bin/sh
 
-if [ -d bin ]
+if [ ! -d aiui_sample/build/ ]
 then
-	echo '... deep in ... '
-	cd bin && exec ../$$(basename $$0)
+	echo 
+	echo ' dir error ' 
+	echo 
+fi
+
+cd aiui_sample/build/ 
+
+if [ ! -f ../../bin/$(TARGET) ]
+then
+	echo	
+	echo " file <../../bin/$(TARGET)> don't exist "
+	echo	
 	exit
 fi
 
-if [ -f ./$(TARGET) ]
-then
-	LD_LIBRARY_PATH=./:../      ./$(TARGET)
-else
-	LD_LIBRARY_PATH=./:../      ../$(TARGET)
-fi
-
 echo
-echo "`pwd`/$(TARGET)"
+echo `realpath ../../bin/$(TARGET)`
 echo
 
 chmod -R a+w . 2>/dev/null
+
+LD_LIBRARY_PATH=../../      ../../bin/$(TARGET)
 
 endef
 export  RUN01
@@ -49,7 +54,8 @@ LDFLAGS := -L./
 #LDFLAGS += -lmsc -lrt -ldl -lpthread
 #LDFLAGS += -lmsc 
 #LDFLAGS += -lmsc -Werror
-LDFLAGS += -lmsc -Werror -lstdc++ -laiui 
+#LDFLAGS += -lmsc -Werror -lstdc++ -laiui 
+LDFLAGS += -lmsc -laiui -Werror -lstdc++ -lpthread
 
 OBJECTSsrc := $(wildcard aiui_sample/src/*.cpp) $(wildcard aiui_sample/src/jsoncpp/*.cpp) 
 OBJECTS := $(patsubst %.cpp,%.o,$(OBJECTSsrc))
@@ -57,7 +63,7 @@ OBJECTS := $(patsubst %.cpp,%.o,$(OBJECTSsrc))
 $(BIN_TARGET) : $(OBJECTS)
 	$(CROSS_COMPILE)gcc $(CFLAGS) $^ -o $@ $(LDFLAGS)
 	echo "$${RUN01}" > run.sh
-	chmod 555 run.sh
+	chmod 755 run.sh
 	chmod -R a+w bin/
 
 %.o : %.cpp
@@ -65,6 +71,10 @@ $(BIN_TARGET) : $(OBJECTS)
 	$(CROSS_COMPILE)gcc -c $(CFLAGS) $< -o $@
 clean:
 	@rm -f *.o $(BIN_TARGET)
+c:
+	rm -f $(OBJECTS)
+m:
+	vim Makefile
 
 .PHONY:clean
 
