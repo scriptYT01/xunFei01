@@ -1,6 +1,6 @@
 #!/bin/sh
 
-cd /ch/xf10
+[ -d /ch/xf10 ] && cd /ch/xf10 || cd /xf10    
 
 (lsof |grep snd |grep pvalg_ymhood ) && killall pvalg_ymhood
 
@@ -14,6 +14,24 @@ nohup aaa61_arecord_s16_le_16k__mono -d 5 /tmp/wav01.wav > /tmp/logW1.arecord.tx
 aa12=$(date +%s)
 echo '# end record '  "$((${aa12}-${aa11})) , ${aa12}"
 /etc/YMwifi/led_on_off.sh off
+
+if [ $((${aa12}-${aa11})) -lt 3 ]
+then
+    echo 
+    echo ' mic is hold by another prog, please check and run again '
+    echo
+    sleep 30
+    exit
+fi
+
+
+[ -d /ch/xf30 ] && cd /ch/xf30 || cd /xf30    
+nohup ./aiui_sample32.x1000.bin    /tmp/wav01.wav  > /tmp/w0.txt
+
+exit
+
+
+
 
 aa11=$(date +%s)
 echo '# before recognize ' ${aa11}

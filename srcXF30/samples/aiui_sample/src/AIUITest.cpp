@@ -364,7 +364,7 @@ void AIUITester::readCmd()
 		} else if (cmd == "wrr") {
 			cout << "write repeatly" << endl;
 			write(true);
-		} else if (cmd == "swrt" || cmd == "S") {
+		} else if (cmd == "swrt" || cmd == "stwr"|| cmd == "S") {
 			cout << "stopWriteThread" << endl;
 			stopWriteThread();
 		} else if (cmd == "wrt") {
@@ -380,6 +380,8 @@ void AIUITester::readCmd()
             //usleep(1000);
             //sleep(5);
 			//cout << "222" << endl;
+			wakeup();
+			start();
 			wakeup();
 			//cout << "333" << endl;
             //usleep(1000000);
