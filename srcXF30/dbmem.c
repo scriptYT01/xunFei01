@@ -9,6 +9,12 @@
 
 int _myDebug01 = 0 ;
 
+int _cntMalloc01    = 0 ;
+int _cntMalloc02    = 0 ;
+int _cntMalloc03    = 0 ;
+int _cntMalloc04    = 0 ;
+int _cntFree01      = 0 ;
+
 //FILE *(*original_fopen)(const char*, const char*);
 //original_fopen = dlsym(RTLD_NEXT, "fopen");
 //return (*original_fopen)(path, mode);
@@ -45,12 +51,20 @@ void *malloc(size_t ___size) {
     show_dbinfo_once( 'm' ) ;
 
     __v01 = _origin__malloc( ___size ) ;
+    if ( __v01 ) {
+        _cntMalloc01    ++ ;
+        _cntMalloc02    += ___size
+    } else {
+        _cntMalloc03    ++ ;
+        _cntMalloc04    += ___size
+    }
     return __v01 ;
 } // malloc
 
 void free(void *___ptr){
     show_dbinfo_once( 'f' ) ;
 
+    _cntFree01      ++ ;
     _origin__free( ___ptr );
 } // free
 
