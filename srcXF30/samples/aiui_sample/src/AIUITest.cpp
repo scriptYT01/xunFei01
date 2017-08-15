@@ -301,8 +301,8 @@ void AIUITester::writeText()
 {
 	if (NULL != agent)
 	{
-		string text = "ÁõµÂ»ªµÄ¸è¡£";
-		// textDataÄÚ´æ»áÔÚMessageÔÚÄÚ²¿´¦ÀíÍêºó×Ô¶¯releaseµô
+		string text = "åˆ˜å¾·åŽçš„æ­Œã€‚";
+		// textDataå†…å­˜ä¼šåœ¨Messageåœ¨å†…éƒ¨å¤„ç†å®ŒåŽè‡ªåŠ¨releaseæŽ‰
 		Buffer* textData = Buffer::alloc(text.length());
 		text.copy((char*) textData->data(), text.length());
 

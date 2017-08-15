@@ -1,4 +1,4 @@
-﻿/*
+/*
  * FileUtil.cpp
  *
  *  Created on: 2017年2月21日
