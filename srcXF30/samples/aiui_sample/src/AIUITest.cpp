@@ -5,6 +5,10 @@
 #include "jsoncpp/json/json.h"
 
 
+extern "C" {
+    void dbmemDebugShow( void );
+}
+
 bool WriteAudioThread::threadLoop()
 {
 	char audio[1279];
@@ -385,6 +389,9 @@ void AIUITester::readCmd()
 			//cout << "555" << endl;
 			;
 		} else if (cmd == "h") {
+            dbmemDebugShow();
+
+
 			cout 
 			<< "c    : createAgent"         << endl 
 			<< "w    : wakeup"              << endl 

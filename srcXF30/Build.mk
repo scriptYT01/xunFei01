@@ -18,6 +18,8 @@ LOCAL_MODULE_TAGS := aiui_sample
 LOCAL_MODULE_PATH:=$(TARGET_FS_BUILD)/$(TARGET_TESTSUIT_DIR)/network
 LOCAL_MODULE_PATH:=$(TARGET_FS_BUILD)/ch/xf30
 LOCAL_SRC_FILES := \
+	dbmemDebugShow.c \
+	\
 	samples/aiui_sample/src/jsoncpp/json_reader.cpp \
 	samples/aiui_sample/src/jsoncpp/json_value.cpp \
 	samples/aiui_sample/src/jsoncpp/json_writer.cpp \
@@ -30,7 +32,8 @@ LOCAL_SRC_FILES := \
 #LOCAL_LDLIBS := -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc -lc
 #LOCAL_LDLIBS := -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc -lc -lpthread
 #LOCAL_LDLIBS := -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc -lc -lpthread -lstdc++
-LOCAL_LDLIBS := -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc -laiui -lc -lpthread -lstdc++
+#LOCAL_LDLIBS := -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc -laiui -lc -lpthread -lstdc++
+LOCAL_LDLIBS := -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc -laiui -lc -lpthread -lstdc++ -ldl
 include $(BUILD_EXECUTABLE)
 
 #==== dbmem.so ==========================================

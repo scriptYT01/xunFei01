@@ -53,10 +53,10 @@ void *malloc(size_t ___size) {
     __v01 = _origin__malloc( ___size ) ;
     if ( __v01 ) {
         _cntMalloc01    ++ ;
-        _cntMalloc02    += ___size
+        _cntMalloc02    += ___size;
     } else {
         _cntMalloc03    ++ ;
-        _cntMalloc04    += ___size
+        _cntMalloc04    += ___size;
     }
     return __v01 ;
 } // malloc
@@ -67,4 +67,30 @@ void free(void *___ptr){
     _cntFree01      ++ ;
     _origin__free( ___ptr );
 } // free
+
+void dbmem_Dump_inSO(void) {
+    printf( "\n" "\n"
+
+    "_myDebug01  %d" "\n"
+    "_cntMalloc01  %d" "\n"
+    "_cntMalloc02  %d" "\n"
+    "_cntMalloc03  %d" "\n"
+    "_cntMalloc04  %d" "\n"
+    "_cntFree01  %d" "\n"
+    "_origin__malloc  %d" "\n"
+    "_origin__free  %d" "\n"
+
+    "\n"
+
+    , _myDebug01              
+    , _cntMalloc01                    
+    , _cntMalloc02                    
+    , _cntMalloc03                    
+    , _cntMalloc04                    
+    , _cntFree01                      
+    , _origin__malloc             
+    , _origin__free          
+    );
+
+} // dbmem_Dump_inSO
 
