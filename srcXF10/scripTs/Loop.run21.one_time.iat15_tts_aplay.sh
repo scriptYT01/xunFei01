@@ -1,8 +1,9 @@
 #!/bin/sh
 
-cd /ch/xf10
-
 (lsof |grep snd |grep pvalg_ymhood ) && killall pvalg_ymhood
+
+[ -d /ch/xf10 ] && cd /ch/xf10 || cd /xf10
+
 
 killall led_flash.sh
 
