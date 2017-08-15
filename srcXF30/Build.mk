@@ -33,3 +33,13 @@ LOCAL_SRC_FILES := \
 LOCAL_LDLIBS := -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc -laiui -lc -lpthread -lstdc++
 include $(BUILD_EXECUTABLE)
 
+#==== dbmem.so ==========================================
+include $(CLEAR_VARS)
+LOCAL_MODULE := dbmem
+LOCAL_MODULE_TAGS := dbmem
+LOCAL_MODULE_PATH:=$(TARGET_FS_BUILD)/ch/xf30
+LOCAL_SRC_FILES := dbmem.c
+LOCAL_MODULE_GEN_SHARED_FILES :=$(LOCAL_MODULE)
+LOCAL_EXPORT_C_INCLUDE_FILES := dbmem.h
+LOCAL_CFLAGS := -Wa,-mips32r2 -O2 -G 0 -Wall -fPIC -shared
+include $(BUILD_SHARED_LIBRARY)
