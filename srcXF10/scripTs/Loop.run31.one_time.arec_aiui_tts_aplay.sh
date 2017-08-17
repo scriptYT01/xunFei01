@@ -27,7 +27,8 @@ fi
 
 
 [ -d /ch/xf30 ] && cd /ch/xf30 || cd /xf30    
-nohup ./aiui_sample32.x1000.bin    /tmp/wav01.wav  > /tmp/w0.txt
+#nohup ./aiui_sample32.x1000.bin    /tmp/wav01.wav  > /tmp/w0.txt
+       ./aiui_sample32.x1000.bin    /tmp/wav01.wav  
 
 exit
 
