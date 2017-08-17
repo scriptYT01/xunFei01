@@ -9,6 +9,8 @@ extern "C" {
     void dbmemDebugShow( void );
 }
 
+string _fname01 = TEST_AUDIO_PATH ;
+
 bool WriteAudioThread::threadLoop()
 {
 	char audio[1279];
@@ -101,116 +103,116 @@ bool WriteAudioThread::run()
 
 void TestListener::onEvent(IAIUIEvent& event)
 {
-	switch (event.getEventType()) {
-	case AIUIConstant::EVENT_STATE:
-		{
-			switch (event.getArg1()) {
-			case AIUIConstant::STATE_IDLE:
-				{
-					cout << "EVENT_STATE:" << "IDLE" << endl;
-				} 
-                break;
+    switch (event.getEventType()) {
+        case AIUIConstant::EVENT_STATE:
+            {
+                switch (event.getArg1()) {
+                    case AIUIConstant::STATE_IDLE:
+                        {
+                            cout << "EVENT_STATE:" << "IDLE" << endl;
+                        } 
+                        break;
 
-			case AIUIConstant::STATE_READY:
-				{
-					cout << "EVENT_STATE:" << "READY" << endl;
-				} 
-                break;
+                    case AIUIConstant::STATE_READY:
+                        {
+                            cout << "EVENT_STATE:" << "READY" << endl;
+                        } 
+                        break;
 
-			case AIUIConstant::STATE_WORKING:
-				{
-					cout << "EVENT_STATE:" << "WORKING" << endl;
-				} 
-                break;
-			}
-		} 
-        break;
+                    case AIUIConstant::STATE_WORKING:
+                        {
+                            cout << "EVENT_STATE:" << "WORKING" << endl;
+                        } 
+                        break;
+                }
+            } 
+            break;
 
-	case AIUIConstant::EVENT_WAKEUP:
-		{
-			cout << "EVENT_WAKEUP:" << event.getInfo() << endl;
-		} 
-        break;
+        case AIUIConstant::EVENT_WAKEUP:
+            {
+                cout << "EVENT_WAKEUP:" << event.getInfo() << endl;
+            } 
+            break;
 
-	case AIUIConstant::EVENT_SLEEP:
-		{
-			cout << "EVENT_SLEEP:arg1=" << event.getArg1() << endl;
-		} 
-        break;
+        case AIUIConstant::EVENT_SLEEP:
+            {
+                cout << "EVENT_SLEEP:arg1=" << event.getArg1() << endl;
+            } 
+            break;
 
-	case AIUIConstant::EVENT_VAD:
-		{
-			switch (event.getArg1()) {
-			case AIUIConstant::VAD_BOS:
-				{
-					cout << "EVENT_VAD:" << "BOS" << endl;
-				} 
-                break;
+        case AIUIConstant::EVENT_VAD:
+            {
+                switch (event.getArg1()) {
+                    case AIUIConstant::VAD_BOS:
+                        {
+                            cout << "EVENT_VAD:" << "BOS" << endl;
+                        } 
+                        break;
 
-			case AIUIConstant::VAD_EOS:
-				{
-					cout << "EVENT_VAD:" << "EOS" << endl;
-				} 
-                break;
+                    case AIUIConstant::VAD_EOS:
+                        {
+                            cout << "EVENT_VAD:" << "EOS" << endl;
+                        } 
+                        break;
 
-			case AIUIConstant::VAD_VOL:
-				{
-					//						cout << "EVENT_VAD:" << "VOL" << endl;
-				} 
-                break;
-			}
-		} 
-        break;
+                    case AIUIConstant::VAD_VOL:
+                        {
+                            if(0) { cout << "EVENT_VAD:" << "VOL" << endl;}
+                        } 
+                        break;
+                }
+            } 
+            break;
 
-	case AIUIConstant::EVENT_RESULT:
-		{
-			using namespace VA;
-			Json::Value bizParamJson;
-			Json::Reader reader;
-			
-			if (!reader.parse(event.getInfo(), bizParamJson, false)) {
-				cout << "parse error!" << endl << event.getInfo() << endl;
-				break;
-			}
-			Json::Value data = (bizParamJson["data"])[0];
-			Json::Value params = data["params"];
-			Json::Value content = (data["content"])[0];
-			string sub = params["sub"].asString();
-			cout << "EVENT_RESULT:start:" << sub << __func__ << " " << __LINE__ << endl;
+        case AIUIConstant::EVENT_RESULT:
+            {
+                using namespace VA;
+                Json::Value bizParamJson;
+                Json::Reader reader;
 
-			if (sub == "nlp")
-			{
-				Json::Value empty;
-				Json::Value contentId = content.get("cnt_id", empty);
+                if (!reader.parse(event.getInfo(), bizParamJson, false)) {
+                    cout << "parse error!" << endl << event.getInfo() << endl;
+                    break;
+                }
+                Json::Value data = (bizParamJson["data"])[0];
+                Json::Value params = data["params"];
+                Json::Value content = (data["content"])[0];
+                string sub = params["sub"].asString();
+                cout << "EVENT_RESULT:start:" << sub << __func__ << " " << __LINE__ << endl;
 
-				if (contentId.empty())
-				{
-					cout << "Content Id is empty" << endl;
-					break;
-				}
+                if (sub == "nlp")
+                {
+                    Json::Value empty;
+                    Json::Value contentId = content.get("cnt_id", empty);
 
-				string cnt_id = contentId.asString();
-				Buffer* buffer = event.getData()->getBinary(cnt_id.c_str());
-				string resultStr;
+                    if (contentId.empty())
+                    {
+                        cout << "Content Id is empty" << endl;
+                        break;
+                    }
 
-				if (NULL != buffer)
-				{
-					resultStr = string((char*)buffer->data());
+                    string cnt_id = contentId.asString();
+                    Buffer* buffer = event.getData()->getBinary(cnt_id.c_str());
+                    string resultStr;
 
-					cout << resultStr << endl;
-				}
-			}
-			cout << "EVENT_RESULT:end:" << sub << __func__ << " " << __LINE__ << endl;
+                    if (NULL != buffer)
+                    {
+                        resultStr = string((char*)buffer->data());
 
-		}
-		break;
+                        cout << resultStr << endl;
+                    }
+                }
+                cout << "EVENT_RESULT:end:" << sub << ":" << __func__ << " " << __LINE__ << endl;
 
-	case AIUIConstant::EVENT_ERROR:
-		{
-			cout << "EVENT_ERROR:" << event.getArg1() << endl;
-		} 
-        break;
-	}
+            }
+            break;
+
+        case AIUIConstant::EVENT_ERROR:
+            {
+                cout << "EVENT_ERROR:" << event.getArg1() << endl;
+            } 
+            break;
+    }
 } // TestListener::onEvent
 
 AIUITester::AIUITester() : agent(NULL), writeThread(NULL)
@@ -272,7 +274,9 @@ void AIUITester::write(bool repeat)
 		return;
 
 	if (writeThread == NULL) {
-		writeThread = new WriteAudioThread(agent, TEST_AUDIO_PATH,  repeat);
+		//writeThread = new WriteAudioThread(agent, TEST_AUDIO_PATH,  repeat);
+	    cout << "\n open file <" << _fname01 << "> as input \n\n\n" << endl;
+		writeThread = new WriteAudioThread(agent, _fname01,  repeat);
 		writeThread->run();
 	}	
 }
@@ -329,12 +333,33 @@ void AIUITester::destory()
 
 extern int      _argc ;
 extern char **  _argv ;
-void autoCmd01()
+void AIUITester::autoCmd01()
 {
     if ( _argc != 2 ) {
 	    cout << "\n useage : " << _argv[0] << " <wave_input.wav>\n\n\n" << _argc << endl;
         exit(33);
     }
+    _fname01 = _argv[1] ;
+
+	cout << "\n autoCmd01 start \n\n\n" << _argc << endl;
+    createAgent();
+    sleep(1);
+
+    stopWriteThread();
+	while ( NULL == agent ) {
+        sleep(1);
+    }
+
+    wakeup();
+    sleep(1);
+    start();
+    sleep(1);
+    wakeup();
+    sleep(1);
+    write(false);
+
+	cout << "\n autoCmd01 end \n\n\n" << _argc << endl;
+
 } // AIUITester::autoCmd01
 
 void AIUITester::readCmd()
@@ -342,7 +367,7 @@ void AIUITester::readCmd()
 
 	cout << "input argc:" << _argc << endl;
     if ( _argc > 1 ) {
-        autoCmd01();
+        autoCmd01( );
         return ;
     }
     

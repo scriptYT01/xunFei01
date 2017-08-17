@@ -99,6 +99,8 @@ private:
 	void writeText();
 	void destory();
 
+	void autoCmd01();
+
 public:
 	void readCmd();
 	void test();

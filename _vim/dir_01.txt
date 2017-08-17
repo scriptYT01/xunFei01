@@ -1,5 +1,4 @@
 scriptS/
-srcXF30/
 srcXF10/include/
 srcXF10/samples/iat_record_sample/
 srcXF10/samples/asr_sample
@@ -9,6 +8,8 @@ srcXF10/samples/ise_sample
 srcXF10/samples/sch_speak_sample
 srcXF10/samples/sch_text_sample
 srcXF10/samples/tts_sample
+srcXF30/
 srcXF30/samples/aiui_sample/src/
 srcXF30/samples/aiui_sample/src/jsoncpp/
 srcXF30/samples/aiui_sample/src/jsoncpp/json/
+srcXF30/include/aiui/
