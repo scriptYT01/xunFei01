@@ -327,8 +327,25 @@ void AIUITester::destory()
 	//		SpeechUtility::getUtility()->destroy();
 }
 
+extern int      _argc ;
+extern char **  _argv ;
+void autoCmd01()
+{
+    if ( _argc != 2 ) {
+	    cout << "\n useage : " << _argv[0] << " <wave_input.wav>\n\n\n" << _argc << endl;
+        exit(33);
+    }
+} // AIUITester::autoCmd01
+
 void AIUITester::readCmd()
 {
+
+	cout << "input argc:" << _argc << endl;
+    if ( _argc > 1 ) {
+        autoCmd01();
+        return ;
+    }
+    
 	cout << "input cmd:" << endl;
 
 	string cmd;
