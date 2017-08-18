@@ -123,6 +123,9 @@ int AIUITester::_sleepWaitForState01( int ___gapUS, int ___gapMax , int * ___dst
         usleep( ___gapUS ) ;
         __checkCNT ++ ;
     }
+    if ( __checkCNT >= ___gapMax ) {
+        return -(300000 + __checkCNT ) ;
+    }
     return -1 ;
 } // AIUITester::_sleepWaitForState01
 int AIUITester::_sleepWaitForState02( int ___gapUS, int ___gapMax , int * ___dst , int ___wanted )
@@ -134,11 +137,24 @@ int AIUITester::_sleepWaitForState02( int ___gapUS, int ___gapMax , int * ___dst
     if ( ___dst == NULL )   return -10003 ;
 
     while ( __checkCNT < ___gapMax ) {
-        if ( (*___dst) != ___wanted ) {
-            return __checkCNT ;
+        if ( (*___dst) == ___wanted ) {
+            break ;
         }
         usleep( ___gapUS ) ;
         __checkCNT ++ ;
+    }
+    if ( __checkCNT >= ___gapMax ) {
+        return -2 ;
+    }
+    while ( __checkCNT < ___gapMax ) {
+        usleep( ___gapUS ) ;
+        if ( (*___dst) != ___wanted ) {
+            return __checkCNT ;
+        }
+        __checkCNT ++ ;
+    }
+    if ( __checkCNT >= ___gapMax ) {
+        return -(300000 + __checkCNT ) ;
     }
     return -1 ;
 } // AIUITester::_sleepWaitForState02
@@ -171,7 +187,7 @@ void AIUITester::_autoCmd01()
     if ( 0 ) { exit(22); }
 
     write(false);
-    __i01 = _sleepWaitForState02( 100000 , 100 , &_lastEventType11 , AIUIConstant::STATE_WORKING ) ;
+    __i01 = _sleepWaitForState02( 100000 , 200 , &_lastEventType11 , AIUIConstant::STATE_WORKING ) ;
 	cout << " 33 repeate ("  << __i01 << ") time , result : " << SSTR( _lastEventType11 ) << " --> " << _stateToStr( _lastEventType11 ) << endl;
     if ( 1 ) { exit(33); }
 
