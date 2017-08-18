@@ -21,6 +21,8 @@ int _lastEventType11 = -1 ;
 int _lastEventType31 = -1 ;
 int _lastEventType41 = -1 ;
 int _lastEventType61 = -1 ;
+int _lastNlp01 = -1 ;
+int _lastNlp02 = -1 ;
 
 char _numstr[21]; // enough to hold all numbers up to 64-bits
 
@@ -143,7 +145,7 @@ int AIUITester::_sleepWaitForState02( int ___gapUS, int ___gapMax , int * ___dst
         usleep( ___gapUS ) ;
         __checkCNT ++ ;
     }
-    if ( __checkCNT >= ___gapMax ) {
+    if ( __checkCNT >= ___gapMax ) { // _sleepWaitForState02
         return -2 ;
     }
     while ( __checkCNT < ___gapMax ) {
@@ -158,6 +160,38 @@ int AIUITester::_sleepWaitForState02( int ___gapUS, int ___gapMax , int * ___dst
     }
     return -1 ;
 } // AIUITester::_sleepWaitForState02
+int AIUITester::_sleepWaitForState11( int ___gapUS, int ___gapMax , int * ___lastNLP01 , int *___lastNLP02 , int ___idleWait )
+{
+    int __checkCNT = 0 ;
+
+    if ( ___gapUS <= 0 )            return -1000001 ;
+    if ( ___gapMax <= 0 )           return -1000002 ;
+    if ( ___lastNLP01 == NULL )     return -1000003 ;
+    if ( ___lastNLP02 == NULL )     return -1000004 ;
+    if ( ___idleWait <= 0 )           return -1000002 ;
+
+    while ( __checkCNT < ___gapMax ) {
+        if ( (*___lastNLP01) > 0 && (*___lastNLP02) > 0 ) {
+            break ;
+        }
+        usleep( ___gapUS ) ;
+        __checkCNT ++ ;
+    }
+    if ( __checkCNT >= ___gapMax ) {
+        return -2 ;
+    }
+    while ( __checkCNT < ___gapMax ) { // _sleepWaitForState11
+        usleep( ___gapUS ) ;
+        if ( (time(0)) - (*___lastNLP02) >= ___idleWait ) {
+            return __checkCNT ;
+        }
+        __checkCNT ++ ;
+    }
+    if ( __checkCNT >= ___gapMax ) {
+        return -(300000 + __checkCNT ) ;
+    }
+    return -1 ;
+} // AIUITester::_sleepWaitForState11
 
 extern int      _argc ;
 extern char **  _argv ;
@@ -186,9 +220,24 @@ void AIUITester::_autoCmd01()
 	cout << " 22 repeate ("  << __i01 << ") time , result : " << SSTR( _lastEventType11 ) << " --> " << _stateToStr( _lastEventType11 ) << endl;
     if ( 0 ) { exit(22); }
 
+    _lastNlp01 = -1 ;
+    _lastNlp02 = -1 ;
     write(false);
-    __i01 = _sleepWaitForState02( 100000 , 200 , &_lastEventType11 , AIUIConstant::STATE_WORKING ) ;
-	cout << " 33 repeate ("  << __i01 << ") time , result : " << SSTR( _lastEventType11 ) << " --> " << _stateToStr( _lastEventType11 ) << endl;
+    if ( 0 ) {
+        __i01 = _sleepWaitForState02( 100000 , 200 , &_lastEventType11 , AIUIConstant::STATE_WORKING ) ;
+	    cout << " 33 repeate ("  << __i01 << ") time , result : " << SSTR( _lastEventType11 ) << " --> " << _stateToStr( _lastEventType11 ) << endl;
+    } else {
+        __i01 = _sleepWaitForState11( 100000 , 200 , &_lastNlp01 , &_lastNlp02 , 4 ) ;
+	    cout << " 34 NLP result ("  
+            << __i01 
+            << ") time , result : " 
+            << SSTR( _lastNlp01 ) 
+            << " -- " 
+            << SSTR( _lastNlp02 ) 
+            << " -- " 
+            << TSTR
+            << endl ;
+    }
     if ( 1 ) { exit(33); }
 
     wakeup();
@@ -385,6 +434,9 @@ void TestListener::onEvent(IAIUIEvent& event)
                 {
                     Json::Value empty;
                     Json::Value contentId = content.get("cnt_id", empty);
+
+                    _lastNlp01 = _lastNlp02 ;
+                    _lastNlp02 = time(0);
 
                     if (contentId.empty())
                     {
