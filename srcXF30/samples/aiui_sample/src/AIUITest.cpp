@@ -9,6 +9,8 @@
     static_cast< std::ostringstream & >( \
             ( std::ostringstream() << std::dec << x ) ).str()
 
+#define TSTR   (" " + SSTR( time(0) ) + " ")
+
 extern "C" {
     void dbmemDebugShow( void );
 }
@@ -341,7 +343,7 @@ void TestListener::onEvent(IAIUIEvent& event)
                         cout << resultStr << endl;
                     }
                 }
-                cout << "EVENT_RESULT:end:" << sub << ":" << __func__ << " " << __LINE__ << endl;
+                cout << "EVENT_RESULT:end:" << sub << ":" << __func__ << " " << __LINE__ << TSTR << endl;
 
             }
             break;
