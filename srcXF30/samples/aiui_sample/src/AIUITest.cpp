@@ -25,12 +25,12 @@ char _numstr[21]; // enough to hold all numbers up to 64-bits
 #define _strX( bb ) # bb
 #define _id2str( aa ) \
     case (AIUIConstant::aa) : \
-    __str += " ==-5= " ; \
+    __str += " ==-C= " ; \
     __str += _strX( aa ) ; \
     __str += ":" ; \
     __str += SSTR( (AIUIConstant::aa)+0)  ; \
     __str += " " ; \
-    __str += " ==-6= " ; \
+    __str += " ==-D= " ; \
     break 
 //#define _unStr( saved , msg , id )  snprintf( _numstr , 20 , "%d" , id ) ; saved = msg + _numstr 
 #define _unStr( saved , msg , id )  \
@@ -40,6 +40,7 @@ char _numstr[21]; // enough to hold all numbers up to 64-bits
 string AIUITester::_cmdToStr( int ___eventID ) 
 {
     string __str = "" ;
+    if ( 1 ) { __str = +" =--A= " ; } else     { __str += " " ; }
     switch ( ___eventID ) {
         _id2str( CMD_RESET ) ;
         _id2str( CMD_START ) ;
@@ -49,12 +50,13 @@ string AIUITester::_cmdToStr( int ___eventID )
         _id2str( CMD_WRITE ) ;
         default : _unStr( __str , " unknowCMD " , ___eventID ) ;
     }
+    if ( 1 ) { __str = +" =--B= " ; } else     { __str += " " ; }
     return __str ;
 } // AIUITester::_cmdToStr
 string AIUITester::_eventToStr( int ___eventID ) 
 {
     string __str = "" ;
-    if ( 1 ) { __str = " =--1= " ; } else     { __str = " " ; }
+    if ( 1 ) { __str += " =--1= " ; } else     { __str += " " ; }
     switch ( ___eventID ) {
         _id2str( EVENT_ERROR ) ;
         _id2str( EVENT_RESULT ) ;
@@ -70,27 +72,27 @@ string AIUITester::_eventToStr( int ___eventID )
 string AIUITester::_stateToStr( int ___eventID ) 
 {
     string __str = "" ;
-    if ( 1 ) { __str = " =--3= " ; } else     { __str = " " ; }
+    if ( 1 ) { __str += " =--3= " ; } else     { __str += " " ; }
     switch ( ___eventID ) {
         _id2str( STATE_IDLE ) ;
         _id2str( STATE_READY ) ;
         _id2str( STATE_WORKING ) ;
         default : _unStr( __str , " unknowSTATE " , ___eventID ) ;
     }
-    if ( 1 ) { __str = " =--4= " ; } else     { __str = " " ; }
+    if ( 1 ) { __str += " =--4= " ; } else     { __str += " " ; }
     return __str ;
 } // AIUITester::_stateToStr
 string AIUITester::_vadToStr( int ___eventID ) 
 {
     string __str = "" ;
-    if ( 1 ) { __str = " =--5= " ; } else     { __str = " " ; }
+    if ( 1 ) { __str += " =--5= " ; } else     { __str += " " ; }
     switch ( ___eventID ) {
         _id2str( VAD_BOS ) ;
         _id2str( VAD_EOS ) ;
         _id2str( VAD_VOL ) ;
         default : _unStr( __str , " unknowVAD " , ___eventID ) ;
     }
-    if ( 1 ) { __str = " =--6= " ; } else     { __str = " " ; }
+    if ( 1 ) { __str += " =--6= " ; } else     { __str += " " ; }
     return __str ;
 } // AIUITester::_vadToStr
 
@@ -98,9 +100,9 @@ void AIUITester::_dumpStatus()
 {
     cout << _eventToStr( _lastEventType00 ) << endl ;
     cout << _stateToStr( _lastEventType11 ) << endl ;
-    cout << " =--7 sleep : " << SSTR( _lastEventType31 ) << " =--8= " << endl ;
+    cout << " =--7= sleep : " << SSTR( _lastEventType31 ) << " =--8= " << endl ;
     cout << _vadToStr( _lastEventType41 ) << endl ;
-    cout << " =--8 error : " << SSTR( _lastEventType61 ) << " =--0= " << endl ;
+    cout << " =--8= error : " << SSTR( _lastEventType61 ) << " =--0= " << endl ;
 
 } // AIUITester::_dumpStatus
 
@@ -487,7 +489,7 @@ void AIUITester::readCmd()
 
 		if (cmd == "c")
 		{
-			cout << "createAgent" << endl;
+			cout << "createAgent" << endl; // AIUITester::readCmd
 			createAgent();
 		} else if (cmd == "w") {
 			cout << "wakeup" << endl;
@@ -499,7 +501,7 @@ void AIUITester::readCmd()
 			cout << "stop" << endl;
 			stop();
 		} else if (cmd == "d") {
-			cout << "destroy" << endl;
+			cout << "destroy" << endl; // AIUITester::readCmd
 			destory();
 		} else if (cmd == "r") {
 			cout << "reset" << endl;
@@ -511,7 +513,7 @@ void AIUITester::readCmd()
 			cout << "write" << endl;
 			write(false);
 		} else if (cmd == "wrr") {
-			cout << "write repeatly" << endl;
+			cout << "write repeatly" << endl; // AIUITester::readCmd
 			write(true);
 		} else if (cmd == "swrt" || cmd == "stwr"|| cmd == "S") {
 			cout << "stopWriteThread" << endl;
@@ -523,7 +525,7 @@ void AIUITester::readCmd()
 			destory();
 			break;
 		} else if (cmd == "ww") {
-			cout << "stop-wakeup-write" << endl;
+			cout << "stop-wakeup-write" << endl; // AIUITester::readCmd
 			stopWriteThread();
 			//cout << "111" << endl;
             //usleep(1000);
@@ -539,7 +541,7 @@ void AIUITester::readCmd()
 			write(false);
 			//cout << "555" << endl;
 			;
-		} else if (cmd == "h") {
+		} else if (cmd == "h") { // AIUITester::readCmd
             dbmemDebugShow();
 
 
@@ -558,10 +560,11 @@ void AIUITester::readCmd()
 			<< "ww   : stop-wakeup-write"   << endl
             ;
 		} else {
-			cout << "invalid cmd, input again." << endl;
+			cout << "invalid cmd, input again." << endl; // AIUITester::readCmd
 		}
-	}
-}
+        _dumpStatus();
+	} // while
+} // AIUITester::readCmd
 void AIUITester::test()
 {
 	//		AIUISetting::setSaveDataLog(true);
