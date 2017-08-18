@@ -27,36 +27,40 @@ fi
 
 
 [ -d /ch/xf30 ] && cd /ch/xf30 || cd /xf30    
-#nohup ./aiui_sample32.x1000.bin    /tmp/wav01.wav  > /tmp/w0.txt
-       ./aiui_sample32.x1000.bin    /tmp/wav01.wav  
+nohup ./aiui_sample32.x1000.bin    /tmp/wav01.wav  > /tmp/w0.txt
+#       ./aiui_sample32.x1000.bin    /tmp/wav01.wav  
 
-exit
+cat /tmp/w0.txt \
+    |grep ^get_answer01: \
+    |cut -c 14- \
+    |sed -e 's;\\\";;g'  \
+    |grep -v ^jsonError \
+    |tr -d '\r' \
+    |tr -d '\n' \
+    > /tmp/w1.txt
+
+cat /tmp/w1.txt \
+    |head -n 1 \
+    > /tmp/w2.txt
+
+# exit
 
 
 
 
-aa11=$(date +%s)
-echo '# before recognize ' ${aa11}
-nohup ./iat_sample15.x1000.bin /tmp/wav01.wav > /tmp/w1.txt
-aa12=$(date +%s)
-echo '# end recognize '  "$((${aa12}-${aa11})) , ${aa12}"
 
-cat /tmp/w1.txt |grep ^succee_iat_result: |head -n 1 > /tmp/w2.txt
-cat /tmp/w2.txt |sed -e 's;^succee_iat_result:;;g' |tr -d '\r' |tr -d '\n' > /tmp/w3.txt
-cat /tmp/w1.txt |grep ^'QISRGetResult failed' |tr -d '\r' |tr -d '\n' > /tmp/w4.txt
-ll1=$(cat /tmp/w3.txt  |wc -c)
-ll2=$(cat /tmp/w3.txt)
-ll3=$(cat /tmp/w4.txt|wc -c )
+ll1=$(cat /tmp/w1.txt  |wc -c)
+ll2=$(cat /tmp/w2.txt|wc -c )
+ll3=$(cat /tmp/w2.txt)
 if [ \
     "${ll1}" != 0 \
-    -a "${ll3}" == 0 \
-    -a "${ll2}" != 'nomatch:noisy' \
-    -a "${ll2}" != 'nomatch:out-of-voca' \
+    -a "${ll2}" == 0 \
     ]
 then
-    echo "${ll2} : /tmp/w3.txt : recognize ok  : ${ll1}"
+    echo "${ll2} : /tmp/w2.txt : recognize ok  : ${ll1}"
 else
     echo " recognize failed  : ${ll1}"
+    echo "see /tmp/w0.txt for details . "
     cat /tmp/w1.txt
 
     echo
@@ -69,7 +73,7 @@ fi
 
 aa11=$(date +%s)
 echo '# before tts ' ${aa11}
-nohup ./tts_sample11.x1000.bin /tmp/w3.txt > /tmp/logW4.tts.recognize.txt
+nohup ./tts_sample11.x1000.bin /tmp/w2.txt > /tmp/logW4.tts.recognize.txt
 aa12=$(date +%s)
 echo '# end tts '  "$((${aa12}-${aa11})) , ${aa12}"
 

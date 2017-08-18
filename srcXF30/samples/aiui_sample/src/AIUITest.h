@@ -108,6 +108,7 @@ private:
     int _sleepWaitForState01( int ___gapUS, int ___gapMax , int * ___dst , int ___wanted );
     int _sleepWaitForState02( int ___gapUS, int ___gapMax , int * ___dst , int ___wanted );
     int _sleepWaitForState11( int ___gapUS, int ___gapMax , int * ___lastNLP01 , int *___lastNLP02 , int ___idleWait ) ;
+    //string _jsonGetResult12( string ___inStr , string ___node1 , string ___node2 );
 
 public:
 	void readCmd();

@@ -14,6 +14,7 @@
 extern "C" {
     void dbmemDebugShow( void );
 }
+#include "cJSON.h"
 
 string _fname01 = TEST_AUDIO_PATH ;
 int _lastEventType00 = -1 ;
@@ -192,6 +193,46 @@ int AIUITester::_sleepWaitForState11( int ___gapUS, int ___gapMax , int * ___las
     }
     return -1 ;
 } // AIUITester::_sleepWaitForState11
+
+//string AIUITester::_jsonGetResult14( string ___inStr , string ___node1 , string ___node2 )
+string _jsonGetResult14( string ___inStr , string ___node1 , string ___node2 , string ___node3 , string ___node4 )
+{
+#if 1
+    string __rtStr ;
+    cJSON * __jN0 ;
+    cJSON * __jN1 ;
+    cJSON * __jN2 ;
+    cJSON * __jN3 ;
+    cJSON * __jN4 ;
+
+    __jN0 = cJSON_Parse( ___inStr . c_str() );
+    if ( NULL == __jN0 ) return "jsonError00" ;
+
+    if ( ___node1 == "" ) { __jN1 = __jN0 ; } else {
+        __jN1 = cJSON_GetObjectItemCaseSensitive(   __jN0 ,       ___node1 . c_str() ) ;
+        if ( NULL == __jN1 ) return "jsonError01:<" + ___node1 + ">";
+    }
+    if ( ___node2 == "" ) { __jN2 = __jN1 ; } else {
+        __jN2 = cJSON_GetObjectItemCaseSensitive(   __jN1 ,       ___node2 . c_str() ) ;
+        if ( NULL == __jN2 ) return "jsonError02:<" + ___node2 + ">";
+    }
+    if ( ___node3 == "" ) { __jN3 = __jN2 ; } else {
+        __jN3 = cJSON_GetObjectItemCaseSensitive(   __jN2 ,       ___node3 . c_str() ) ;
+        if ( NULL == __jN3 ) return "jsonError03:<" + ___node3 + ">";
+    }
+    if ( ___node4 == "" ) { __jN4 = __jN3 ; } else {
+        __jN4 = cJSON_GetObjectItemCaseSensitive(   __jN3 ,       ___node4 . c_str() ) ;
+        if ( NULL == __jN4 ) return "jsonError04:<" + ___node4 + ">";
+    }
+
+    //__rtStr = cJSON_Print( __jN4 ) ;
+    __rtStr = cJSON_PrintUnformatted( __jN4 ) ;
+    //__rtStr = *(__jN4 -> string) ;
+    return __rtStr ;
+#else
+    return "" ;
+#endif
+} // AIUITester::_jsonGetResult14
 
 extern int      _argc ;
 extern char **  _argv ;
@@ -447,12 +488,22 @@ void TestListener::onEvent(IAIUIEvent& event)
                     string cnt_id = contentId.asString();
                     Buffer* buffer = event.getData()->getBinary(cnt_id.c_str()); // onEvent 52
                     string resultStr;
+                    string __answer ;
 
                     if (NULL != buffer)
                     {
                         resultStr = string((char*)buffer->data());
 
+                        cout << "==get json : begin" << endl;
                         cout << resultStr << endl;
+                        cout << "==get json : end" << endl;
+                        //__answer = _jsonGetResult14( resultStr , "intent" , "answer" , "text" ) ;
+                        __answer = _jsonGetResult14( resultStr , "intent" , "answer" , "text" , "" ) ;
+                        if ( "" !=  __answer ) {
+                            cout << "get_answer01:" << __answer << endl ;
+                        } else {
+                            cout << "no get_answer01 found." << endl ;
+                        }
                     }
                 }
                 cout << "EVENT_RESULT:end:" << sub << ":" << __func__ << " " << __LINE__ << TSTR << endl;
