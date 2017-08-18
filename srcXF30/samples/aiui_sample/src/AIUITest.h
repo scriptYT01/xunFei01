@@ -105,6 +105,8 @@ private:
     string _stateToStr( int ) ;
     string _vadToStr( int ) ;
 	void _dumpStatus();
+    int _sleepWaitForState01( int ___gapUS, int ___gapMax , int * ___dst , int ___wanted );
+    int _sleepWaitForState02( int ___gapUS, int ___gapMax , int * ___dst , int ___wanted );
 
 public:
 	void readCmd();

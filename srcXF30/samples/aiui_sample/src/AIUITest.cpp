@@ -108,28 +108,72 @@ void AIUITester::_dumpStatus()
 
 } // AIUITester::_dumpStatus
 
+int AIUITester::_sleepWaitForState01( int ___gapUS, int ___gapMax , int * ___dst , int ___wanted )
+{
+    int __checkCNT = 0 ;
+
+    if ( ___gapUS <= 0 )    return -10001 ;
+    if ( ___gapMax <= 0 )   return -10002 ;
+    if ( ___dst == NULL )   return -10003 ;
+
+    while ( __checkCNT < ___gapMax ) {
+        if ( (*___dst) == ___wanted ) {
+            return __checkCNT ;
+        }
+        usleep( ___gapUS ) ;
+        __checkCNT ++ ;
+    }
+    return -1 ;
+} // AIUITester::_sleepWaitForState01
+int AIUITester::_sleepWaitForState02( int ___gapUS, int ___gapMax , int * ___dst , int ___wanted )
+{
+    int __checkCNT = 0 ;
+
+    if ( ___gapUS <= 0 )    return -10001 ;
+    if ( ___gapMax <= 0 )   return -10002 ;
+    if ( ___dst == NULL )   return -10003 ;
+
+    while ( __checkCNT < ___gapMax ) {
+        if ( (*___dst) != ___wanted ) {
+            return __checkCNT ;
+        }
+        usleep( ___gapUS ) ;
+        __checkCNT ++ ;
+    }
+    return -1 ;
+} // AIUITester::_sleepWaitForState02
+
 extern int      _argc ;
 extern char **  _argv ;
 void AIUITester::_autoCmd01()
 {
+    int __i01 ;
     if ( _argc != 2 ) {
 	    cout << "\n useage : " << _argv[0] << " <wave_input.wav>\n\n\n" << _argc << endl;
         exit(33);
     }
     _fname01 = _argv[1] ;
 
-	cout << "\n _autoCmd01 start "  << _argc << "\n\n\n"<< endl;
+	//cout << "\n _autoCmd01 start "  << _argc << "\n\n\n"<< endl;
     _dumpStatus();
-	cout << "\n _autoCmd01 0121 "   << _argc << "\n\n\n" << endl;
-    exit(32);
+	//cout << "\n _autoCmd01 0121 "   << _argc << "\n\n\n" << endl;
 
     createAgent();
-    sleep(1);
+    //sleep(1);
+    __i01 = _sleepWaitForState01( 100000 , 10 , &_lastEventType11 , AIUIConstant::STATE_READY ) ;
+	cout << " 11 repeate ("  << __i01 << ") time , result : " << SSTR( _lastEventType11 ) << " --> " << _stateToStr( _lastEventType11 ) << endl;
+    if ( 0 ) { exit(11); }
 
-    stopWriteThread();
-	while ( NULL == agent ) {
-        sleep(1);
-    }
+    //stopWriteThread();
+    wakeup();
+    __i01 = _sleepWaitForState01( 100000 , 100 , &_lastEventType11 , AIUIConstant::STATE_WORKING ) ;
+	cout << " 22 repeate ("  << __i01 << ") time , result : " << SSTR( _lastEventType11 ) << " --> " << _stateToStr( _lastEventType11 ) << endl;
+    if ( 0 ) { exit(22); }
+
+    write(false);
+    __i01 = _sleepWaitForState02( 100000 , 100 , &_lastEventType11 , AIUIConstant::STATE_WORKING ) ;
+	cout << " 33 repeate ("  << __i01 << ") time , result : " << SSTR( _lastEventType11 ) << " --> " << _stateToStr( _lastEventType11 ) << endl;
+    if ( 1 ) { exit(33); }
 
     wakeup();
     sleep(1);
