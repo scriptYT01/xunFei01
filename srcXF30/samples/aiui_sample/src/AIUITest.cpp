@@ -2,8 +2,12 @@
 
 #include <string.h>
 #include <stdlib.h>
+#include <sstream>
 #include "jsoncpp/json/json.h"
 
+#define SSTR( x ) \
+    static_cast< std::ostringstream & >( \
+            ( std::ostringstream() << std::dec << x ) ).str()
 
 extern "C" {
     void dbmemDebugShow( void );
@@ -21,18 +25,21 @@ char _numstr[21]; // enough to hold all numbers up to 64-bits
 #define _strX( bb ) # bb
 #define _id2str( aa ) \
     case (AIUIConstant::aa) : \
-    __str = " ==-= " ; \
+    __str += " ==-5= " ; \
     __str += _strX( aa ) ; \
     __str += ":" ; \
-    __str += ('0' + ((AIUIConstant::aa)+0) ) ; \
+    __str += SSTR( (AIUIConstant::aa)+0)  ; \
     __str += " " ; \
+    __str += " ==-6= " ; \
     break 
 //#define _unStr( saved , msg , id )  snprintf( _numstr , 20 , "%d" , id ) ; saved = msg + _numstr 
 #define _unStr( saved , msg , id )  \
-    saved = msg + ('0' + id )
+    saved += msg ; \
+    saved += ":" ; \
+    saved += SSTR( id ) ;
 string AIUITester::_cmdToStr( int ___eventID ) 
 {
-    string __str ;
+    string __str = "" ;
     switch ( ___eventID ) {
         _id2str( CMD_RESET ) ;
         _id2str( CMD_START ) ;
@@ -46,7 +53,8 @@ string AIUITester::_cmdToStr( int ___eventID )
 } // AIUITester::_cmdToStr
 string AIUITester::_eventToStr( int ___eventID ) 
 {
-    string __str ;
+    string __str = "" ;
+    if ( 1 ) { __str = " =--1= " ; } else     { __str = " " ; }
     switch ( ___eventID ) {
         _id2str( EVENT_ERROR ) ;
         _id2str( EVENT_RESULT ) ;
@@ -56,34 +64,44 @@ string AIUITester::_eventToStr( int ___eventID )
         _id2str( EVENT_WAKEUP ) ;
         default : _unStr( __str , " unknowEvent " , ___eventID ) ;
     }
+    if ( 1 ) { __str += " =--2= " ; } else     { __str += " " ; }
     return __str ;
 } // AIUITester::_eventToStr
 string AIUITester::_stateToStr( int ___eventID ) 
 {
-    string __str ;
+    string __str = "" ;
+    if ( 1 ) { __str = " =--3= " ; } else     { __str = " " ; }
     switch ( ___eventID ) {
         _id2str( STATE_IDLE ) ;
         _id2str( STATE_READY ) ;
         _id2str( STATE_WORKING ) ;
         default : _unStr( __str , " unknowSTATE " , ___eventID ) ;
     }
+    if ( 1 ) { __str = " =--4= " ; } else     { __str = " " ; }
     return __str ;
 } // AIUITester::_stateToStr
 string AIUITester::_vadToStr( int ___eventID ) 
 {
-    string __str ;
+    string __str = "" ;
+    if ( 1 ) { __str = " =--5= " ; } else     { __str = " " ; }
     switch ( ___eventID ) {
         _id2str( VAD_BOS ) ;
         _id2str( VAD_EOS ) ;
         _id2str( VAD_VOL ) ;
         default : _unStr( __str , " unknowVAD " , ___eventID ) ;
     }
+    if ( 1 ) { __str = " =--6= " ; } else     { __str = " " ; }
     return __str ;
 } // AIUITester::_vadToStr
 
 void AIUITester::_dumpStatus()
 {
     cout << _eventToStr( _lastEventType00 ) << endl ;
+    cout << _stateToStr( _lastEventType11 ) << endl ;
+    cout << " =--7 sleep : " << SSTR( _lastEventType31 ) << " =--8= " << endl ;
+    cout << _vadToStr( _lastEventType41 ) << endl ;
+    cout << " =--8 error : " << SSTR( _lastEventType61 ) << " =--0= " << endl ;
+
 } // AIUITester::_dumpStatus
 
 extern int      _argc ;
