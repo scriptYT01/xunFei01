@@ -99,7 +99,12 @@ private:
 	void writeText();
 	void destory();
 
-	void autoCmd01();
+	void _autoCmd01();
+    string _cmdToStr( int ) ;
+    string _eventToStr( int ) ;
+    string _stateToStr( int ) ;
+    string _vadToStr( int ) ;
+	void _dumpStatus();
 
 public:
 	void readCmd();

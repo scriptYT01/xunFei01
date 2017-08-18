@@ -10,6 +10,120 @@ extern "C" {
 }
 
 string _fname01 = TEST_AUDIO_PATH ;
+int _lastEventType00 = -1 ;
+int _lastEventType11 = -1 ;
+int _lastEventType31 = -1 ;
+int _lastEventType41 = -1 ;
+int _lastEventType61 = -1 ;
+
+char _numstr[21]; // enough to hold all numbers up to 64-bits
+
+#define _strX( bb ) # bb
+#define _id2str( aa ) \
+    case (AIUIConstant::aa) : \
+    __str = " ==-= " ; \
+    __str += _strX( aa ) ; \
+    __str += ":" ; \
+    __str += ('0' + ((AIUIConstant::aa)+0) ) ; \
+    __str += " " ; \
+    break 
+//#define _unStr( saved , msg , id )  snprintf( _numstr , 20 , "%d" , id ) ; saved = msg + _numstr 
+#define _unStr( saved , msg , id )  \
+    saved = msg + ('0' + id )
+string AIUITester::_cmdToStr( int ___eventID ) 
+{
+    string __str ;
+    switch ( ___eventID ) {
+        _id2str( CMD_RESET ) ;
+        _id2str( CMD_START ) ;
+        _id2str( CMD_STOP ) ;
+        _id2str( CMD_STOP_WRITE ) ;
+        _id2str( CMD_WAKEUP ) ;
+        _id2str( CMD_WRITE ) ;
+        default : _unStr( __str , " unknowCMD " , ___eventID ) ;
+    }
+    return __str ;
+} // AIUITester::_cmdToStr
+string AIUITester::_eventToStr( int ___eventID ) 
+{
+    string __str ;
+    switch ( ___eventID ) {
+        _id2str( EVENT_ERROR ) ;
+        _id2str( EVENT_RESULT ) ;
+        _id2str( EVENT_SLEEP ) ;
+        _id2str( EVENT_STATE ) ;
+        _id2str( EVENT_VAD ) ;
+        _id2str( EVENT_WAKEUP ) ;
+        default : _unStr( __str , " unknowEvent " , ___eventID ) ;
+    }
+    return __str ;
+} // AIUITester::_eventToStr
+string AIUITester::_stateToStr( int ___eventID ) 
+{
+    string __str ;
+    switch ( ___eventID ) {
+        _id2str( STATE_IDLE ) ;
+        _id2str( STATE_READY ) ;
+        _id2str( STATE_WORKING ) ;
+        default : _unStr( __str , " unknowSTATE " , ___eventID ) ;
+    }
+    return __str ;
+} // AIUITester::_stateToStr
+string AIUITester::_vadToStr( int ___eventID ) 
+{
+    string __str ;
+    switch ( ___eventID ) {
+        _id2str( VAD_BOS ) ;
+        _id2str( VAD_EOS ) ;
+        _id2str( VAD_VOL ) ;
+        default : _unStr( __str , " unknowVAD " , ___eventID ) ;
+    }
+    return __str ;
+} // AIUITester::_vadToStr
+
+void AIUITester::_dumpStatus()
+{
+    cout << _eventToStr( _lastEventType00 ) << endl ;
+} // AIUITester::_dumpStatus
+
+extern int      _argc ;
+extern char **  _argv ;
+void AIUITester::_autoCmd01()
+{
+    if ( _argc != 2 ) {
+	    cout << "\n useage : " << _argv[0] << " <wave_input.wav>\n\n\n" << _argc << endl;
+        exit(33);
+    }
+    _fname01 = _argv[1] ;
+
+	cout << "\n _autoCmd01 start "  << _argc << "\n\n\n"<< endl;
+    _dumpStatus();
+	cout << "\n _autoCmd01 0121 "   << _argc << "\n\n\n" << endl;
+    exit(32);
+
+    createAgent();
+    sleep(1);
+
+    stopWriteThread();
+	while ( NULL == agent ) {
+        sleep(1);
+    }
+
+    wakeup();
+    sleep(1);
+    start();
+    sleep(1);
+    wakeup();
+    sleep(1);
+    write(false);
+
+	cout << "\n _autoCmd01 end \n\n\n" << _argc << endl;
+
+} // AIUITester::_autoCmd01
+
+
+
+
 
 bool WriteAudioThread::threadLoop()
 {
@@ -103,10 +217,13 @@ bool WriteAudioThread::run()
 
 void TestListener::onEvent(IAIUIEvent& event)
 {
-    switch (event.getEventType()) {
-        case AIUIConstant::EVENT_STATE:
+    _lastEventType00 = event.getEventType() ;
+    switch ( _lastEventType00 ) {
+    //switch (event.getEventType()) {
+        case AIUIConstant::EVENT_STATE: // onEvent 1 // :3
             {
-                switch (event.getArg1()) {
+                _lastEventType11 = event.getArg1() ;
+                switch ( _lastEventType11 ) { // onEvent    11
                     case AIUIConstant::STATE_IDLE:
                         {
                             cout << "EVENT_STATE:" << "IDLE" << endl;
@@ -128,21 +245,23 @@ void TestListener::onEvent(IAIUIEvent& event)
             } 
             break;
 
-        case AIUIConstant::EVENT_WAKEUP:
+        case AIUIConstant::EVENT_WAKEUP: // onEvent    2
             {
                 cout << "EVENT_WAKEUP:" << event.getInfo() << endl;
             } 
             break;
 
-        case AIUIConstant::EVENT_SLEEP:
+        case AIUIConstant::EVENT_SLEEP: // onEvent 3
             {
-                cout << "EVENT_SLEEP:arg1=" << event.getArg1() << endl;
+                _lastEventType31 = event.getArg1() ;
+                cout << "EVENT_SLEEP:arg1=" << _lastEventType31 << endl; // onEvent 31
             } 
             break;
 
-        case AIUIConstant::EVENT_VAD:
+        case AIUIConstant::EVENT_VAD: // onEvent 4 
             {
-                switch (event.getArg1()) {
+                _lastEventType41 = event.getArg1() ;
+                switch ( _lastEventType41 ) { // onEvent 41
                     case AIUIConstant::VAD_BOS:
                         {
                             cout << "EVENT_VAD:" << "BOS" << endl;
@@ -164,7 +283,7 @@ void TestListener::onEvent(IAIUIEvent& event)
             } 
             break;
 
-        case AIUIConstant::EVENT_RESULT:
+        case AIUIConstant::EVENT_RESULT: // onEvent 5
             {
                 using namespace VA;
                 Json::Value bizParamJson;
@@ -178,7 +297,7 @@ void TestListener::onEvent(IAIUIEvent& event)
                 Json::Value params = data["params"];
                 Json::Value content = (data["content"])[0];
                 string sub = params["sub"].asString();
-                cout << "EVENT_RESULT:start:" << sub << __func__ << " " << __LINE__ << endl;
+                cout << "EVENT_RESULT:start:" << sub << __func__ << " " << __LINE__ << endl; // onEvent 51
 
                 if (sub == "nlp")
                 {
@@ -192,7 +311,7 @@ void TestListener::onEvent(IAIUIEvent& event)
                     }
 
                     string cnt_id = contentId.asString();
-                    Buffer* buffer = event.getData()->getBinary(cnt_id.c_str());
+                    Buffer* buffer = event.getData()->getBinary(cnt_id.c_str()); // onEvent 52
                     string resultStr;
 
                     if (NULL != buffer)
@@ -207,9 +326,10 @@ void TestListener::onEvent(IAIUIEvent& event)
             }
             break;
 
-        case AIUIConstant::EVENT_ERROR:
+        case AIUIConstant::EVENT_ERROR: // onEvent 6
             {
-                cout << "EVENT_ERROR:" << event.getArg1() << endl;
+                _lastEventType61 = event.getArg1() ;
+                cout << "EVENT_ERROR:" << _lastEventType61 << endl; // onEvent 61
             } 
             break;
     }
@@ -331,43 +451,12 @@ void AIUITester::destory()
 	//		SpeechUtility::getUtility()->destroy();
 }
 
-extern int      _argc ;
-extern char **  _argv ;
-void AIUITester::autoCmd01()
-{
-    if ( _argc != 2 ) {
-	    cout << "\n useage : " << _argv[0] << " <wave_input.wav>\n\n\n" << _argc << endl;
-        exit(33);
-    }
-    _fname01 = _argv[1] ;
-
-	cout << "\n autoCmd01 start \n\n\n" << _argc << endl;
-    createAgent();
-    sleep(1);
-
-    stopWriteThread();
-	while ( NULL == agent ) {
-        sleep(1);
-    }
-
-    wakeup();
-    sleep(1);
-    start();
-    sleep(1);
-    wakeup();
-    sleep(1);
-    write(false);
-
-	cout << "\n autoCmd01 end \n\n\n" << _argc << endl;
-
-} // AIUITester::autoCmd01
-
 void AIUITester::readCmd()
 {
 
 	cout << "input argc:" << _argc << endl;
     if ( _argc > 1 ) {
-        autoCmd01( );
+        _autoCmd01( );
         return ;
     }
     
