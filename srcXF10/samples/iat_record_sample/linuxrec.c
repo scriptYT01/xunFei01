@@ -612,7 +612,9 @@ record_dev_id  get_default_input_dev()
 {
 	record_dev_id id; 
 #ifdef __i386__
-	    id.u.name = "hw:0,2";
+	    id.u.name = "default" ; // arecord -L :
+	    id.u.name = "sysdefault" ; // arecord -L :
+	    //id.u.name = "front" ; // arecord -L :
 #else
     if ( 1 ) {
 	    id.u.name = "default";
