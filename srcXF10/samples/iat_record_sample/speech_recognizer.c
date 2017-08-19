@@ -160,6 +160,8 @@ int _sr_init_ex(struct speech_rec * ___sr, const char * session_begin_params,
 	size_t param_size;
 	WAVEFORMATEX wavfmt = DEFAULT_FORMAT;
 
+    _prSFn( " start : %s " , record_dev_id.u.name ) ;
+
 	if (___aud_src == SR_MIC && get_input_dev_num() == 0) { // _sr_init_ex
 		return -E_SR_NOACTIVEDEVICE;
 	}
@@ -205,6 +207,7 @@ int _sr_init_ex(struct speech_rec * ___sr, const char * session_begin_params,
 		}
 	}
 
+    _prSFn( " end normal " ) ;
 	return 0;
 
 fail:
@@ -219,6 +222,7 @@ fail:
 	}
 	SR_MEMSET(&___sr->notif, 0, sizeof(___sr->notif));
 
+    _prSFn( " end error : %d" , errcode ) ;
 	return errcode;
 } // _sr_init_ex
 

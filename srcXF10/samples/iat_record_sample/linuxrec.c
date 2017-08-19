@@ -188,11 +188,11 @@ static int _set_hwparams3(struct recorder * ___rec,  const WAVEFORMATEX *wavfmt,
 	___rec->period_frames = __size; 
 	err = snd_pcm_hw_params_get_buffer_size(params, &__size); // _set_hwparams3
 	if (__size == ___rec->period_frames) {
-		//dbg("Can't 1 use period equal to buffer __size (%lu == %lu)",
-		_prSF("Can't 1 use period equal to buffer __size (%lu == %lu)",
-				      __size, ___rec->period_frames);
+		_prSF("Can't 1 use period equal to buffer __size (%lu == %lu)", __size, ___rec->period_frames);
 		return -EINVAL;
-	}
+	} else {
+		_prSF("  use period not equal to buffer __size (%lu != %lu)", __size, ___rec->period_frames);
+    }
 	___rec->buffer_frames = __size;
 	___rec->bits_per_frame = wavfmt->wBitsPerSample; // _set_hwparams3
 
@@ -615,10 +615,11 @@ record_dev_id  get_default_input_dev()
 	    id.u.name = "default" ; // arecord -L :
 	    id.u.name = "sysdefault" ; // arecord -L :
 	    //id.u.name = "front" ; // arecord -L :
+	    id.u.name = "hw:0,0" ; // arecord -L :
 #else
     if ( 1 ) {
 	    id.u.name = "default";
-	    //id.u.name = "hw:0,2";
+	    id.u.name = "sysdefault" ;
     } else {
 	    id.u.name = "hw:0,2";
     }
