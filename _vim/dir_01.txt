@@ -1,6 +1,5 @@
 scriptS/
 srcXF10/include/
-srcXF10/samples/iat_record_sample/
 srcXF10/samples/asr_sample
 srcXF10/samples/iat_record_sample
 srcXF10/samples/iat_sample

@@ -63,6 +63,20 @@ samples/asr_sample/asr_sample.c
 XFi386SrcList13:=$(foreach aa1,$(XFi386SrcList13x),$(XFi386S10)/$(aa1))
 XFi386DST13:=$(shell readlink -m patchDIR__x1000/XFi386DST13)
 
+XFi386SrcList18x:= 				\
+Makefile.i386.18				\
+libs/x86/libmsc.so				\
+include/						\
+bin/							\
+samples/iat_record_sample/formats.h							\
+samples/iat_record_sample/linuxrec.h						\
+samples/iat_record_sample/speech_recognizer.h				\
+samples/iat_record_sample/iat_record_sample.c    			\
+samples/iat_record_sample/linuxrec.c    					\
+samples/iat_record_sample/speech_recognizer.c    	
+XFi386SrcList18:=$(foreach aa1,$(XFi386SrcList18x),$(XFi386S10)/$(aa1))
+XFi386DST18:=$(shell readlink -m patchDIR__x1000/XFi386DST18)
+
 XFi386S20:=$(makePATH1)/srcXF20/
 XFi386SrcList21x:= 				\
 Makefile.i386.21				\
@@ -122,6 +136,12 @@ XFu XFupdate : XFgenDate
 	$(foreach aa1,$(XFi386SrcList13)\
 		, rsync -a $(aa1) $(XFi386DST13)/`basename $(aa1)`$(EOL))
 	cd $(XFi386DST13)/ && rm -f Makefile && ln -s `basename $(firstword $(XFi386SrcList13))`  	Makefile
+	@#
+	rm -fr $(XFi386DST18)/
+	mkdir -p $(XFi386DST18)
+	$(foreach aa1,$(XFi386SrcList18)\
+		, rsync -a $(aa1) $(XFi386DST18)/`basename $(aa1)`$(EOL))
+	cd $(XFi386DST18)/ && rm -f Makefile && ln -s `basename $(firstword $(XFi386SrcList18))`  	Makefile
 	@#
 	rm -fr $(XFi386DST21)/
 	mkdir -p $(XFi386DST21)

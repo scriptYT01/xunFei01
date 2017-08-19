@@ -57,7 +57,7 @@ $(BIN_TARGET) : $(OBJECTS)
 	$(CROSS_COMPILE)gcc $(CFLAGS) $^ -o $@ $(LDFLAGS)
 	echo "$${RUN01}" > run.sh
 	chmod 555 run.sh
-	chmod -R a+w bin/
+	-chmod -R a+w bin/
 
 %.o : %.c
 	sed -i -e 's;\.\./\.\./;./;g'   $<

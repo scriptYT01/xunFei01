@@ -12,7 +12,11 @@
 
 //#include <alsa/asoundlib.h>
 //#include <tinyalsa/asoundlib.h>
+#ifdef  __i386__
+#include <alsa/asoundlib.h>
+#else  
 #include <asoundlib.h>
+#endif
 
 
 
@@ -607,8 +611,16 @@ fail:
 record_dev_id  get_default_input_dev()
 {
 	record_dev_id id; 
-	id.u.name = "default";
-	id.u.name = "hw:0,2";
+#ifdef __i386__
+	    id.u.name = "hw:0,2";
+#else
+    if ( 1 ) {
+	    id.u.name = "default";
+	    //id.u.name = "hw:0,2";
+    } else {
+	    id.u.name = "hw:0,2";
+    }
+#endif
 	return id;
 } // get_default_input_dev
 
