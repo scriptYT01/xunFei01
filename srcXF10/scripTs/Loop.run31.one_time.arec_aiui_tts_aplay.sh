@@ -53,8 +53,8 @@ ll1=$(cat /tmp/w1.txt  |wc -c)
 ll2=$(cat /tmp/w2.txt|wc -c )
 ll3=$(cat /tmp/w2.txt)
 if [ \
-    "${ll1}" != 0 \
-    -a "${ll2}" == 0 \
+    "${ll1}" -gt 1 \
+    -a "${ll2}" -gt 1 \
     ]
 then
     echo "${ll2} : /tmp/w2.txt : recognize ok  : ${ll1}"
@@ -71,6 +71,9 @@ else
     exit 22
 fi
 
+grep '' /tmp/w1.txt
+
+[ -d /ch/xf10 ] && cd /ch/xf10 || cd /xf10    
 aa11=$(date +%s)
 echo '# before tts ' ${aa11}
 nohup ./tts_sample11.x1000.bin /tmp/w2.txt > /tmp/logW4.tts.recognize.txt

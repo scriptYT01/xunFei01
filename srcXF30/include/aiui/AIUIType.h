@@ -1,4 +1,4 @@
-﻿/*
+/*
  * AIUIType.h
  *
  *  Created on: 2017年2月17日
