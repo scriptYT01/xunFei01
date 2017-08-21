@@ -23,7 +23,7 @@
 #include "formats.h"
 
 #include <libgen.h>
-#define _prSF( fmt , ... ) printf( "--debuging: %s %d %s : " fmt "\n" , basename(__FILE__), __LINE__, __func__ , ## __VA_ARGS__ )
+#define _prSF( fmt , ... ) printf( "--debuging: %s %d %s : " fmt , basename(__FILE__), __LINE__, __func__ , ## __VA_ARGS__ )
 #define _prSFn( fmt , ... ) _prSF( fmt "\n" , ## __VA_ARGS__ )
 /* error code */
 enum {

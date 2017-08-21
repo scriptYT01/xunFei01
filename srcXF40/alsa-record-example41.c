@@ -19,7 +19,7 @@
 #include <alsa/asoundlib.h>
 
 #include <libgen.h>
-#define _prSF( fmt , ... ) printf( "--debuging: %s %d %s : " fmt "\n" , basename(__FILE__), __LINE__, __func__ , ## __VA_ARGS__ )
+#define _prSF( fmt , ... ) printf( "--debuging: %s %d %s : " fmt , basename(__FILE__), __LINE__, __func__ , ## __VA_ARGS__ )
 #define _prSFn( fmt , ... ) _prSF( fmt "\n" , ## __VA_ARGS__ )
 	      
 char * _dev_name01 = "default" ;
@@ -39,15 +39,16 @@ int main (int ___argc, char *___argv[])
 
     if ( ___argc >=2 && ___argv[1] != NULL && ___argv[1][0] != 0 ) {
         _dev_name01 = ___argv[1] ; 
-        _prSFn( " arg c <%d>" , ___argc ) ; 
-        _prSFn( " arg 1 <%s>" , _dev_name01 ) ; 
-        _prSFn( " arg 0 <%s>" , ___argv[0] ) ; 
-        _prSFn( " arg 1 <%s>" , ___argv[1] ) ; 
-        _prSFn( " arg 2 <%s>" , ___argv[2] ) ; 
+        if ( 0 ) {
+            _prSFn( " arg c <%d>" , ___argc ) ; 
+            _prSFn( " arg 1 <%s>" , _dev_name01 ) ; 
+            _prSFn( " arg 0 <%s>" , ___argv[0] ) ; 
+            _prSFn( " arg 1 <%s>" , ___argv[1] ) ; 
+            _prSFn( " arg 2 <%s>" , ___argv[2] ) ; 
+        }
     }
 
     _prSFn( " use device named <%s>" , _dev_name01 ) ; 
-
 
     if ((err = snd_pcm_open (&capture_handle, _dev_name01, SND_PCM_STREAM_CAPTURE, 0)) < 0) {
         fprintf (stderr, "cannot open audio device %s (%s)\n", 
