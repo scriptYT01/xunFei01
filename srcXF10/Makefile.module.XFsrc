@@ -190,6 +190,7 @@ XF05:=srcXF10/samples/iat_sample/Makefile
 XF06:=srcXF10/samples/iat_record_sample/Makefile
 XF07:=srcXF10/samples/asr_sample/Makefile
 
+XF10:=srcXF10/alsa-record-example19.c
 XF11:=srcXF10/samples/asr_sample/asr_sample.c
 
 XF12:=srcXF10/samples/iat_record_sample/iat_record_sample.c
@@ -214,7 +215,7 @@ vb2:=srcXF20/Build.mk
 
 XFlist:= 
 #XFlist+= XF01 XF02 XF03 XF04 XF05 XF06 XF07 
-XFlist+= XF11 XF12 XF13 XF14 XF15 XF16 XF17 XF18 XF19   
+XFlist+= XF10 XF11 XF12 XF13 XF14 XF15 XF16 XF17 XF18 XF19   
 XFlist+= XF20
 XFlist+= XF31 XF32 XF33 XF34
 XFlist+= vb1 vb2
