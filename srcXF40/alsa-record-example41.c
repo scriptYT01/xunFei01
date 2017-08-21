@@ -18,12 +18,13 @@
 #include <stdlib.h>
 #include <alsa/asoundlib.h>
 
-#define _prSF(  fmt , ... ) printf( "--debuging: %s %d %s : " fmt  , basename(__FILE__), __LINE__, __func__ , ## __VA_ARGS__ )
-#define _prSFn( fmt , ... ) _prSF( fmt "\n" ) 
+#include <libgen.h>
+#define _prSF( fmt , ... ) printf( "--debuging: %s %d %s : " fmt "\n" , basename(__FILE__), __LINE__, __func__ , ## __VA_ARGS__ )
+#define _prSFn( fmt , ... ) _prSF( fmt "\n" , ## __VA_ARGS__ )
 	      
 char * _dev_name01 = "default" ;
 
-main (int ___argc, char *___argv[])
+int main (int ___argc, char *___argv[])
 {
     int i;
     int err;
@@ -131,7 +132,7 @@ main (int ___argc, char *___argv[])
 
     for (i = 0; i < 10; ++i) {
         if ((err = snd_pcm_readi (capture_handle, buffer, buffer_frames)) != buffer_frames) {
-            fprintf (stderr, "read from audio interface failed (%s)\n",
+            fprintf (stderr, "read from audio interface failed (%d:%s)\n",
                     err, snd_strerror (err));
             exit (1);
         }
