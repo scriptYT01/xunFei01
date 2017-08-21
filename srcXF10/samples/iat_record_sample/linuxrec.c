@@ -536,8 +536,10 @@ static int get_pcm_device_cnt(snd_pcm_stream_t stream)
 	while (*n != NULL) {
 		io = snd_device_name_get_hint(*n, "IOID");
 		name = snd_device_name_get_hint(*n, "NAME");
-		if (name && (io == NULL || strcmp(io, filter) == 0))
+		if (name && (io == NULL || strcmp(io, filter) == 0)) {
+            _prSFn( " ==--== cmp pcm:  %d : %s -- %s -- %s " , cnt , filter , io , name ) ;
 			cnt ++;
+        }
 		if (io != NULL)
 			free(io);
 		if (name != NULL)
