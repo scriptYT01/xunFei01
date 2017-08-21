@@ -99,12 +99,12 @@ static int _is_stopped_internal(struct recorder *___rec)
 	
 } // _is_stopped_internal
 
-static int _format_ms_to_alsa(const WAVEFORMATEX * wavfmt, 
+static int _format_ms_to_alsa(const WAVEFORMATEX * ___wavfmt, 
 						snd_pcm_format_t * format)
 {
 	snd_pcm_format_t tmp;
-	tmp = snd_pcm_build_linear_format(wavfmt->wBitsPerSample, 
-			wavfmt->wBitsPerSample, wavfmt->wBitsPerSample == 8 ? 1 : 0, 0);
+	tmp = snd_pcm_build_linear_format(___wavfmt->wBitsPerSample, 
+			___wavfmt->wBitsPerSample, ___wavfmt->wBitsPerSample == 8 ? 1 : 0, 0);
 	if ( tmp == SND_PCM_FORMAT_UNKNOWN )
 		return -EINVAL;
 	*format = tmp;
@@ -112,7 +112,7 @@ static int _format_ms_to_alsa(const WAVEFORMATEX * wavfmt,
 } // _format_ms_to_alsa
 
 /* set hardware and software params */
-static int _set_hwparams3(struct recorder * ___rec,  const WAVEFORMATEX *wavfmt,
+static int _set_hwparams3(struct recorder * ___rec,  const WAVEFORMATEX *___wavfmt,
 			unsigned int buffertime, unsigned int periodtime)
 {
 	snd_pcm_hw_params_t *params;
@@ -137,7 +137,7 @@ static int _set_hwparams3(struct recorder * ___rec,  const WAVEFORMATEX *wavfmt,
 		_prSFn("ERROR Access type not available");
 		return err;
 	}
-	err = _format_ms_to_alsa(wavfmt, &format); // _set_hwparams3
+	err = _format_ms_to_alsa(___wavfmt, &format); // _set_hwparams3
 	if (err) {
 		_prSFn("ERROR Invalid format");
 		return - EINVAL;
@@ -147,19 +147,24 @@ static int _set_hwparams3(struct recorder * ___rec,  const WAVEFORMATEX *wavfmt,
 		_prSFn("ERROR Sample format non available");
 		return err;
 	}
-	err = snd_pcm_hw_params_set_channels(__handle, params, wavfmt->nChannels); // _set_hwparams3
+
+    // ___wavfmt->nChannels 
+    extern int     _chAmount ;
+    _prSFn(" trying ---- set channel -- %d" , _chAmount ) ;
+	err = snd_pcm_hw_params_set_channels(__handle, params, _chAmount ); // _set_hwparams3
 	if (err < 0) {
-		_prSFn("ERROR Channels count non available");
+		_prSFn("ERROR Channels count non available : %d " , ___wavfmt->nChannels );
 		return err;
 	}
 
-	rate = wavfmt->nSamplesPerSec;
+    _prSFn(" trying ---- set rate -- %d" , rate ) ;
+	rate = ___wavfmt->nSamplesPerSec;
 	err = snd_pcm_hw_params_set_rate_near(__handle, params, &rate, 0); // _set_hwparams3
 	if (err < 0) {
 		_prSFn("ERROR Set rate failed");
 		return err;
 	}
-	if(rate != wavfmt->nSamplesPerSec) {
+	if(rate != ___wavfmt->nSamplesPerSec) {
 		_prSFn("ERROR Rate mismatch");
 		return -EINVAL;
 	}
@@ -197,7 +202,7 @@ static int _set_hwparams3(struct recorder * ___rec,  const WAVEFORMATEX *wavfmt,
 		_prSFn("SUCCEED   use period not equal to buffer __size (%u != %u)", (unsigned int) __size, (unsigned int) ___rec->period_frames);
     }
 	___rec->buffer_frames = __size;
-	___rec->bits_per_frame = wavfmt->wBitsPerSample; // _set_hwparams3
+	___rec->bits_per_frame = ___wavfmt->wBitsPerSample; // _set_hwparams3
 
 	/* set to driver */
 	err = snd_pcm_hw_params(__handle, params);

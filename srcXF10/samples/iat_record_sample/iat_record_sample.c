@@ -18,8 +18,9 @@
 
 #include "linuxrec.h"
 
-char * _argv01 = NULL ;
-char * _argv02 = NULL ;
+char *  _argv01 = NULL ;
+char *  _argv02 = NULL ;
+int     _chAmount = 1 ;
 
 /* Upload User words */
 static int upload_userwords()
@@ -299,6 +300,9 @@ int main(int argc, char* argv[])
 
     if ( argc >= 2 ) { _argv01 = argv[1] ; }
     if ( argc >= 3 ) { _argv02 = argv[2] ; }
+        if ( _argv02 != NULL ) {
+            _chAmount = atoi( _argv02 ) ;
+        }
 
 	/*
 	* See "iFlytek MSC Reference Manual"
