@@ -458,14 +458,14 @@ static int open_recorder_internal(struct recorder * ___rec,
 	err = snd_pcm_open((snd_pcm_t **)&___rec->wavein_hdl, ___dev.u.name, 
 			SND_PCM_STREAM_CAPTURE, 0);
 	if(err < 0) {
-        _prSF( " open failed <%s>" "\n" , ___dev.u.name ) ;
+        _prSF( " ERROR open failed <%s>" "\n" , ___dev.u.name ) ;
 		goto fail;
     }
 
     _prSF( " trying set para <%s>" "\n" , ___dev.u.name ) ;
 	err = _set_params1(___rec, fmt, DEF_BUFF_TIME, DEF_PERIOD_TIME);
 	if(err) {
-        _prSF( " set para <%s>" "\n" , ___dev.u.name ) ;
+        _prSF( " ERROR set para <%s>" "\n" , ___dev.u.name ) ;
 		goto fail;
     }
 
@@ -474,7 +474,7 @@ static int open_recorder_internal(struct recorder * ___rec,
     _prSF( " trying prepare rec buffer <%s>" "\n" , ___dev.u.name ) ;
 	err = prepare_rec_buffer(___rec);
 	if(err) {
-        _prSF( " prepare rec buffer faile : <%s>" "\n" , ___dev.u.name ) ;
+        _prSF( " ERROR prepare rec buffer faile : <%s>" "\n" , ___dev.u.name ) ;
 		goto fail;
     }
 
@@ -482,7 +482,7 @@ static int open_recorder_internal(struct recorder * ___rec,
 	err = create_record_thread((void*)___rec, 
 			&___rec->rec_thread);
 	if(err) {
-        _prSF( " create rec thread failed :<%s>" "\n" , ___dev.u.name ) ;
+        _prSF( " ERROR create rec thread failed :<%s>" "\n" , ___dev.u.name ) ;
 		goto fail;
     }
 	
