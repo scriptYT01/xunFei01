@@ -178,12 +178,14 @@ static void demo_file(const char* audio_file, const char* session_begin_params)
 		goto iat_exit;
 	}
 
+    _prSFn( " ----- before sr_init " ) ; // demo_file
 	errcode = _sr_init(&iat, session_begin_params, SR_USER, &recnotifier);
 	if (errcode) {
 		printf("speech recognizer init failed : %d\n", errcode);
         _prSFn( " ----- ERROR end 9 " ) ;
 		goto iat_exit;
 	}
+    _prSFn( " ----- after sr_init " ) ; // demo_file
 
 	errcode = _sr_start_listening(&iat);
 	if (errcode) {
@@ -256,12 +258,15 @@ static void _demo_mic(const char* session_begin_params)
 
     _prSFn( " ----- start " ) ;
 
+    _prSFn( " ----- before sr_init \n\n" ) ; // _demo_mic
 	errcode = _sr_init(&iat, session_begin_params, SR_MIC, &recnotifier);// _demo_mic
 	if (errcode) {
 		printf("speech recognizer init failed\n");
         _prSFn( " ----- ERROR end " ) ;
 		return;
 	}
+    _prSFn( "\n\n ----- after sr_init " ) ; // _demo_mic
+
 	errcode = _sr_start_listening(&iat);
 	if (errcode) {
 		printf("start listen failed %d\n", errcode);// _demo_mic

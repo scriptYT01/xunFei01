@@ -160,14 +160,17 @@ int _sr_init_ex(struct speech_rec * ___sr, const char * session_begin_params,
 	size_t param_size;
 	WAVEFORMATEX wavfmt = DEFAULT_FORMAT;
 
-    _prSFn( " start : %s " , ___devid.u.name ) ;
+    _prSFn( "=====----- start : %s " , ___devid.u.name ) ;
 
 	if (___aud_src == SR_MIC && get_input_dev_num() == 0) { // _sr_init_ex
+        _prSFn( "=====----- end middle 1 error : %d" , errcode ) ;
 		return -E_SR_NOACTIVEDEVICE;
 	}
 
-	if (!___sr)
+	if (!___sr) {
+        _prSFn( "=====----- end middle 3 error : %d" , errcode ) ;
 		return -E_SR_INVAL;
+    }
 
 	if (session_begin_params == NULL) {
 		session_begin_params = DEFAULT_SESSION_PARA; // _sr_init_ex
@@ -184,6 +187,7 @@ int _sr_init_ex(struct speech_rec * ___sr, const char * session_begin_params,
 	___sr->session_begin_params = (char*)SR_MALLOC(param_size); // _sr_init_ex
 	if (___sr->session_begin_params == NULL) {
 		sr_dbg("mem alloc failed\n");
+        _prSFn( "=====----- end middle 5 error : %d" , errcode ) ;
 		return -E_SR_NOMEM;
 	}
 	strncpy(___sr->session_begin_params, session_begin_params, param_size); // _sr_init_ex
@@ -207,7 +211,7 @@ int _sr_init_ex(struct speech_rec * ___sr, const char * session_begin_params,
 		}
 	}
 
-    _prSFn( " end normal " ) ;
+    _prSFn( "=====----- end normal " ) ;
 	return 0;
 
 fail:
@@ -222,7 +226,7 @@ fail:
 	}
 	SR_MEMSET(&___sr->notif, 0, sizeof(___sr->notif));
 
-    _prSFn( " end error : %d" , errcode ) ;
+    _prSFn( "=====----- end error : %d" , errcode ) ;
 	return errcode;
 } // _sr_init_ex
 
