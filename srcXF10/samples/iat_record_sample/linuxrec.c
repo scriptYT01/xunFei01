@@ -128,39 +128,39 @@ static int _set_hwparams3(struct recorder * ___rec,  const WAVEFORMATEX *wavfmt,
 	snd_pcm_hw_params_alloca(&params);
 	err = snd_pcm_hw_params_any(__handle, params);
 	if (err < 0) {
-		dbg("Broken configuration for this PCM");
+		_prSFn("ERROR Broken configuration for this PCM");
 		return err;
 	}
 	err = snd_pcm_hw_params_set_access(__handle, params, // _set_hwparams3
 					   SND_PCM_ACCESS_RW_INTERLEAVED);
 	if (err < 0) {
-		dbg("Access type not available");
+		_prSFn("ERROR Access type not available");
 		return err;
 	}
 	err = _format_ms_to_alsa(wavfmt, &format); // _set_hwparams3
 	if (err) {
-		dbg("Invalid format");
+		_prSFn("ERROR Invalid format");
 		return - EINVAL;
 	}
 	err = snd_pcm_hw_params_set_format(__handle, params, format); // _set_hwparams3
 	if (err < 0) {
-		dbg("Sample format non available");
+		_prSFn("ERROR Sample format non available");
 		return err;
 	}
 	err = snd_pcm_hw_params_set_channels(__handle, params, wavfmt->nChannels); // _set_hwparams3
 	if (err < 0) {
-		dbg("Channels count non available");
+		_prSFn("ERROR Channels count non available");
 		return err;
 	}
 
 	rate = wavfmt->nSamplesPerSec;
 	err = snd_pcm_hw_params_set_rate_near(__handle, params, &rate, 0); // _set_hwparams3
 	if (err < 0) {
-		dbg("Set rate failed");
+		_prSFn("ERROR Set rate failed");
 		return err;
 	}
 	if(rate != wavfmt->nSamplesPerSec) {
-		dbg("Rate mismatch");
+		_prSFn("ERROR Rate mismatch");
 		return -EINVAL;
 	}
 	if (___rec->buffer_time == 0 || ___rec->period_time == 0) { // _set_hwparams3
@@ -174,27 +174,27 @@ static int _set_hwparams3(struct recorder * ___rec,  const WAVEFORMATEX *wavfmt,
 	err = snd_pcm_hw_params_set_period_time_near(__handle, params, // _set_hwparams3
 					     &___rec->period_time, 0);
 	if (err < 0) {
-		dbg("set period time fail");
+		_prSFn("ERROR set period time fail");
 		return err;
 	}
 	err = snd_pcm_hw_params_set_buffer_time_near(__handle, params, // _set_hwparams3
 					     &___rec->buffer_time, 0);
 	if (err < 0) {
-		dbg("set buffer time failed");
+		_prSFn("ERROR set buffer time failed");
 		return err;
 	}
 	err = snd_pcm_hw_params_get_period_size(params, &__size, 0); // _set_hwparams3
 	if (err < 0) {
-		dbg("get period __size fail");
+		_prSFn("ERROR get period __size fail");
 		return err;
 	}
 	___rec->period_frames = __size; 
 	err = snd_pcm_hw_params_get_buffer_size(params, &__size); // _set_hwparams3
 	if (__size == ___rec->period_frames) {
-		_prSF("Can't 1 use period equal to buffer __size (%u == %u)", (unsigned int) __size, (unsigned int) ___rec->period_frames);
+		_prSFn("ERROR Can't 1 use period equal to buffer __size (%u == %u)", (unsigned int) __size, (unsigned int) ___rec->period_frames);
 		return -EINVAL;
 	} else {
-		_prSF("  use period not equal to buffer __size (%u != %u)", (unsigned int) __size, (unsigned int) ___rec->period_frames);
+		_prSFn("SUCCEED   use period not equal to buffer __size (%u != %u)", (unsigned int) __size, (unsigned int) ___rec->period_frames);
     }
 	___rec->buffer_frames = __size;
 	___rec->bits_per_frame = wavfmt->wBitsPerSample; // _set_hwparams3
@@ -202,9 +202,10 @@ static int _set_hwparams3(struct recorder * ___rec,  const WAVEFORMATEX *wavfmt,
 	/* set to driver */
 	err = snd_pcm_hw_params(__handle, params);
 	if (err < 0) {
-		dbg("Unable to install hw params:");
+		_prSFn("ERROR Unable to install hw params:");
 		return err;
 	}
+    _prSFn(" ==== end normal " );
 	return 0;
 } // _set_hwparams3
 
@@ -275,7 +276,7 @@ static int xrun_recovery(snd_pcm_t *___handle, int err)
 		if (err < 0) {
 			if (show_xrun)
 				//printf("Can't 2 recovery from overrun,"
-				_prSF("Can't 2 recovery from overrun,"
+				_prSFn("Can't 2 recovery from overrun,"
 				"prepare failed: %s\n", snd_strerror(err));
 			return err;
 		}
@@ -288,7 +289,7 @@ static int xrun_recovery(snd_pcm_t *___handle, int err)
 			if (err < 0) {
 				if (show_xrun)
 					//printf("Can't 3 recovery from suspend,"
-					_prSF("Can't 3 recovery from suspend,"
+					_prSFn("Can't 3 recovery from suspend,"
 					"prepare failed: %s\n", snd_strerror(err));
 				return err;
 			}
