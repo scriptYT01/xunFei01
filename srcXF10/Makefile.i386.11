@@ -22,9 +22,11 @@ fi
 
 if [ -f ./$(TARGET) ]
 then
-	LD_LIBRARY_PATH=./:../      ./$(TARGET)
+	echo "LD_LIBRARY_PATH=./:../      ./$(TARGET) $*"
+	      LD_LIBRARY_PATH=./:../      ./$(TARGET) $*
 else
-	LD_LIBRARY_PATH=./:../      ../$(TARGET)
+	echo "LD_LIBRARY_PATH=./:../      ../$(TARGET) $*"
+	      LD_LIBRARY_PATH=./:../      ../$(TARGET) $*
 fi
 
 echo

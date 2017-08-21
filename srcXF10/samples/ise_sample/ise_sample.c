@@ -9,7 +9,6 @@
 
 #define FRAME_LEN	640
 
-//#define _prD( aa ) printf( "--debuging: %s %d %s : %d \n" , basename(__FILE__), __LINE__, __func__ , aa )
 //#define _prDS( dd , ss ) printf( "--debuging: %s %d %s : %d <%s> \n" , basename(__FILE__), __LINE__, __func__ , dd , ss )
 //#define _prS( ss ) printf( "--debuging: %s %d %s : <%s> \n" , basename(__FILE__), __LINE__, __func__ , ss )
 //#define _prSF( fmt , ... ) printf( "--debuging: %s %d %s : " fmt "\n" , basename(__FILE__), __LINE__, __func__ , ## __VA_ARGS__ )
@@ -18,6 +17,9 @@
 #include <libgen.h>
 #define _prSF( fmt , ... ) printf( "--debuging: %s %d %s : " fmt , basename(__FILE__), __LINE__, __func__ , ## __VA_ARGS__ )
 #define _prSFn( fmt , ... ) _prSF( fmt "\n" , ## __VA_ARGS__ )
+
+#define _prD( aa ) _prSFn( "%d" , aa )
+#define _prDS( dd , ss ) _prSFn( "<%d:%s>" , dd , ss )
 
 int main(int argc, char* argv[])
 {

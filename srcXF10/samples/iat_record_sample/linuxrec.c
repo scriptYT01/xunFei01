@@ -190,10 +190,10 @@ static int _set_hwparams3(struct recorder * ___rec,  const WAVEFORMATEX *wavfmt,
 	___rec->period_frames = __size; 
 	err = snd_pcm_hw_params_get_buffer_size(params, &__size); // _set_hwparams3
 	if (__size == ___rec->period_frames) {
-		_prSF("Can't 1 use period equal to buffer __size (%lu == %lu)", __size, ___rec->period_frames);
+		_prSF("Can't 1 use period equal to buffer __size (%u == %u)", (unsigned int) __size, (unsigned int) ___rec->period_frames);
 		return -EINVAL;
 	} else {
-		_prSF("  use period not equal to buffer __size (%lu != %lu)", __size, ___rec->period_frames);
+		_prSF("  use period not equal to buffer __size (%u != %u)", (unsigned int) __size, (unsigned int) ___rec->period_frames);
     }
 	___rec->buffer_frames = __size;
 	___rec->bits_per_frame = wavfmt->wBitsPerSample; // _set_hwparams3

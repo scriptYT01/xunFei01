@@ -19,7 +19,7 @@
 
 #define SR_DBGON 1
 #if SR_DBGON == 1
-#	define sr_dbg printf
+#	define sr_dbg _prSFn
 #else
 #	define sr_dbg
 #endif
@@ -153,14 +153,14 @@ static int _update_format_from_sessionparam(const char * session_para, WAVEFORMA
  */
 
 int _sr_init_ex(struct speech_rec * ___sr, const char * session_begin_params, 
-			enum sr_audsrc ___aud_src, record_dev_id devid, 
+			enum sr_audsrc ___aud_src, record_dev_id ___devid, 
 				struct speech_rec_notifier * notify)
 {
 	int errcode;
 	size_t param_size;
 	WAVEFORMATEX wavfmt = DEFAULT_FORMAT;
 
-    _prSFn( " start : %s " , record_dev_id.u.name ) ;
+    _prSFn( " start : %s " , ___devid.u.name ) ;
 
 	if (___aud_src == SR_MIC && get_input_dev_num() == 0) { // _sr_init_ex
 		return -E_SR_NOACTIVEDEVICE;
@@ -199,7 +199,7 @@ int _sr_init_ex(struct speech_rec * ___sr, const char * session_begin_params,
 		}
 		_update_format_from_sessionparam(session_begin_params, &wavfmt); // _sr_init_ex
 	
-		errcode = _open_recorder5(___sr->recorder, devid, &wavfmt);
+		errcode = _open_recorder5(___sr->recorder, ___devid, &wavfmt);
 		if (errcode != 0) {
 			sr_dbg("recorder open failed: %d\n", errcode); // _sr_init_ex
 			errcode = -E_SR_RECORDFAIL;
