@@ -15,6 +15,8 @@
 #define	BUFFER_SIZE	4096
 
 //#define _prSF( fmt , ... ) printf( "--debuging: %s %d %s : " fmt "\n" , basename(__FILE__), __LINE__, __func__ , ## __VA_ARGS__ )
+char * _argv01 = NULL ;
+char * _argv02 = NULL ;
 
 /* Upload User words */
 static int upload_userwords()
@@ -268,6 +270,9 @@ int main(int argc, char* argv[])
 	/* login params, please do keep the appid correct */
 	const char* login_params = "appid = 58f4654e, work_dir = .";
 	int __aud_src_0file_1mic = 1; /* from mic or file */
+
+    if ( argc >= 2 ) { _argv01 = argv[1] ; }
+    if ( argc >= 3 ) { _argv02 = argv[2] ; }
 
 	/*
 	* See "iFlytek MSC Reference Manual"

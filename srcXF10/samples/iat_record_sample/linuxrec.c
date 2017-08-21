@@ -611,19 +611,25 @@ fail:
 record_dev_id  get_default_input_dev()
 {
 	record_dev_id id; 
-#ifdef __i386__
-	    id.u.name = "default" ; // arecord -L :
-	    id.u.name = "sysdefault" ; // arecord -L :
-	    //id.u.name = "front" ; // arecord -L :
-	    id.u.name = "hw:0,0" ; // arecord -L :
-#else
-    if ( 1 ) {
-	    id.u.name = "default";
-	    id.u.name = "sysdefault" ;
+
+    extern char * _argv01 ;
+    if ( _argv01 != NULL ) {
+	    id.u.name = _argv01 ;
     } else {
-	    id.u.name = "hw:0,2";
+        #ifdef __i386__
+	        id.u.name = "default" ; // arecord -L :
+	        id.u.name = "sysdefault" ; // arecord -L :
+	        //id.u.name = "front" ; // arecord -L :
+	        id.u.name = "hw:0,0" ; // arecord -L :
+        #else
+            if ( 1 ) {
+	            id.u.name = "default";
+        	    id.u.name = "sysdefault" ;
+            } else {
+	            id.u.name = "hw:0,2";
+            }
+        #endif
     }
-#endif
 	return id;
 } // get_default_input_dev
 
