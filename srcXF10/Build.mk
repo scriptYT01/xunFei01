@@ -87,19 +87,3 @@ LOCAL_LDLIBS := -Ldevice/common/system/usr/lib -L$(LOCAL_PATH)/libs/mipsX1000 -l
 LOCAL_CFLAGS := -Iexternal/alsa-lib/include
 include $(BUILD_EXECUTABLE)
 
-# alsa-record-example.c
-#==== alsa-record-example19 ==========================================
-include $(CLEAR_VARS)
-LOCAL_MODULE := alsa-record-example19.x1000.bin
-LOCAL_MODULE_TAGS := alsa-record-example19
-LOCAL_MODULE_PATH:=$(TARGET_FS_BUILD)/ch/xf10
-LOCAL_SRC_FILES := \
-	alsa-record-example19.c 
-#LOCAL_LDLIBS := -Ldevice/common/system/usr/lib -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc -lc -lpthread -lasound 
-#LOCAL_LDLIBS := -Ldevice/common/system/usr/lib 
-#LOCAL_LDLIBS := -Ldevice/common/system/usr/lib -L$(LOCAL_PATH)/libs/mipsX1000 -lc 
-#LOCAL_LDLIBS := -Ldevice/common/system/usr/lib -L$(LOCAL_PATH)/libs/mipsX1000 -lc -lasound 
-LOCAL_LDLIBS := -Ldevice/common/system/usr/lib -lc -lasound 
-LOCAL_CFLAGS := -Iexternal/alsa-lib/include
-include $(BUILD_EXECUTABLE)
-
