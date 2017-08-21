@@ -70,6 +70,7 @@ struct bufinfo {
 };
 #endif
 
+//#include "linuxrec.h"
 
 static int show_xrun = 1;
 static int _start_record_internal(snd_pcm_t *pcm)
@@ -456,30 +457,44 @@ static int open_recorder_internal(struct recorder * ___rec,
     _prSF( " trying open <%s>" "\n" , ___dev.u.name ) ;
 	err = snd_pcm_open((snd_pcm_t **)&___rec->wavein_hdl, ___dev.u.name, 
 			SND_PCM_STREAM_CAPTURE, 0);
-	if(err < 0)
+	if(err < 0) {
+        _prSF( " open failed <%s>" "\n" , ___dev.u.name ) ;
 		goto fail;
+    }
 
+    _prSF( " trying set para <%s>" "\n" , ___dev.u.name ) ;
 	err = _set_params1(___rec, fmt, DEF_BUFF_TIME, DEF_PERIOD_TIME);
-	if(err)
+	if(err) {
+        _prSF( " set para <%s>" "\n" , ___dev.u.name ) ;
 		goto fail;
+    }
 
 	assert(___rec->bufheader == NULL);
-	err = prepare_rec_buffer(___rec);
-	if(err)
-		goto fail;
 
+    _prSF( " trying prepare rec buffer <%s>" "\n" , ___dev.u.name ) ;
+	err = prepare_rec_buffer(___rec);
+	if(err) {
+        _prSF( " prepare rec buffer faile : <%s>" "\n" , ___dev.u.name ) ;
+		goto fail;
+    }
+
+    _prSF( " trying create rec thread <%s>" "\n" , ___dev.u.name ) ;
 	err = create_record_thread((void*)___rec, 
 			&___rec->rec_thread);
-	if(err)
+	if(err) {
+        _prSF( " create rec thread failed :<%s>" "\n" , ___dev.u.name ) ;
 		goto fail;
+    }
 	
 
+    _prSF( " rec open normal end : <%s>" "\n" , ___dev.u.name ) ;
 	return 0;
 fail:
 	if(___rec->wavein_hdl)
 		snd_pcm_close((snd_pcm_t *) ___rec->wavein_hdl);
 	___rec->wavein_hdl = NULL;
 	free_rec_buffer(___rec);
+    _prSF( " rec open ERROR end : <%s>" "\n" , ___dev.u.name ) ;
 	return err;
 }
 
@@ -632,6 +647,8 @@ record_dev_id  get_default_input_dev()
             }
         #endif
     }
+
+    _prSFn( "------ return id.u.name %s" , id.u.name );
 	return id;
 } // get_default_input_dev
 
@@ -679,12 +696,14 @@ int _open_recorder5(struct recorder * ___rec, record_dev_id dev, WAVEFORMATEX * 
 	int ret = 0;
 	if(!___rec )
 		return -RECORD_ERR_INVAL;
-	if(___rec->state >= RECORD_STATE_READY)
+	if(___rec->state >= RECORD_STATE_READY) {
 		return 0;
+    }
 
 	ret = open_recorder_internal(___rec, dev, fmt);
-	if(ret == 0)
+	if(ret == 0) {
 		___rec->state = RECORD_STATE_READY;
+    }
 	return 0;
 
 } // _open_recorder5
@@ -706,12 +725,16 @@ void close_recorder(struct recorder *___rec)
 int start_record(struct recorder * ___rec)
 {
 	int ret;
-	if(___rec == NULL)
+	if(___rec == NULL) {
 		return -RECORD_ERR_INVAL;
-	if( ___rec->state < RECORD_STATE_READY)
+    }
+	if( ___rec->state < RECORD_STATE_READY) {
+        _prSFn( "------ why not ready : %d , %d " , ___rec->state , RECORD_STATE_READY );
 		return -RECORD_ERR_NOT_READY;
-	if( ___rec->state == RECORD_STATE_RECORDING)
+    }
+	if( ___rec->state == RECORD_STATE_RECORDING) {
 		return 0;
+    }
 
 	ret = _start_record_internal((snd_pcm_t *)___rec->wavein_hdl);
 	if(ret == 0)

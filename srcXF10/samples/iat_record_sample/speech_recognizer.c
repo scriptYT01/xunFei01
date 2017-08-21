@@ -262,6 +262,9 @@ int _sr_start_listening(struct speech_rec *___sr)
 			sr_dbg("start record failed: %d\n", ret);
 			QISRSessionEnd(session_id, "start record fail"); // _sr_start_listening
 			___sr->session_id = NULL;
+
+            if ( 0 )  exit( 34 ) ;
+
 			return -E_SR_RECORDFAIL;
 		}
 	}

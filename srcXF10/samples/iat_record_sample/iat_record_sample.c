@@ -15,6 +15,9 @@
 #define	BUFFER_SIZE	4096
 
 //#define _prSF( fmt , ... ) printf( "--debuging: %s %d %s : " fmt "\n" , basename(__FILE__), __LINE__, __func__ , ## __VA_ARGS__ )
+
+#include "linuxrec.h"
+
 char * _argv01 = NULL ;
 char * _argv02 = NULL ;
 
@@ -140,13 +143,18 @@ static void demo_file(const char* audio_file, const char* session_begin_params)
 		on_speech_end
 	};
 
-	if (NULL == audio_file)
+    _prSFn( " ----- start " ) ;
+
+	if (NULL == audio_file) {
+        _prSFn( " ----- ERROR end 1 " ) ;
 		goto iat_exit;
+    }
 
 	f_pcm = fopen(audio_file, "rb");
 	if (NULL == f_pcm)
 	{
 		printf("\nopen [%s] failed! \n", audio_file);
+        _prSFn( " ----- ERROR end 3 " ) ;
 		goto iat_exit;
 	}
 
@@ -158,6 +166,7 @@ static void demo_file(const char* audio_file, const char* session_begin_params)
 	if (NULL == p_pcm)
 	{
 		printf("\nout of memory! \n");
+        _prSFn( " ----- ERROR end 5 " ) ;
 		goto iat_exit;
 	}
 
@@ -165,18 +174,21 @@ static void demo_file(const char* audio_file, const char* session_begin_params)
 	if (read_size != pcm_size)
 	{
 		printf("\nread [%s] error!\n", audio_file);
+        _prSFn( " ----- ERROR end 7 " ) ;
 		goto iat_exit;
 	}
 
 	errcode = _sr_init(&iat, session_begin_params, SR_USER, &recnotifier);
 	if (errcode) {
 		printf("speech recognizer init failed : %d\n", errcode);
+        _prSFn( " ----- ERROR end 9 " ) ;
 		goto iat_exit;
 	}
 
 	errcode = _sr_start_listening(&iat);
 	if (errcode) {
 		printf("\nsr_start_listening failed! error code:%d\n", errcode);
+        _prSFn( " ----- ERROR end 11 " ) ;
 		goto iat_exit;
 	}
 
@@ -195,6 +207,7 @@ static void demo_file(const char* audio_file, const char* session_begin_params)
 		if (0 != __ret)
 		{
 			printf("\nwrite audio data failed! error code:%d\n", __ret);
+            _prSFn( " ----- ERROR end 13 " ) ;
 			goto iat_exit;
 		}
 
@@ -205,6 +218,7 @@ static void demo_file(const char* audio_file, const char* session_begin_params)
 	errcode = _sr_stop_listening(&iat);
 	if (errcode) {
 		printf("\n_sr_stop_listening failed! error code:%d \n", errcode);
+            _prSFn( " ----- ERROR end 15 " ) ;
 		goto iat_exit;
 	}
 
@@ -222,6 +236,8 @@ iat_exit:
 
 	_sr_stop_listening(&iat);
 	_sr_uninit(&iat);
+
+    _prSFn( " ----- ALL end " ) ;
 }
 
 /* demo recognize the audio from microphone */
@@ -238,9 +254,12 @@ static void _demo_mic(const char* session_begin_params)
 		on_speech_end
 	};
 
+    _prSFn( " ----- start " ) ;
+
 	errcode = _sr_init(&iat, session_begin_params, SR_MIC, &recnotifier);// _demo_mic
 	if (errcode) {
 		printf("speech recognizer init failed\n");
+        _prSFn( " ----- ERROR end " ) ;
 		return;
 	}
 	errcode = _sr_start_listening(&iat);
@@ -256,6 +275,8 @@ static void _demo_mic(const char* session_begin_params)
 	}
 
 	_sr_uninit(&iat);
+
+    _prSFn( " ----- end " ) ;
 } // _demo_mic
 
 
