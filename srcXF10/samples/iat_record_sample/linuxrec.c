@@ -10,13 +10,15 @@
 #include <stdlib.h>
 #include <fcntl.h>
 
+////#include <alsa/asoundlib.h>
+////#include <tinyalsa/asoundlib.h>
+//#ifdef  __i386__
 //#include <alsa/asoundlib.h>
-//#include <tinyalsa/asoundlib.h>
-#ifdef  __i386__
+//#else  
+////#include <asoundlib.h>
+//#include <alsa/asoundlib.h>
+//#endif
 #include <alsa/asoundlib.h>
-#else  
-#include <asoundlib.h>
-#endif
 
 
 
