@@ -16,24 +16,28 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <alsa/asoundlib.h>
+//#include <alsa/asoundlib.h>
 
+#include <libgen.h>
 #define _prSF(  fmt , ... ) printf( "--debuging: %s %d %s : " fmt  , basename(__FILE__), __LINE__, __func__ , ## __VA_ARGS__ )
-#define _prSFn( fmt , ... ) _prSF( fmt "\n" ) 
+#define _prSFn( fmt , ... ) _prSF( fmt "\n" , ## __VA_ARGS__ ) 
 	      
 char * _dev_name01 = "default" ;
 
-main (int ___argc, char *___argv[])
+int main (int ___argc, char **___argv)
 {
-    int i;
-    int err;
-    char *buffer;
-    int buffer_frames = 128;
-    unsigned int rate = 44100;
-    snd_pcm_t *capture_handle;
-    snd_pcm_hw_params_t *hw_params;
-    snd_pcm_format_t format = SND_PCM_FORMAT_S16_LE;
+//    int i;
+//    int err;
+//    char *buffer;
+//    int buffer_frames = 128;
+//    unsigned int rate = 44100;
+//    snd_pcm_t *capture_handle;
+//    snd_pcm_hw_params_t *hw_params;
+//    snd_pcm_format_t format = SND_PCM_FORMAT_S16_LE;
 
+        printf( " arg c <%d>" , ___argc ) ; 
+
+        _prSF( " arg c <%d>" , ___argc ) ; 
         _prSFn( " arg c <%d>" , ___argc ) ; 
 
     if ( ___argc >=2 && ___argv[1] != NULL && ___argv[1][0] != 0 ) {

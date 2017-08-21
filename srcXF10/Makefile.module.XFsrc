@@ -212,6 +212,7 @@ XF33:=srcXF30/samples/aiui_sample/src/demo.cpp
 XF34:=srcXF30/samples/aiui_sample/src/FileUtil.cpp
 
 XF41:=srcXF40/alsa-record-example41.c
+XF42:=srcXF40/alsa-record-example42.c
 
 vb1:=srcXF10/Build.mk
 vb2:=srcXF20/Build.mk
@@ -222,7 +223,7 @@ XFlist:=
 XFlist+= XF10 XF11 XF12 XF13 XF14 XF15 XF16 XF17 XF18 XF19   
 XFlist+= XF20
 XFlist+= XF31 XF32 XF33 XF34
-XFlist+= XF41 
+XFlist+= XF41 XF42 
 XFlist+= vb1 vb2
 
 $(call VIMobj,$(XFlist))
