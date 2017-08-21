@@ -524,8 +524,13 @@ static int get_pcm_device_cnt(snd_pcm_stream_t stream)
 	char *io, *filter, *name;
 	int cnt = 0;
 
-	if (snd_device_name_hint(-1, "pcm", &hints) < 0)
+    _prSFn( " ---- start " ) ;
+
+	if (snd_device_name_hint(-1, "pcm", &hints) < 0) {
+        _prSFn( " ---- init end " ) ;
 		return 0;
+    }
+
 	n = hints;
 	filter = stream == SND_PCM_STREAM_CAPTURE ? "Input" : "Output";
 	while (*n != NULL) {
@@ -540,6 +545,7 @@ static int get_pcm_device_cnt(snd_pcm_stream_t stream)
 		n++;
 	}
 	snd_device_name_free_hint(hints);
+    _prSFn( " ---- end %d " , cnt ) ;
 	return cnt;
 }
 
@@ -569,20 +575,32 @@ static int list_pcm(snd_pcm_stream_t stream, char**name_out,
 	int cnt = 0;
 	int i = 0;
 
-	if (snd_device_name_hint(-1, "pcm", &hints) < 0) // list_pcm
+    _prSFn( " ---- start " ) ;
+
+	if (snd_device_name_hint(-1, "pcm", &hints) < 0) { // list_pcm
+        _prSFn( " ---- init end " ) ;
 		return 0;
+    }
+
 	n = hints;
 	cnt = get_pcm_device_cnt(stream);
 	if(!cnt) {
+        _prSFn( " ---- ERROR end 1" ) ;
 		goto fail; 
 	}
+    _prSFn( " ---- pcm amount : %d " , cnt ) ;
 
 	*name_out = calloc(sizeof(char *) , (1+cnt)); // list_pcm
-	if (*name_out == NULL)
+	if (*name_out == NULL) {
+        _prSFn( " ---- ERROR end 3" ) ;
 		goto fail;
+    }
+
 	*desc_out = calloc(sizeof(char *) , (1 + cnt));
-	if (*desc_out == NULL)
+	if (*desc_out == NULL) {
+        _prSFn( " ---- ERROR end 5" ) ;
 		goto fail;
+    }
 
 	/* the last one is a flag, NULL */
 	name_out[cnt] = NULL;
@@ -613,11 +631,13 @@ static int list_pcm(snd_pcm_stream_t stream, char**name_out,
 		n++;
 	}
 	snd_device_name_free_hint(hints); // list_pcm
+    _prSFn( " ---- normal end %d " , cnt ) ;
 	return cnt;
 fail:
 	_free_name_desc(name_out);
 	_free_name_desc(desc_out);
 	snd_device_name_free_hint(hints);
+    _prSFn( " ---- ERROR end " ) ;
 	return -1;
 } // list_pcm
 
