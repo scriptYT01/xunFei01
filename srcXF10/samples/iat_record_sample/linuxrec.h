@@ -7,7 +7,7 @@
  *
  * Common steps:
  *	create_recorder,
- *	_open_recorder5, 
+ *	open_recorder, 
  *	start_record, 
  *	stop_record, 
  *	close_recorder,
@@ -21,14 +21,10 @@
 #define __IFLY_WINREC_H__
 
 #include "formats.h"
-
-#include <libgen.h>
-#define _prSF( fmt , ... ) printf( "--debuging: %s %d %s : " fmt , basename(__FILE__), __LINE__, __func__ , ## __VA_ARGS__ )
-#define _prSFn( fmt , ... ) _prSF( fmt "\n" , ## __VA_ARGS__ )
 /* error code */
 enum {
 	RECORD_ERR_BASE = 0,
-	RECORD_ERR_GENERAL, 
+	RECORD_ERR_GENERAL,
 	RECORD_ERR_MEMFAIL,
 	RECORD_ERR_INVAL,
 	RECORD_ERR_NOT_READY
@@ -119,7 +115,7 @@ void destroy_recorder(struct recorder *rec);
  * @see
  * 	get_default_input_dev()
  */
-int _open_recorder5(struct recorder * rec, record_dev_id dev, WAVEFORMATEX * fmt);
+int open_recorder(struct recorder * rec, record_dev_id dev, WAVEFORMATEX * fmt);
 
 /**
  * @fn

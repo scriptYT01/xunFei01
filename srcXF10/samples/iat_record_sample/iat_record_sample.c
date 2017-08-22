@@ -14,14 +14,6 @@
 #define FRAME_LEN	640 
 #define	BUFFER_SIZE	4096
 
-//#define _prSF( fmt , ... ) printf( "--debuging: %s %d %s : " fmt "\n" , basename(__FILE__), __LINE__, __func__ , ## __VA_ARGS__ )
-
-#include "linuxrec.h"
-
-char *  _argv01 = NULL ;
-char *  _argv02 = NULL ;
-int     _chAmount = 1 ;
-
 /* Upload User words */
 static int upload_userwords()
 {
@@ -29,7 +21,7 @@ static int upload_userwords()
 	size_t			len			=	0;
 	size_t			read_len	=	0;
 	FILE*			fp			=	NULL;
-	int				__ret			=	-1;
+	int				ret			=	-1;
 
 	fp = fopen("userwords.txt", "rb");
 	if (NULL == fp)										
@@ -57,10 +49,10 @@ static int upload_userwords()
 	}
 	userwords[len] = '\0';
 	
-	MSPUploadData("userwords", userwords, len, "sub = uup, dtt = userword", &__ret); //ÉÏ´«ÓÃ»§´Ê±í
-	if (MSP_SUCCESS != __ret)
+	MSPUploadData("userwords", userwords, len, "sub = uup, dtt = userword", &ret); //ÉÏ´«ÓÃ»§´Ê±í
+	if (MSP_SUCCESS != ret)
 	{
-		printf("\nMSPUploadData failed ! errorCode: %d \n", __ret);
+		printf("\nMSPUploadData failed ! errorCode: %d \n", ret);
 		goto upload_exit;
 	}
 	
@@ -76,7 +68,7 @@ upload_exit:
 		userwords = NULL;
 	}
 	
-	return __ret;
+	return ret;
 }
 
 
@@ -144,18 +136,13 @@ static void demo_file(const char* audio_file, const char* session_begin_params)
 		on_speech_end
 	};
 
-    _prSFn( " ----- start " ) ;
-
-	if (NULL == audio_file) {
-        _prSFn( " ----- ERROR end 1 " ) ;
+	if (NULL == audio_file)
 		goto iat_exit;
-    }
 
 	f_pcm = fopen(audio_file, "rb");
 	if (NULL == f_pcm)
 	{
 		printf("\nopen [%s] failed! \n", audio_file);
-        _prSFn( " ----- ERROR end 3 " ) ;
 		goto iat_exit;
 	}
 
@@ -167,7 +154,6 @@ static void demo_file(const char* audio_file, const char* session_begin_params)
 	if (NULL == p_pcm)
 	{
 		printf("\nout of memory! \n");
-        _prSFn( " ----- ERROR end 5 " ) ;
 		goto iat_exit;
 	}
 
@@ -175,42 +161,36 @@ static void demo_file(const char* audio_file, const char* session_begin_params)
 	if (read_size != pcm_size)
 	{
 		printf("\nread [%s] error!\n", audio_file);
-        _prSFn( " ----- ERROR end 7 " ) ;
 		goto iat_exit;
 	}
 
-    _prSFn( " ----- before sr_init " ) ; // demo_file
-	errcode = _sr_init(&iat, session_begin_params, SR_USER, &recnotifier);
+	errcode = sr_init(&iat, session_begin_params, SR_USER, &recnotifier);
 	if (errcode) {
 		printf("speech recognizer init failed : %d\n", errcode);
-        _prSFn( " ----- ERROR end 9 " ) ;
 		goto iat_exit;
 	}
-    _prSFn( " ----- after sr_init " ) ; // demo_file
 
-	errcode = _sr_start_listening(&iat);
+	errcode = sr_start_listening(&iat);
 	if (errcode) {
 		printf("\nsr_start_listening failed! error code:%d\n", errcode);
-        _prSFn( " ----- ERROR end 11 " ) ;
 		goto iat_exit;
 	}
 
 	while (1)
 	{
 		unsigned int len = 10 * FRAME_LEN; /* 200ms audio */
-		int __ret = 0;
+		int ret = 0;
 
 		if (pcm_size < 2 * len)
 			len = pcm_size;
 		if (len <= 0)
 			break;
 
-		__ret = _sr_write_audio_data(&iat, &p_pcm[pcm_count], len);
+		ret = sr_write_audio_data(&iat, &p_pcm[pcm_count], len);
 
-		if (0 != __ret)
+		if (0 != ret)
 		{
-			printf("\nwrite audio data failed! error code:%d\n", __ret);
-            _prSFn( " ----- ERROR end 13 " ) ;
+			printf("\nwrite audio data failed! error code:%d\n", ret);
 			goto iat_exit;
 		}
 
@@ -218,10 +198,9 @@ static void demo_file(const char* audio_file, const char* session_begin_params)
 		pcm_size -= (long)len;		
 	}
 
-	errcode = _sr_stop_listening(&iat);
+	errcode = sr_stop_listening(&iat);
 	if (errcode) {
-		printf("\n_sr_stop_listening failed! error code:%d \n", errcode);
-            _prSFn( " ----- ERROR end 15 " ) ;
+		printf("\nsr_stop_listening failed! error code:%d \n", errcode);
 		goto iat_exit;
 	}
 
@@ -237,53 +216,43 @@ iat_exit:
 		p_pcm = NULL;
 	}
 
-	_sr_stop_listening(&iat);
-	_sr_uninit(&iat);
-
-    _prSFn( " ----- ALL end " ) ;
+	sr_stop_listening(&iat);
+	sr_uninit(&iat);
 }
 
 /* demo recognize the audio from microphone */
-static void _demo_mic(const char* session_begin_params)
+static void demo_mic(const char* session_begin_params)
 {
 	int errcode;
 	int i = 0;
 
 	struct speech_rec iat;
 
-	struct speech_rec_notifier recnotifier = {// _demo_mic
+	struct speech_rec_notifier recnotifier = {
 		on_result,
 		on_speech_begin,
 		on_speech_end
 	};
 
-    _prSFn( " ----- start " ) ;
-
-    _prSFn( " ----- before sr_init \n\n" ) ; // _demo_mic
-	errcode = _sr_init(&iat, session_begin_params, SR_MIC, &recnotifier);// _demo_mic
+	errcode = sr_init(&iat, session_begin_params, SR_MIC, &recnotifier);
 	if (errcode) {
 		printf("speech recognizer init failed\n");
-        _prSFn( " ----- ERROR end " ) ;
 		return;
 	}
-    _prSFn( "\n\n ----- after sr_init " ) ; // _demo_mic
-
-	errcode = _sr_start_listening(&iat);
+	errcode = sr_start_listening(&iat);
 	if (errcode) {
-		printf("start listen failed %d\n", errcode);// _demo_mic
+		printf("start listen failed %d\n", errcode);
 	}
 	/* demo 15 seconds recording */
 	while(i++ < 15)
 		sleep(1);
-	errcode = _sr_stop_listening(&iat);// _demo_mic
+	errcode = sr_stop_listening(&iat);
 	if (errcode) {
 		printf("stop listening failed %d\n", errcode);
 	}
 
-	_sr_uninit(&iat);
-
-    _prSFn( " ----- end " ) ;
-} // _demo_mic
+	sr_uninit(&iat);
+}
 
 
 /* main thread: start/stop record ; query the result of recgonization.
@@ -292,22 +261,16 @@ static void _demo_mic(const char* session_begin_params)
  */
 int main(int argc, char* argv[])
 {
-	int __ret = MSP_SUCCESS;
-	int __upload_on =	0; /* whether upload the user word */
+	int ret = MSP_SUCCESS;
+	int upload_on =	1; /* whether upload the user word */
 	/* login params, please do keep the appid correct */
 	const char* login_params = "appid = 58f4654e, work_dir = .";
-	int __aud_src_0file_1mic = 1; /* from mic or file */
-
-    if ( argc >= 2 ) { _argv01 = argv[1] ; }
-    if ( argc >= 3 ) { _argv02 = argv[2] ; }
-        if ( _argv02 != NULL ) {
-            _chAmount = atoi( _argv02 ) ;
-        }
+	int aud_src = 0; /* from mic or file */
 
 	/*
 	* See "iFlytek MSC Reference Manual"
 	*/
-	const char* session_begin_params = // main
+	const char* session_begin_params =
 		"sub = iat, domain = iat, language = zh_cn, "
 		"accent = mandarin, sample_rate = 16000, "
 		"result_type = plain, result_encoding = utf8";
@@ -315,43 +278,39 @@ int main(int argc, char* argv[])
 	/* Login first. the 1st arg is username, the 2nd arg is password
 	 * just set them as NULL. the 3rd arg is login paramertes 
 	 * */
-	__ret = MSPLogin(NULL, NULL, login_params); // main
-	if (MSP_SUCCESS != __ret)	{
-		printf("MSPLogin failed , Error code %d.\n",__ret);
+	ret = MSPLogin(NULL, NULL, login_params);
+	if (MSP_SUCCESS != ret)	{
+		printf("MSPLogin failed , Error code %d.\n",ret);
 		goto exit; // login fail, exit the program
 	}
 
-	printf("Want to upload the user words ? \n0: No.\n1: Yes\n"); // main
-    if ( 0 ) {
-	    scanf("%d", &__upload_on);
-    }
-	if (__upload_on)
+	printf("Want to upload the user words ? \n0: No.\n1: Yes\n");
+	scanf("%d", &upload_on);
+	if (upload_on)
 	{
-		printf("Uploading the user words ...\n"); // main
-		__ret = upload_userwords();
-		if (MSP_SUCCESS != __ret)
+		printf("Uploading the user words ...\n");
+		ret = upload_userwords();
+		if (MSP_SUCCESS != ret)
 			goto exit;	
-		printf("Uploaded successfully\n"); // main
+		printf("Uploaded successfully\n");
 	}
 
 	printf("Where the audio comes from?\n"
-			"0: From a audio file.\n1: From microphone.\n"); // main
-    if ( 0 ) {
-	    scanf("%d", &__aud_src_0file_1mic);
-    } 
-	if(__aud_src_0file_1mic != 0) {
-		printf("Demo recognizing the speech from microphone\n"); // main
+			"0: From a audio file.\n1: From microphone.\n");
+	scanf("%d", &aud_src);
+	if(aud_src != 0) {
+		printf("Demo recognizing the speech from microphone\n");
 		printf("Speak in 15 seconds\n");
 
-		_demo_mic(session_begin_params); // main
+		demo_mic(session_begin_params);
 
 		printf("15 sec passed\n");
 	} else {
-		printf("Demo recgonizing the speech from a recorded audio file\n"); // main
+		printf("Demo recgonizing the speech from a recorded audio file\n");
 		demo_file("wav/iflytek02.wav", session_begin_params); 
 	}
 exit:
 	MSPLogout(); // Logout...
 
 	return 0;
-} // main
+}

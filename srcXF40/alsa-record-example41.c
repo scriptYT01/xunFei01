@@ -86,7 +86,7 @@ int main (int ___argc, char *___argv[])
     }
     _prSFn( "hw_params access setted");
 
-    _prSFn( "trying to set hw_params rate to <%d : %s>" , format , 
+    _prSFn( "trying to set hw_params formate to <%d : %s>" , format , 
             format==SND_PCM_FORMAT_S16_LE?"SND_PCM_FORMAT_S16_LE":"unknown format" );
     if ((err = snd_pcm_hw_params_set_format (capture_handle, hw_params, format)) < 0) {
         _prSFn( "cannot set sample format (%d:%s)",
