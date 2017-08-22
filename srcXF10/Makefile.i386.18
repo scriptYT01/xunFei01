@@ -55,6 +55,7 @@ LDFLAGS += -lmsc -Werror
 LDFLAGS += -lmsc -lasound -Werror
 
 OBJECTS := $(patsubst %.c,%.o,$(wildcard *.c))
+OBJECTS += $(patsubst %.c,%.o,$(wildcard patchXF/*.c))
 
 $(BIN_TARGET) : $(OBJECTS)
 	$(CROSS_COMPILE)gcc $(CFLAGS) $^ -o $@ $(LDFLAGS)
