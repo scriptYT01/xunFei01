@@ -310,14 +310,14 @@ int main(int argc, char* argv[])
 	if ( 0 ) { scanf("%d", &aud_src);} else { aud_src = 1 ; } 
 
 	if(aud_src != 0) {
-		_prSF("Demo recognizing the speech from microphone\n");
+		_prSF(" 1 : from MIC : Demo recognizing the speech from microphone\n");
 		printf("Speak in 15 seconds\n");
 
 		demo_mic(session_begin_params);
 
 		printf("15 sec passed\n");
 	} else {
-		_prSF("Demo recgonizing the speech from a recorded audio file\n");
+		_prSF(" 1 : from Wav file : Demo recgonizing the speech from a recorded audio file\n");
 		demo_file("wav/iflytek02.wav", session_begin_params); 
 	}
 
