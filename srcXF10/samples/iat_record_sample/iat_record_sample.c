@@ -11,6 +11,8 @@
 #include "msp_errors.h"
 #include "speech_recognizer.h"
 
+#include "patchXF/pathcXF.h"
+
 #define FRAME_LEN	640 
 #define	BUFFER_SIZE	4096
 

@@ -70,6 +70,7 @@ Makefile.i386.18				\
 libs/x86/libmsc.so				\
 include/						\
 bin/							\
+patchXF/						\
 samples/iat_record_sample/formats.h							\
 samples/iat_record_sample/linuxrec.h						\
 samples/iat_record_sample/speech_recognizer.h				\
@@ -216,6 +217,11 @@ XF42:=srcXF40/alsa-record-example42.c
 
 vb1:=srcXF10/Build.mk
 vb2:=srcXF20/Build.mk
+vb3:=srcXF30/Build.mk
+vb4:=srcXF40/Build.mk
+
+px1:=srcXF10/patchXF/iat_record_sample_patch.c  
+px2:=srcXF10/patchXF/pathcXFbase01.c
 
 
 XFlist:= 
@@ -224,7 +230,8 @@ XFlist+= XF10 XF11 XF12 XF13 XF14 XF15 XF16 XF17 XF18 XF19
 XFlist+= XF20
 XFlist+= XF31 XF32 XF33 XF34
 XFlist+= XF41 XF42 
-XFlist+= vb1 vb2
+XFlist+= vb1 vb2 vb3 vb4 
+XFlist+= px1 px2
 
 $(call VIMobj,$(XFlist))
 

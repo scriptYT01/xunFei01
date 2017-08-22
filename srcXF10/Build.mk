@@ -77,13 +77,15 @@ LOCAL_MODULE := iat_record_sample18.x1000.bin
 LOCAL_MODULE_TAGS := iat_record_sample18
 LOCAL_MODULE_PATH:=$(TARGET_FS_BUILD)/ch/xf10
 LOCAL_SRC_FILES := \
-	samples/iat_record_sample/linuxrec.c                             \
-	samples/iat_record_sample/speech_recognizer.c                    \
+	patchXF/pathcXFbase01.c                             			\
+	patchXF/iat_record_sample_patch.c                             	\
+	samples/iat_record_sample/linuxrec.c                            \
+	samples/iat_record_sample/speech_recognizer.c                   \
 	samples/iat_record_sample/iat_record_sample.c
 
 LOCAL_LDLIBS := -Ldevice/common/system/usr/lib -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc -lc -lpthread -lasound
 #LOCAL_CFLAGS := -I../tinyalsa/include
 #LOCAL_CFLAGS := -I../alsa-lib/include
-LOCAL_CFLAGS := -Iexternal/alsa-lib/include
+LOCAL_CFLAGS := -Iexternal/alsa-lib/include -I$(LOCAL_PATH) 
 include $(BUILD_EXECUTABLE)
 
