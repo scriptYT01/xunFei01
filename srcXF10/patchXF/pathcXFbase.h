@@ -1,6 +1,6 @@
 
-#ifndef __PATCHXF_H 
-#define __PATCHXF_H 
+#ifndef __PATCHXFBASE_H 
+#define __PATCHXFBASE_H 
 
 #include <libgen.h>
 #include <stdio.h>
@@ -10,6 +10,11 @@
 #define _prD( aa ) _prSFn( "%d" , aa )
 #define _prDS( dd , ss ) _prSFn( "<%d:%s>" , dd , ss )
 
+#define _strX( aa ) # aa
+
 extern void _mainPara01( int ___argc , char ** ___argv ) ;
+
+extern void _paraAtoi( int ___argc , char ** ___argv , int ___index , char * ___varName , int * ___varLP ) ;
+#define X_paraAtoi( idx , iii ) _paraAtoi( ___argc , ___argv , idx , _strX( iii ) , & iii ) 
 
 #endif
