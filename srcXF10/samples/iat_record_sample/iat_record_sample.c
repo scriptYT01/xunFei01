@@ -277,6 +277,7 @@ int main(int argc, char* argv[])
 		"accent = mandarin, sample_rate = 16000, "
 		"result_type = plain, result_encoding = utf8";
 
+    // _paraAtoi
     _mainPara01( argc , argv );
 
 	/* Login first. the 1st arg is username, the 2nd arg is password

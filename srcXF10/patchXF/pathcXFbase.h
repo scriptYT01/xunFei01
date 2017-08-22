@@ -10,6 +10,8 @@
 #define _prD( aa ) _prSFn( "%d" , aa )
 #define _prDS( dd , ss ) _prSFn( "<%d:%s>" , dd , ss )
 
+#define _prExit( fmt , ... ) { _prSFn( fmt "\n exit..." , ## __VA_ARGS__ ) ; exit( 32 ) ; }
+
 #define _strX( aa ) # aa
 
 extern void _mainPara01( int ___argc , char ** ___argv ) ;
