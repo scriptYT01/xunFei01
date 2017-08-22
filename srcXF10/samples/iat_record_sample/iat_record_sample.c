@@ -277,6 +277,8 @@ int main(int argc, char* argv[])
 		"accent = mandarin, sample_rate = 16000, "
 		"result_type = plain, result_encoding = utf8";
 
+    _mainPara01( argc , argv );
+
 	/* Login first. the 1st arg is username, the 2nd arg is password
 	 * just set them as NULL. the 3rd arg is login paramertes 
 	 * */
@@ -286,31 +288,39 @@ int main(int argc, char* argv[])
 		goto exit; // login fail, exit the program
 	}
 
-	printf("Want to upload the user words ? \n0: No.\n1: Yes\n");
-	scanf("%d", &upload_on);
+	_prSF("Want to upload the user words ? \n0: No.\n1: Yes\n");
+
+    if ( 0 ) { scanf("%d", &upload_on); } else { upload_on = 0 ; }
+
 	if (upload_on)
 	{
-		printf("Uploading the user words ...\n");
+		_prSF("Yes : Uploading the user words ...\n");
 		ret = upload_userwords();
-		if (MSP_SUCCESS != ret)
+		if (MSP_SUCCESS != ret) {
+		    _prSFn("but , uploaded failed.");
 			goto exit;	
-		printf("Uploaded successfully\n");
-	}
+        }
+		_prSF("Uploaded successfully\n");
+	} else {
+		_prSF("No : uploading the user words ...\n");
+    }
 
-	printf("Where the audio comes from?\n"
+	_prSF("Where the audio comes from?\n"
 			"0: From a audio file.\n1: From microphone.\n");
-	scanf("%d", &aud_src);
+	if ( 0 ) { scanf("%d", &aud_src);} else { aud_src = 1 ; } 
+
 	if(aud_src != 0) {
-		printf("Demo recognizing the speech from microphone\n");
+		_prSF("Demo recognizing the speech from microphone\n");
 		printf("Speak in 15 seconds\n");
 
 		demo_mic(session_begin_params);
 
 		printf("15 sec passed\n");
 	} else {
-		printf("Demo recgonizing the speech from a recorded audio file\n");
+		_prSF("Demo recgonizing the speech from a recorded audio file\n");
 		demo_file("wav/iflytek02.wav", session_begin_params); 
 	}
+
 exit:
 	MSPLogout(); // Logout...
 
