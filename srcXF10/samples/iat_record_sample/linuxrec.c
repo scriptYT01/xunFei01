@@ -24,6 +24,7 @@
 #define dbg
 #endif
 
+#include "patchXF/pathcXFbase.h"
 
 /* Do not change the sequence */
 enum {
@@ -178,8 +179,8 @@ static int set_hwparams(struct recorder * rec,  const WAVEFORMATEX *wavfmt,
 	rec->period_frames = size; 
 	err = snd_pcm_hw_params_get_buffer_size(params, &size);
 	if (size == rec->period_frames) {
-		dbg("Can't use period equal to buffer size (%lu == %lu)",
-				      size, rec->period_frames);
+		_prSFn("Can't use period equal to buffer size (%d == %d)",
+				      (int) size, rec->period_frames);
 		return -EINVAL;
 	}
 	rec->buffer_frames = size;
@@ -524,9 +525,10 @@ static void free_name_desc(char **name_or_desc)
 	}
 	free(ss);
 }
+
 /* return success: total count, need free the name and desc buffer 
  * fail: -1 , *name_out and *desc_out will be NULL */
-static int list_pcm(snd_pcm_stream_t stream, char**name_out, 
+int list_pcm(snd_pcm_stream_t stream, char**name_out, 
 						char ** desc_out)
 {
 	void **hints, **n;
@@ -586,7 +588,8 @@ fail:
 	free_name_desc(desc_out);
 	snd_device_name_free_hint(hints);
 	return -1;
-}
+} // list_pcm 
+
 /* -------------------------------------
  * Interfaces 
  --------------------------------------*/ 

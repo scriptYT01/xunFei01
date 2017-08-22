@@ -86,6 +86,6 @@ LOCAL_SRC_FILES := \
 LOCAL_LDLIBS := -Ldevice/common/system/usr/lib -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc -lc -lpthread -lasound
 #LOCAL_CFLAGS := -I../tinyalsa/include
 #LOCAL_CFLAGS := -I../alsa-lib/include
-LOCAL_CFLAGS := -Iexternal/alsa-lib/include -I$(LOCAL_PATH) 
+LOCAL_CFLAGS := -Iexternal/alsa-lib/include -I$(LOCAL_PATH) -Wall -Werror
 include $(BUILD_EXECUTABLE)
 

@@ -16,7 +16,7 @@ define  RUN01
 if [ -d bin ]
 then
 	echo '... deep in ... '
-	cd bin && exec ../$$(basename $$0)
+	cd bin && exec ../$$(basename $$0) $*
 	exit
 fi
 
@@ -51,8 +51,8 @@ LDFLAGS := -L./
 
 #LDFLAGS += -lmsc -lrt -ldl -lpthread
 #LDFLAGS += -lmsc 
-LDFLAGS += -lmsc -Werror
-LDFLAGS += -lmsc -lasound -Werror
+#LDFLAGS += -lmsc -Werror
+LDFLAGS += -lmsc -lasound -Wall -Werror
 
 OBJECTS := $(patsubst %.c,%.o,$(wildcard *.c))
 OBJECTS += $(patsubst %.c,%.o,$(wildcard patchXF/*.c))
