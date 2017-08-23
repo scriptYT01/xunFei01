@@ -97,7 +97,7 @@ static int format_ms_to_alsa(const WAVEFORMATEX * wavfmt,
 		return -EINVAL;
 	*format = tmp;
 	return 0;
-}
+} // format_ms_to_alsa
 
 /* set hardware and software params */
 static int set_hwparams(struct recorder * rec,  const WAVEFORMATEX *wavfmt,
@@ -108,18 +108,18 @@ static int set_hwparams(struct recorder * rec,  const WAVEFORMATEX *wavfmt,
 	unsigned int rate;
 	snd_pcm_format_t format;
 	snd_pcm_uframes_t size;
-	snd_pcm_t *handle = (snd_pcm_t *)rec->wavein_hdl;
+	snd_pcm_t *__handle = (snd_pcm_t *)rec->wavein_hdl;
 
 	rec->buffer_time = buffertime;
 	rec->period_time = periodtime;
 
 	snd_pcm_hw_params_alloca(&params);
-	err = snd_pcm_hw_params_any(handle, params);
+	err = snd_pcm_hw_params_any(__handle, params);
 	if (err < 0) {
 		dbg("Broken configuration for this PCM");
 		return err;
 	}
-	err = snd_pcm_hw_params_set_access(handle, params,
+	err = snd_pcm_hw_params_set_access(__handle, params,
 					   SND_PCM_ACCESS_RW_INTERLEAVED);
 	if (err < 0) {
 		dbg("Access type not available");
@@ -130,19 +130,19 @@ static int set_hwparams(struct recorder * rec,  const WAVEFORMATEX *wavfmt,
 		dbg("Invalid format");
 		return - EINVAL;
 	}
-	err = snd_pcm_hw_params_set_format(handle, params, format);
+	err = snd_pcm_hw_params_set_format(__handle, params, format);
 	if (err < 0) {
 		dbg("Sample format non available");
 		return err;
 	}
-	err = snd_pcm_hw_params_set_channels(handle, params, wavfmt->nChannels);
+	err = snd_pcm_hw_params_set_channels(__handle, params, wavfmt->nChannels);
 	if (err < 0) {
 		dbg("Channels count non available");
 		return err;
 	}
 
 	rate = wavfmt->nSamplesPerSec;
-	err = snd_pcm_hw_params_set_rate_near(handle, params, &rate, 0);
+	err = snd_pcm_hw_params_set_rate_near(__handle, params, &rate, 0);
 	if (err < 0) {
 		dbg("Set rate failed");
 		return err;
@@ -159,13 +159,13 @@ static int set_hwparams(struct recorder * rec,  const WAVEFORMATEX *wavfmt,
 			rec->buffer_time = 500000;
 		rec->period_time = rec->buffer_time / 4;
 	}
-	err = snd_pcm_hw_params_set_period_time_near(handle, params,
+	err = snd_pcm_hw_params_set_period_time_near(__handle, params,
 					     &rec->period_time, 0);
 	if (err < 0) {
 		dbg("set period time fail");
 		return err;
 	}
-	err = snd_pcm_hw_params_set_buffer_time_near(handle, params,
+	err = snd_pcm_hw_params_set_buffer_time_near(__handle, params,
 					     &rec->buffer_time, 0);
 	if (err < 0) {
 		dbg("set buffer time failed");
@@ -187,27 +187,28 @@ static int set_hwparams(struct recorder * rec,  const WAVEFORMATEX *wavfmt,
 	rec->bits_per_frame = wavfmt->wBitsPerSample;
 
 	/* set to driver */
-	err = snd_pcm_hw_params(handle, params);
+	err = snd_pcm_hw_params(__handle, params);
 	if (err < 0) {
 		dbg("Unable to install hw params:");
 		return err;
 	}
 	return 0;
-}
+} // set_hwparams
+
 static int set_swparams(struct recorder * rec)
 {
 	int err;
 	snd_pcm_sw_params_t *swparams;
-	snd_pcm_t * handle = (snd_pcm_t*)(rec->wavein_hdl);
+	snd_pcm_t * __handle = (snd_pcm_t*)(rec->wavein_hdl);
 	/* sw para */
 	snd_pcm_sw_params_alloca(&swparams);
-	err = snd_pcm_sw_params_current(handle, swparams);
+	err = snd_pcm_sw_params_current(__handle, swparams);
 	if (err < 0) {
 		dbg("get current sw para fail");
 		return err;
 	}
 
-	err = snd_pcm_sw_params_set_avail_min(handle, swparams, 
+	err = snd_pcm_sw_params_set_avail_min(__handle, swparams, 
 						rec->period_frames);
 	if (err < 0) {
 		dbg("set avail min failed");
@@ -215,19 +216,19 @@ static int set_swparams(struct recorder * rec)
 	}
 	/* set a value bigger than the buffer frames to prevent the auto start.
 	 * we use the snd_pcm_start to explicit start the pcm */
-	err = snd_pcm_sw_params_set_start_threshold(handle, swparams, 
+	err = snd_pcm_sw_params_set_start_threshold(__handle, swparams, 
 			rec->buffer_frames * 2);
 	if (err < 0) {
 		dbg("set start threshold fail");
 		return err;
 	}
 
-	if ( (err = snd_pcm_sw_params(handle, swparams)) < 0) {
+	if ( (err = snd_pcm_sw_params(__handle, swparams)) < 0) {
 		dbg("unable to install sw params:");
 		return err;
 	}
 	return 0;
-}
+} // set_swparams
 
 static int set_params(struct recorder *rec, WAVEFORMATEX *fmt,
 		unsigned int buffertime, unsigned int periodtime)
@@ -245,19 +246,19 @@ static int set_params(struct recorder *rec, WAVEFORMATEX *fmt,
 	if (err)
 		return err;
 	return 0;
-}
+} // set_params
 
 /*
  *   Underrun and suspend recovery
  */
  
-static int xrun_recovery(snd_pcm_t *handle, int err)
+static int xrun_recovery(snd_pcm_t *__handle, int err)
 {
 	if (err == -EPIPE) {	/* over-run */
 		if (show_xrun)
 			printf("!!!!!!overrun happend!!!!!!");
 
-		err = snd_pcm_prepare(handle);
+		err = snd_pcm_prepare(__handle);
 		if (err < 0) {
 			if (show_xrun)
 				printf("Can't recovery from overrun,"
@@ -266,10 +267,10 @@ static int xrun_recovery(snd_pcm_t *handle, int err)
 		}
 		return 0;
 	} else if (err == -ESTRPIPE) {
-		while ((err = snd_pcm_resume(handle)) == -EAGAIN)
+		while ((err = snd_pcm_resume(__handle)) == -EAGAIN)
 			usleep(200000);	/* wait until the suspend flag is released */
 		if (err < 0) {
-			err = snd_pcm_prepare(handle);
+			err = snd_pcm_prepare(__handle);
 			if (err < 0) {
 				if (show_xrun)
 					printf("Can't recovery from suspend,"
@@ -286,17 +287,17 @@ static ssize_t pcm_read(struct recorder *rec, size_t rcount)
 	ssize_t r;
 	size_t count = rcount;
 	char *data;
-	snd_pcm_t *handle = (snd_pcm_t *)rec->wavein_hdl;
-	if(!handle)
+	snd_pcm_t *__handle = (snd_pcm_t *)rec->wavein_hdl;
+	if(!__handle)
 		return -EINVAL;
 
 	data = rec->audiobuf;
 	while (count > 0) {
-		r = snd_pcm_readi(handle, data, count);
+		r = snd_pcm_readi(__handle, data, count);
 		if (r == -EAGAIN || (r >= 0 && (size_t)r < count)) {
-			snd_pcm_wait(handle, 100);
+			snd_pcm_wait(__handle, 100);
 		} else if (r < 0) {
-			if(xrun_recovery(handle, r) < 0) {
+			if(xrun_recovery(__handle, r) < 0) {
 				return -1;
 			}
 		} 
@@ -469,9 +470,9 @@ fail:
 
 static void close_recorder_internal(struct recorder *rec)
 {
-	snd_pcm_t * handle;
+	snd_pcm_t * __handle;
 
-	handle = (snd_pcm_t *) rec->wavein_hdl;
+	__handle = (snd_pcm_t *) rec->wavein_hdl;
 
 	/* may be the thread is blocked at read, cancel it */
 	pthread_cancel(rec->rec_thread);
@@ -479,8 +480,8 @@ static void close_recorder_internal(struct recorder *rec)
 	/* wait for the pcm thread quit first */
 	pthread_join(rec->rec_thread, NULL);
 
-	if(handle) {
-		snd_pcm_close(handle);
+	if(__handle) {
+		snd_pcm_close(__handle);
 		rec->wavein_hdl = NULL;
 	}
 	free_rec_buffer(rec);

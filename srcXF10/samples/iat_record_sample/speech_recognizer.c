@@ -16,6 +16,7 @@
 #include "msp_errors.h"
 #include "linuxrec.h"
 
+#include "patchXF/pathcXFbase.h"
 
 #define SR_DBGON 1
 #if SR_DBGON == 1
@@ -135,6 +136,8 @@ static int update_format_from_sessionparam(const char * session_para, WAVEFORMAT
 			if (s && *s) {
 				wavefmt->nSamplesPerSec = atoi(s);
 				wavefmt->nAvgBytesPerSec = wavefmt->nBlockAlign * wavefmt->nSamplesPerSec;
+                _prSFn( "\n" "--- reset : ch * sampleRate == bitRate == : \n" "%d * %d == %d" "\n",
+                        wavefmt->nBlockAlign , wavefmt->nSamplesPerSec , wavefmt->nAvgBytesPerSec );
 			}
 		}
 		else
@@ -152,7 +155,7 @@ static int update_format_from_sessionparam(const char * session_para, WAVEFORMAT
  * not provided yet. 
  */
 
-int sr_init_ex(struct speech_rec * sr, const char * session_begin_params, 
+int sr_init_ex(struct speech_rec * sr, const char * ___session_begin_params, 
 			enum sr_audsrc aud_src, record_dev_id devid, 
 				struct speech_rec_notifier * notify)
 {
@@ -167,8 +170,8 @@ int sr_init_ex(struct speech_rec * sr, const char * session_begin_params,
 	if (!sr)
 		return -E_SR_INVAL;
 
-	if (session_begin_params == NULL) {
-		session_begin_params = DEFAULT_SESSION_PARA;
+	if (___session_begin_params == NULL) {
+		___session_begin_params = DEFAULT_SESSION_PARA;
 	}
 
 	SR_MEMSET(sr, 0, sizeof(struct speech_rec));
@@ -178,13 +181,14 @@ int sr_init_ex(struct speech_rec * sr, const char * session_begin_params,
 	sr->rec_stat = MSP_REC_STATUS_SUCCESS;
 	sr->audio_status = MSP_AUDIO_SAMPLE_FIRST;
 
-	param_size = strlen(session_begin_params) + 1;
+	param_size = strlen(___session_begin_params) + 1;
 	sr->session_begin_params = (char*)SR_MALLOC(param_size);
 	if (sr->session_begin_params == NULL) {
 		sr_dbg("mem alloc failed\n");
 		return -E_SR_NOMEM;
 	}
-	strncpy(sr->session_begin_params, session_begin_params, param_size);
+    _prSFn( " --- set IAT parameter : \n" "%s" "\n" , ___session_begin_params ) ;
+	strncpy(sr->session_begin_params, ___session_begin_params, param_size);
 
 	sr->notif = *notify;
 	
@@ -195,7 +199,7 @@ int sr_init_ex(struct speech_rec * sr, const char * session_begin_params,
 			errcode = -E_SR_RECORDFAIL;
 			goto fail;
 		}
-		update_format_from_sessionparam(session_begin_params, &wavfmt);
+		update_format_from_sessionparam(___session_begin_params, &wavfmt);
 	
 		errcode = open_recorder(sr->recorder, devid, &wavfmt);
 		if (errcode != 0) {
@@ -223,10 +227,10 @@ fail:
 }
 
 /* use the default input device to capture the audio. see sr_init_ex */
-int sr_init(struct speech_rec * sr, const char * session_begin_params, 
+int sr_init(struct speech_rec * sr, const char * ___session_begin_params, 
 		enum sr_audsrc aud_src, struct speech_rec_notifier * notify)
 {
-	return sr_init_ex(sr, session_begin_params, aud_src, 
+	return sr_init_ex(sr, ___session_begin_params, aud_src, 
 			get_default_input_dev(), notify);
 }
 
