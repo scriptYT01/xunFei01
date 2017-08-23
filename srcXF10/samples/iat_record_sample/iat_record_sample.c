@@ -247,8 +247,9 @@ static void demo_mic(const char* session_begin_params)
 		printf("start listen failed %d\n", errcode);
 	}
 	/* demo 15 seconds recording */
-	while(i++ < 15)
+	while(i++ < 15) {
 		sleep(1);
+    }
 	errcode = sr_stop_listening(&iat);
 	if (errcode) {
 		printf("stop listening failed %d\n", errcode);

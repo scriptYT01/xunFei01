@@ -78,6 +78,7 @@ LOCAL_MODULE_TAGS := iat_record_sample18
 LOCAL_MODULE_PATH:=$(TARGET_FS_BUILD)/ch/xf10
 LOCAL_SRC_FILES := \
 	patchXF/pathcXFbase01.c                             			\
+	patchXF/pathcXFbase02.c                             			\
 	patchXF/iat_record_sample_patch.c                             	\
 	samples/iat_record_sample/linuxrec.c                            \
 	samples/iat_record_sample/speech_recognizer.c                   \
