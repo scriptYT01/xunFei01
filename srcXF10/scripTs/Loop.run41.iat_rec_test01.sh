@@ -5,7 +5,9 @@
 
 while [ 1 ]
 do
+    echo
     echo    "./iat_record_sample18.x1000.bin 0 1   'hw:0,2'    1    16000"
+    echo
              ./iat_record_sample18.x1000.bin 0 1   'hw:0,2'    1    16000
 
     [ 1 == 2 ] || exit
