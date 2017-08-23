@@ -14,5 +14,7 @@ extern
 int     _chAmount   ;
 extern 
 int     _sampleFreq ;
+extern 
+char  * _wavFileName ;
 
 #endif

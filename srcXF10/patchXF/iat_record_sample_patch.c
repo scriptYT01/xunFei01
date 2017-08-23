@@ -5,6 +5,7 @@ int     _src_0wavFile_1mic = -1 ;
 char  * _micDevName = "default" ;
 int     _chAmount   = 1 ;
 int     _sampleFreq = 16000 ;
+char  * _wavFileName = "wav/iflytek02.wav" ;
 
 static void _usageIatRec( int ___argc , char ** ___argv ) {
     _prSFn( "\n\n" "%s" 
@@ -13,6 +14,7 @@ static void _usageIatRec( int ___argc , char ** ___argv ) {
             " [_micDevName]"
             " [_chAmount]"
             " [_sampleFreq]"
+            " [_wavFileName]"
             "\n\n\n"
             , ___argv[0] ) ;
 } // _usageIatRec
@@ -39,6 +41,7 @@ void _mainPara01( int ___argc , char ** ___argv ) {
     X_paraAtoS( 0 , 3 , _micDevName             ) ;
     X_paraAtoi( 0 , 4 , _chAmount               ) ;
     X_paraAtoi( 0 , 5 , _sampleFreq             ) ;
+    X_paraAtoS( 0 , 6 , _wavFileName            ) ;
 
     _prSFn( "\n" " ---=== parameter analyze : end " "\n\n" );
 

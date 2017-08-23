@@ -16,6 +16,7 @@
 #define FRAME_LEN	640 
 #define	BUFFER_SIZE	4096
 
+
 /* Upload User words */
 static int upload_userwords()
 {
@@ -318,8 +319,11 @@ int main(int argc, char* argv[])
 
 		printf("15 sec passed\n");
 	} else {
-		_prSF(" 1 : from Wav file : Demo recgonizing the speech from a recorded audio file\n");
-		demo_file("wav/iflytek02.wav", session_begin_params); 
+		_prSFn(" 1 : from Wav file : Demo recgonizing the speech from a recorded audio file");
+		_prOOn(" %s : " 
+                " RIFF (little-endian) data, WAVE audio, Microsoft PCM, 16 bit, mono 16000 Hz" 
+                , _wavFileName ) ;
+		demo_file( _wavFileName , session_begin_params); 
 	}
 
 exit:
