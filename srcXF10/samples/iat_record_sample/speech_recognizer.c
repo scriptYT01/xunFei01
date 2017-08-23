@@ -164,7 +164,7 @@ int sr_init_ex(struct speech_rec * sr, const char * ___session_begin_params,
 	size_t param_size;
 	WAVEFORMATEX wavfmt = DEFAULT_FORMAT;
 
-    _dumpWAVEFORMATEX( "origin_wavfmt\n" , "\n" , &wavfmt ) ;
+    _dumpWAVEFORMATEX( "origin_wavfmt\n" , "\n" , "wavfmt" , &wavfmt ) ;
 
 	if (aud_src == SR_MIC && get_input_dev_num() == 0) {
 		return -E_SR_NOACTIVEDEVICE;

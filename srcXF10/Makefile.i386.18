@@ -16,7 +16,7 @@ define  RUN01
 if [ -d bin ]
 then
 	echo '... deep in ... '
-	cd bin && exec ../$$(basename $$0) $*
+	cd bin && exec ../$$(basename $$0) $$*
 	exit
 fi
 

@@ -3,8 +3,8 @@
 
 //  WAVEFORMATEX wavfmt = DEFAULT_FORMAT;
 
-void _dumpWAVEFORMATEX( char * ___hMsg , char * ___tMsg , WAVEFORMATEX * ___wavfmt ) {
-    if ( NULL != ___hMsg ) { _prOO( "%s" , ___hMsg ) ; }
+void _dumpWAVEFORMATEX( char * ___hMsg , char * ___tMsg , char * ___varName , WAVEFORMATEX * ___wavfmt ) {
+    if ( NULL != ___hMsg ) { _prSF( ":%s:%s" , ___varName , ___hMsg ) ; }
 
 
     _prFFn( "%d" , ___wavfmt , wFormatTag          );
