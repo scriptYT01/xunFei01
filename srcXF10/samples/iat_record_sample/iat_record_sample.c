@@ -291,7 +291,7 @@ int main(int argc, char* argv[])
 
 	_prSF("Want to upload the user words ? \n0: No.\n1: Yes\n");
 
-    if ( 0 ) { scanf("%d", &upload_on); } else { upload_on = 0 ; }
+    if ( 0 ) { scanf("%d", &upload_on); } else { upload_on = _uploadWord_0not_1up ; }
 
 	if (upload_on)
 	{
@@ -308,7 +308,7 @@ int main(int argc, char* argv[])
 
 	_prSF("Where the audio comes from?\n"
 			"0: From a audio file.\n1: From microphone.\n");
-	if ( 0 ) { scanf("%d", &aud_src);} else { aud_src = 1 ; } 
+	if ( 0 ) { scanf("%d", &aud_src);} else { aud_src = _src_0wavFile_1mic ; } 
 
 	if(aud_src != 0) {
 		_prSF(" 1 : from MIC : Demo recognizing the speech from microphone\n");
