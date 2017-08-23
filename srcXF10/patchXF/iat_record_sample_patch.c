@@ -10,6 +10,9 @@ static void _usageIatRec( int ___argc , char ** ___argv ) {
     _prSFn( "\n\n" "%s" 
             " <_uploadWord_0not_1up>"
             " <_src_0wavFile_1mic>"
+            " [_micDevName]"
+            " [_chAmount]"
+            " [_sampleFreq]"
             "\n\n\n"
             , ___argv[0] ) ;
 } // _usageIatRec
@@ -33,7 +36,7 @@ void _mainPara01( int ___argc , char ** ___argv ) {
     // _paraAtoi
     X_paraAtoi( 1 , 1 , _uploadWord_0not_1up    ) ;
     X_paraAtoi( 1 , 2 , _src_0wavFile_1mic      ) ;
-    //X_paraAtoS( 0 , 3 , _micDevName             ) ;
+    X_paraAtoS( 0 , 3 , _micDevName             ) ;
     X_paraAtoi( 0 , 4 , _chAmount               ) ;
     X_paraAtoi( 0 , 5 , _sampleFreq             ) ;
 

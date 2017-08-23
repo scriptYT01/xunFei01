@@ -433,7 +433,7 @@ static int prepare_rec_buffer(struct recorder * rec )
 }
 #endif
 
-static int open_recorder_internal(struct recorder * rec, 
+static int open_recorder_internal(struct recorder * rec,  // call to snd_pcm_open , set_params , create_record_thread
 		record_dev_id dev, WAVEFORMATEX * fmt)
 {
 	int err = 0;
@@ -640,7 +640,7 @@ void destroy_recorder(struct recorder *rec)
 	free(rec);
 }
 
-int open_recorder(struct recorder * rec, record_dev_id dev, WAVEFORMATEX * fmt)
+int open_recorder(struct recorder * rec, record_dev_id dev, WAVEFORMATEX * fmt) // internal -> snd_pcm_open , set_params , create_record_thread
 {
 	int ret = 0;
 	if(!rec )
