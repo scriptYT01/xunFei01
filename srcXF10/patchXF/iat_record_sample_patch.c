@@ -17,6 +17,11 @@ void _mainPara01( int ___argc , char ** ___argv ) {
     _usageIatRec( ___argc , ___argv );
 
     if ( ___argc < (2 + 1) ) {
+        _prSFn( 
+                "\n"
+                "no enough parameter. exit."
+                "\n" 
+              );
         exit( 11 ) ;
     }
 
