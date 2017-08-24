@@ -117,27 +117,36 @@ static int _Set_hwparams(struct recorder * ___rec,  const WAVEFORMATEX *___wavfm
     _prSFn( " -- snd_pcm_hw_params_alloca malloc the __HWparams " );
 	snd_pcm_hw_params_alloca(&__HWparams);
 
+    _prSFn( " -- snd_pcm_hw_params_any Fill params " );
 	__err = snd_pcm_hw_params_any(__handle, __HWparams);
 	if (__err < 0) {
-		dbg("Broken configuration for this PCM");
+		_prSFn("ERROR : snd_pcm_hw_params_any : Broken configuration for this PCM : %d " , __err );
 		return __err;
 	}
+
+    _prSFn( " -- snd_pcm_hw_params_set_access : %d " , SND_PCM_ACCESS_RW_INTERLEAVED );
 	__err = snd_pcm_hw_params_set_access(__handle, __HWparams, // _Set_hwparams
 					   SND_PCM_ACCESS_RW_INTERLEAVED);
 	if (__err < 0) {
-		dbg("Access type not available");
+		_prSFn("ERROR : snd_pcm_hw_params_set_access : Access type not available");
 		return __err;
 	}
+
+    _prSFn( " -- _Format_ms_to_alsa " ) ;
 	__err = _Format_ms_to_alsa(___wavfmt, &__pcmformat);
 	if (__err) {
-		dbg("Invalid __pcmformat");
+		_prSFn("ERROR : _Format_ms_to_alsa : Invalid __pcmformat");
 		return - EINVAL;
 	}
+
+    _prSFn( " -- snd_pcm_hw_params_set_format : %d " , __pcmformat ) ;
 	__err = snd_pcm_hw_params_set_format(__handle, __HWparams, __pcmformat); // _Set_hwparams
 	if (__err < 0) {
-		dbg("Sample __pcmformat non available");
+		_prSFn("ERROR : snd_pcm_hw_params_set_format : Sample __pcmformat non available");
 		return __err;
 	}
+
+    _prSFn( " -- snd_pcm_hw_params_set_channels : %d " , ___wavfmt->nChannels ) ;
 	__err = snd_pcm_hw_params_set_channels(__handle, __HWparams, ___wavfmt->nChannels);
 	if (__err < 0) {
 		dbg("Channels count non available");
