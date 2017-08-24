@@ -105,7 +105,7 @@ static int _Set_hwparams(struct recorder * rec,  const WAVEFORMATEX *wavfmt,
 			unsigned int buffertime, unsigned int periodtime)
 {
 	snd_pcm_hw_params_t *params;
-	int err;
+	int __err;
 	unsigned int rate;
 	snd_pcm_format_t format;
 	snd_pcm_uframes_t size;
@@ -115,70 +115,70 @@ static int _Set_hwparams(struct recorder * rec,  const WAVEFORMATEX *wavfmt,
 	rec->period_time = periodtime;
 
 	snd_pcm_hw_params_alloca(&params);
-	err = snd_pcm_hw_params_any(__handle, params);
-	if (err < 0) {
+	__err = snd_pcm_hw_params_any(__handle, params);
+	if (__err < 0) {
 		dbg("Broken configuration for this PCM");
-		return err;
+		return __err;
 	}
-	err = snd_pcm_hw_params_set_access(__handle, params, // _Set_hwparams
+	__err = snd_pcm_hw_params_set_access(__handle, params, // _Set_hwparams
 					   SND_PCM_ACCESS_RW_INTERLEAVED);
-	if (err < 0) {
+	if (__err < 0) {
 		dbg("Access type not available");
-		return err;
+		return __err;
 	}
-	err = _Format_ms_to_alsa(wavfmt, &format);
-	if (err) {
+	__err = _Format_ms_to_alsa(wavfmt, &format);
+	if (__err) {
 		dbg("Invalid format");
 		return - EINVAL;
 	}
-	err = snd_pcm_hw_params_set_format(__handle, params, format); // _Set_hwparams
-	if (err < 0) {
+	__err = snd_pcm_hw_params_set_format(__handle, params, format); // _Set_hwparams
+	if (__err < 0) {
 		dbg("Sample format non available");
-		return err;
+		return __err;
 	}
-	err = snd_pcm_hw_params_set_channels(__handle, params, wavfmt->nChannels);
-	if (err < 0) {
+	__err = snd_pcm_hw_params_set_channels(__handle, params, wavfmt->nChannels);
+	if (__err < 0) {
 		dbg("Channels count non available");
-		return err;
+		return __err;
 	}
 
 	rate = wavfmt->nSamplesPerSec;
-	err = snd_pcm_hw_params_set_rate_near(__handle, params, &rate, 0); // _Set_hwparams
-	if (err < 0) {
+	__err = snd_pcm_hw_params_set_rate_near(__handle, params, &rate, 0); // _Set_hwparams
+	if (__err < 0) {
 		dbg("Set rate failed");
-		return err;
+		return __err;
 	}
 	if(rate != wavfmt->nSamplesPerSec) {
 		dbg("Rate mismatch");
 		return -EINVAL;
 	}
 	if (rec->buffer_time == 0 || rec->period_time == 0) {
-		err = snd_pcm_hw_params_get_buffer_time_max(params,
+		__err = snd_pcm_hw_params_get_buffer_time_max(params,
 						    &rec->buffer_time, 0);
-		assert(err >= 0);
+		assert(__err >= 0);
 		if (rec->buffer_time > 500000)
 			rec->buffer_time = 500000;
 		rec->period_time = rec->buffer_time / 4;
 	}
-	err = snd_pcm_hw_params_set_period_time_near(__handle, params, // _Set_hwparams
+	__err = snd_pcm_hw_params_set_period_time_near(__handle, params, // _Set_hwparams
 					     &rec->period_time, 0);
-	if (err < 0) {
+	if (__err < 0) {
 		dbg("set period time fail");
-		return err;
+		return __err;
 	}
-	err = snd_pcm_hw_params_set_buffer_time_near(__handle, params,
+	__err = snd_pcm_hw_params_set_buffer_time_near(__handle, params,
 					     &rec->buffer_time, 0);
-	if (err < 0) {
+	if (__err < 0) {
 		dbg("set buffer time failed");
-		return err;
+		return __err;
 	}
-	err = snd_pcm_hw_params_get_period_size(params, &size, 0); // _Set_hwparams
-	if (err < 0) {
+	__err = snd_pcm_hw_params_get_period_size(params, &size, 0); // _Set_hwparams
+	if (__err < 0) {
 		dbg("get period size fail");
-		return err;
+		return __err;
 	}
 	rec->period_frames = size; 
-	err = snd_pcm_hw_params_get_buffer_size(params, &size);
+	__err = snd_pcm_hw_params_get_buffer_size(params, &size);
 	if (size == rec->period_frames) {
 		_prSFn("Can't use period equal to buffer size (%d == %d)",
 				      (int) size, rec->period_frames);
@@ -188,45 +188,45 @@ static int _Set_hwparams(struct recorder * rec,  const WAVEFORMATEX *wavfmt,
 	rec->bits_per_frame = wavfmt->wBitsPerSample; // _Set_hwparams
 
 	/* set to driver */
-	err = snd_pcm_hw_params(__handle, params);
-	if (err < 0) {
+	__err = snd_pcm_hw_params(__handle, params);
+	if (__err < 0) {
 		dbg("Unable to install hw params:");
-		return err;
+		return __err;
 	}
 	return 0;
 } // _Set_hwparams
 
 static int _Set_swparams(struct recorder * rec)
 {
-	int err;
+	int __err;
 	snd_pcm_sw_params_t *swparams;
 	snd_pcm_t * __handle = (snd_pcm_t*)(rec->wavein_hdl);
 	/* sw para */
 	snd_pcm_sw_params_alloca(&swparams);
-	err = snd_pcm_sw_params_current(__handle, swparams);
-	if (err < 0) {
+	__err = snd_pcm_sw_params_current(__handle, swparams);
+	if (__err < 0) {
 		dbg("get current sw para fail");
-		return err;
+		return __err;
 	}
 
-	err = snd_pcm_sw_params_set_avail_min(__handle, swparams, 
+	__err = snd_pcm_sw_params_set_avail_min(__handle, swparams, 
 						rec->period_frames);
-	if (err < 0) {
+	if (__err < 0) {
 		dbg("set avail min failed");
-		return err;
+		return __err;
 	}
 	/* set a value bigger than the buffer frames to prevent the auto start.
 	 * we use the snd_pcm_start to explicit start the pcm */
-	err = snd_pcm_sw_params_set_start_threshold(__handle, swparams,  // _Set_swparams
+	__err = snd_pcm_sw_params_set_start_threshold(__handle, swparams,  // _Set_swparams
 			rec->buffer_frames * 2);
-	if (err < 0) {
+	if (__err < 0) {
 		dbg("set start threshold fail");
-		return err;
+		return __err;
 	}
 
-	if ( (err = snd_pcm_sw_params(__handle, swparams)) < 0) {
+	if ( (__err = snd_pcm_sw_params(__handle, swparams)) < 0) {
 		dbg("unable to install sw params:");
-		return err;
+		return __err;
 	}
 	return 0;
 } // _Set_swparams
@@ -234,18 +234,18 @@ static int _Set_swparams(struct recorder * rec)
 static int _Set_params(struct recorder *rec, WAVEFORMATEX *fmt,
 		unsigned int buffertime, unsigned int periodtime)
 {
-	int err;
+	int __err;
 	WAVEFORMATEX defmt = DEFAULT_FORMAT;
 	
 	if (fmt == NULL) {
 		fmt = &defmt;
 	}
-	err = _Set_hwparams(rec, fmt, buffertime, periodtime);
-	if (err)
-		return err;
-	err = _Set_swparams(rec);
-	if (err)
-		return err;
+	__err = _Set_hwparams(rec, fmt, buffertime, periodtime);
+	if (__err)
+		return __err;
+	__err = _Set_swparams(rec);
+	if (__err)
+		return __err;
 	return 0;
 } // _Set_params
 
@@ -253,35 +253,35 @@ static int _Set_params(struct recorder *rec, WAVEFORMATEX *fmt,
  *   Underrun and suspend recovery
  */
  
-static int _Xrun_recovery(snd_pcm_t *__handle, int err)
+static int _Xrun_recovery(snd_pcm_t *__handle, int ___err)
 {
-	if (err == -EPIPE) {	/* over-run */
+	if (___err == -EPIPE) {	/* over-run */
 		if (_Show_xrun)
 			printf("!!!!!!overrun happend!!!!!!");
 
-		err = snd_pcm_prepare(__handle);
-		if (err < 0) {
+		___err = snd_pcm_prepare(__handle);
+		if (___err < 0) {
 			if (_Show_xrun)
 				printf("Can't recovery from overrun,"
-				"prepare failed: %s\n", snd_strerror(err));
-			return err;
+				"prepare failed: %s\n", snd_strerror(___err));
+			return ___err;
 		}
 		return 0;
-	} else if (err == -ESTRPIPE) {
-		while ((err = snd_pcm_resume(__handle)) == -EAGAIN) // _Xrun_recovery
+	} else if (___err == -ESTRPIPE) {
+		while ((___err = snd_pcm_resume(__handle)) == -EAGAIN) // _Xrun_recovery
 			usleep(200000);	/* wait until the suspend flag is released */
-		if (err < 0) {
-			err = snd_pcm_prepare(__handle);
-			if (err < 0) {
+		if (___err < 0) {
+			___err = snd_pcm_prepare(__handle);
+			if (___err < 0) {
 				if (_Show_xrun)
 					printf("Can't recovery from suspend,"
-					"prepare failed: %s\n", snd_strerror(err));
-				return err;
+					"prepare failed: %s\n", snd_strerror(___err));
+				return ___err;
 			}
 		}
 		return 0;
 	}
-	return err;
+	return ___err;
 } // _Xrun_recovery
 
 static ssize_t _Pcm_read(struct recorder *rec, size_t rcount)
@@ -349,10 +349,10 @@ static void * _Record_thread_proc(void * para)
 
 static int _Create_record_thread(void * para, pthread_t * tidp)
 {
-	int err;
-	err = pthread_create(tidp, NULL, _Record_thread_proc, (void *)para);
-	if (err != 0)
-		return err;
+	int __err;
+	__err = pthread_create(tidp, NULL, _Record_thread_proc, (void *)para);
+	if (__err != 0)
+		return __err;
 
 	return 0;
 } // _Create_record_thread
@@ -384,7 +384,7 @@ static int _Prepare_rec_buffer(struct recorder * rec )
 {
 	struct bufinfo *buffers;
 	unsigned int i;
-	int err;
+	int __err;
 	size_t sz;
 
 	/* the read and QISRWrite is blocked, currently only support one buffer,
@@ -440,25 +440,25 @@ static int _Prepare_rec_buffer(struct recorder * rec )
 static int _Open_recorder_internal(struct recorder * rec,  // call to snd_pcm_open , _Set_params , _Create_record_thread
 		record_dev_id dev, WAVEFORMATEX * fmt)
 {
-	int err = 0;
+	int __err = 0;
 
-	err = snd_pcm_open((snd_pcm_t **)&rec->wavein_hdl, dev.u.name, 
+	__err = snd_pcm_open((snd_pcm_t **)&rec->wavein_hdl, dev.u.name, 
 			SND_PCM_STREAM_CAPTURE, 0);
-	if(err < 0)
+	if(__err < 0)
 		goto fail;
 
-	err = _Set_params(rec, fmt, DEF_BUFF_TIME, DEF_PERIOD_TIME);
-	if(err)
+	__err = _Set_params(rec, fmt, DEF_BUFF_TIME, DEF_PERIOD_TIME);
+	if(__err)
 		goto fail;
 
 	assert(rec->bufheader == NULL);
-	err = _Prepare_rec_buffer(rec); // _Open_recorder_internal
-	if(err)
+	__err = _Prepare_rec_buffer(rec); // _Open_recorder_internal
+	if(__err)
 		goto fail;
 
-	err = _Create_record_thread((void*)rec, 
+	__err = _Create_record_thread((void*)rec, 
 			&rec->rec_thread);
-	if(err)
+	if(__err)
 		goto fail;
 	
 
@@ -468,7 +468,7 @@ fail:
 		snd_pcm_close((snd_pcm_t *) rec->wavein_hdl);
 	rec->wavein_hdl = NULL;
 	_Free_rec_buffer(rec);
-	return err;
+	return __err;
 } // _Open_recorder_internal
 
 static void _Close_recorder_internal(struct recorder *rec)

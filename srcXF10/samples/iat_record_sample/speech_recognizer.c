@@ -207,9 +207,9 @@ int sr_init_ex(struct speech_rec * ___sr, const char * ___session_begin_params,
 		}
 		_Update_format_from_sessionparam(___session_begin_params, &__wavfmt);
 	
-        _prSF("_open_recorder : start " );
+        _prSFn("_open_recorder : start " );
 		__errcode = _open_recorder(___sr->recorder, devid, &__wavfmt);
-        _prSF("_open_recorder : end " );
+        _prSFn("_open_recorder : end " );
 
 		if (__errcode != 0) {
 			_prSF("recorder open failed: %d\n", __errcode); // sr_init_ex
@@ -218,7 +218,7 @@ int sr_init_ex(struct speech_rec * ___sr, const char * ___session_begin_params,
 		}
 	}
 
-    _prSF(" end normal. " );
+    _prSFn(" end normal. " );
 	return 0;
 
 fail:
@@ -233,7 +233,7 @@ fail:
 	}
 	SR_MEMSET(&___sr->notif, 0, sizeof(___sr->notif));
 
-    _prSF(" end ERROR : %d. " , __errcode);
+    _prSFn(" end ERROR : %d. " , __errcode);
 	return __errcode;
 } // sr_init_ex
 
