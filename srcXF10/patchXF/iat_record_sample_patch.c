@@ -21,7 +21,8 @@ static void _usageIatRec( int ___argc , char ** ___argv ) {
 
 
 
-void _mainPara01( int ___argc , char ** ___argv ) {
+// _paraAtoi
+void _mainParaIatRec( int ___argc , char ** ___argv ) {
     _usageIatRec( ___argc , ___argv );
 
     if ( ___argc < (2 + 1) ) {
@@ -45,4 +46,4 @@ void _mainPara01( int ___argc , char ** ___argv ) {
 
     _prSFn( "\n" " ---=== parameter analyze : end " "\n\n" );
 
-} // _mainPara01
+} // _mainParaIatRec

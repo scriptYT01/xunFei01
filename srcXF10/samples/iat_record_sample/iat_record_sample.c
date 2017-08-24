@@ -280,7 +280,7 @@ int main(int argc, char* argv[])
 		"result_type = plain, result_encoding = utf8";
 
     // _paraAtoi
-    _mainPara01( argc , argv );
+    _mainParaIatRec( argc , argv );
 
 	/* Login first. the 1st arg is username, the 2nd arg is password
 	 * just set them as NULL. the 3rd arg is login paramertes 

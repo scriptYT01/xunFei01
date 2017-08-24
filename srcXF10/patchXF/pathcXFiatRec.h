@@ -17,4 +17,6 @@ int     _sampleFreq ;
 extern 
 char  * _wavFileName ;
 
+extern void _mainParaIatRec( int ___argc , char ** ___argv ) ;
+
 #endif
