@@ -445,26 +445,33 @@ static int _Open_recorder_internal(struct recorder * ___rec,  // call to snd_pcm
     _prSFn( " -- snd_pcm_open <%s>" , ___dev.u.name ) ;
 	__err = snd_pcm_open((snd_pcm_t **)&___rec->wavein_hdl, ___dev.u.name, 
 			SND_PCM_STREAM_CAPTURE, 0);
-	if(__err < 0)
+	if(__err < 0) {
+        _prSFn( " -- snd_pcm_open ERROR <%d>" , __err ) ;
 		goto fail;
+    }
 
     _prSFn( " -- _Set_params <%d,%d>" , DEF_BUFF_TIME , DEF_PERIOD_TIME ) ;
 	__err = _Set_params(___rec, ___fmt, DEF_BUFF_TIME, DEF_PERIOD_TIME);
-	if(__err)
+	if(__err) {
+        _prSFn( " -- _Set_params ERROR <%d>" , __err ) ;
 		goto fail;
+    }
 
     _prSFn( " -- _Prepare_rec_buffer " );
 	assert(___rec->bufheader == NULL);
 	__err = _Prepare_rec_buffer(___rec); // _Open_recorder_internal
-	if(__err)
+	if(__err) {
+        _prSFn( " -- _Prepare_rec_buffer ERROR <%d>" , __err ) ;
 		goto fail;
+    }
 
     _prSFn( " -- _Create_record_thread " );
 	__err = _Create_record_thread((void*)___rec, 
 			&___rec->rec_thread);
-	if(__err)
+	if(__err) {
+        _prSFn( " -- _Create_record_thread ERROR <%d>" , __err ) ;
 		goto fail;
-	
+    }
 
     _prSFn( " -- end normal " );
 	return 0;

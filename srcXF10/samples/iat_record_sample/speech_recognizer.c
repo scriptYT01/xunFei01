@@ -199,12 +199,15 @@ int sr_init_ex(struct speech_rec * ___sr, const char * ___session_begin_params,
 	___sr->notif = *notify;
 	
 	if (aud_src == SR_MIC) {
+        _prSFn(" _create_recorder " );
 		__errcode = _create_recorder(&___sr->recorder, _Iat_cb, (void*)___sr);
 		if (___sr->recorder == NULL || __errcode != 0) {
 			_prSF("create recorder failed: %d\n", __errcode);
 			__errcode = -E_SR_RECORDFAIL;
 			goto fail;
 		}
+
+        _prSFn(" _Update_format_from_sessionparam " );
 		_Update_format_from_sessionparam(___session_begin_params, &__wavfmt);
 	
         _prSFn("_open_recorder : start " ); // _Open_recorder_internal
