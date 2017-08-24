@@ -135,10 +135,10 @@ static int _update_format_from_sessionparam(const char * session_para, WAVEFORMA
 			s = _skip_space(s);
 			if (s && *s) {
                 _prSFn( "\n" "--- reset : nBlockAlign * nSamplesPerSec == nAvgBytesPerSec == : " );
-                _prSFn( "%d * %d == %d" , wavefmt->nBlockAlign , wavefmt->nSamplesPerSec , wavefmt->nAvgBytesPerSec );
+                _prOOn( "%d * %d == %d" , wavefmt->nBlockAlign , wavefmt->nSamplesPerSec , wavefmt->nAvgBytesPerSec );
 				wavefmt->nSamplesPerSec = atoi(s);
 				wavefmt->nAvgBytesPerSec = wavefmt->nBlockAlign * wavefmt->nSamplesPerSec;
-                _prSFn( "%d * %d == %d" "\n", wavefmt->nBlockAlign , wavefmt->nSamplesPerSec , wavefmt->nAvgBytesPerSec );
+                _prOOn( "%d * %d == %d" "\n", wavefmt->nBlockAlign , wavefmt->nSamplesPerSec , wavefmt->nAvgBytesPerSec );
 			}
 		}
 		else

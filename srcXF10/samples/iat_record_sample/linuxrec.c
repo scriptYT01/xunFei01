@@ -25,6 +25,7 @@
 #endif
 
 #include "patchXF/pathcXFbase.h"
+#include "patchXF/pathcXFiatRec.h"
 
 /* Do not change the sequence */
 enum {
@@ -493,6 +494,8 @@ static int get_pcm_device_cnt(snd_pcm_stream_t stream)
 	void **hints, **n;
 	char *io, *filter, *name;
 	int cnt = 0;
+	int _amount = 0;
+	char * __descr ; 
 
 	if (snd_device_name_hint(-1, "pcm", &hints) < 0)
 		return 0;
@@ -501,17 +504,25 @@ static int get_pcm_device_cnt(snd_pcm_stream_t stream)
 	while (*n != NULL) {
 		io = snd_device_name_get_hint(*n, "IOID");
 		name = snd_device_name_get_hint(*n, "NAME");
-		if (name && (io == NULL || strcmp(io, filter) == 0))
+		__descr = snd_device_name_get_hint(*n, "DESC");
+		if (name && (io == NULL || strcmp(io, filter) == 0)) {
+            if ( 0 ) { _prSFn( " %s : <%s> : [%s] : {%s} " , filter , io , name , __descr ) ; } 
+            if ( 1 ) { _prSFn( " %s : <%s> : [%s] " , filter , io , name ) ; } 
 			cnt ++;
+        }
 		if (io != NULL)
 			free(io);
 		if (name != NULL)
 			free(name);
+		if (__descr != NULL)
+			free(__descr);
 		n++;
+		_amount ++ ;
 	}
 	snd_device_name_free_hint(hints);
+    _prSFn( " get_pcm_device_cnt -> %d of %d" , cnt , _amount) ;
 	return cnt;
-}
+} // get_pcm_device_cnt
 
 static void free_name_desc(char **name_or_desc) 
 {
@@ -529,11 +540,11 @@ static void free_name_desc(char **name_or_desc)
 
 /* return success: total count, need free the name and desc buffer 
  * fail: -1 , *name_out and *desc_out will be NULL */
-int list_pcm(snd_pcm_stream_t stream, char**name_out, 
+int _list_pcm(snd_pcm_stream_t stream, char**name_out, 
 						char ** desc_out)
 {
 	void **hints, **n;
-	char **name, **descr;
+	char **__name, **__descr;
 	char *io;
 	const char *filter;
 	int cnt = 0;
@@ -557,25 +568,26 @@ int list_pcm(snd_pcm_stream_t stream, char**name_out,
 	/* the last one is a flag, NULL */
 	name_out[cnt] = NULL;
 	desc_out[cnt] = NULL;
-	name = name_out;
-	descr = desc_out;
+	__name = name_out;
+	__descr = desc_out;
 
 	filter = stream == SND_PCM_STREAM_CAPTURE ? "Input" : "Output";
 	while (*n != NULL && i < cnt) {
-		*name = snd_device_name_get_hint(*n, "NAME");
-		*descr = snd_device_name_get_hint(*n, "DESC");
+		*__name = snd_device_name_get_hint(*n, "NAME");
+		*__descr = snd_device_name_get_hint(*n, "DESC");
 		io = snd_device_name_get_hint(*n, "IOID");
-		if (name == NULL || 
+		if (__name == NULL || 
 			(io != NULL && strcmp(io, filter) != 0) ){
-			if (*name) free(*name);
-			if (*descr) free(*descr);
+			if (*__name) free(*__name);
+			if (*__descr) free(*__descr);
 		} else {
-			if (*descr == NULL) {
-				*descr = malloc(4);
-				memset(*descr, 0, 4);
+			if (*__descr == NULL) {
+				*__descr = malloc(4);
+				memset(*__descr, 0, 4);
 			}
-			name++;
-			descr++;
+            if ( 1 ) { _prSFn( " %s : <%s> : [%s] " , filter , *__name , *__descr ) ; } 
+			__name++;
+			__descr++;
 			i++;
 		}
 		if (io != NULL)
@@ -589,7 +601,7 @@ fail:
 	free_name_desc(desc_out);
 	snd_device_name_free_hint(hints);
 	return -1;
-} // list_pcm 
+} // _list_pcm 
 
 /* -------------------------------------
  * Interfaces 
@@ -599,8 +611,11 @@ record_dev_id  get_default_input_dev()
 {
 	record_dev_id id; 
 	id.u.name = "default";
+	id.u.name = _micDevName ;
+
+    if ( 1 ) { _prSFn( " init record_dev_id's name to : %s" , id.u.name ) ; } 
 	return id;
-}
+} // get_default_input_dev
 
 record_dev_id * list_input_device() 
 {
@@ -610,7 +625,17 @@ record_dev_id * list_input_device()
 
 int get_input_dev_num()
 {
-	return get_pcm_device_cnt(SND_PCM_STREAM_CAPTURE);
+    int __rt ;
+	__rt = get_pcm_device_cnt(SND_PCM_STREAM_CAPTURE);
+
+    if ( 1 ) { _prSFn( " get_pcm_device_cnt -> %d" , __rt ); }
+    if ( 0 ) { 
+        char* name_out ;
+        char * desc_out ;
+        _list_pcm( SND_PCM_STREAM_CAPTURE , & name_out , & desc_out ) ; 
+    }
+
+	return __rt; 
 }
 
 

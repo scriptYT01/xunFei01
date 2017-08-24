@@ -196,24 +196,25 @@ XF07:=srcXF10/samples/asr_sample/Makefile
 
 XF11:=srcXF10/samples/asr_sample/asr_sample.c
 
-XF12:=srcXF10/samples/iat_record_sample/iat_record_sample.c
-XF13:=srcXF10/samples/iat_record_sample/linuxrec.c
-XF14:=srcXF10/samples/iat_record_sample/speech_recognizer.c
-XF15:=srcXF10/samples/iat_sample/iat_sample.c
-XF16:=srcXF10/samples/ise_sample/ise_sample.c
-XF17:=srcXF10/samples/sch_speak_sample/sch_speak_sample.c
-XF18:=srcXF10/samples/sch_text_sample/sch_text_sample.c
-XF19:=srcXF10/samples/tts_sample/tts_sample.c
+XF22:=srcXF10/samples/iat_record_sample/iat_record_sample.c
+XF23:=srcXF10/samples/iat_record_sample/speech_recognizer.c
+XF24:=srcXF10/samples/iat_record_sample/linuxrec.c
 
-XF20:=srcXF20/samples/tts_sample/tts_sample.c
+XF31:=srcXF10/samples/iat_sample/iat_sample.c
+XF41:=srcXF10/samples/ise_sample/ise_sample.c
+XF57:=srcXF10/samples/sch_speak_sample/sch_speak_sample.c
+XF58:=srcXF10/samples/sch_text_sample/sch_text_sample.c
+XF69:=srcXF10/samples/tts_sample/tts_sample.c
 
-XF31:=srcXF30/Build.mk
-XF32:=srcXF30/samples/aiui_sample/src/AIUITest.cpp
-XF33:=srcXF30/samples/aiui_sample/src/demo.cpp
-XF34:=srcXF30/samples/aiui_sample/src/FileUtil.cpp
+XF70:=srcXF20/samples/tts_sample/tts_sample.c
 
-XF41:=srcXF40/alsa-record-example41.c
-XF42:=srcXF40/alsa-record-example42.c
+XF81:=srcXF30/Build.mk
+XF82:=srcXF30/samples/aiui_sample/src/AIUITest.cpp
+XF83:=srcXF30/samples/aiui_sample/src/demo.cpp
+XF84:=srcXF30/samples/aiui_sample/src/FileUtil.cpp
+
+XF91:=srcXF40/alsa-record-example41.c
+XF92:=srcXF40/alsa-record-example42.c
 
 vb1:=srcXF10/Build.mk
 vb2:=srcXF20/Build.mk
@@ -226,10 +227,15 @@ px2:=srcXF10/patchXF/pathcXFbase01.c
 
 XFlist:= 
 #XFlist+= XF01 XF02 XF03 XF04 XF05 XF06 XF07 
-XFlist+= XF10 XF11 XF12 XF13 XF14 XF15 XF16 XF17 XF18 XF19   
-XFlist+= XF20
-XFlist+= XF31 XF32 XF33 XF34
-XFlist+= XF41 XF42 
+XFlist+= XF11 
+XFlist+= XF22 XF23 XF24 
+XFlist+= XF31 
+XFlist+= XF41 
+XFlist+= XF57 XF58 
+XFlist+= XF69   
+XFlist+= XF70
+XFlist+= XF81 XF82 XF83 XF84
+XFlist+= XF91 XF92 
 XFlist+= vb1 vb2 vb3 vb4 
 XFlist+= px1 px2
 
