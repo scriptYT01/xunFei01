@@ -60,7 +60,7 @@ static void _msSleep(size_t ms)
 static void _end_sr_on_error(struct speech_rec *sr, int errcode)
 {
 	if(sr->aud_src == SR_MIC)
-		stop_record(sr->recorder);
+		_stop_record(sr->recorder);
 	
 	if (sr->session_id) {
 		if (sr->notif.on_speech_end)
@@ -78,7 +78,7 @@ static void _end_sr_on_vad(struct speech_rec *sr)
 	const char *rslt;
 
 	if (sr->aud_src == SR_MIC)
-		stop_record(sr->recorder);	
+		_stop_record(sr->recorder);	
 
 	while(sr->rec_stat != MSP_REC_STATUS_COMPLETE ){
 		rslt = QISRGetResult(sr->session_id, &sr->rec_stat, 0, &errcode);
@@ -166,7 +166,7 @@ int sr_init_ex(struct speech_rec * sr, const char * ___session_begin_params,
 
     _dumpWAVEFORMATEX( "origin_wavfmt\n" , "\n" , __func__ , &wavfmt ) ;
 
-	if (aud_src == SR_MIC && get_input_dev_num() == 0) {
+	if (aud_src == SR_MIC && _get_input_dev_num() == 0) {
 		return -E_SR_NOACTIVEDEVICE;
 	}
 
@@ -196,7 +196,7 @@ int sr_init_ex(struct speech_rec * sr, const char * ___session_begin_params,
 	sr->notif = *notify;
 	
 	if (aud_src == SR_MIC) {
-		errcode = create_recorder(&sr->recorder, _iat_cb, (void*)sr);
+		errcode = _create_recorder(&sr->recorder, _iat_cb, (void*)sr);
 		if (sr->recorder == NULL || errcode != 0) {
 			sr_dbg("create recorder failed: %d\n", errcode);
 			errcode = -E_SR_RECORDFAIL;
@@ -204,7 +204,7 @@ int sr_init_ex(struct speech_rec * sr, const char * ___session_begin_params,
 		}
 		_update_format_from_sessionparam(___session_begin_params, &wavfmt);
 	
-		errcode = open_recorder(sr->recorder, devid, &wavfmt);
+		errcode = _open_recorder(sr->recorder, devid, &wavfmt);
 		if (errcode != 0) {
 			sr_dbg("recorder open failed: %d\n", errcode);
 			errcode = -E_SR_RECORDFAIL;
@@ -216,7 +216,7 @@ int sr_init_ex(struct speech_rec * sr, const char * ___session_begin_params,
 
 fail:
 	if (sr->recorder) {
-		destroy_recorder(sr->recorder);
+		_destroy_recorder(sr->recorder);
 		sr->recorder = NULL;
 	}
 
@@ -234,7 +234,7 @@ int sr_init(struct speech_rec * sr, const char * ___session_begin_params,
 		enum sr_audsrc aud_src, struct speech_rec_notifier * notify)
 {
 	return sr_init_ex(sr, ___session_begin_params, aud_src, 
-			get_default_input_dev(), notify);
+			_get_default_input_dev(), notify);
 }
 
 int sr_start_listening(struct speech_rec *sr)
@@ -260,7 +260,7 @@ int sr_start_listening(struct speech_rec *sr)
 	sr->audio_status = MSP_AUDIO_SAMPLE_FIRST;
 
 	if (sr->aud_src == SR_MIC) {
-		ret = start_record(sr->recorder);
+		ret = _start_record(sr->recorder);
 		if (ret != 0) {
 			sr_dbg("start record failed: %d\n", ret);
 			QISRSessionEnd(session_id, "start record fail");
@@ -277,7 +277,7 @@ int sr_start_listening(struct speech_rec *sr)
 	return 0;
 }
 
-/* after stop_record, there are still some data callbacks */
+/* after _stop_record, there are still some data callbacks */
 static void wait_for_rec_stop(struct recorder *rec, unsigned int timeout_ms)
 {
 	while (!is_record_stopped(rec)) {
@@ -299,7 +299,7 @@ int sr_stop_listening(struct speech_rec *sr)
 	}
 
 	if (sr->aud_src == SR_MIC) {
-		ret = stop_record(sr->recorder);
+		ret = _stop_record(sr->recorder);
 		if (ret != 0) {
 			sr_dbg("Stop failed! \n");
 			return -E_SR_RECORDFAIL;
@@ -368,9 +368,9 @@ void sr_uninit(struct speech_rec * sr)
 {
 	if (sr->recorder) {
 		if(!is_record_stopped(sr->recorder))
-			stop_record(sr->recorder);
-		close_recorder(sr->recorder);
-		destroy_recorder(sr->recorder);
+			_stop_record(sr->recorder);
+		_close_recorder(sr->recorder);
+		_destroy_recorder(sr->recorder);
 		sr->recorder = NULL;
 	}
 

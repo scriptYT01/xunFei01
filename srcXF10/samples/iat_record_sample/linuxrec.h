@@ -6,12 +6,12 @@
  * keep the function same as winrec.h
  *
  * Common steps:
- *	create_recorder,
- *	open_recorder, 
- *	start_record, 
- *	stop_record, 
- *	close_recorder,
- *	destroy_recorder
+ *	_create_recorder,
+ *	_open_recorder, 
+ *	_start_record, 
+ *	_stop_record, 
+ *	_close_recorder,
+ *	_destroy_recorder
  *
  * @author		taozhang9
  * @date		2016/06/01
@@ -72,20 +72,20 @@ extern "C" {
  * @return	returns "default" in linux.
  *
  */
-record_dev_id get_default_input_dev();
+record_dev_id _get_default_input_dev();
 
 /**
  * @fn 
  * @brief	Get the total number of active input devices.
  * @return	
  */
-int get_input_dev_num();
+int _get_input_dev_num();
 
 /**
  * @fn 
  * @brief	Create a recorder object.
  *
- * Never call the close_recorder in the callback function. as close
+ * Never call the _close_recorder in the callback function. as close
  * action will wait for the callback thread to quit. 
  *
  * @return	int			- Return 0 in success, otherwise return error code.
@@ -94,7 +94,7 @@ int get_input_dev_num();
  * @param	user_cb_para	- [in] user params for the callback.
  * @see
  */
-int create_recorder(struct recorder ** out_rec, 
+int _create_recorder(struct recorder ** out_rec, 
 				void (*on_data_ind)(char *data, unsigned long len, void *user_para), 
 				void* user_cb_para);
 
@@ -103,7 +103,7 @@ int create_recorder(struct recorder ** out_rec,
  * @brief	Destroy recorder object. free memory. 
  * @param	rec	- [in]recorder object
  */
-void destroy_recorder(struct recorder *rec);
+void _destroy_recorder(struct recorder *rec);
 
 /**
  * @fn 
@@ -113,9 +113,9 @@ void destroy_recorder(struct recorder *rec);
  * @param	dev			- [in] device id, from 0.
  * @param	fmt			- [in] record format.
  * @see
- * 	get_default_input_dev()
+ * 	_get_default_input_dev()
  */
-int open_recorder(struct recorder * rec, record_dev_id dev, WAVEFORMATEX * fmt);
+int _open_recorder(struct recorder * rec, record_dev_id dev, WAVEFORMATEX * fmt);
 
 /**
  * @fn
@@ -123,7 +123,7 @@ int open_recorder(struct recorder * rec, record_dev_id dev, WAVEFORMATEX * fmt);
  * @param	rec			- [in] recorder object
  */
 
-void close_recorder(struct recorder *rec);
+void _close_recorder(struct recorder *rec);
 
 /**
  * @fn
@@ -131,7 +131,7 @@ void close_recorder(struct recorder *rec);
  * @return	int			- Return 0 in success, otherwise return error code.
  * @param	rec			- [in] recorder object
  */
-int start_record(struct recorder * rec);
+int _start_record(struct recorder * rec);
 
 /**
  * @fn
@@ -139,7 +139,7 @@ int start_record(struct recorder * rec);
  * @return	int			- Return 0 in success, otherwise return error code.
  * @param	rec			- [in] recorder object
  */
-int stop_record(struct recorder * rec);
+int _stop_record(struct recorder * rec);
 
 /**
  * @fn

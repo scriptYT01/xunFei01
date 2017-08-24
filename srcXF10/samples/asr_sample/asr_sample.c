@@ -16,7 +16,7 @@
 #define GRAMID_LEN	128
 #define FRAME_LEN	640 
  
-const char _wav01[]="wav/iflytek01.wav" ;
+char _wav01[]="wav/iflytek01.wav" ;
 //const char _wav01[]="wav/iflytek02.wav" ;
 
 int _get_grammar_id(char* grammar_id, unsigned int id_len)
@@ -256,7 +256,7 @@ int main(int ___argc, char* ___argv[])
 	}
 	memset(grammar_id, 0, GRAMID_LEN);
 
-	printf("上传语法 ... %d , %d : %s \n", grammar_id , GRAMID_LEN , session_begin_params );
+	printf("上传语法 ... %p , %d : %s \n", grammar_id , GRAMID_LEN , session_begin_params );
 	ret = _get_grammar_id(grammar_id, GRAMID_LEN);
 	if (MSP_SUCCESS != ret) {
 	    printf("上传语法 failed \n");
