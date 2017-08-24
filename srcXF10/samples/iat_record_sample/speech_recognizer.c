@@ -157,78 +157,85 @@ static int _Update_format_from_sessionparam(const char * session_para, WAVEFORMA
  * not provided yet. 
  */
 
-int sr_init_ex(struct speech_rec * sr, const char * ___session_begin_params, 
+int sr_init_ex(struct speech_rec * ___sr, const char * ___session_begin_params, 
 			enum sr_audsrc aud_src, record_dev_id devid, 
 				struct speech_rec_notifier * notify)
 {
-	int errcode;
+	int __errcode;
 	size_t param_size;
-	WAVEFORMATEX wavfmt = DEFAULT_FORMAT;
+	WAVEFORMATEX __wavfmt = DEFAULT_FORMAT;
 
-    _dumpWAVEFORMATEX( "origin_wavfmt\n" , "\n" , __func__ , &wavfmt ) ;
+    _dumpWAVEFORMATEX( "origin_wavfmt\n" , "\n" , __func__ , &__wavfmt ) ;
 
-	if (aud_src == SR_MIC && _get_input_dev_num() == 0) {
+	if (aud_src == SR_MIC && _get_input_dev_num() == 0) { // sr_init_ex
 		return -E_SR_NOACTIVEDEVICE;
 	}
+    _prSFn( " aud_src %d" , aud_src ) ;
 
-	if (!sr)
+	if (!___sr)
 		return -E_SR_INVAL;
 
 	if (___session_begin_params == NULL) {
 		___session_begin_params = DEFAULT_SESSION_PARA;
 	}
+    if ( 0 ) { _prSFn( " ___session_begin_params <%s>" , ___session_begin_params ) ; }
 
-	SR_MEMSET(sr, 0, sizeof(struct speech_rec));
-	sr->state = _SR_STATE_INIT;
-	sr->aud_src = aud_src;
-	sr->ep_stat = MSP_EP_LOOKING_FOR_SPEECH;
-	sr->rec_stat = MSP_REC_STATUS_SUCCESS;
-	sr->audio_status = MSP_AUDIO_SAMPLE_FIRST;
+	SR_MEMSET(___sr, 0, sizeof(struct speech_rec)); // sr_init_ex
+	___sr->state = _SR_STATE_INIT;
+	___sr->aud_src = aud_src;
+	___sr->ep_stat = MSP_EP_LOOKING_FOR_SPEECH;
+	___sr->rec_stat = MSP_REC_STATUS_SUCCESS;
+	___sr->audio_status = MSP_AUDIO_SAMPLE_FIRST;
 
 	param_size = strlen(___session_begin_params) + 1;
-	sr->session_begin_params = (char*)SR_MALLOC(param_size);
-	if (sr->session_begin_params == NULL) {
+	___sr->session_begin_params = (char*)SR_MALLOC(param_size);
+	if (___sr->session_begin_params == NULL) {
 		sr_dbg("mem alloc failed\n");
 		return -E_SR_NOMEM;
 	}
     _prSFn( " --- set IAT parameter : \n" "%s" "\n" , ___session_begin_params ) ;
-	strncpy(sr->session_begin_params, ___session_begin_params, param_size);
+	strncpy(___sr->session_begin_params, ___session_begin_params, param_size); // sr_init_ex
 
-	sr->notif = *notify;
+	___sr->notif = *notify;
 	
 	if (aud_src == SR_MIC) {
-		errcode = _create_recorder(&sr->recorder, _Iat_cb, (void*)sr);
-		if (sr->recorder == NULL || errcode != 0) {
-			sr_dbg("create recorder failed: %d\n", errcode);
-			errcode = -E_SR_RECORDFAIL;
+		__errcode = _create_recorder(&___sr->recorder, _Iat_cb, (void*)___sr);
+		if (___sr->recorder == NULL || __errcode != 0) {
+			_prSF("create recorder failed: %d\n", __errcode);
+			__errcode = -E_SR_RECORDFAIL;
 			goto fail;
 		}
-		_Update_format_from_sessionparam(___session_begin_params, &wavfmt);
+		_Update_format_from_sessionparam(___session_begin_params, &__wavfmt);
 	
-		errcode = _open_recorder(sr->recorder, devid, &wavfmt);
-		if (errcode != 0) {
-			sr_dbg("recorder open failed: %d\n", errcode);
-			errcode = -E_SR_RECORDFAIL;
+        _prSF("_open_recorder : start " );
+		__errcode = _open_recorder(___sr->recorder, devid, &__wavfmt);
+        _prSF("_open_recorder : end " );
+
+		if (__errcode != 0) {
+			_prSF("recorder open failed: %d\n", __errcode); // sr_init_ex
+			__errcode = -E_SR_RECORDFAIL;
 			goto fail;
 		}
 	}
 
+    _prSF(" end normal. " );
 	return 0;
 
 fail:
-	if (sr->recorder) {
-		_destroy_recorder(sr->recorder);
-		sr->recorder = NULL;
+	if (___sr->recorder) {
+		_destroy_recorder(___sr->recorder);
+		___sr->recorder = NULL;
 	}
 
-	if (sr->session_begin_params) {
-		SR_MFREE(sr->session_begin_params);
-		sr->session_begin_params = NULL;
+	if (___sr->session_begin_params) {
+		SR_MFREE(___sr->session_begin_params);
+		___sr->session_begin_params = NULL;
 	}
-	SR_MEMSET(&sr->notif, 0, sizeof(sr->notif));
+	SR_MEMSET(&___sr->notif, 0, sizeof(___sr->notif));
 
-	return errcode;
-}
+    _prSF(" end ERROR : %d. " , __errcode);
+	return __errcode;
+} // sr_init_ex
 
 /* use the default input device to capture the audio. see sr_init_ex */
 int sr_init(struct speech_rec * sr, const char * ___session_begin_params, 
