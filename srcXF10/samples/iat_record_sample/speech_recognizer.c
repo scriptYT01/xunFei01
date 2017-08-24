@@ -207,7 +207,7 @@ int sr_init_ex(struct speech_rec * ___sr, const char * ___session_begin_params,
 		}
 		_Update_format_from_sessionparam(___session_begin_params, &__wavfmt);
 	
-        _prSFn("_open_recorder : start " );
+        _prSFn("_open_recorder : start " ); // _Open_recorder_internal
 		__errcode = _open_recorder(___sr->recorder, devid, &__wavfmt);
         _prSFn("_open_recorder : end " );
 
