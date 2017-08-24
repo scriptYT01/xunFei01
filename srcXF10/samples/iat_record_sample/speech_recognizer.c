@@ -51,13 +51,13 @@ enum {
 #define SR_MEMSET	memset
 
 
-static void _msSleep(size_t ms)
+static void _MsSleep(size_t ms)
 {
 	usleep(ms*1000);
-} // _msSleep
+} // _MsSleep
 
 
-static void _end_sr_on_error(struct speech_rec *sr, int errcode)
+static void _End_sr_on_error(struct speech_rec *sr, int errcode)
 {
 	if(sr->aud_src == SR_MIC)
 		_stop_record(sr->recorder);
@@ -70,9 +70,9 @@ static void _end_sr_on_error(struct speech_rec *sr, int errcode)
 		sr->session_id = NULL;
 	}
 	sr->state = _SR_STATE_INIT;
-} // _end_sr_on_error
+} // _End_sr_on_error
 
-static void _end_sr_on_vad(struct speech_rec *sr)
+static void _End_sr_on_vad(struct speech_rec *sr)
 {
 	int errcode;
 	const char *rslt;
@@ -85,7 +85,7 @@ static void _end_sr_on_vad(struct speech_rec *sr)
 		if (rslt && sr->notif.on_result)
 			sr->notif.on_result(rslt, sr->rec_stat == MSP_REC_STATUS_COMPLETE ? 1 : 0);
 
-		_msSleep(100); /* for cpu occupy, should sleep here */
+		_MsSleep(100); /* for cpu occupy, should sleep here */
 	}
 
 	if (sr->session_id) {
@@ -95,10 +95,10 @@ static void _end_sr_on_vad(struct speech_rec *sr)
 		sr->session_id = NULL;
 	}
 	sr->state = _SR_STATE_INIT;
-} // _end_sr_on_vad
+} // _End_sr_on_vad
 
 /* the record call back */
-static void _iat_cb(char *data, unsigned long len, void *user_para)
+static void _Iat_cb(char *data, unsigned long len, void *user_para)
 {
 	int errcode;
 	struct speech_rec *sr;
@@ -115,24 +115,25 @@ static void _iat_cb(char *data, unsigned long len, void *user_para)
 	
 	errcode = sr_write_audio_data(sr, data, len);
 	if (errcode) {
-		_end_sr_on_error(sr, errcode);
+		_End_sr_on_error(sr, errcode);
 		return;
 	}
-} // _iat_cb
+} // _Iat_cb
 
-static char * _skip_space(char *s)
+static char * _Skip_space(char *s)
 {
 	while (s && *s != ' ' && *s != '\0')
 		s++;
 	return s;
-} // _skip_space
-static int _update_format_from_sessionparam(const char * session_para, WAVEFORMATEX *wavefmt)
+} // _Skip_space
+
+static int _Update_format_from_sessionparam(const char * session_para, WAVEFORMATEX *wavefmt)
 {
 	char *s;
 	if ((s = strstr(session_para, "sample_rate"))) {
 		s = strstr(s, "=");
 		if (s && *s) {
-			s = _skip_space(s);
+			s = _Skip_space(s);
 			if (s && *s) {
                 _prSFn( "\n" "--- reset : nBlockAlign * nSamplesPerSec == nAvgBytesPerSec == : " );
                 _prOOn( "%d * %d == %d" , wavefmt->nBlockAlign , wavefmt->nSamplesPerSec , wavefmt->nAvgBytesPerSec );
@@ -149,7 +150,7 @@ static int _update_format_from_sessionparam(const char * session_para, WAVEFORMA
 	}
 
 	return 0;
-} // _update_format_from_sessionparam
+} // _Update_format_from_sessionparam
 
 /* devid will be ignored if aud_src is not SR_MIC ; use get_default_dev_id
  * to use the default input device. Currently the device list function is
@@ -196,13 +197,13 @@ int sr_init_ex(struct speech_rec * sr, const char * ___session_begin_params,
 	sr->notif = *notify;
 	
 	if (aud_src == SR_MIC) {
-		errcode = _create_recorder(&sr->recorder, _iat_cb, (void*)sr);
+		errcode = _create_recorder(&sr->recorder, _Iat_cb, (void*)sr);
 		if (sr->recorder == NULL || errcode != 0) {
 			sr_dbg("create recorder failed: %d\n", errcode);
 			errcode = -E_SR_RECORDFAIL;
 			goto fail;
 		}
-		_update_format_from_sessionparam(___session_begin_params, &wavfmt);
+		_Update_format_from_sessionparam(___session_begin_params, &wavfmt);
 	
 		errcode = _open_recorder(sr->recorder, devid, &wavfmt);
 		if (errcode != 0) {
@@ -281,7 +282,7 @@ int sr_start_listening(struct speech_rec *sr)
 static void wait_for_rec_stop(struct recorder *rec, unsigned int timeout_ms)
 {
 	while (!is_record_stopped(rec)) {
-		_msSleep(1);
+		_MsSleep(1);
 		if (timeout_ms != (unsigned int)-1)
 			if (0 == timeout_ms--)
 				break;
@@ -318,12 +319,12 @@ int sr_stop_listening(struct speech_rec *sr)
 		rslt = QISRGetResult(sr->session_id, &sr->rec_stat, 0, &ret);
 		if (MSP_SUCCESS != ret)	{
 			sr_dbg("\nQISRGetResult failed! error code: %d\n", ret);
-			_end_sr_on_error(sr, ret);
+			_End_sr_on_error(sr, ret);
 			return ret;
 		}
 		if (NULL != rslt && sr->notif.on_result)
 			sr->notif.on_result(rslt, sr->rec_stat == MSP_REC_STATUS_COMPLETE ? 1 : 0);
-		_msSleep(100);
+		_MsSleep(100);
 	}
 
 	QISRSessionEnd(sr->session_id, "normal");
@@ -342,16 +343,16 @@ int sr_write_audio_data(struct speech_rec *sr, char *data, unsigned int len)
 
 	ret = QISRAudioWrite(sr->session_id, data, len, sr->audio_status, &sr->ep_stat, &sr->rec_stat);
 	if (ret) {
-		_end_sr_on_error(sr, ret);
+		_End_sr_on_error(sr, ret);
 		return ret;
 	}
-	sr->audio_status = MSP_AUDIO_SAMPLE_CONTINUE;
+	sr->audio_status = MSP_AUDIO_SAMPLE_CONTINUE; // sr_write_audio_data
 
 	if (MSP_REC_STATUS_SUCCESS == sr->rec_stat) { //已经有部分听写结果
 		rslt = QISRGetResult(sr->session_id, &sr->rec_stat, 0, &ret);
 		if (MSP_SUCCESS != ret)	{
 			sr_dbg("\nQISRGetResult failed! error code: %d\n", ret);
-			_end_sr_on_error(sr, ret);
+			_End_sr_on_error(sr, ret);
 			return ret;
 		}
 		if (NULL != rslt && sr->notif.on_result)
@@ -359,10 +360,10 @@ int sr_write_audio_data(struct speech_rec *sr, char *data, unsigned int len)
 	}
 
 	if (MSP_EP_AFTER_SPEECH == sr->ep_stat)
-		_end_sr_on_vad(sr);
+		_End_sr_on_vad(sr);
 
 	return 0;
-}
+} // sr_write_audio_data
 
 void sr_uninit(struct speech_rec * sr)
 {
