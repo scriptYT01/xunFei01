@@ -47,6 +47,6 @@ extern void _paraAtoS( int _para_must1_ignore0 , int ___argc , char ** ___argv ,
 #define X_paraAtoi( must , idx , iii ) _paraAtoi( must , ___argc , ___argv , idx , _strX( iii ) , & iii ) 
 #define X_paraAtoS( must , idx , sss ) _paraAtoS( must , ___argc , ___argv , idx , _strX( sss ) , &(sss) ) 
 
-extern void _dumpWAVEFORMATEX( char * ___hMsg , char * ___tMsg , char * ___varName , WAVEFORMATEX * ___wavfmt ) ;
+extern void _dumpWAVEFORMATEX( char * ___hMsg , char * ___tMsg , const char * ___varName , WAVEFORMATEX * ___wavfmt ) ;
 
 #endif

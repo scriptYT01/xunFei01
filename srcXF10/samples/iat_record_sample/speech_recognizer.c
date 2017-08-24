@@ -134,7 +134,7 @@ static int _update_format_from_sessionparam(const char * session_para, WAVEFORMA
 		if (s && *s) {
 			s = _skip_space(s);
 			if (s && *s) {
-                _prSFn( "\n" "--- reset : ch * sampleRate == bitRate == : " );
+                _prSFn( "\n" "--- reset : nBlockAlign * nSamplesPerSec == nAvgBytesPerSec == : " );
                 _prSFn( "%d * %d == %d" , wavefmt->nBlockAlign , wavefmt->nSamplesPerSec , wavefmt->nAvgBytesPerSec );
 				wavefmt->nSamplesPerSec = atoi(s);
 				wavefmt->nAvgBytesPerSec = wavefmt->nBlockAlign * wavefmt->nSamplesPerSec;
@@ -164,7 +164,7 @@ int sr_init_ex(struct speech_rec * sr, const char * ___session_begin_params,
 	size_t param_size;
 	WAVEFORMATEX wavfmt = DEFAULT_FORMAT;
 
-    _dumpWAVEFORMATEX( "origin_wavfmt\n" , "\n" , "wavfmt" , &wavfmt ) ;
+    _dumpWAVEFORMATEX( "origin_wavfmt\n" , "\n" , __func__ , &wavfmt ) ;
 
 	if (aud_src == SR_MIC && get_input_dev_num() == 0) {
 		return -E_SR_NOACTIVEDEVICE;
