@@ -139,7 +139,8 @@ static int _Set_hwparams(struct recorder * ___rec,  const WAVEFORMATEX *___wavfm
 		return - EINVAL;
 	}
 
-    _prSFn( " -- snd_pcm_hw_params_set_format : %d " , __pcmformat ) ;
+    _prSFn( " -- snd_pcm_hw_params_set_format : %d , %s" , __pcmformat , 
+            (__pcmformat==SND_PCM_FORMAT_S16_LE)?"SND_PCM_FORMAT_S16_LE":"unknown_SND_PCM_FORMAT" ) ;
 	__err = snd_pcm_hw_params_set_format(__handle, __HWparams, __pcmformat); // _Set_hwparams
 	if (__err < 0) {
 		_prSFn("ERROR : snd_pcm_hw_params_set_format : Sample __pcmformat non available");
@@ -154,44 +155,58 @@ static int _Set_hwparams(struct recorder * ___rec,  const WAVEFORMATEX *___wavfm
 	}
 
 	__rate = ___wavfmt->nSamplesPerSec;
+    _prSFn( " -- snd_pcm_hw_params_set_rate_near : %d " , __rate ) ;
 	__err = snd_pcm_hw_params_set_rate_near(__handle, __HWparams, &__rate, 0); // _Set_hwparams
 	if (__err < 0) {
-		dbg("Set __rate failed");
+		_prSFn( "ERROR : snd_pcm_hw_params_set_rate_near : Set __rate failed" );
 		return __err;
 	}
 	if(__rate != ___wavfmt->nSamplesPerSec) {
-		dbg("Rate mismatch");
+		_prSFn( "ERROR : Rate mismatch : %d , %d " ,  __rate , ___wavfmt->nSamplesPerSec );
 		return -EINVAL;
 	}
+
+    _prSFn( " -- before set buf : buffer_time %d , period_time %d" , ___rec->buffer_time , ___rec->period_time ) ;
 	if (___rec->buffer_time == 0 || ___rec->period_time == 0) {
-		__err = snd_pcm_hw_params_get_buffer_time_max(__HWparams,
+		__err = snd_pcm_hw_params_get_buffer_time_max( __HWparams,
 						    &___rec->buffer_time, 0);
+        _prSFn( " -- snd_pcm_hw_params_get_buffer_time_max result : %d " , __err ) ;
 		assert(__err >= 0);
 		if (___rec->buffer_time > 500000)
 			___rec->buffer_time = 500000;
 		___rec->period_time = ___rec->buffer_time / 4;
 	}
+
+    _prSFn( " -- snd_pcm_hw_params_set_period_time_near : %d " , ___rec->period_time ) ;
 	__err = snd_pcm_hw_params_set_period_time_near(__handle, __HWparams, // _Set_hwparams
 					     &___rec->period_time, 0);
 	if (__err < 0) {
-		dbg("set period time fail");
+		_prSFn("ERROR : set period time fail : %d " , __err );
 		return __err;
 	}
+
+    _prSFn( " -- snd_pcm_hw_params_set_buffer_time_near : %d " , ___rec->buffer_time ) ;
 	__err = snd_pcm_hw_params_set_buffer_time_near(__handle, __HWparams,
 					     &___rec->buffer_time, 0);
 	if (__err < 0) {
-		dbg("set buffer time failed");
+		_prSFn("set buffer time failed : %d" , __err );
 		return __err;
 	}
+
+    _prSFn( " -- snd_pcm_hw_params_get_period_size  : re-get the now size" ) ;
 	__err = snd_pcm_hw_params_get_period_size(__HWparams, &__size, 0); // _Set_hwparams
 	if (__err < 0) {
-		dbg("get period __size fail");
+		_prSFn("ERROR : get period __size fail : %d " , __err );
 		return __err;
 	}
 	___rec->period_frames = __size; 
+    _prSFn("snd_pcm_hw_params_get_period_size result : %d " , (int) __size );
+
+    _prSFn( " -- snd_pcm_hw_params_get_buffer_size  : re-get the now size" ) ;
 	__err = snd_pcm_hw_params_get_buffer_size(__HWparams, &__size);
+    _prSFn("snd_pcm_hw_params_get_buffer_size result : %d " , (int) __size );
 	if (__size == ___rec->period_frames) {
-		_prSFn("Can't use period equal to buffer __size (%d == %d)",
+		_prSFn("ERROR : snd_pcm_hw_params_get_buffer_size : Can't use period equal to buffer __size (%d == %d)",
 				      (int) __size, ___rec->period_frames);
 		return -EINVAL;
 	}
@@ -199,11 +214,14 @@ static int _Set_hwparams(struct recorder * ___rec,  const WAVEFORMATEX *___wavfm
 	___rec->bits_per_frame = ___wavfmt->wBitsPerSample; // _Set_hwparams
 
 	/* set to driver */
+    _prSFn( " -- snd_pcm_hw_params" );
 	__err = snd_pcm_hw_params(__handle, __HWparams);
 	if (__err < 0) {
-		dbg("Unable to install __HWparams:");
+		_prSFn("ERROR : snd_pcm_hw_params : Unable to install __HWparams: %d " , __err );
 		return __err;
 	}
+
+    _prSFn( " -- end normal" );
 	return 0;
 } // _Set_hwparams
 
