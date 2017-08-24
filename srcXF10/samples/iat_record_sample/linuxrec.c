@@ -448,27 +448,33 @@ static int _Open_recorder_internal(struct recorder * ___rec,  // call to snd_pcm
 	if(__err < 0)
 		goto fail;
 
+    _prSFn( " -- _Set_params <%d,%d>" , DEF_BUFF_TIME , DEF_PERIOD_TIME ) ;
 	__err = _Set_params(___rec, ___fmt, DEF_BUFF_TIME, DEF_PERIOD_TIME);
 	if(__err)
 		goto fail;
 
+    _prSFn( " -- _Prepare_rec_buffer " );
 	assert(___rec->bufheader == NULL);
 	__err = _Prepare_rec_buffer(___rec); // _Open_recorder_internal
 	if(__err)
 		goto fail;
 
+    _prSFn( " -- _Create_record_thread " );
 	__err = _Create_record_thread((void*)___rec, 
 			&___rec->rec_thread);
 	if(__err)
 		goto fail;
 	
 
+    _prSFn( " -- end normal " );
 	return 0;
 fail:
 	if(___rec->wavein_hdl)
 		snd_pcm_close((snd_pcm_t *) ___rec->wavein_hdl);
 	___rec->wavein_hdl = NULL;
 	_Free_rec_buffer(___rec);
+
+    _prSFn( " -- end ERROR : %d " , __err );
 	return __err;
 } // _Open_recorder_internal
 
