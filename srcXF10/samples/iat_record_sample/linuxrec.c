@@ -383,7 +383,14 @@ static ssize_t _Pcm_read(struct recorder *___rec, size_t rcount)
 				return -1;
 			}
             _ReadCnt01[3] ++ ;
-		} 
+		} else {
+		    if (r == 0) {
+                _ReadCnt01[4] ++ ;
+            } else {
+                _ReadCnt01[5] ++ ;
+                //_ReadCnt01[6] += r ;
+            }
+        }
 
 		if (r > 0) {
 			count -= r;
