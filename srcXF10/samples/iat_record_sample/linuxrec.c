@@ -60,6 +60,16 @@ struct bufinfo {
 };
 #endif
 
+int _ReadCnt01[4] = {0} ;
+void _dumpReadCnt01( const char * ___file , int ___line , const char * ___func  ) {
+    _prSFn( " _ReadCnt01 : %d , %d, %d , %d" 
+            , _ReadCnt01[0] 
+            , _ReadCnt01[1] 
+            , _ReadCnt01[2] 
+            , _ReadCnt01[3] 
+            );
+} // _dumpReadCnt01
+ 
 
 static int _Show_xrun = 1;
 static int _Start_record_internal(snd_pcm_t *pcm)
@@ -319,12 +329,14 @@ static int _Set_params(struct recorder *___rec, WAVEFORMATEX *___fmt,
 /*
  *   Underrun and suspend recovery
  */
- 
+
 static int _Xrun_recovery(snd_pcm_t *__handle, int ___err)
 {
 	if (___err == -EPIPE) {	/* over-run */
-		if (_Show_xrun)
+		if (_Show_xrun) {
 			printf("!!!!!!overrun happend!!!!!!");
+            _dumpReadCnt01( __FILE__ , __LINE__ , __func__ ) ;
+        }
 
 		___err = snd_pcm_prepare(__handle);
 		if (___err < 0) {
@@ -360,20 +372,26 @@ static ssize_t _Pcm_read(struct recorder *___rec, size_t rcount)
 	if(!__handle)
 		return -EINVAL;
 
-    if ( 1 ) {
+    if ( 0 ) {
         _prSFn( " rcount -> %d " , rcount ) ;
         exit ( 1 ) ;
     }
+
+    _ReadCnt01[0] ++ ;
+
 
 	data = ___rec->audiobuf;
 	while (count > 0) {
 		r = snd_pcm_readi(__handle, data, count);
 		if (r == -EAGAIN || (r >= 0 && (size_t)r < count)) {
+            _ReadCnt01[1] ++ ;
 			snd_pcm_wait(__handle, 100);
 		} else if (r < 0) {
 			if(_Xrun_recovery(__handle, r) < 0) { // _Pcm_read
+                _ReadCnt01[2] ++ ;
 				return -1;
 			}
+            _ReadCnt01[3] ++ ;
 		} 
 
 		if (r > 0) {
