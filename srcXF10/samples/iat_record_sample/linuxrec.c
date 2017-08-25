@@ -205,16 +205,17 @@ static int _Set_hwparams(struct recorder * ___rec,  const WAVEFORMATEX *___wavfm
     _prSFn( " -- snd_pcm_hw_params_get_period_size  : re-get the now size" ) ;
     __size = 3322 ;
 	__err = snd_pcm_hw_params_get_period_size(__HWparams, &__size, 0); // _Set_hwparams
+    _prSFn("snd_pcm_hw_params_get_period_size result : err %d , size %d " , __err , (int) __size );
 	if (__err < 0) {
 		_prSFn("ERROR : get period __size fail : err %d , size %d " , __err , (int) __size );
 		return __err;
 	}
-    if ( __err == 0 ) {
+    if ( __err > 0 ) {
 #ifdef __i386__
 		_prSFn(" i386 cpu , unknow met. : err %d , size %d " , __err , (int) __size );
 #else
         __size = 341 ; 
-		_prSFn(" ARM cpu , force change : err %d , size %d " , __err , (int) __size );
+		_prSFn(" X1000 cpu , force change : err %d , size %d " , __err , (int) __size );
 #endif
     }
 	___rec->period_frames = __size; 
@@ -222,7 +223,8 @@ static int _Set_hwparams(struct recorder * ___rec,  const WAVEFORMATEX *___wavfm
 
     _prSFn( " -- snd_pcm_hw_params_get_buffer_size  : re-get the now size" ) ;
 	__err = snd_pcm_hw_params_get_buffer_size(__HWparams, &__size);
-    _prSFn("snd_pcm_hw_params_get_buffer_size result : %d " , (int) __size );
+    _prSFn("snd_pcm_hw_params_get_buffer_size result : err %d , size %d " , __err , (int) __size );
+
 	if (__size == ___rec->period_frames) {
 		_prSFn("ERROR : snd_pcm_hw_params_get_buffer_size : Can't use period equal to buffer __size (%d == %d) , err %d ",
 				      (int) __size, ___rec->period_frames, __err );
