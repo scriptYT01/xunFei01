@@ -166,15 +166,24 @@ static int _Set_hwparams(struct recorder * ___rec,  const WAVEFORMATEX *___wavfm
 		return -EINVAL;
 	}
 
+    if ( 1 ) {
+        unsigned int __i01 ;
+        __err = snd_pcm_hw_params_get_buffer_time_max( __HWparams, & __i01 , 0 ) ;
+        _prSFn( " snd_pcm_hw_params_get_buffer_time_max debug result : err %d , buffer_time %d" , __err , __i01 ) ;
+    }
+
+
     _prSFn( " -- before snd_pcm_hw_params_get_buffer_time_max : buffer_time %d , period_time %d" , ___rec->buffer_time , ___rec->period_time ) ;
-	if (___rec->buffer_time == 0 || ___rec->period_time == 0) {
+	if ( ___rec->buffer_time == 0 || ___rec->period_time == 0 ) {
 		__err = snd_pcm_hw_params_get_buffer_time_max( __HWparams,
 						    &___rec->buffer_time, 0);
-        _prSFn( " -- snd_pcm_hw_params_get_buffer_time_max result : %d " , __err ) ;
+        _prSFn( " -- snd_pcm_hw_params_get_buffer_time_max result : %d , 0x%x : %d " , __err , __err , ___rec->buffer_time ) ;
 		assert(__err >= 0);
-		if (___rec->buffer_time > 500000)
+		if (___rec->buffer_time > 500000) {
 			___rec->buffer_time = 500000;
+        }
 		___rec->period_time = ___rec->buffer_time / 4;
+        _prSFn( " -- modified result : buffer_time %d , period_time %d" , ___rec->buffer_time , ___rec->period_time ) ;
 	}
 
     _prSFn( " -- snd_pcm_hw_params_set_period_time_near : %d " , ___rec->period_time ) ;
@@ -194,24 +203,27 @@ static int _Set_hwparams(struct recorder * ___rec,  const WAVEFORMATEX *___wavfm
 	}
 
     _prSFn( " -- snd_pcm_hw_params_get_period_size  : re-get the now size" ) ;
+    __size = 3322 ;
 	__err = snd_pcm_hw_params_get_period_size(__HWparams, &__size, 0); // _Set_hwparams
 	if (__err < 0) {
 		_prSFn("ERROR : get period __size fail : %d " , __err );
 		return __err;
 	}
 	___rec->period_frames = __size; 
-    _prSFn("snd_pcm_hw_params_get_period_size result : %d " , (int) __size );
+    _prSFn(" ***=== snd_pcm_hw_params_get_period_size result : err %d , period_frames %d " , __err , (int) __size );
 
     _prSFn( " -- snd_pcm_hw_params_get_buffer_size  : re-get the now size" ) ;
 	__err = snd_pcm_hw_params_get_buffer_size(__HWparams, &__size);
     _prSFn("snd_pcm_hw_params_get_buffer_size result : %d " , (int) __size );
 	if (__size == ___rec->period_frames) {
-		_prSFn("ERROR : snd_pcm_hw_params_get_buffer_size : Can't use period equal to buffer __size (%d == %d)",
-				      (int) __size, ___rec->period_frames);
+		_prSFn("ERROR : snd_pcm_hw_params_get_buffer_size : Can't use period equal to buffer __size (%d == %d) , err %d ",
+				      (int) __size, ___rec->period_frames, __err );
 		return -EINVAL;
 	}
 	___rec->buffer_frames = __size;
 	___rec->bits_per_frame = ___wavfmt->wBitsPerSample; // _Set_hwparams
+    _prSFn( " ***=== snd_pcm_hw_params_get_buffer_size result : buffer_frames %d , bits_per_frame %d , err %d" 
+            , (int) __size , ___rec->bits_per_frame , __err );
 
 	/* set to driver */
     _prSFn( " -- snd_pcm_hw_params" );
@@ -467,6 +479,10 @@ static int _Prepare_rec_buffer(struct recorder * ___rec )
 	 * if overrun too much, need more buffer and another new thread
 	 * to write the audio to network */
 	size_t sz = (___rec->period_frames * ___rec->bits_per_frame / 8);
+
+    _prSFn( " sz == period_frames * bits_per_frame / 8 : %d == %d * %d / 8 " , 
+            sz , ___rec->period_frames , ___rec->bits_per_frame );
+
 	___rec->audiobuf = (char *)malloc(sz);
 	if(!___rec->audiobuf)
 		return -ENOMEM;
