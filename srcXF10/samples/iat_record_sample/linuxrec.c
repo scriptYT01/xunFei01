@@ -206,9 +206,17 @@ static int _Set_hwparams(struct recorder * ___rec,  const WAVEFORMATEX *___wavfm
     __size = 3322 ;
 	__err = snd_pcm_hw_params_get_period_size(__HWparams, &__size, 0); // _Set_hwparams
 	if (__err < 0) {
-		_prSFn("ERROR : get period __size fail : %d " , __err );
+		_prSFn("ERROR : get period __size fail : err %d , size %d " , __err , (int) __size );
 		return __err;
 	}
+    if ( __err == 0 ) {
+#ifdef __i386__
+		_prSFn(" i386 cpu , unknow met. : err %d , size %d " , __err , (int) __size );
+#else
+        __size = 341 ; 
+		_prSFn(" ARM cpu , force change : err %d , size %d " , __err , (int) __size );
+#endif
+    }
 	___rec->period_frames = __size; 
     _prSFn(" ***=== snd_pcm_hw_params_get_period_size result : err %d , period_frames %d " , __err , (int) __size );
 
