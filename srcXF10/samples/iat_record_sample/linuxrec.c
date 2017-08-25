@@ -360,6 +360,11 @@ static ssize_t _Pcm_read(struct recorder *___rec, size_t rcount)
 	if(!__handle)
 		return -EINVAL;
 
+    if ( 1 ) {
+        _prSFn( " rcount -> %d " , rcount ) ;
+        exit ( 1 ) ;
+    }
+
 	data = ___rec->audiobuf;
 	while (count > 0) {
 		r = snd_pcm_readi(__handle, data, count);
