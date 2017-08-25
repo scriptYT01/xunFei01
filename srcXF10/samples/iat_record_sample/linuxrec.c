@@ -224,6 +224,14 @@ static int _Set_hwparams(struct recorder * ___rec,  const WAVEFORMATEX *___wavfm
     _prSFn( " -- snd_pcm_hw_params_get_buffer_size  : re-get the now size" ) ;
 	__err = snd_pcm_hw_params_get_buffer_size(__HWparams, &__size);
     _prSFn("snd_pcm_hw_params_get_buffer_size result : err %d , size %d " , __err , (int) __size );
+    if ( __err ) {
+#ifdef __i386__
+		_prSFn(" i386 cpu , unknow met. : err %d , size %d " , __err , (int) __size );
+#else
+        __size = 5461 ; 
+		_prSFn(" X1000 cpu , force change : err %d , size %d " , __err , (int) __size );
+#endif
+    }
 
 	if (__size == ___rec->period_frames) {
 		_prSFn("ERROR : snd_pcm_hw_params_get_buffer_size : Can't use period equal to buffer __size (%d == %d) , err %d ",
