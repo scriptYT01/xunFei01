@@ -166,7 +166,7 @@ static int _Set_hwparams(struct recorder * ___rec,  const WAVEFORMATEX *___wavfm
 		return -EINVAL;
 	}
 
-    _prSFn( " -- before set buf : buffer_time %d , period_time %d" , ___rec->buffer_time , ___rec->period_time ) ;
+    _prSFn( " -- before snd_pcm_hw_params_get_buffer_time_max : buffer_time %d , period_time %d" , ___rec->buffer_time , ___rec->period_time ) ;
 	if (___rec->buffer_time == 0 || ___rec->period_time == 0) {
 		__err = snd_pcm_hw_params_get_buffer_time_max( __HWparams,
 						    &___rec->buffer_time, 0);
