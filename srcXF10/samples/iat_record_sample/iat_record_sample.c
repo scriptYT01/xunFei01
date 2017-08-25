@@ -320,6 +320,8 @@ int main(int argc, char* argv[])
 		demo_mic(session_begin_params);
 
 		printf("15 sec passed\n");
+        _dumpReadCnt01( __FILE__ , __LINE__ , __func__ ) ;
+
 	} else {
 		_prSFn(" 1 : from Wav file : Demo recgonizing the speech from a recorded audio file");
 		_prOOn(" %s : " 

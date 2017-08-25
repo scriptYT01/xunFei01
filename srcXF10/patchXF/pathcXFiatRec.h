@@ -18,5 +18,7 @@ extern
 char  * _wavFileName ;
 
 extern void _mainParaIatRec( int ___argc , char ** ___argv ) ;
+extern void _dumpReadCnt01( const char * ___file , int ___line , const char * ___func  ) ;
+extern int _ReadCnt01[4] ;
 
 #endif

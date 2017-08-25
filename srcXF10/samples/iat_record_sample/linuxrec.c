@@ -60,15 +60,6 @@ struct bufinfo {
 };
 #endif
 
-int _ReadCnt01[4] = {0} ;
-void _dumpReadCnt01( const char * ___file , int ___line , const char * ___func  ) {
-    _prSFn( " _ReadCnt01 : %d , %d, %d , %d" 
-            , _ReadCnt01[0] 
-            , _ReadCnt01[1] 
-            , _ReadCnt01[2] 
-            , _ReadCnt01[3] 
-            );
-} // _dumpReadCnt01
  
 
 static int _Show_xrun = 1;
