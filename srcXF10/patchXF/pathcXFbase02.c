@@ -22,7 +22,9 @@ void _dumpWAVEFORMATEX( char * ___hMsg , char * ___tMsg , const char * ___varNam
 int _ReadCnt01[4] = {0} ;
 
 void _dumpReadCnt01( const char * ___file , int ___line , const char * ___func  ) {
-    _prSFn( " _ReadCnt01 : %d , %d, %d , %d" 
+    //_prSFn( " _ReadCnt01 : %d , %d, %d , %d" 
+    _prOOn( " %s %d %s : _ReadCnt01 : %d , %d, %d , %d" 
+            , ___file , ___line , ___func
             , _ReadCnt01[0] 
             , _ReadCnt01[1] 
             , _ReadCnt01[2] 
