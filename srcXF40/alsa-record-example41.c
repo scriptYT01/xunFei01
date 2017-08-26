@@ -22,6 +22,10 @@
 	      
 char *  _dev_name01 = "default" ;
 int     _chAmount = 2 ;
+time_t  _Time01 ;
+time_t  _Time02 ;
+int64_t _Time03 ;
+int64_t _Time04 ;
 
 int main (int ___argc, char *___argv[])
 {
@@ -36,6 +40,7 @@ int main (int ___argc, char *___argv[])
     snd_pcm_format_t format = SND_PCM_FORMAT_S16_LE;
 
         _prEFn( " arg c <%d>" , ___argc ) ; 
+        _prEFn( " usage : %s [_dev_name01] [_chAmount] " , ___argv[0] );
 
     if ( ___argc >=2 && ___argv[1] != NULL && ___argv[1][0] != 0 ) {
         _dev_name01 = ___argv[1] ; 
@@ -129,6 +134,7 @@ int main (int ___argc, char *___argv[])
     buffer = malloc(128 * snd_pcm_format_width(format) / 8 * 2);
     _prEFn( "buffer allocated");
 
+    _Time01 = time(0) ;
     for (__i01 = 0; __i01 < 100000; ++__i01) {
         if ((err = snd_pcm_readi (capture_handle, buffer, buffer_frames)) != buffer_frames) {
             _prEFn( "read from audio interface failed (%d:%s)",
@@ -136,11 +142,13 @@ int main (int ___argc, char *___argv[])
             exit (1);
         }
         if ( __i01 % 1000 == 1 ) {
-            _prEFn( "read %5d done", __i01);
+            _Time02 = time(0) ; _Time03 = (int) (_Time02 - _Time01) ; _Time04 = _Time03 * 1000000 / (__i01+1) ;
+            _prEFn( "read %5d done , %lld , %lld us/perREAD ", __i01 , _Time03 , _Time04 );
         }
     }
     free(buffer);
-    _prEFn( "buffer freed : %d" , __i01 );
+            _Time02 = time(0) ; _Time03 = (int) (_Time02 - _Time01) ; _Time04 = _Time03 * 1000000 / (__i01+1) ;
+            _prEFn( "buffer freed : %d end , %lld , %lld us/perREAD " , __i01 , _Time03 , _Time04 );
 
     snd_pcm_close (capture_handle);
     _prEFn( "audio interface closed");
