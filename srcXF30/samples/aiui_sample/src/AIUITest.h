@@ -32,6 +32,8 @@
 #define LOG_DIR "./AIUI/log"
 #endif
 
+#include "patchXF/pathcXFbase.h"
+
 using namespace aiui;
 using namespace std;
 
@@ -89,6 +91,7 @@ public:
 
 	~AIUITester();
 private:
+
 	void createAgent();
 	void wakeup();
 	void start();
@@ -99,7 +102,7 @@ private:
 	void writeText();
 	void destory();
 
-	void _autoCmd01();
+	void _waveCMDauto01();
     string _cmdToStr( int ) ;
     string _eventToStr( int ) ;
     string _stateToStr( int ) ;

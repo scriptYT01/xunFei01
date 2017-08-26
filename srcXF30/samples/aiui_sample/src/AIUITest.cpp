@@ -236,18 +236,21 @@ string _jsonGetResult14( string ___inStr , string ___node1 , string ___node2 , s
 
 extern int      _argc ;
 extern char **  _argv ;
-void AIUITester::_autoCmd01()
+void AIUITester::_waveCMDauto01()
 {
     int __i01 ;
+
+    _prEFn( " supply with argv[1] , then use it as the input as wav file name and deal with it. " ) ;
+
     if ( _argc != 2 ) {
 	    cout << "\n useage : " << _argv[0] << " <wave_input.wav>\n\n\n" << _argc << endl;
         exit(33);
     }
     _fname01 = _argv[1] ;
 
-	//cout << "\n _autoCmd01 start "  << _argc << "\n\n\n"<< endl;
+	//cout << "\n _waveCMDauto01 start "  << _argc << "\n\n\n"<< endl;
     _dumpStatus();
-	//cout << "\n _autoCmd01 0121 "   << _argc << "\n\n\n" << endl;
+	//cout << "\n _waveCMDauto01 0121 "   << _argc << "\n\n\n" << endl;
 
     createAgent();
     //sleep(1);
@@ -289,9 +292,9 @@ void AIUITester::_autoCmd01()
     sleep(1);
     write(false);
 
-	cout << "\n _autoCmd01 end \n\n\n" << _argc << endl;
+	cout << "\n _waveCMDauto01 end \n\n\n" << _argc << endl;
 
-} // AIUITester::_autoCmd01
+} // AIUITester::_waveCMDauto01
 
 
 
@@ -639,11 +642,7 @@ void AIUITester::destory()
 void AIUITester::readCmd()
 {
 
-	cout << "input argc:" << _argc << endl;
-    if ( _argc > 1 ) {
-        _autoCmd01( );
-        return ;
-    }
+    _prEFn( " supply no argv[1] , then wait for the stdin's cmd " );
     
 	cout << "input cmd:" << endl;
 
@@ -735,6 +734,26 @@ void AIUITester::test()
 	//		AIUISetting::setSaveDataLog(true);
 	AIUISetting::setAIUIDir(TEST_ROOT_DIR);
 	AIUISetting::initLogger(LOG_DIR);
+
+	cout 
+        << endl
+        << " usage : "
+        << _argv[0] 
+        << " [input.wav | listenIP listenPort] "
+        << endl
+        << endl
+        ;
+
+	cout << 
+        "input argc:" 
+        << _argc 
+        << endl
+        ;
+
+    if ( _argc > 1 ) {
+        _waveCMDauto01( );
+        return ;
+    } 
 
 	readCmd();
 }

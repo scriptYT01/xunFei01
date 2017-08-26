@@ -11,10 +11,12 @@ char ** _argv = NULL ;
 
 int main(int ___argc , char ** ___argv )
 {
+
+	AIUITester t;
+
     _argc   = ___argc ;
     _argv   = ___argv ;
 
-	AIUITester t;
 	t.test();
 	return 0;
 }
