@@ -55,11 +55,20 @@ LDFLAGS := -L$(DIR_LIB)/x86
 endif
 LDFLAGS := -L./
 
+LDFLAGS01:=		   \
+	/usr/lib/i386-linux-gnu/libpthread.a \
+	/usr/lib/gcc/i686-linux-gnu/5/libstdc++.a \
+	/usr/lib/i386-linux-gnu/libdl.a \
+	/usr/lib/i386-linux-gnu/libc.a 
+LDFLAGS02:=		   \
+	-lstdc++ -lpthread -ldl -lc
+
 #LDFLAGS += -lmsc -lrt -ldl -lpthread
 #LDFLAGS += -lmsc 
 #LDFLAGS += -lmsc -Werror
 #LDFLAGS += -lmsc -Werror -lstdc++ -laiui 
-LDFLAGS += -lmsc -laiui -Werror -lstdc++ -lpthread -ldl
+LDFLAGS += -lmsc -laiui -Werror    $(LDFLAGS01)
+
 
 OBJECTSsrc := \
 	$(wildcard *.c) \
