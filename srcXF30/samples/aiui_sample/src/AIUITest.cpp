@@ -729,12 +729,9 @@ void AIUITester::readCmd()
         _dumpStatus();
 	} // while
 } // AIUITester::readCmd
-void AIUITester::test()
-{
-	//		AIUISetting::setSaveDataLog(true);
-	AIUISetting::setAIUIDir(TEST_ROOT_DIR);
-	AIUISetting::initLogger(LOG_DIR);
 
+void AIUITester::usage()
+{
 	cout 
         << endl
         << " usage : "
@@ -743,17 +740,37 @@ void AIUITester::test()
         << endl
         << endl
         ;
+} // AIUITester::usage
 
-	cout << 
-        "input argc:" 
+void AIUITester::test()
+{
+	//		AIUISetting::setSaveDataLog(true);
+	AIUISetting::setAIUIDir(TEST_ROOT_DIR);
+	AIUISetting::initLogger(LOG_DIR);
+
+    usage() ;
+
+	cout 
+        << " input argc: " 
         << _argc 
         << endl
         ;
 
-    if ( _argc > 1 ) {
-        _waveCMDauto01( );
-        return ;
+    switch ( _argc ) {
+        case 1 : // 0 para -- > wait for stdin to input cmd
+            readCmd();
+            break ;
+        case 2 : // 1 para -- > deal with the para 1 as the input-wave-file-name , using the automaticly process.
+            _waveCMDauto01();
+            break ;
+        default : 
+            cout 
+                << endl
+                << " unknow parameter amount : " 
+                << _argc
+                << endl
+                << endl
+                ;
+            break;
     } 
-
-	readCmd();
 }
