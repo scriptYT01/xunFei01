@@ -42,7 +42,7 @@ endef
 export  RUN01
 
 CROSS_COMPILE = 
-CFLAGS = -g -Wall -I$(DIR_INC)
+CFLAGS = -g -Wall -I$(DIR_INC) -I.
 
 ifdef LINUX64
 LDFLAGS := -L$(DIR_LIB)/x64
