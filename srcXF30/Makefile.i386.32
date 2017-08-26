@@ -20,7 +20,11 @@ then
 	echo 
 fi
 
+[ -L w12 ] 		|| ln -s ../XFi386DST18/w12/ 	./
+[ -L bin/w12 ] 	|| ln -s ../w12/ 			  	./bin/
+
 cd aiui_sample/build/ 
+[ -L w12 ] 	|| ln -s ../../w12/ 		./
 
 if [ ! -f ../../bin/$(TARGET) ]
 then
@@ -36,7 +40,7 @@ echo
 
 chmod -R a+w . 2>/dev/null
 
-LD_LIBRARY_PATH=../../      ../../bin/$(TARGET)
+LD_LIBRARY_PATH=../../      time ../../bin/$(TARGET)    $$*
 
 endef
 export  RUN01
@@ -55,10 +59,14 @@ LDFLAGS := -L./
 #LDFLAGS += -lmsc 
 #LDFLAGS += -lmsc -Werror
 #LDFLAGS += -lmsc -Werror -lstdc++ -laiui 
-LDFLAGS += -lmsc -laiui -Werror -lstdc++ -lpthread
+LDFLAGS += -lmsc -laiui -Werror -lstdc++ -lpthread -ldl
 
-OBJECTSsrc := $(wildcard aiui_sample/src/*.cpp) $(wildcard aiui_sample/src/jsoncpp/*.cpp) 
-OBJECTS := $(patsubst %.cpp,%.o,$(OBJECTSsrc))
+OBJECTSsrc := \
+	$(wildcard *.c) \
+	$(wildcard aiui_sample/src/*.c) \
+	$(wildcard aiui_sample/src/*.cpp) \
+	$(wildcard aiui_sample/src/jsoncpp/*.cpp) 
+OBJECTS := $(patsubst %.c,%.o,$(patsubst %.cpp,%.o,$(OBJECTSsrc)))
 
 $(BIN_TARGET) : $(OBJECTS)
 	$(CROSS_COMPILE)gcc $(CFLAGS) $^ -o $@ $(LDFLAGS)
@@ -70,7 +78,7 @@ $(BIN_TARGET) : $(OBJECTS)
 	sed -i -e 's;\.\./\.\./;./;g'   $<
 	$(CROSS_COMPILE)gcc -c $(CFLAGS) $< -o $@
 clean:
-	@rm -f *.o $(BIN_TARGET)
+	@rm -f *.o $(BIN_TARGET) $(OBJECTS)
 c:
 	rm -f $(OBJECTS)
 m:

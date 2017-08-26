@@ -27,7 +27,7 @@ int _lastNlp02 = -1 ;
 
 char _numstr[21]; // enough to hold all numbers up to 64-bits
 
-#define _strX( bb ) # bb
+// #define _strX( bb ) # bb
 #define _id2str( aa ) \
     case (AIUIConstant::aa) : \
     __str += " ==-C= " ; \
