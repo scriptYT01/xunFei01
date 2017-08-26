@@ -62,12 +62,15 @@ LDFLAGS01:=		   \
 	/usr/lib/i386-linux-gnu/libc.a 
 LDFLAGS02:=		   \
 	-lstdc++ -lpthread -ldl -lc
+LDFLAGS03:=		   \
+	/usr/lib/gcc/i686-linux-gnu/5/libstdc++.a \
+	-lpthread -ldl -lc
 
 #LDFLAGS += -lmsc -lrt -ldl -lpthread
 #LDFLAGS += -lmsc 
 #LDFLAGS += -lmsc -Werror
 #LDFLAGS += -lmsc -Werror -lstdc++ -laiui 
-LDFLAGS += -lmsc -laiui -Werror    $(LDFLAGS01)
+LDFLAGS += -lmsc -laiui -Werror    $(LDFLAGS03)
 
 
 OBJECTSsrc := \
