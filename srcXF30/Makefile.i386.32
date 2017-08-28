@@ -80,15 +80,24 @@ OBJECTSsrc := \
 	$(wildcard aiui_sample/src/jsoncpp/*.cpp) 
 OBJECTS := $(patsubst %.c,%.o,$(patsubst %.cpp,%.o,$(OBJECTSsrc)))
 
+ifneq (,$(wildcard ../../GccBin))
+gccPATH:= PATH=../../GccBin/Bin:$${PATH} 
+gccINC01:= PATH=../../GccBin/Bin:$${PATH} 
+else
+gccPATH:= 
+gccINC01:= 
+endif
 $(BIN_TARGET) : $(OBJECTS)
-	$(CROSS_COMPILE)gcc $(CFLAGS) $^ -o $@ $(LDFLAGS)
+	$(gccPATH) $(CROSS_COMPILE)gcc $(CFLAGS) $(gccINC01) $^ -o $@ $(LDFLAGS)
 	echo "$${RUN01}" > run.sh
 	chmod 755 run.sh
 	chmod -R a+w bin/
 
 %.o : %.cpp
 	sed -i -e 's;\.\./\.\./;./;g'   $<
-	$(CROSS_COMPILE)gcc -c $(CFLAGS) $< -o $@
+	$(gccPATH) $(CROSS_COMPILE)gcc -c $(CFLAGS) $(gccINC01) $< -o $@
+%.o : %.c
+	$(gccPATH) $(CROSS_COMPILE)gcc -c $(CFLAGS) $(gccINC01) $< -o $@
 clean:
 	@rm -f *.o $(BIN_TARGET) $(OBJECTS)
 c:
