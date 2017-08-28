@@ -116,8 +116,8 @@ private:
 
 public:
 	void readCmd();
-	void test();
-};
+	void testAiui();
+}; // AIUITester
 
 
 

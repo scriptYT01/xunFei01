@@ -742,7 +742,7 @@ void AIUITester::usage()
         ;
 } // AIUITester::usage
 
-void AIUITester::test()
+void AIUITester::testAiui()
 {
 	//		AIUISetting::setSaveDataLog(true);
 	AIUISetting::setAIUIDir(TEST_ROOT_DIR);
@@ -773,4 +773,4 @@ void AIUITester::test()
                 ;
             break;
     } 
-}
+} // AIUITester::testAiui

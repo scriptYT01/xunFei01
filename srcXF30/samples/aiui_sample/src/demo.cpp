@@ -17,6 +17,6 @@ int main(int ___argc , char ** ___argv )
     _argc   = ___argc ;
     _argv   = ___argv ;
 
-	t.test();
+	t.testAiui();
 	return 0;
 }

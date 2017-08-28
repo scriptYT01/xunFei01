@@ -331,7 +331,7 @@ bool FileUtil::DataFileHelper::openReadFile(const string& filePath, bool inCurre
 
 
 	return true;
-}
+} // FileUtil::DataFileHelper::openReadFile
 
 int FileUtil::DataFileHelper::read(char* buffer, int bufferLen)
 {
