@@ -80,9 +80,12 @@ OBJECTSsrc := \
 	$(wildcard aiui_sample/src/jsoncpp/*.cpp) 
 OBJECTS := $(patsubst %.c,%.o,$(patsubst %.cpp,%.o,$(OBJECTSsrc)))
 
+GBpath:=$(realpath ../../GccBin)
 ifneq (,$(wildcard ../../GccBin))
-gccPATH:= PATH=../../GccBin/Bin:$${PATH} 
-gccINC01:= PATH=../../GccBin/Bin:$${PATH} 
+gccPATH:= \
+	LD_LIBRARY_PATH=$(GBpath)/__gmp-6.1.2/lib:$(GBpath)/__mpfr-3.1.5/lib:$(GBpath)/__mpc-1.0.3/lib:$(GBpath)/__gcc-4.8.5/lib \
+	PATH=$(GBpath)/Bin:$${PATH} 
+gccINC01:= 
 else
 gccPATH:= 
 gccINC01:= 

@@ -541,7 +541,7 @@ void AIUITester::createAgent()
 	ISpeechUtility::createSingleInstance("", "",
 		"appid=58f4654e");
 
-	string paramStr = FileUtil::readFileAsString(CFG_FILE_PATH);
+	string paramStr = FileUtil::readFileAsString( CFG_FILE_PATH );
 	agent = IAIUIAgent::createAgent(paramStr.c_str(), &listener);
 }
 
@@ -586,7 +586,9 @@ void AIUITester::writeAiui(bool repeat)
 		//writeThread = new WriteAudioThread(agent, TEST_AUDIO_PATH,  repeat);
 		writeThread = new WriteAudioThread(agent, _fname01,  repeat);
 		writeThread->run();
-	}	
+	} else {
+        // if , writeThread is already created, skip ..... to prevent double thread is created.
+    }
 } // AIUITester::writeAiui
 
 
