@@ -266,7 +266,7 @@ void AIUITester::_waveCMDauto01()
 
     _lastNlp01 = -1 ;
     _lastNlp02 = -1 ;
-    write(false);
+    writeAiui(false);
     if ( 0 ) {
         __i01 = _sleepWaitForState02( 100000 , 200 , &_lastEventType11 , AIUIConstant::STATE_WORKING ) ;
 	    cout << " 33 repeate ("  << __i01 << ") time , result : " << SSTR( _lastEventType11 ) << " --> " << _stateToStr( _lastEventType11 ) << endl;
@@ -290,7 +290,7 @@ void AIUITester::_waveCMDauto01()
     sleep(1);
     wakeup();
     sleep(1);
-    write(false);
+    writeAiui(false);
 
 	cout << "\n _waveCMDauto01 end \n\n\n" << _argc << endl;
 
@@ -576,7 +576,7 @@ void AIUITester::stop()
 }
 
 
-void AIUITester::write(bool repeat)
+void AIUITester::writeAiui(bool repeat)
 {
 	if (agent == NULL)
 		return;
@@ -587,7 +587,7 @@ void AIUITester::write(bool repeat)
 		writeThread = new WriteAudioThread(agent, _fname01,  repeat);
 		writeThread->run();
 	}	
-}
+} // AIUITester::writeAiui
 
 
 
@@ -674,11 +674,11 @@ void AIUITester::readCmd()
 			cout << "exit" << endl;
 			break;
 		} else if (cmd == "wr") {
-			cout << "write" << endl;
-			write(false);
+			cout << "writeAiui" << endl;
+			writeAiui(false);
 		} else if (cmd == "wrr") {
-			cout << "write repeatly" << endl; // AIUITester::readCmd
-			write(true);
+			cout << "writeAiui repeatly" << endl; // AIUITester::readCmd
+			writeAiui(true);
 		} else if (cmd == "swrt" || cmd == "stwr"|| cmd == "S") {
 			cout << "stopWriteThread" << endl;
 			stopWriteThread();
@@ -689,7 +689,7 @@ void AIUITester::readCmd()
 			destory();
 			break;
 		} else if (cmd == "ww") {
-			cout << "stop-wakeup-write" << endl; // AIUITester::readCmd
+			cout << "stop-wakeup-writeAiui" << endl; // AIUITester::readCmd
 			stopWriteThread();
 			//cout << "111" << endl;
             //usleep(1000);
@@ -702,7 +702,7 @@ void AIUITester::readCmd()
             //usleep(1000000);
             //sleep(10);
 			//cout << "444" << endl;
-			write(false);
+			writeAiui(false);
 			//cout << "555" << endl;
 			;
 		} else if (cmd == "h") { // AIUITester::readCmd
@@ -710,18 +710,18 @@ void AIUITester::readCmd()
 
 
 			cout 
-			<< "c    : createAgent"         << endl 
-			<< "w    : wakeup"              << endl 
-			<< "s    : start"               << endl 
-			<< "st   : stop"                << endl 
-			<< "d    : destroy"             << endl 
-			<< "r    : reset"               << endl 
-			<< "e    : exit"                << endl 
-			<< "wr   : write"               << endl 
-			<< "wrr  : write repeatly"      << endl 
-			<< "swrt : stopWriteThread"     << endl 
-			<< "wrt  : writeText"           << endl 
-			<< "ww   : stop-wakeup-write"   << endl
+			<< "c    : createAgent"             << endl 
+			<< "w    : wakeup"                  << endl 
+			<< "s    : start"                   << endl 
+			<< "st   : stop"                    << endl 
+			<< "d    : destroy"                 << endl 
+			<< "r    : reset"                   << endl 
+			<< "e    : exit"                    << endl 
+			<< "wr   : writeAiui"               << endl 
+			<< "wrr  : writeAiui repeatly"      << endl 
+			<< "swrt : stopWriteThread"         << endl 
+			<< "wrt  : writeText"               << endl 
+			<< "ww   : stop-wakeup-writeAiui"   << endl
             ;
 		} else {
 			cout << "invalid cmd, input again." << endl; // AIUITester::readCmd

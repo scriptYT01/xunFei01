@@ -96,7 +96,7 @@ private:
 	void wakeup();
 	void start();
 	void stop();
-	void write(bool repeat);
+	void writeAiui(bool repeat);
 	void stopWriteThread();
 	void reset();
 	void writeText();
