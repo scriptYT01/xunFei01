@@ -103,11 +103,11 @@ string AIUITester::_vadToStr( int ___eventID )
 
 void AIUITester::_dumpStatus()
 {
-    cout << _eventToStr( _lastEventType00 ) << endl ;
-    cout << _stateToStr( _lastEventType11 ) << endl ;
-    cout << " =--7= sleep : " << SSTR( _lastEventType31 ) << " =--8= " << endl ;
-    cout << _vadToStr( _lastEventType41 ) << endl ;
-    cout << " =--8= error : " << SSTR( _lastEventType61 ) << " =--0= " << endl ;
+    cerr << _eventToStr( _lastEventType00 ) << endl ;
+    cerr << _stateToStr( _lastEventType11 ) << endl ;
+    cerr << " =--7= sleep : " << SSTR( _lastEventType31 ) << " =--8= " << endl ;
+    cerr << _vadToStr( _lastEventType41 ) << endl ;
+    cerr << " =--8= error : " << SSTR( _lastEventType61 ) << " =--0= " << endl ;
 
 } // AIUITester::_dumpStatus
 
@@ -243,25 +243,25 @@ void AIUITester::_waveCMDauto01()
     _prEFn( " supply with argv[1] , then use it as the input as wav file name and deal with it. " ) ;
 
     if ( _argc != 2 ) {
-	    cout << "\n useage : " << _argv[0] << " <wave_input.wav>\n\n\n" << _argc << endl;
+	    cerr << "\n useage : " << _argv[0] << " <wave_input.wav>\n\n\n" << _argc << endl;
         exit(33);
     }
     _fname01 = _argv[1] ;
 
-	//cout << "\n _waveCMDauto01 start "  << _argc << "\n\n\n"<< endl;
+	//cerr << "\n _waveCMDauto01 start "  << _argc << "\n\n\n"<< endl;
     _dumpStatus();
-	//cout << "\n _waveCMDauto01 0121 "   << _argc << "\n\n\n" << endl;
+	//cerr << "\n _waveCMDauto01 0121 "   << _argc << "\n\n\n" << endl;
 
     createAgent();
     //sleep(1);
     __i01 = _sleepWaitForState01( 100000 , 10 , &_lastEventType11 , AIUIConstant::STATE_READY ) ;
-	cout << " 11 repeate ("  << __i01 << ") time , result : " << SSTR( _lastEventType11 ) << " --> " << _stateToStr( _lastEventType11 ) << endl;
+	cerr << " 11 repeate ("  << __i01 << ") time , result : " << SSTR( _lastEventType11 ) << " --> " << _stateToStr( _lastEventType11 ) << endl;
     if ( 0 ) { exit(11); }
 
     //stopWriteThread();
     wakeup();
     __i01 = _sleepWaitForState01( 100000 , 100 , &_lastEventType11 , AIUIConstant::STATE_WORKING ) ;
-	cout << " 22 repeate ("  << __i01 << ") time , result : " << SSTR( _lastEventType11 ) << " --> " << _stateToStr( _lastEventType11 ) << endl;
+	cerr << " 22 repeate ("  << __i01 << ") time , result : " << SSTR( _lastEventType11 ) << " --> " << _stateToStr( _lastEventType11 ) << endl;
     if ( 0 ) { exit(22); }
 
     _lastNlp01 = -1 ;
@@ -269,10 +269,10 @@ void AIUITester::_waveCMDauto01()
     writeAiui(false);
     if ( 0 ) {
         __i01 = _sleepWaitForState02( 100000 , 200 , &_lastEventType11 , AIUIConstant::STATE_WORKING ) ;
-	    cout << " 33 repeate ("  << __i01 << ") time , result : " << SSTR( _lastEventType11 ) << " --> " << _stateToStr( _lastEventType11 ) << endl;
+	    cerr << " 33 repeate ("  << __i01 << ") time , result : " << SSTR( _lastEventType11 ) << " --> " << _stateToStr( _lastEventType11 ) << endl;
     } else {
         __i01 = _sleepWaitForState11( 100000 , 200 , &_lastNlp01 , &_lastNlp02 , 4 ) ;
-	    cout << " 34 NLP result ("  
+	    cerr << " 34 NLP result ("  
             << __i01 
             << ") time , result : " 
             << SSTR( _lastNlp01 ) 
@@ -292,7 +292,7 @@ void AIUITester::_waveCMDauto01()
     sleep(1);
     writeAiui(false);
 
-	cout << "\n _waveCMDauto01 end \n\n\n" << _argc << endl;
+	cerr << "\n _waveCMDauto01 end \n\n\n" << _argc << endl;
 
 } // AIUITester::_waveCMDauto01
 
@@ -401,19 +401,19 @@ void TestListener::onEvent(IAIUIEvent& event)
                 switch ( _lastEventType11 ) { // onEvent    11
                     case AIUIConstant::STATE_IDLE:
                         {
-                            cout << "EVENT_STATE:" << "IDLE" << endl;
+                            cerr << "EVENT_STATE:" << "IDLE" << endl;
                         } 
                         break;
 
                     case AIUIConstant::STATE_READY:
                         {
-                            cout << "EVENT_STATE:" << "READY" << endl;
+                            cerr << "EVENT_STATE:" << "READY" << endl;
                         } 
                         break;
 
                     case AIUIConstant::STATE_WORKING:
                         {
-                            cout << "EVENT_STATE:" << "WORKING" << endl;
+                            cerr << "EVENT_STATE:" << "WORKING" << endl;
                         } 
                         break;
                 }
@@ -422,14 +422,14 @@ void TestListener::onEvent(IAIUIEvent& event)
 
         case AIUIConstant::EVENT_WAKEUP: // onEvent    2
             {
-                cout << "EVENT_WAKEUP:" << event.getInfo() << endl;
+                cerr << "EVENT_WAKEUP:" << event.getInfo() << endl;
             } 
             break;
 
         case AIUIConstant::EVENT_SLEEP: // onEvent 3
             {
                 _lastEventType31 = event.getArg1() ;
-                cout << "EVENT_SLEEP:arg1=" << _lastEventType31 << endl; // onEvent 31
+                cerr << "EVENT_SLEEP:arg1=" << _lastEventType31 << endl; // onEvent 31
             } 
             break;
 
@@ -439,19 +439,19 @@ void TestListener::onEvent(IAIUIEvent& event)
                 switch ( _lastEventType41 ) { // onEvent 41
                     case AIUIConstant::VAD_BOS:
                         {
-                            cout << "EVENT_VAD:" << "BOS" << endl;
+                            cerr << "EVENT_VAD:" << "BOS" << endl;
                         } 
                         break;
 
                     case AIUIConstant::VAD_EOS:
                         {
-                            cout << "EVENT_VAD:" << "EOS" << endl;
+                            cerr << "EVENT_VAD:" << "EOS" << endl;
                         } 
                         break;
 
                     case AIUIConstant::VAD_VOL:
                         {
-                            if(0) { cout << "EVENT_VAD:" << "VOL" << endl;}
+                            if(0) { cerr << "EVENT_VAD:" << "VOL" << endl;}
                         } 
                         break;
                 }
@@ -465,14 +465,14 @@ void TestListener::onEvent(IAIUIEvent& event)
                 Json::Reader reader;
 
                 if (!reader.parse(event.getInfo(), bizParamJson, false)) {
-                    cout << "parse error!" << endl << event.getInfo() << endl;
+                    cerr << "parse error!" << endl << event.getInfo() << endl;
                     break;
                 }
                 Json::Value data = (bizParamJson["data"])[0];
                 Json::Value params = data["params"];
                 Json::Value content = (data["content"])[0];
                 string sub = params["sub"].asString();
-                cout << "EVENT_RESULT:start:" << sub << __func__ << " " << __LINE__ << endl; // onEvent 51
+                cerr << "EVENT_RESULT:start:" << sub << __func__ << " " << __LINE__ << endl; // onEvent 51
 
                 if (sub == "nlp")
                 {
@@ -484,7 +484,7 @@ void TestListener::onEvent(IAIUIEvent& event)
 
                     if (contentId.empty())
                     {
-                        cout << "Content Id is empty" << endl;
+                        cerr << "Content Id is empty" << endl;
                         break;
                     }
 
@@ -497,19 +497,19 @@ void TestListener::onEvent(IAIUIEvent& event)
                     {
                         resultStr = string((char*)buffer->data());
 
-                        cout << "==get json : begin" << endl;
-                        cout << resultStr << endl;
-                        cout << "==get json : end" << endl;
+                        cerr << "==get json : begin" << endl;
+                        cerr << resultStr << endl;
+                        cerr << "==get json : end" << endl;
                         //__answer = _jsonGetResult14( resultStr , "intent" , "answer" , "text" ) ;
                         __answer = _jsonGetResult14( resultStr , "intent" , "answer" , "text" , "" ) ;
                         if ( "" !=  __answer ) {
-                            cout << "get_answer01:" << __answer << endl ;
+                            cerr << "get_answer01:" << __answer << endl ;
                         } else {
-                            cout << "no get_answer01 found." << endl ;
+                            cerr << "no get_answer01 found." << endl ;
                         }
                     }
                 }
-                cout << "EVENT_RESULT:end:" << sub << ":" << __func__ << " " << __LINE__ << TSTR << endl;
+                cerr << "EVENT_RESULT:end:" << sub << ":" << __func__ << " " << __LINE__ << TSTR << endl;
 
             }
             break;
@@ -517,7 +517,7 @@ void TestListener::onEvent(IAIUIEvent& event)
         case AIUIConstant::EVENT_ERROR: // onEvent 6
             {
                 _lastEventType61 = event.getArg1() ;
-                cout << "EVENT_ERROR:" << _lastEventType61 << endl; // onEvent 61
+                cerr << "EVENT_ERROR:" << _lastEventType61 << endl; // onEvent 61
             } 
             break;
     }
@@ -582,8 +582,8 @@ void AIUITester::writeAiui(bool repeat)
 		return;
 
 	if (writeThread == NULL) {
+	    cerr << "\n open file <" << _fname01 << "> as input \n\n\n" << endl;
 		//writeThread = new WriteAudioThread(agent, TEST_AUDIO_PATH,  repeat);
-	    cout << "\n open file <" << _fname01 << "> as input \n\n\n" << endl;
 		writeThread = new WriteAudioThread(agent, _fname01,  repeat);
 		writeThread->run();
 	}	
@@ -644,7 +644,7 @@ void AIUITester::readCmd()
 
     _prEFn( " supply no argv[1] , then wait for the stdin's cmd " );
     
-	cout << "input cmd:" << endl;
+	cerr << "input cmd:" << endl;
 
 	string cmd;
 	while (true)
@@ -653,63 +653,63 @@ void AIUITester::readCmd()
 
 		if (cmd == "c")
 		{
-			cout << "createAgent" << endl; // AIUITester::readCmd
+			cerr << "createAgent" << endl; // AIUITester::readCmd
 			createAgent();
 		} else if (cmd == "w") {
-			cout << "wakeup" << endl;
+			cerr << "wakeup" << endl;
 			wakeup();
 		} else if (cmd == "s") {
-			cout << "start" << endl;
+			cerr << "start" << endl;
 			start();
 		} else if (cmd == "st") {
-			cout << "stop" << endl;
+			cerr << "stop" << endl;
 			stop();
 		} else if (cmd == "d") {
-			cout << "destroy" << endl; // AIUITester::readCmd
+			cerr << "destroy" << endl; // AIUITester::readCmd
 			destory();
 		} else if (cmd == "r") {
-			cout << "reset" << endl;
+			cerr << "reset" << endl;
 			reset();
 		} else if (cmd == "e") {
-			cout << "exit" << endl;
+			cerr << "exit" << endl;
 			break;
 		} else if (cmd == "wr") {
-			cout << "writeAiui" << endl;
+			cerr << "writeAiui" << endl;
 			writeAiui(false);
 		} else if (cmd == "wrr") {
-			cout << "writeAiui repeatly" << endl; // AIUITester::readCmd
+			cerr << "writeAiui repeatly" << endl; // AIUITester::readCmd
 			writeAiui(true);
 		} else if (cmd == "swrt" || cmd == "stwr"|| cmd == "S") {
-			cout << "stopWriteThread" << endl;
+			cerr << "stopWriteThread" << endl;
 			stopWriteThread();
 		} else if (cmd == "wrt") {
-			cout << "writeText" << endl;
+			cerr << "writeText" << endl;
 			writeText();
 		} else if (cmd == "q") {
 			destory();
 			break;
 		} else if (cmd == "ww") {
-			cout << "stop-wakeup-writeAiui" << endl; // AIUITester::readCmd
+			cerr << "stop-wakeup-writeAiui" << endl; // AIUITester::readCmd
 			stopWriteThread();
-			//cout << "111" << endl;
+			//cerr << "111" << endl;
             //usleep(1000);
             //sleep(5);
-			//cout << "222" << endl;
+			//cerr << "222" << endl;
 			wakeup();
 			start();
 			wakeup();
-			//cout << "333" << endl;
+			//cerr << "333" << endl;
             //usleep(1000000);
             //sleep(10);
-			//cout << "444" << endl;
+			//cerr << "444" << endl;
 			writeAiui(false);
-			//cout << "555" << endl;
+			//cerr << "555" << endl;
 			;
 		} else if (cmd == "h") { // AIUITester::readCmd
             dbmemDebugShow();
 
 
-			cout 
+			cerr 
 			<< "c    : createAgent"             << endl 
 			<< "w    : wakeup"                  << endl 
 			<< "s    : start"                   << endl 
@@ -724,7 +724,7 @@ void AIUITester::readCmd()
 			<< "ww   : stop-wakeup-writeAiui"   << endl
             ;
 		} else {
-			cout << "invalid cmd, input again." << endl; // AIUITester::readCmd
+			cerr << "invalid cmd, input again." << endl; // AIUITester::readCmd
 		}
         _dumpStatus();
 	} // while
@@ -732,7 +732,7 @@ void AIUITester::readCmd()
 
 void AIUITester::usage()
 {
-	cout 
+	cerr 
         << endl
         << " usage : "
         << _argv[0] 
@@ -750,7 +750,7 @@ void AIUITester::testAiui()
 
     usage() ;
 
-	cout 
+	cerr 
         << " input argc: " 
         << _argc 
         << endl
@@ -764,7 +764,7 @@ void AIUITester::testAiui()
             _waveCMDauto01();
             break ;
         default : 
-            cout 
+            cerr 
                 << endl
                 << " unknow parameter amount : " 
                 << _argc
