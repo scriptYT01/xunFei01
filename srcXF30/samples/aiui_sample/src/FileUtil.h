@@ -17,6 +17,7 @@
 using namespace std;
 using namespace aiui;
 
+
 #ifdef _MSC_VER
 #include <windows.h>
 #else
@@ -65,6 +66,25 @@ public:
 	 */
 	static Buffer* readFileAsBuffer(const string &filePath);
 
+	class inFileStream
+	{
+        private:
+            string  _fPath ;
+		    fstream _mSS;
+	    public:
+            void OpenSS( string ___fPath ) ;
+            bool is_open() ;
+            bool eof() ;
+            void close() ;
+            //void clear(istream::iostate state );
+            void clear( );
+            istream& read (char* s, streamsize n);
+            istream& seekg( streamoff off, ios_base::seekdir way);
+            //istream& getline (istream& is, string& str);
+            void getline ( string& str );
+            streamsize gcount() ;
+    } ; // inFileStream
+
 	class DataFileHelper
 	{
 	private:
@@ -72,7 +92,11 @@ public:
 
 		const string mFileDir;
 
-		fstream mIn;
+		//fstream mIn;
+		//istream  *mIn;
+		//ifstream *mIn;
+		//ifstream mInXXX;
+		inFileStream mIn;
 
 		fstream mOut;
 

@@ -7,6 +7,7 @@
 
 #include "FileUtil.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <sstream>
 
@@ -308,58 +309,128 @@ bool FileUtil::DataFileHelper::openReadFile(const string& filePath, bool inCurre
 {
 	string fullPath;
 
-	if (inCurrentDir)
-	{
-		fullPath = mFileDir + filePath;
-	} else {
-		fullPath = filePath;
-	}
+    cerr << endl << " filename <" << filePath << ">" << endl ;
 
-	if (!exist(fullPath))
-	{
-		return false;
-	}
+    if ( filePath == "-" ) {
+        cerr << endl << " use stdin as filename. " << endl ;
+    } else {
+        if (inCurrentDir)
+        {
+            fullPath = mFileDir + filePath;
+        } else {
+            fullPath = filePath;
+        }
+
+        if (!exist(fullPath))
+        {
+            cerr << endl << " filename <" << fullPath << "> don't exist. " << endl ;
+            exit(33);
+            return false;
+        }
+    }
 
 	pthread_mutex_lock(&mMutex);
-	if (mIn.is_open())
-	{
-		mIn.close();
-	}
 
-	mIn.open(fullPath.c_str(), ios::in | ios::binary);
+    if ( filePath == "-" ) {
+        mIn . OpenSS(  "-" ) ;
+    } else {
+        mIn . OpenSS(  fullPath ) ;
+    }
+
 	pthread_mutex_unlock(&mMutex);
 
 
 	return true;
 } // FileUtil::DataFileHelper::openReadFile
 
+void FileUtil::inFileStream::OpenSS( string ___fPath ) 
+{
+    _fPath = ___fPath ; 
+    if ( _fPath == "-" )  return ;
+	if (_mSS . is_open())
+    {
+        _mSS . close();
+    }
+    _mSS . open(_fPath.c_str(), ios::in | ios::binary);
+} // FileUtil::inFileStream::OpenSS
+streamsize FileUtil::inFileStream::gcount()
+{
+    if ( _fPath == "-" )  return cin . gcount() ;
+    return _mSS . gcount() ;
+} // FileUtil::inFileStream::gcount
+void FileUtil::inFileStream::getline (string& str)
+{
+    if ( _fPath == "-" )  {
+        std::getline( cin , str ) ;
+    } else {
+        std::getline( _mSS , str ) ;
+    }
+} // FileUtil::inFileStream::getline 
+void FileUtil::inFileStream::close()
+{
+    if ( _fPath == "-" )  {
+        //cin . close();
+    } else {
+        _mSS . close();
+    }
+} // FileUtil::inFileStream::close
+istream& FileUtil::inFileStream::seekg( streamoff off, ios_base::seekdir way)
+{
+    if ( _fPath == "-" )  return cin . seekg( off , way ) ;
+    return _mSS . seekg( off , way );
+} // FileUtil::inFileStream::seekg
+void FileUtil::inFileStream::clear()
+{
+    if ( _fPath == "-" )  {
+        cin . clear( ) ;
+    } else { 
+        _mSS . clear() ;
+    }
+} // FileUtil::inFileStream::clear
+bool FileUtil::inFileStream::eof() {
+    if ( _fPath == "-" )  return cin . eof() ;
+    return _mSS . eof();
+} // FileUtil::inFileStream::eof
+bool FileUtil::inFileStream::is_open( ) 
+{
+    if ( _fPath == "-" )  return true ;
+    return _mSS . is_open();
+} // FileUtil::inFileStream::is_open
+istream& FileUtil::inFileStream::read (char* s, streamsize n){
+    if ( _fPath == "-" )  {
+        return cin . read( s , n ) ;
+    } else {
+        return _mSS . read( s , n ) ;
+    }
+} // FileUtil::inFileStream::read
+
 int FileUtil::DataFileHelper::read(char* buffer, int bufferLen)
 {
 	pthread_mutex_lock(&mMutex);
-	if (!mIn.is_open())
+	if (! mIn . is_open())
 	{
 		pthread_mutex_unlock(&mMutex);
 		return -1;
 	}
 
-	mIn.read(buffer, bufferLen);
+	mIn . read(buffer, bufferLen);
 
 	pthread_mutex_unlock(&mMutex);
-	return mIn.gcount();
+	return mIn . gcount();
 }
 
 string FileUtil::DataFileHelper::readLine()
 {
 	pthread_mutex_lock(&mMutex);
 
-	if (!mIn.is_open())
+	if (! mIn . is_open())
 	{
 		pthread_mutex_unlock(&mMutex);
 		return "";
 	}
 
 	string line;
-	getline(mIn, line);
+	mIn . getline( line);
 
 	pthread_mutex_unlock(&mMutex);
 	return line;
@@ -369,18 +440,18 @@ void FileUtil::DataFileHelper::rewindReadFile()
 {
 	pthread_mutex_lock(&mMutex);
 
-	if (!mIn.is_open())
+	if (! mIn . is_open())
 	{
 		pthread_mutex_unlock(&mMutex);
 		return;
 	}
 
-	if (mIn.eof())
+	if (mIn . eof())
 	{
-		mIn.clear();
+		mIn . clear();
 	}
 
-	mIn.seekg(0, ios::beg);
+	mIn . seekg(0, ios::beg);
 
 	pthread_mutex_unlock(&mMutex);
 }
@@ -389,9 +460,9 @@ void FileUtil::DataFileHelper::closeReadFile()
 {
 	pthread_mutex_lock(&mMutex);
 
-	if (mIn.is_open())
+	if ( mIn . is_open())
 	{
-		mIn.close();
+		mIn . close();
 	}
 	pthread_mutex_unlock(&mMutex);
 }
