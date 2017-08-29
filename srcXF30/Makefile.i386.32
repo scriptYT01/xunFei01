@@ -97,6 +97,7 @@ $(BIN_TARGET) : $(OBJECTS)
 	chmod -R a+w bin/
 	@echo ; echo gcc $(OBJECTSsrc)  $(CFLAGS)  -o $@.static $(LDFLAGS) 
 	@echo ; echo './run.sh  w12/tianQi21.wav.wav'
+	@echo ; echo 'gcc -print-file-name=libc.a'
 	@echo
 
 %.o : %.cpp

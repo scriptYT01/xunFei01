@@ -111,6 +111,7 @@ void AIUITester::_dumpStatus()
 
 } // AIUITester::_dumpStatus
 
+// wait the ___wanted event equal to ___dst , first appears, then exit;or timeout will exit.
 int AIUITester::_sleepWaitForState01( int ___gapUS, int ___gapMax , int * ___dst , int ___wanted )
 {
     int __checkCNT = 0 ;
@@ -131,6 +132,9 @@ int AIUITester::_sleepWaitForState01( int ___gapUS, int ___gapMax , int * ___dst
     }
     return -1 ;
 } // AIUITester::_sleepWaitForState01
+
+// wait the ___wanted event equal to ___dst , first appears, or timeout then exit.
+// the next step , wait untile the state change to different than dst, then exit, or timeout exit.
 int AIUITester::_sleepWaitForState02( int ___gapUS, int ___gapMax , int * ___dst , int ___wanted )
 {
     int __checkCNT = 0 ;
@@ -270,19 +274,21 @@ void AIUITester::_waveCMDauto01()
     if ( 0 ) {
         __i01 = _sleepWaitForState02( 100000 , 200 , &_lastEventType11 , AIUIConstant::STATE_WORKING ) ;
 	    cerr << " 33 repeate ("  << __i01 << ") time , result : " << SSTR( _lastEventType11 ) << " --> " << _stateToStr( _lastEventType11 ) << endl;
-    } else {
+    } 
+    if ( _fname01 != "-" ) 
+    {
         __i01 = _sleepWaitForState11( 100000 , 200 , &_lastNlp01 , &_lastNlp02 , 4 ) ;
-	    cerr << " 34 NLP result ("  
-            << __i01 
-            << ") time , result : " 
-            << SSTR( _lastNlp01 ) 
-            << " -- " 
-            << SSTR( _lastNlp02 ) 
-            << " -- " 
-            << TSTR
-            << endl ;
+	    cerr << " 34 NLP result ("  << __i01 << ") time , result : " << SSTR( _lastNlp01 ) 
+            << " -- " << SSTR( _lastNlp02 ) << " -- " << TSTR << endl ;
     }
-    if ( 1 ) { exit(33); }
+    if ( _fname01 == "-" ) 
+    {
+        __i01 = _sleepWaitForState11( 100 * 1000000 , 200 , &_lastNlp01 , &_lastNlp02 , 4 ) ;
+	    cerr << " 35 NLP result ("  << __i01 << ") time , result : " << SSTR( _lastNlp01 ) 
+            << " -- " << SSTR( _lastNlp02 ) << " -- " << TSTR << endl ;
+    }
+
+    if ( 1 ) { _prEFn( " nothing got " ) ; exit(33); }
 
     wakeup();
     sleep(1);
@@ -381,6 +387,7 @@ bool WriteAudioThread::runWAT()
     if (thread_created == false) {
         int rc = pthread_create(&thread_id, NULL, thread_proc, this);
         if (rc != 0) {
+            _prEFn( " create pthread error " ) ;
             exit(-1);
         }
         thread_created = true;
