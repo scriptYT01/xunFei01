@@ -376,7 +376,7 @@ void WriteAudioThread::stopRun()
     }
 }
 
-bool WriteAudioThread::run()
+bool WriteAudioThread::runWAT()
 {
     if (thread_created == false) {
         int rc = pthread_create(&thread_id, NULL, thread_proc, this);
@@ -585,7 +585,7 @@ void AIUITester::writeAiui(bool repeat)
 	    cerr << "\n open file <" << _fname01 << "> as input \n\n\n" << endl;
 		//writeThread = new WriteAudioThread(agent, TEST_AUDIO_PATH,  repeat);
 		writeThread = new WriteAudioThread(agent, _fname01,  repeat);
-		writeThread->run();
+		writeThread->runWAT();
 	} else {
         // if , writeThread is already created, skip ..... to prevent double thread is created.
     }

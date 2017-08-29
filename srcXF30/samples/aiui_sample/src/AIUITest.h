@@ -66,7 +66,7 @@ public:
 
 	void stopRun();
 
-	bool run();
+	bool runWAT();
 
 };
 
