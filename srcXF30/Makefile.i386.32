@@ -95,6 +95,7 @@ $(BIN_TARGET) : $(OBJECTS)
 	echo "$${RUN01}" > run.sh
 	chmod 755 run.sh
 	chmod -R a+w bin/
+	@echo gcc $(OBJECTSsrc)  $(CFLAGS)  -o $@.static $(LDFLAGS) 
 
 %.o : %.cpp
 	sed -i -e 's;\.\./\.\./;./;g'   $<
