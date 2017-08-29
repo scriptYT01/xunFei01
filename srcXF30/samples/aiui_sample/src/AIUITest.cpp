@@ -738,7 +738,7 @@ void AIUITester::usage()
         << endl
         << " usage : "
         << _argv[0] 
-        << " [input.wav | listenIP listenPort] "
+        << " [input.wav | listenIP listenPort | file filename | file -] "
         << endl
         << endl
         ;
