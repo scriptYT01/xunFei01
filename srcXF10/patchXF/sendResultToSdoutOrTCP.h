@@ -11,10 +11,10 @@ using namespace std;
 class _sendResultToSdoutOrTCP
 {
     private :
-        string _outDST ;
+        string _outPath ;
         class _sendResultToSdoutOrTCP * _nowOBJ = NULL ;
     public :
-        _sendResultToSdoutOrTCP( string ___outDST ) ;
+        _sendResultToSdoutOrTCP( string ___outPath ) ;
         ~_sendResultToSdoutOrTCP();
         class _sendResultToSdoutOrTCP * _Obj() ;
 

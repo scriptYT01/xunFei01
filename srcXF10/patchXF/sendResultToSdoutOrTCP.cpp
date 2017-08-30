@@ -1,8 +1,8 @@
 #include "sendResultToSdoutOrTCP.h"
 
-_sendResultToSdoutOrTCP::_sendResultToSdoutOrTCP( string ___outDST )
+_sendResultToSdoutOrTCP::_sendResultToSdoutOrTCP( string ___outPath )
     : 
-        _outDST( ___outDST ) 
+        _outPath( ___outPath ) 
 {
 } // _sendResultToSdoutOrTCP::_sendResultToSdoutOrTCP
 
