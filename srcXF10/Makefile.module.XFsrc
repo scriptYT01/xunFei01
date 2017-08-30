@@ -123,11 +123,16 @@ XFu_only_cmd1:= echo kk | nc 127.0.0.1 58111
 XFu_only_cmd2:= $(adbViomi) shell killall ymClient13001_tty.bin 
 XFu XFupdate : XFgenDate
 	@echo
-	rm -fr $(XFdst1)/*
+	#rm -fr $(XFdst1)/*
+	#rm -fr $(XFdst2)/*
+	#rm -fr $(XFdst3)/*
+	#rm -fr $(XFdst4)/*
 	$(rsync1)    $(XFsrc1)/  	$(XFdst1)/
 	$(rsync1)    $(XFsrc2)/  	$(XFdst2)/
 	$(rsync1)    $(XFsrc3)/  	$(XFdst3)/
 	$(rsync1)    $(XFsrc4)/  	$(XFdst4)/
+	@#
+	$(rsync1)    $(XFsrc1)/patchXF/  	$(XFdst3)/patchXF/
 	@#
 	rm -fr $(XFi386DST11)/
 	mkdir -p $(XFi386DST11)
@@ -223,6 +228,7 @@ vb4:=srcXF40/Build.mk
 
 px1:=srcXF10/patchXF/iat_record_sample_patch.c  
 px2:=srcXF10/patchXF/pathcXFbase01.c
+px3:=srcXF10/patchXF/sendResultToSdoutOrTCP.cpp
 
 
 XFlist:= 
@@ -237,7 +243,7 @@ XFlist+= XF70
 XFlist+= XF81 XF82 XF83 XF84
 XFlist+= XF91 XF92 
 XFlist+= vb1 vb2 vb3 vb4 
-XFlist+= px1 px2
+XFlist+= px1 px2 px3 
 
 $(call VIMobj,$(XFlist))
 

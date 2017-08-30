@@ -18,7 +18,8 @@ LOCAL_MODULE_TAGS := aiui_sample
 LOCAL_MODULE_PATH:=$(TARGET_FS_BUILD)/$(TARGET_TESTSUIT_DIR)/network
 LOCAL_MODULE_PATH:=$(TARGET_FS_BUILD)/ch/xf30
 LOCAL_SRC_FILES := \
-	dbmemDebugShow.c \
+	patchXF/dbmemDebugShow.c \
+	patchXF/sendResultToSdoutOrTCP.cpp \
 	samples/aiui_sample/src/cJSON.c \
 	\
 	samples/aiui_sample/src/jsoncpp/json_reader.cpp \
