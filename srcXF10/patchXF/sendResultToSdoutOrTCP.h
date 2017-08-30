@@ -7,11 +7,17 @@
 
 using namespace std;
 
+enum _enOssType {
+    _enOssUnknown,
+    _enOssStdout,
+    _enOssTcp
+};
 
 class _sendResultToSdoutOrTCP
 {
     private :
         string _outPath ;
+        _enOssType _ossType ;
         class _sendResultToSdoutOrTCP * _nowOBJ = NULL ;
     public :
         _sendResultToSdoutOrTCP( string ___outPath ) ;

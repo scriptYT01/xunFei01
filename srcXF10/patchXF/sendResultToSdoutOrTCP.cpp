@@ -4,6 +4,11 @@ _sendResultToSdoutOrTCP::_sendResultToSdoutOrTCP( string ___outPath )
     : 
         _outPath( ___outPath ) 
 {
+    if ( "-" == _outPath ) {
+        _ossType = _enOssStdout ;
+    } else {
+        _ossType = _enOssUnknown ;
+    }
 } // _sendResultToSdoutOrTCP::_sendResultToSdoutOrTCP
 
 _sendResultToSdoutOrTCP::~_sendResultToSdoutOrTCP( )
