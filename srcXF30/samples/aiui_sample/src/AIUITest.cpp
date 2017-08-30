@@ -16,7 +16,6 @@ extern "C" {
 }
 #include "cJSON.h"
 
-string _fname01 = TEST_AUDIO_PATH ;
 int _lastEventType00 = -1 ;
 int _lastEventType11 = -1 ;
 int _lastEventType31 = -1 ;
@@ -246,11 +245,10 @@ void AIUITester::_waveCMDauto01()
 
     _prEFn( " supply with argv[1] , then use it as the input as wav file name and deal with it. " ) ;
 
-    if ( _argc != 2 ) {
+    if ( _argc != 2 && _argc != 3 ) {
 	    cerr << "\n useage : " << _argv[0] << " <wave_input.wav>\n\n\n" << _argc << endl;
         exit(33);
     }
-    _fname01 = _argv[1] ;
 
 	//cerr << "\n _waveCMDauto01 start "  << _argc << "\n\n\n"<< endl;
     _dumpStatus();
@@ -770,6 +768,12 @@ void AIUITester::testAiui()
             readCmd();
             break ;
         case 2 : // 1 para -- > deal with the para 1 as the input-wave-file-name , using the automaticly process.
+            _fname01 = _argv[1] ;
+            _waveCMDauto01();
+            break ;
+        case 3 : // 2 para -- > deal with the para 1 as the input-wave-file-name , using the automaticly process.
+                 // 2 para -- > deal with the para 2 as the outputProtocol , using the automaticly process.
+            _fname01 = _argv[1] ;
             _waveCMDauto01();
             break ;
         default : 

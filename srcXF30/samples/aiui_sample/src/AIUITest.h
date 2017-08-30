@@ -86,6 +86,8 @@ private:
 	TestListener listener;
 
 	WriteAudioThread * writeThread;
+
+    string _fname01 = TEST_AUDIO_PATH ;
 public:
 	AIUITester() ;
 
@@ -113,6 +115,7 @@ private:
     int _sleepWaitForState11( int ___gapUS, int ___gapMax , int * ___lastNLP01 , int *___lastNLP02 , int ___idleWait ) ;
     //string _jsonGetResult12( string ___inStr , string ___node1 , string ___node2 );
     void usage();
+
 
 public:
 	void readCmd();
