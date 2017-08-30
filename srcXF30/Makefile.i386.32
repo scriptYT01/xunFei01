@@ -40,7 +40,14 @@ echo
 
 chmod -R a+w . 2>/dev/null
 
-LD_LIBRARY_PATH=../../      time ../../bin/$(TARGET)    $$*
+if [ "$${1}" = "-" ]
+then
+	echo list on  33335 
+	nc -l -p 33335 |  \
+		LD_LIBRARY_PATH=../../      time ../../bin/$(TARGET)    $$*
+else
+	    LD_LIBRARY_PATH=../../      time ../../bin/$(TARGET)    $$*
+fi
 
 endef
 export  RUN01
