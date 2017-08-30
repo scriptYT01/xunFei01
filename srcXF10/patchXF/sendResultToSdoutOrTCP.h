@@ -15,7 +15,7 @@ class _sendResultToSdoutOrTCP
     public :
         _sendResultToSdoutOrTCP( string ___outDST ) ;
         ~_sendResultToSdoutOrTCP();
-        class _sendResultToSdoutOrTCP * _getOBJ() ;
+        class _sendResultToSdoutOrTCP * _Obj() ;
 
 } ; // class _sendResultToSdoutOrTCP
 

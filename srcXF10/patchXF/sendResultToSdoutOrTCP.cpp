@@ -10,8 +10,8 @@ _sendResultToSdoutOrTCP::~_sendResultToSdoutOrTCP( )
 {
 } // _sendResultToSdoutOrTCP::~_sendResultToSdoutOrTCP
 
-class _sendResultToSdoutOrTCP * _sendResultToSdoutOrTCP::_getOBJ() 
+class _sendResultToSdoutOrTCP * _sendResultToSdoutOrTCP::_Obj() 
 {
     //return this;
     return  _nowOBJ ;
-} // _sendResultToSdoutOrTCP::_getOBJ
+} // _sendResultToSdoutOrTCP::_Obj

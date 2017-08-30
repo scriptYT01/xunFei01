@@ -5,6 +5,8 @@
 *      Author: hj
 */
 
+#include "patchXF/sendResultToSdoutOrTCP.h"
+
 #ifndef AIUIAGENTTEST_H_
 #define AIUIAGENTTEST_H_
 
@@ -88,6 +90,7 @@ private:
 	WriteAudioThread * writeThread;
 
     string _fname01 = TEST_AUDIO_PATH ;
+    class _sendResultToSdoutOrTCP * _outHelper = NULL ;
 public:
 	AIUITester() ;
 
