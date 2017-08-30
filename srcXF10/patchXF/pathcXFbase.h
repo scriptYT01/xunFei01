@@ -41,6 +41,8 @@ typedef struct tWAVEFORMATEX {
 #define _prDS( dd , ss ) _prSFn( "<%d:%s>" , dd , ss )
 
 #define _prExit( fmt , ... ) { _prSFn( fmt "\n exit..." , ## __VA_ARGS__ ) ; exit( 32 ) ; }
+#define _zExit( mm , fmt , ... ) if ( 0 == mm ) _prExit( fmt , ## __VA_ARGS__ ) ;
+#define _nExit( mm , fmt , ... ) if ( 0 != mm ) _prExit( fmt , ## __VA_ARGS__ ) ;
 
 
 

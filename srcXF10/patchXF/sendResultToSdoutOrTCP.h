@@ -3,6 +3,7 @@
 #define     __SENDRESULTTOSDOUTORTCP_H
 
 #include <string>
+#include <assert.h>
 
 using namespace std;
 
