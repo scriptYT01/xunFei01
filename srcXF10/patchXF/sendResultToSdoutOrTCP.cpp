@@ -6,9 +6,10 @@ _sendResultToSdoutOrTCP::_sendResultToSdoutOrTCP( string ___outPath )
 {
     if ( "-" == _outPath ) {
         _ossType = _enOssStdout ;
-    } else {
-        _ossType = _enOssUnknown ;
-    }
+    } 
+
+    _nExit ( _ossType != _enOssUnknown ) ;
+    _nowObj = this ;
 } // _sendResultToSdoutOrTCP::_sendResultToSdoutOrTCP
 
 _sendResultToSdoutOrTCP::~_sendResultToSdoutOrTCP( )
@@ -18,5 +19,5 @@ _sendResultToSdoutOrTCP::~_sendResultToSdoutOrTCP( )
 class _sendResultToSdoutOrTCP * _sendResultToSdoutOrTCP::_Obj() 
 {
     //return this;
-    return  _nowOBJ ;
+    return  _nowObj ;
 } // _sendResultToSdoutOrTCP::_Obj

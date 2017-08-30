@@ -18,7 +18,7 @@ class _sendResultToSdoutOrTCP
     private :
         string _outPath ;
         _enOssType _ossType ;
-        class _sendResultToSdoutOrTCP * _nowOBJ = NULL ;
+        class _sendResultToSdoutOrTCP * _nowObj = NULL ;
     public :
         _sendResultToSdoutOrTCP( string ___outPath ) ;
         ~_sendResultToSdoutOrTCP();
