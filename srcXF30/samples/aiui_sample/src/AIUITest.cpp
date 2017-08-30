@@ -776,7 +776,7 @@ void AIUITester::testAiui()
             _fname01 = _argv[1] ;
 
             _outHelper = (new _sendResultToSdoutOrTCP( _argv[2]) ) -> _Obj() ;
-            _zExit( _outHelper , "output stream error" ) ;
+            _zExit( _outHelper , "output stream error : <%s> <%s> " , _argv[1] , _argv[2] ) ;
 
             _waveCMDauto01();
             break ;
