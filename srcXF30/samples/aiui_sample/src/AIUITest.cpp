@@ -779,13 +779,8 @@ void AIUITester::testAiui()
                  // 2 para -- > deal with the para 2 as the outputProtocol , using the automaticly process.
             _fname01 = _argv[1] ;
 
-            //_outSC . _addPath2<_streamBase>( SSTR(_argv[2]) , " output-stream " ) ;
-            //_outSC . _addPath2<_streamBase>( "xxzz" , " output-stream " ) ;
-            _outSC . _addPath2<_streamBase>( _argv[2] , " output-text-to-tts" ) ;
-            // _streamController
-            // _sendSS = (new _sendResultToSdoutOrTCP( _argv[2]) ) -> _Obj() ;
-            //_zExit( _sendSS , "output stream error : <%s> <%s> " , _argv[1] , _argv[2] ) ;
-            //listener . _sendSS2 = &_sendSS ;
+            _zExit( _outSC . _addPath2<_streamBase>( _argv[2] , " output-text-to-tts" ) 
+                    , "output stream error : <%s> <%s> " , _argv[1] , _argv[2] ) ;
 
             _waveCMDauto01();
             break ;

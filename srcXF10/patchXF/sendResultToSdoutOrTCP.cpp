@@ -1,7 +1,5 @@
 #include "sendResultToSdoutOrTCP.h"
 
-_streamController       _outSC    ;
-_streamController       _inSC     ;
 
 _sendResultToSdoutOrTCP::_sendResultToSdoutOrTCP( string ___outPath )
     : 

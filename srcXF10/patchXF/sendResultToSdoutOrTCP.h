@@ -57,12 +57,11 @@ class _streamController
         bool _addPath2( string ___path , string ___comment ) {
             //_sVec . push_back( ___path , ___comment , (_streamBase*) new TSS1( ___path , ___comment ) ) ;
             _sVec . push_back( (_streamBase*) new TSS1( ___path , ___comment ) ) ;
+            return true ;
         }
     
 }; // class _streamController 
 
-extern _streamController       _outSC    ;
-extern _streamController       _inSC     ;
 
 #endif //     __SENDRESULTTOSDOUTORTCP_H
 
