@@ -15,3 +15,5 @@ srcXF30/samples/aiui_sample/src/jsoncpp/
 srcXF30/samples/aiui_sample/src/jsoncpp/json/
 srcXF30/include/aiui/
 srcXF40/
+testing/src/
+

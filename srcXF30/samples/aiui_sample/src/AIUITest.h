@@ -80,7 +80,6 @@ public:
 	void onEvent(IAIUIEvent& event);
 }; // class TestListener 
 
-
 class AIUITester
 {
 private:
@@ -92,7 +91,7 @@ private:
 
     //string _fname01 = TEST_AUDIO_PATH ;
     string _fname01 ;
-    _sendResultToSdoutOrTCP * _sendSS ;
+    //_sendResultToSdoutOrTCP * _sendSS ;
 public:
 	AIUITester() ;
 

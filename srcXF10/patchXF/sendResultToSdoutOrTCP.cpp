@@ -1,5 +1,8 @@
 #include "sendResultToSdoutOrTCP.h"
 
+_streamController       _outSC    ;
+_streamController       _inSC     ;
+
 _sendResultToSdoutOrTCP::_sendResultToSdoutOrTCP( string ___outPath )
     : 
         _outPath( ___outPath ) 
@@ -29,3 +32,5 @@ void _sendResultToSdoutOrTCP::_SSo2( string ___msg1 , string ___msg2 )
 {
     _SSo1( ___msg1 + ___msg2 ) ;
 } // _sendResultToSdoutOrTCP::_SSo2
+
+
