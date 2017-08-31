@@ -509,6 +509,7 @@ void TestListener::onEvent(IAIUIEvent& event)
                         __answer = _jsonGetResult14( resultStr , "intent" , "answer" , "text" , "" ) ;
                         if ( "" !=  __answer ) {
                             cerr << "get_answer01:" << __answer << endl ;
+                            //(*_sendSS2) -> _SSo2( __answer , endl ) ;
                         } else {
                             cerr << "no get_answer01 found." << endl ;
                         }
@@ -528,9 +529,13 @@ void TestListener::onEvent(IAIUIEvent& event)
     }
 } // TestListener::onEvent
 
-AIUITester::AIUITester() : agent(NULL), writeThread(NULL)
+AIUITester::AIUITester() 
+    : 
+    agent(NULL)
+    , writeThread(NULL)
+    , _fname01 ( TEST_AUDIO_PATH )
+    , _sendSS ( NULL ) 
 {
-
 }
 
 AIUITester::~AIUITester()
@@ -775,8 +780,10 @@ void AIUITester::testAiui()
                  // 2 para -- > deal with the para 2 as the outputProtocol , using the automaticly process.
             _fname01 = _argv[1] ;
 
-            _outHelper = (new _sendResultToSdoutOrTCP( _argv[2]) ) -> _Obj() ;
-            _zExit( _outHelper , "output stream error : <%s> <%s> " , _argv[1] , _argv[2] ) ;
+            _sendSS = (new _sendResultToSdoutOrTCP( _argv[2]) ) -> 
+                _Obj() ;
+            _zExit( _sendSS , "output stream error : <%s> <%s> " , _argv[1] , _argv[2] ) ;
+            //listener . _sendSS2 = &_sendSS ;
 
             _waveCMDauto01();
             break ;

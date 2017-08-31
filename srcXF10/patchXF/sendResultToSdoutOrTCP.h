@@ -18,11 +18,13 @@ class _sendResultToSdoutOrTCP
     private :
         string _outPath ;
         _enOssType _ossType ;
-        class _sendResultToSdoutOrTCP * _nowObj = NULL ;
+        _sendResultToSdoutOrTCP * _nowObj ;
     public :
         _sendResultToSdoutOrTCP( string ___outPath ) ;
         ~_sendResultToSdoutOrTCP();
-        class _sendResultToSdoutOrTCP * _Obj() ;
+        _sendResultToSdoutOrTCP * _Obj() ;
+        void _SSo1( string ___msg1 ) ;
+        void _SSo2( string ___msg1 , string ___msg2 ) ;
 
 } ; // class _sendResultToSdoutOrTCP
 

@@ -70,14 +70,15 @@ public:
 
 	bool runWAT();
 
-};
+}; // class WriteAudioThread
 
 
 class TestListener : public IAIUIListener
 {
+private:
 public:
 	void onEvent(IAIUIEvent& event);
-};
+}; // class TestListener 
 
 
 class AIUITester
@@ -89,8 +90,9 @@ private:
 
 	WriteAudioThread * writeThread;
 
-    string _fname01 = TEST_AUDIO_PATH ;
-    class _sendResultToSdoutOrTCP * _outHelper = NULL ;
+    //string _fname01 = TEST_AUDIO_PATH ;
+    string _fname01 ;
+    _sendResultToSdoutOrTCP * _sendSS ;
 public:
 	AIUITester() ;
 
@@ -123,7 +125,7 @@ private:
 public:
 	void readCmd();
 	void testAiui();
-}; // AIUITester
+}; // class AIUITester
 
 
 

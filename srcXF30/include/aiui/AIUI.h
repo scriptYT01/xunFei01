@@ -128,7 +128,7 @@ public:
 	 * @param event AIUI事件
 	 */
 	virtual void onEvent( IAIUIEvent& event) = 0;
-};
+}; // class  AIUIListener
 typedef AIUIListener IAIUIListener;
 
 /**

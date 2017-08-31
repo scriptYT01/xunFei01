@@ -8,7 +8,7 @@ _sendResultToSdoutOrTCP::_sendResultToSdoutOrTCP( string ___outPath )
         _ossType = _enOssStdout ;
     } 
 
-    _nExit ( _ossType != _enOssUnknown ) ;
+    assert ( _ossType != _enOssUnknown ) ;
     _nowObj = this ;
 } // _sendResultToSdoutOrTCP::_sendResultToSdoutOrTCP
 
@@ -18,6 +18,14 @@ _sendResultToSdoutOrTCP::~_sendResultToSdoutOrTCP( )
 
 class _sendResultToSdoutOrTCP * _sendResultToSdoutOrTCP::_Obj() 
 {
-    //return this;
     return  _nowObj ;
 } // _sendResultToSdoutOrTCP::_Obj
+
+void _sendResultToSdoutOrTCP::_SSo1( string ___msg1 ) 
+{
+} // _sendResultToSdoutOrTCP::_SSo1
+
+void _sendResultToSdoutOrTCP::_SSo2( string ___msg1 , string ___msg2 ) 
+{
+    _SSo1( ___msg1 + ___msg2 ) ;
+} // _sendResultToSdoutOrTCP::_SSo2
