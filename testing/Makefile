@@ -3,6 +3,7 @@
 
 nameS1:=$(sort $(wildcard src/*.c src/*.cpp))
 nameS2:=$(patsubst src/%,%,$(patsubst %.c,%,$(patsubst %.cpp,%,$(nameS1))))
+nameS3:=$(patsubst %,v%,$(nameS2))
 
 #nameS:= t01 t02 t03
 nameS:=$(nameS2)
@@ -20,8 +21,8 @@ $(info )
 
 all: help01
 help01:
-	@echo ; echo $(nameS)
-	@echo ; echo $(nameS2)
+	@echo ; echo 'buile & run       : ' $(nameS)
+	@echo ; echo 'vim & build & run : ' $(nameS3)
 	@echo
 
 m:
