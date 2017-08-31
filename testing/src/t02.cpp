@@ -7,6 +7,7 @@ Description : Demo how to use interface
 Release     : 05/07/2007 1.0
 */
 
+#include <stdio.h>
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -15,30 +16,20 @@ Release     : 05/07/2007 1.0
 using namespace std;
 
 class IAlarm {
+    public :
+        string _objName ;
     public:
-        //virtual void alert() const = 0;
-        virtual void alert() const ;
+        virtual ~IAlarm(){};
+        virtual void alert() const = 0;
+        //virtual void alert() const ;
 }; // class IAlarm 
 
-class XXX1 {
-}; // class XXX1 
-
-class XXX21 {
-    public:
-        virtual void alert() {
-            cout << " alert XXX21 " << endl;
-        };
-}; // class XXX21 
-
-class XXX22 : public XXX21 {
-    public:
-        void alert() {
-            cout << " alert XXX22 " << endl;
-        };
-}; // class XXX22 
 
 class Door {
     public:
+        string _objName ;
+    public:
+        Door() { _objName = "Door" ; }
         virtual void open() const {
             cout << "open horizontally" << endl;
         }
@@ -46,9 +37,13 @@ class Door {
         virtual void close() const {
             cout << "close horizontally" << endl;
         }
+        virtual ~Door(){};
 }; // class Door
 
 class HorizontalDoor : public Door {
+    public:
+    HorizontalDoor () { _objName = "HorizontalDoor" ; cout << " HorizontalDoor create " << endl; }
+    ~HorizontalDoor () { cout << " HorizontalDoor destory " << endl;  }
 }; // class HorizontalDoor 
 
 class VerticalDoor : public Door {
@@ -60,57 +55,40 @@ class VerticalDoor : public Door {
         void close() const {
             cout << "close vertically" << endl;
         }
+        VerticalDoor () { _objName = "VerticalDoor" ; cout << " VerticalDoor create " << endl; }
+        ~VerticalDoor () { cout << " VerticalDoor destory " << endl;  }
 }; // class VerticalDoor 
 
 class Alarm : public IAlarm {
     public:
         void alert() const {
-            cout << "ring,ring,ring" << endl;
+            cout << "ring,ring,ring : " << _objName << endl;
         }
+        Alarm() { _objName = "Alarm" ; }
+        //~Alarm(){};
 };
 
 class AlarmDoor : public Door {
     //protected:
     private:
-        //VerticalDoor* _alarm;
-        //Door* _alarm;
-        //char* _alarm;
-        //Alarm* _alarm;
-        //XXX1 *_alarm ;
-        //XXX21 *_alarm ;
-        XXX22 *_alarm ;
-        int idx ;
+        Alarm* _alarm;
 
     public:
         AlarmDoor() {
-            //_alarm = new Alarm;
-            //_alarm = new char[10];
-            //_alarm = new VerticalDoor();
-            //_alarm = new Door() ;
-            //_alarm = new XXX1() ;
-            //_alarm = new XXX21() ;
-            if ( _alarm == NULL ) {
-                cout << " NULL , create alarm only. " << (int64_t) _alarm << endl ;
-
-                _alarm = new XXX22() ;
-            } else {
-                cout << " not NULL , free it and re-create alarm . " << (int64_t) _alarm << endl ;
-                //free( _alarm );
-                _alarm = new XXX22() ;
-            }
-            idx += 100 ;
+            _objName = "AlarmDoor" ;
+            //_alarm = new Alarm();
+            _alarm = new Alarm;
+            cout << " AlarmDoor create " << endl; 
         }
 
         ~AlarmDoor() {
-            //delete _alarm;
+            delete _alarm;
+            cout << " AlarmDoor destory " << endl;  
         }
 
     public:
         void alert() {
             _alarm->alert();
-            //_alarm[0] = 11 ;
-            cout << " now idx is : " << idx << endl ;
-            idx += 1 ;
         }
 };
 
@@ -118,7 +96,29 @@ class DoorController {
     protected:
         vector<Door*> _doorVec;
 
+    private:
+    public :
+        void _deleteDoor( Door* ___door ) {
+            //delete ___door ;
+        };
+        struct myclass {           // function object type:
+            //void operator() (int i) {std::cout << ' ' << i;}
+            void operator() (Door* ii) { delete ii ; printf( "delete %p\n" , ii) ;};
+        } myobject;
+    public :
+        string _objName ;
     public:
+        DoorController () { _objName = "DoorController" ; cout << " DoorController create " << endl; }
+        ~DoorController () { 
+            //for(auto it = _doorVec.begin(); it != _doorVec.end() ; ++it){ delete it ; }
+            //for_each(_doorVec.begin(), _doorVec.end(), mem_fun( delete &));
+            //for_each(_doorVec.begin(), _doorVec.end(), delete &);
+            //for(Door** it = _doorVec.begin(); it != _doorVec.end() ; ++it){ delete it ; }
+            //for( Door* it : _doorVec ) {;}
+            //for_each(_doorVec.begin(), _doorVec.end(), _deleteDoor);
+            for_each(_doorVec.begin(), _doorVec.end(), myobject);
+            cout << " DoorController destory " << endl;  }
+
         void addDoor(Door* aDoor) {
             _doorVec.push_back(aDoor);
         }
@@ -148,6 +148,11 @@ int main() {
 
     dynamic_cast<AlarmDoor*>(door1) -> alert();
     dynamic_cast<AlarmDoor*>(door2) -> alert();
+
+    AlarmDoor* door3 = new AlarmDoor();
+
+    door3 -> alert(); 
+
 }
 
 

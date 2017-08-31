@@ -36,6 +36,7 @@ $(1) : $(1).bin
 	@echo
 v$(1) : $(firstword $(wildcard src/$(1).cpp src/$(1).c))
 	@echo
+	make clean
 	vim $$<
 	@echo
 	make $(1)
@@ -45,8 +46,8 @@ $(foreach bb1,$(nameS),$(eval $(call CPPtemple,$(bb1))))
 
 %.bin : src/%.cpp
 	@echo
-	#g++ -Wall -Werror -o $@  $<
-	g++ -Wall -o $@  $<
+	g++ -Wall -Werror -o $@  $<
+	#g++ -Wall -o $@  $<
 
 c clean :
 	@#echo SRCs : $(SRCs)

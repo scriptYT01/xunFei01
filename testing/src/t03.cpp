@@ -45,7 +45,7 @@ class Derived : public Interface
                            
 int main( int __argc , char ** __argv )
 {
-#if 1
+#if 0
     //Interface* p = new Derived();
     Interface* p = new Interface();
 #else
