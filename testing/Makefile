@@ -1,13 +1,27 @@
 
 #.PHONY : t01
 
-nameS:= t01 t02
+nameS1:=$(sort $(wildcard src/*.c src/*.cpp))
+nameS2:=$(patsubst src/%,%,$(patsubst %.c,%,$(patsubst %.cpp,%,$(nameS1))))
+
+#nameS:= t01 t02 t03
+nameS:=$(nameS2)
 SRCs:=$(foreach aa1,$(nameS),$(firstword $(wildcard $(aa1).cpp $(aa1).c)))
 DSTb:=$(foreach aa1,$(nameS),$(aa1).bin)
+
+$(info )
+$(info )
+$(info )
+$(info )
+$(info )
+$(info )
+$(info )
+$(info )
 
 all: help01
 help01:
 	@echo ; echo $(nameS)
+	@echo ; echo $(nameS2)
 	@echo
 
 m:
@@ -31,7 +45,8 @@ $(foreach bb1,$(nameS),$(eval $(call CPPtemple,$(bb1))))
 
 %.bin : src/%.cpp
 	@echo
-	g++ -Wall -Werror -o $@  $<
+	#g++ -Wall -Werror -o $@  $<
+	g++ -Wall -o $@  $<
 
 c clean :
 	@#echo SRCs : $(SRCs)
