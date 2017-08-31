@@ -20,8 +20,7 @@ class IAlarm {
         string _objName ;
     public:
         virtual ~IAlarm(){};
-        virtual void alert() const = 0;
-        //virtual void alert() const ;
+        virtual void alert( string ___src ) const = 0;
 }; // class IAlarm 
 
 
@@ -32,12 +31,20 @@ class Door {
         Door() { _objName = "Door" ; }
         virtual void open() const {
             cout << "open horizontally" << endl;
-        }
+        };
 
         virtual void close() const {
             cout << "close horizontally" << endl;
+        };
+        virtual void addName( string ___doorName ) {
+            _objName.append( ___doorName ) ;
+        };
+        virtual void alertX() {
+            cout << " not Alterm door : " << _objName << endl ; 
         }
-        virtual ~Door(){};
+
+        virtual ~Door() { cout << " door : _objName destory : " << _objName << endl ; }
+        //virtual ~Door(){};
 }; // class Door
 
 class HorizontalDoor : public Door {
@@ -61,8 +68,8 @@ class VerticalDoor : public Door {
 
 class Alarm : public IAlarm {
     public:
-        void alert() const {
-            cout << "ring,ring,ring : " << _objName << endl;
+        void alert( string ___src ) const {
+            cout << "ring,ring,ring : " << _objName << " : " << ___src << endl;
         }
         Alarm() { _objName = "Alarm" ; }
         //~Alarm(){};
@@ -87,8 +94,8 @@ class AlarmDoor : public Door {
         }
 
     public:
-        void alert() {
-            _alarm->alert();
+        void alertX() {
+            _alarm->alert( _objName );
         }
 };
 
@@ -97,61 +104,66 @@ class DoorController {
         vector<Door*> _doorVec;
 
     private:
-    public :
-        void _deleteDoor( Door* ___door ) {
-            //delete ___door ;
-        };
-        struct myclass {           // function object type:
-            //void operator() (int i) {std::cout << ' ' << i;}
+        struct {           
             void operator() (Door* ii) { delete ii ; printf( "delete %p\n" , ii) ;};
-        } myobject;
+        } deleteDoorObj ;
+        struct {           
+            //void operator() (Door* ii) { dynamic_cast<AlarmDoor*>(ii) -> alertX() ; }
+            void operator() (Door* ii) { ii -> alertX() ; }
+        } alertObj ;
     public :
         string _objName ;
     public:
         DoorController () { _objName = "DoorController" ; cout << " DoorController create " << endl; }
         ~DoorController () { 
-            //for(auto it = _doorVec.begin(); it != _doorVec.end() ; ++it){ delete it ; }
-            //for_each(_doorVec.begin(), _doorVec.end(), mem_fun( delete &));
-            //for_each(_doorVec.begin(), _doorVec.end(), delete &);
-            //for(Door** it = _doorVec.begin(); it != _doorVec.end() ; ++it){ delete it ; }
-            //for( Door* it : _doorVec ) {;}
-            //for_each(_doorVec.begin(), _doorVec.end(), _deleteDoor);
-            for_each(_doorVec.begin(), _doorVec.end(), myobject);
-            cout << " DoorController destory " << endl;  }
+            for_each(_doorVec.begin(), _doorVec.end(), deleteDoorObj ); cout << " DoorController destory " << endl;  }
 
-        void addDoor(Door* aDoor) {
+        void addDoor(Door* aDoor, string ___doorName ) {
+            aDoor -> addName( ___doorName ) ;
             _doorVec.push_back(aDoor);
+        }
+
+        template <class TTT>
+        void addDoor2( string ___doorName ){
+            addDoor( new TTT() , ___doorName );
         }
 
         void openDoor() {
             for_each(_doorVec.begin(), _doorVec.end(), mem_fun(&Door::open));
         }
+        void alertDoor() {
+            //for_each(_doorVec.begin(), _doorVec.end(), mem_fun(&dynamic_cast<AlarmDoor*>Door::alertX));
+            for_each(_doorVec.begin(), _doorVec.end(), alertObj ); 
+        }
 };
 
 int main() {
     DoorController dc;
-    dc.addDoor(new HorizontalDoor());
-    dc.addDoor(new VerticalDoor());
-    dc.addDoor(new AlarmDoor());
+    dc.addDoor(new HorizontalDoor , " 1st door " );
+    dc.addDoor(new VerticalDoor , " 2rd door " );
+    dc.addDoor(new AlarmDoor , " 3nd door " );
+    dc.addDoor2<AlarmDoor>( " 4th door ");
+    dc.addDoor2<AlarmDoor>( " 5th door ");
     dc.openDoor();
+    dc.alertDoor();
 
     Door* door1 = new AlarmDoor();
     Door* door2 = new AlarmDoor();
 
-    dynamic_cast<AlarmDoor*>(door1) -> alert();
-    dynamic_cast<AlarmDoor*>(door1) -> alert();
+    dynamic_cast<AlarmDoor*>(door1) -> alertX();
+    dynamic_cast<AlarmDoor*>(door1) -> alertX();
 
-    dynamic_cast<AlarmDoor*>(door2) -> alert();
-    dynamic_cast<AlarmDoor*>(door2) -> alert();
-    dynamic_cast<AlarmDoor*>(door2) -> alert();
-    dynamic_cast<AlarmDoor*>(door2) -> alert();
+    dynamic_cast<AlarmDoor*>(door2) -> alertX();
+    dynamic_cast<AlarmDoor*>(door2) -> alertX();
+    dynamic_cast<AlarmDoor*>(door2) -> alertX();
+    dynamic_cast<AlarmDoor*>(door2) -> alertX();
 
-    dynamic_cast<AlarmDoor*>(door1) -> alert();
-    dynamic_cast<AlarmDoor*>(door2) -> alert();
+    dynamic_cast<AlarmDoor*>(door1) -> alertX();
+    dynamic_cast<AlarmDoor*>(door2) -> alertX();
 
     AlarmDoor* door3 = new AlarmDoor();
 
-    door3 -> alert(); 
+    door3 -> alertX(); 
 
 }
 
