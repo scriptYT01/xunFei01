@@ -37,10 +37,35 @@ class _sendResultToSdoutOrTCP
 
 class _streamBase
 {
+    protected :
+        _enOssType  _ssType ;
+        string      _ssPath ;
+        string      _ssComment ;
     public :
         _streamBase( string ___path , string ___comment ) {
+            _ssType     =   _enOssUnknown ;
+            _ssPath     =   ___path ;
+            _ssComment  =   ___comment ;
         };
 }; // class _streamBase
+
+class _streamIN : public _streamBase
+{
+    public :
+        _streamIN( string ___path , string ___comment )
+            : _streamBase( ___path , ___comment ) {
+        }
+    private:
+} ; // class _streamIN 
+
+class _streamOUT : public _streamBase
+{
+    public :
+        _streamOUT( string ___path , string ___comment ) 
+            : _streamBase( ___path , ___comment ) {
+        }
+    private:
+} ; // class _streamOUT 
 
 // DoorController
 class _streamController 
