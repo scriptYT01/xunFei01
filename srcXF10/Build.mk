@@ -6,7 +6,9 @@ LOCAL_MODULE := tts_sample11.x1000.bin
 LOCAL_MODULE_TAGS := tts_sample11
 LOCAL_MODULE_PATH:=$(TARGET_FS_BUILD)/$(TARGET_TESTSUIT_DIR)/network
 LOCAL_MODULE_PATH:=$(TARGET_FS_BUILD)/ch/xf10
-LOCAL_SRC_FILES := samples/tts_sample/tts_sample.c
+LOCAL_SRC_FILES := \
+	patchXF/pathcXFtts01.c \
+	samples/tts_sample/tts_sample.c
 #LOCAL_LDLIBS := -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc -lrt -ldl -lpthread -lm -lc
 LOCAL_LDLIBS := -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc -lc 
 #LOCAL_LDLIBS := -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc 

@@ -58,6 +58,7 @@ extern void _paraAtoi( int _para_must1_ignore0 , int ___argc , char ** ___argv ,
 extern void _paraAtoS( int _para_must1_ignore0 , int ___argc , char ** ___argv , int ___index , char * ___varName , char ** ___varLP ) ;
 
 extern void _dumpWAVEFORMATEX( char * ___hMsg , char * ___tMsg , const char * ___varName , WAVEFORMATEX * ___wavfmt ) ;
+extern int text_to_speech_from_file_continue(FILE * ___fd , const char* params);
 
 #ifdef __cplusplus
 }

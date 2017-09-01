@@ -17,6 +17,8 @@
 #include "msp_cmn.h"
 #include "msp_errors.h"
 
+#include "patchXF/pathcXFbase.h"
+
 /* wav音频头部格式 */
 typedef struct _wave_pcm_hdr
 {
@@ -135,7 +137,7 @@ int text_to_speech(const char* src_text, const char* des_path, const char* param
 	}
 
 	return ret;
-}
+} // text_to_speech
 
 int main(int ___argc, char* ___argv[])
 {
@@ -152,7 +154,9 @@ int main(int ___argc, char* ___argv[])
 	*
 	* 详细参数说明请参阅《讯飞语音云MSC--API文档》
 	*/
-	const char* session_begin_params = "voice_name = xiaoyan, text_encoding = utf8, sample_rate = 16000, speed = 50, volume = 50, pitch = 50, rdn = 2";
+	const char* session_begin_params = "voice_name = xiaoyan, "
+        "text_encoding = utf8, sample_rate = 16000, speed = 50, volume = 50, pitch = 50, rdn = 2";
+
 	const char* filename             = "Tts_sample.wav"; //合成的语音文件名称
 	//const char* __text                 = "亲爱的用户，您好，这是一个语音合成示例，感谢您对科大讯飞语音技术的支持！科大讯飞是亚太地区最大的语音上市公司，股票代码：002230"; //合成文本
 	const char* __text                 = 
@@ -177,6 +181,18 @@ int main(int ___argc, char* ___argv[])
 		printf("MSPLogin failed, error code: %d.\n", ret);
 		goto exit ;//登录失败，退出登录
 	}
+    if ( ___argc == 2 ) { // 0 para -> 1 , 1 para -> 2 
+        if ( 
+                1 == strlen( ___argv[1] )  
+                && '-' == ___argv[1][0] ) {
+            printf("\n###########################################################################\n");
+            printf("## 语音合成（Text To Speech，TTS）continue ##\n");
+            printf("###########################################################################\n\n");
+            text_to_speech_from_file_continue( stdin , session_begin_params ) ;
+            goto exit ;
+        }
+    }
+
 	printf("\n###########################################################################\n");
 	printf("## 语音合成（Text To Speech，TTS）技术能够自动将任意文字实时转换为连续的 ##\n");
 	printf("## 自然语音，是一种能够在任何时间、任何地点，向任何人提供语音信息服务的  ##\n");
@@ -228,5 +244,5 @@ exit:
 	MSPLogout(); //退出登录
 
 	return 0;
-}
+} // main
 
