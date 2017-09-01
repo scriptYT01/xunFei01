@@ -66,9 +66,12 @@ static int text_to_speech_from_file_continuE_loop( int ___len , const char * ___
 		if (MSP_TTS_FLAG_DATA_END == __synth_status) {
 			break;
         }
-		//_prEFn(">");
-		//usleep(150*1000); //防止频繁占用CPU
+#if 1
+		_prEFn(">");
+		usleep(150*1000); //防止频繁占用CPU
+#else
 		usleep(1*1000); //防止频繁占用CPU
+#endif
 	}
 	_prEFn( "END(%d)(%d)" , ___len , __totalLEN );
 
