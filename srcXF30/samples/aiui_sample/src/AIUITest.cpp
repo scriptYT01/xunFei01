@@ -510,6 +510,8 @@ void TestListener::onEvent(IAIUIEvent& event)
                         if ( "" !=  __answer ) {
                             cerr << "get_answer01:" << __answer << endl ;
                             //(*_sendSS2) -> _SSo2( __answer , endl ) ;
+                            //_zExit( _outSC . _addPath2<_streamOUT>( _argv[2] , " output-text-to-tts" ) 
+                            _aiui -> _outSC . _sendMsg1n( __answer ) ;
                         } else {
                             cerr << "no get_answer01 found." << endl ;
                         }
@@ -551,6 +553,7 @@ void AIUITester::createAgent()
 		"appid=58f4654e");
 
 	string paramStr = FileUtil::readFileAsString( CFG_FILE_PATH );
+    listener . _setCaller1( this ) ;
 	agent = IAIUIAgent::createAgent(paramStr.c_str(), &listener);
 }
 

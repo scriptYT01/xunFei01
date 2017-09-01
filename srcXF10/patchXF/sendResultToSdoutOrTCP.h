@@ -95,7 +95,10 @@ class _streamController
             _sVec . push_back( (_streamBase*) new TSS1( ___path , ___comment ) ) ;
             return true ;
         }
-    
+        void _sendMsg1( string ___msg1 ) {
+            cout << ___msg1 ;
+        }
+        void _sendMsg1n( string ___msg1 ) { _sendMsg1( ___msg1 + "\n" ); }
 }; // class _streamController 
 
 class _streamControllerIN : public _streamController 

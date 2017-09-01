@@ -94,9 +94,10 @@ private:
 
     //string _fname01 = TEST_AUDIO_PATH ;
     string _fname01 ;
+    //_sendResultToSdoutOrTCP * _sendSS ;
+public:
     _streamController       _outSC    ;
     _streamController       _inSC     ;
-    //_sendResultToSdoutOrTCP * _sendSS ;
 public:
 	AIUITester() ;
 
