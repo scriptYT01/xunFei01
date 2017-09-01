@@ -22,6 +22,37 @@ int _cntFree01      = 0 ;
 void * (*_origin__malloc)(size_t ) = NULL ;
 void (*_origin__free)(void *) = NULL ;
 
+void dbmem_Dump_inSO(void) {
+    printf( "\n" "\n"
+
+    "_myDebug01  %d" "\n"
+    "_cntMalloc01  %d" "\n"
+    "_cntMalloc02  %d" "\n"
+
+    "_cntMalloc03  %d" "\n"
+    "_cntMalloc04  %d" "\n"
+    "_cntFree01  %d" "\n"
+
+    "_origin__malloc  %p" "\n"
+    "_origin__free  %p" "\n"
+
+    "\n"
+
+    , _myDebug01              
+    , _cntMalloc01                    
+    , _cntMalloc02                    
+
+    , _cntMalloc03                    
+    , _cntMalloc04                    
+    , _cntFree01                      
+
+    , _origin__malloc             
+    , _origin__free          
+    );
+
+} // dbmem_Dump_inSO
+
+
 static void show_dbinfo_once( char ___who ){
     _myDebug01 ++ ;
     switch ( _myDebug01 ) {
@@ -38,7 +69,7 @@ static void show_dbinfo_once( char ___who ){
             printf( "\n" " can not get func. " " %p %p , exit.\n" , _origin__malloc , _origin__free);
             exit( 21 ) ;
         }
-        if ( _origin__free == _origin__malloc ) {
+        if ( (void*) _origin__free == (void*) _origin__malloc ) {
             printf( "\n" " why equal . " " %p %p , exit.\n" , _origin__malloc , _origin__free);
             exit( 22 ) ;
         }
@@ -73,30 +104,4 @@ void free(void *___ptr){
     _cntFree01      ++ ;
     _origin__free( ___ptr );
 } // free
-
-void dbmem_Dump_inSO(void) {
-    printf( "\n" "\n"
-
-    "_myDebug01  %d" "\n"
-    "_cntMalloc01  %d" "\n"
-    "_cntMalloc02  %d" "\n"
-    "_cntMalloc03  %d" "\n"
-    "_cntMalloc04  %d" "\n"
-    "_cntFree01  %d" "\n"
-    "_origin__malloc  %d" "\n"
-    "_origin__free  %d" "\n"
-
-    "\n"
-
-    , _myDebug01              
-    , _cntMalloc01                    
-    , _cntMalloc02                    
-    , _cntMalloc03                    
-    , _cntMalloc04                    
-    , _cntFree01                      
-    , _origin__malloc             
-    , _origin__free          
-    );
-
-} // dbmem_Dump_inSO
 
