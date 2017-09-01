@@ -230,6 +230,7 @@ px1:=srcXF10/patchXF/iat_record_sample_patch.c
 px2:=srcXF10/patchXF/pathcXFbase01.c
 px3:=srcXF10/patchXF/sendResultToSdoutOrTCP.cpp
 px4:=srcXF10/patchXF/sendResultToSdoutOrTCP.h
+px5:=srcXF10/patchXF/pathcXFtts01.c
 
 
 XFlist:= 
@@ -244,7 +245,7 @@ XFlist+= XF70
 XFlist+= XF81 XF82 XF83 XF84
 XFlist+= XF91 XF92 
 XFlist+= vb1 vb2 vb3 vb4 
-XFlist+= px1 px2 px3 px4 
+XFlist+= px1 px2 px3 px4 px5
 
 $(call VIMobj,$(XFlist))
 
