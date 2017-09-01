@@ -20,6 +20,7 @@ LOCAL_MODULE_PATH:=$(TARGET_FS_BUILD)/ch/xf30
 LOCAL_SRC_FILES := \
 	patchXF/dbmemDebugShow.c \
 	patchXF/sendResultToSdoutOrTCP.cpp \
+	patchXF/pathcXFbase01.c \
 	samples/aiui_sample/src/cJSON.c \
 	\
 	samples/aiui_sample/src/jsoncpp/json_reader.cpp \

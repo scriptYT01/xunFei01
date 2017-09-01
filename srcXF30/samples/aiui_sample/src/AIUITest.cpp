@@ -509,7 +509,8 @@ void TestListener::onEvent(IAIUIEvent& event)
                         __answer = _jsonGetResult14( resultStr , "intent" , "answer" , "text" , "" ) ;
                         if ( "" !=  __answer ) {
                             cerr << "get_answer01:" << __answer << endl ;
-                            if ( 0 != strncmp( __answer.c_str() , "jsonError" , strlen( "jsonError" ) ) ) {
+                            //if ( 0 != strncmp( __answer.c_str() , "jsonError" , strlen( "jsonError" ) ) ) {
+                            if ( 0 != _strcmpX1( "jsonError" , __answer.c_str() ) ) {
                                 _aiui -> _outSC . _sendMsg1n( __answer ) ;
                             }
                         } else {

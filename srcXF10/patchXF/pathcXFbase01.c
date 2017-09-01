@@ -45,3 +45,9 @@ void _paraAtoS( int _para_must1_ignore0 , int ___argc , char ** ___argv , int __
 
 } // _paraAtoS
 
+// 0 -> ok . other -> error , empty, or not equal.
+int _strcmpX1( const char * ___preStr , const char * ___bufStr ) 
+{ 
+    if ( NULL == ___preStr || NULL == ___bufStr ) return -1 ;
+    return strncmp( ___preStr , ___bufStr , strlen( ___preStr ) ) ; 
+}

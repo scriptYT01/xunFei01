@@ -2,12 +2,14 @@
 #ifndef __PATCHXFBASE_H 
 #define __PATCHXFBASE_H 
 
-
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <libgen.h>
+#include <string.h>
+
+
+
 
 #define _strX( aa ) # aa
 
@@ -44,13 +46,21 @@ typedef struct tWAVEFORMATEX {
 #define _zExit( mm , fmt , ... ) if ( 0 == mm ) _prExit( fmt , ## __VA_ARGS__ ) ;
 #define _nExit( mm , fmt , ... ) if ( 0 != mm ) _prExit( fmt , ## __VA_ARGS__ ) ;
 
-
-
-extern void _paraAtoi( int _para_must1_ignore0 , int ___argc , char ** ___argv , int ___index , char * ___varName , int  *  ___varLP ) ;
-extern void _paraAtoS( int _para_must1_ignore0 , int ___argc , char ** ___argv , int ___index , char * ___varName , char ** ___varLP ) ;
 #define X_paraAtoi( must , idx , iii ) _paraAtoi( must , ___argc , ___argv , idx , _strX( iii ) , & iii ) 
 #define X_paraAtoS( must , idx , sss ) _paraAtoS( must , ___argc , ___argv , idx , _strX( sss ) , &(sss) ) 
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+extern int _strcmpX1( const char * ___preStr , const char * ___bufStr ) ;
+extern void _paraAtoi( int _para_must1_ignore0 , int ___argc , char ** ___argv , int ___index , char * ___varName , int  *  ___varLP ) ;
+extern void _paraAtoS( int _para_must1_ignore0 , int ___argc , char ** ___argv , int ___index , char * ___varName , char ** ___varLP ) ;
+
 extern void _dumpWAVEFORMATEX( char * ___hMsg , char * ___tMsg , const char * ___varName , WAVEFORMATEX * ___wavfmt ) ;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
