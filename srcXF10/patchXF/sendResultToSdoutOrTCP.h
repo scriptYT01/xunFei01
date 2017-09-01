@@ -14,6 +14,11 @@
 
 using namespace std;
 
+enum _enOccType {
+    _enOccUnknown,
+    _enOccOut,
+    _enOccIn
+};
 enum _enOssType {
     _enOssUnknown,
     _enOssStdout,
@@ -73,12 +78,15 @@ class _streamOUT : public _streamBase
 // DoorController
 class _streamController 
 {
-    public:
-        virtual ~_streamController(){};
     private :
+    protected :
+        _enOccType _scType ;
     protected :
         //vector <string,string,_streamBase*> _sVec ;
         vector <_streamBase*> _sVec ;
+    public:
+        _streamController():_scType(_enOccUnknown) {};
+        virtual ~_streamController(){};
     public:
         //_outSC< _streamBase > . _addPath2( _argv[2] , " output-stream " ) ;
         template <class TSS1>
@@ -89,6 +97,20 @@ class _streamController
         }
     
 }; // class _streamController 
+
+class _streamControllerIN : public _streamController 
+{
+    public :
+        _streamControllerIN(){ _scType=_enOccIn; };
+        ~_streamControllerIN(){};
+} ; // class _streamControllerIN 
+
+class _streamControllerOUT : public _streamController 
+{
+    public :
+        _streamControllerOUT(){ _scType=_enOccOut; };
+        ~_streamControllerOUT(){};
+} ; // class _streamControllerOUT 
 
 
 #endif //     __SENDRESULTTOSDOUTORTCP_H
