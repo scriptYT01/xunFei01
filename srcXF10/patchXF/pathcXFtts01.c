@@ -13,7 +13,7 @@
 #include "msp_cmn.h"
 #include "msp_errors.h"
 
-static int text_to_speech_from_file_continuE_loop( int ___len , char * ___src_text , const char* params)
+static int text_to_speech_from_file_continuE_loop( int ___len , const char * ___src_text , const char* params)
 {
 	int          __ret          = -1;
 	const char*  __sessionID    = NULL;
@@ -38,7 +38,12 @@ static int text_to_speech_from_file_continuE_loop( int ___len , char * ___src_te
 		return __ret;
 	}
 
-	_prEFn("正在合成 ...");
+#if 0
+	{ _prEFn("正在合成 ...");       }
+#else
+    { _prEFn("正在合成 ...(%d)<%s>" , ___len , ___src_text );   }
+#endif
+
 	while (1) 
 	{
 		/* 获取合成音频 */
