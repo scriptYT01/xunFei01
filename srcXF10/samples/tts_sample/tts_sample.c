@@ -228,7 +228,7 @@ int main(int ___argc, char* ___argv[])
         __bufTEXT        = (char*) __text ;
     }
 
-	printf("开始合成 ...%d %s \n" , ___argc , __bufTEXT );
+	printf("开始合成 ...%d %s --> %s \n" , ___argc , __bufTEXT , filename );
 	ret = text_to_speech(__bufTEXT, filename, session_begin_params);
 	if (MSP_SUCCESS != ret)
 	{
