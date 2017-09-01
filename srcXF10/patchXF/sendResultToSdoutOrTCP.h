@@ -46,6 +46,7 @@ class _streamBase
             _ssType     =   _enOssUnknown ;
             _ssPath     =   ___path ;
             _ssComment  =   ___comment ;
+                cerr << " --- _streamBase : " << endl ;
         };
 }; // class _streamBase
 
@@ -54,6 +55,7 @@ class _streamIN : public _streamBase
     public :
         _streamIN( string ___path , string ___comment )
             : _streamBase( ___path , ___comment ) {
+                cerr << " --- _streamIN : " << endl ;
         }
     private:
 } ; // class _streamIN 
@@ -63,6 +65,7 @@ class _streamOUT : public _streamBase
     public :
         _streamOUT( string ___path , string ___comment ) 
             : _streamBase( ___path , ___comment ) {
+                cerr << " --- _streamOUT : " << endl ;
         }
     private:
 } ; // class _streamOUT 
