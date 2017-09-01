@@ -509,9 +509,9 @@ void TestListener::onEvent(IAIUIEvent& event)
                         __answer = _jsonGetResult14( resultStr , "intent" , "answer" , "text" , "" ) ;
                         if ( "" !=  __answer ) {
                             cerr << "get_answer01:" << __answer << endl ;
-                            //(*_sendSS2) -> _SSo2( __answer , endl ) ;
-                            //_zExit( _outSC . _addPath2<_streamOUT>( _argv[2] , " output-text-to-tts" ) 
-                            _aiui -> _outSC . _sendMsg1n( __answer ) ;
+                            if ( 0 != strncmp( __answer.c_str() , "jsonError" , strlen( "jsonError" ) ) ) {
+                                _aiui -> _outSC . _sendMsg1n( __answer ) ;
+                            }
                         } else {
                             cerr << "no get_answer01 found." << endl ;
                         }
