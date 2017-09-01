@@ -11,7 +11,7 @@ LOCAL_SRC_FILES := \
 	samples/tts_sample/tts_sample.c
 #LOCAL_LDLIBS := -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc -lrt -ldl -lpthread -lm -lc
 LOCAL_LDLIBS := -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc -lc 
-#LOCAL_LDLIBS := -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc 
+LOCAL_CFLAGS := -I$(LOCAL_PATH) -Wall -Werror
 include $(BUILD_EXECUTABLE)
 
 #==== tts_tcp12 ==========================================

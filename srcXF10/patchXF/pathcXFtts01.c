@@ -95,7 +95,8 @@ int text_to_speech_from_file_continue(FILE * ___fd , const char* params)
 {
 	int             __ret          = -1;
     char *          __src_text     ;
-    size_t          __len           ;
+    size_t          __len          ;
+    ssize_t         __ilen         ;
 
     if ( NULL == ___fd ) {
 		_prEFn(" input source ERROR. " );
@@ -105,10 +106,11 @@ int text_to_speech_from_file_continue(FILE * ___fd , const char* params)
     while ( 1 ) {
         __src_text      = NULL ;
         __len           = 0 ;
-        __len           = getline( & __src_text , & __len , ___fd ) ;
+        __ilen          = getline( & __src_text , & __len , ___fd ) ;
 
-	    if ( __len < 0 ) {
+	    if ( __ilen < 0 ) {
 		    _prEFn(" input source read error :  %s " , strerror( errno ) );
+            if ( NULL != __src_text ) { free( __src_text ) ; }
 		    if ( ___fd ) { fclose( ___fd); }
             return __ret ;
         }
@@ -117,6 +119,7 @@ int text_to_speech_from_file_continue(FILE * ___fd , const char* params)
             text_to_speech_from_file_continuE_loop( __len , __src_text , params ) ;
 
 	    if ( MSP_SUCCESS != __ret ) {
+            if ( NULL != __src_text ) { free( __src_text ) ; }
 		    if ( ___fd ) { fclose( ___fd); }
             return __ret ;
         }
