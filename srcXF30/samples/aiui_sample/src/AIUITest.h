@@ -73,11 +73,14 @@ public:
 }; // class WriteAudioThread
 
 
+class AIUITester;
 class TestListener : public IAIUIListener
 {
 private:
+    AIUITester * _aiui ;
 public:
 	void onEvent(IAIUIEvent& event);
+    void _setCaller1( AIUITester * ___aiui ) { _aiui = ___aiui ; };
 }; // class TestListener 
 
 class AIUITester
