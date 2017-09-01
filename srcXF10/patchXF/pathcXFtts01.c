@@ -4,6 +4,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <errno.h>
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -13,13 +14,17 @@
 #include "msp_cmn.h"
 #include "msp_errors.h"
 
+#define _outPCM( len , buf ) fwrite( buf , len , 1 , stdout ) 
+
 static int text_to_speech_from_file_continuE_loop( int ___len , const char * ___src_text , const char* params)
 {
-	int          __ret          = -1;
-	const char*  __sessionID    = NULL;
-	unsigned int __audio_len    = 0;
-	//wave_pcm_hdr __wav_hdr      = default_wav_hdr;
-	int          __synth_status = MSP_TTS_FLAG_STILL_HAVE_DATA;
+	int             __ret           = -1;
+	const char*     __sessionID     = NULL;
+	unsigned int    __audio_len     = 0;
+	//wave_pcm_hdr  __wav_hdr       = default_wav_hdr;
+	int             __synth_status  = MSP_TTS_FLAG_STILL_HAVE_DATA;
+	const void*     __data ;
+	unsigned int    __totalLEN      = 0;
 
 
 	/* 开始合成 */
@@ -47,42 +52,39 @@ static int text_to_speech_from_file_continuE_loop( int ___len , const char * ___
 	while (1) 
 	{
 		/* 获取合成音频 */
-		const void* data = QTTSAudioGet(__sessionID, &__audio_len, &__synth_status, &__ret);
-		if (MSP_SUCCESS != __ret)
+		__data = QTTSAudioGet(__sessionID, &__audio_len, &__synth_status, &__ret);
+		if (MSP_SUCCESS != __ret) {
 			break;
-		if (NULL != data)
+        }
+		if (NULL != __data)
 		{
-			fwrite(data, __audio_len, 1, fp);
-		    __wav_hdr.data_size += __audio_len; //计算data_size大小
+			//fwrite(__data, __audio_len, 1, fp);
+		    //__wav_hdr.data_size += __audio_len; //计算data_size大小
+            _outPCM( __audio_len , __data ) ;
+            __totalLEN += __audio_len ;
 		}
-		if (MSP_TTS_FLAG_DATA_END == __synth_status)
+		if (MSP_TTS_FLAG_DATA_END == __synth_status) {
 			break;
-		_prEFn(">");
-		usleep(150*1000); //防止频繁占用CPU
+        }
+		//_prEFn(">");
+		//usleep(150*1000); //防止频繁占用CPU
+		usleep(1*1000); //防止频繁占用CPU
 	}
-	_prEFn("");
+	_prEFn( "END(%d)(%d)" , ___len , __totalLEN );
+
 	if (MSP_SUCCESS != __ret)
 	{
-		_prEFn("QTTSAudioGet failed, error code: %d.",__ret);
-		QTTSSessionEnd(__sessionID, "AudioGetError");
-		fclose(fp);
+		_prEFn(         "QTTSAudioGet failed, error code: %d." ,    __ret);
+		QTTSSessionEnd( __sessionID, "AudioGetError"                    );
+
 		return __ret;
 	}
-	/* 修正wav文件头数据的大小 */
-	__wav_hdr.size_8 += __wav_hdr.data_size + (sizeof(__wav_hdr) - 8);
-	
-	/* 将修正过的数据写回文件头部,音频文件为wav格式 */
-	fseek(fp, 4, 0);
-	fwrite(&__wav_hdr.size_8,sizeof(__wav_hdr.size_8), 1, fp); //写入size_8的值
-	fseek(fp, 40, 0); //将文件指针偏移到存储data_size值的位置
-	fwrite(&__wav_hdr.data_size,sizeof(__wav_hdr.data_size), 1, fp); //写入data_size的值
-	fclose(fp);
-	fp = NULL;
+
 	/* 合成完毕 */
-	__ret = QTTSSessionEnd(__sessionID, "Normal");
+	__ret = QTTSSessionEnd(     __sessionID ,   "Normal"   );
 	if (MSP_SUCCESS != __ret)
 	{
-		_prEFn("QTTSSessionEnd failed, error code: %d.",__ret);
+		_prEFn(     "QTTSSessionEnd failed, error code: %d." ,  __ret );
 	}
 
 	return __ret;
@@ -90,9 +92,10 @@ static int text_to_speech_from_file_continuE_loop( int ___len , const char * ___
 
 //int text_to_speech_from_file_continue(const char* ___src_text, const char* des_path, const char* params)
 int text_to_speech_from_file_continue(FILE * ___fd , const char* params)
+{
 	int             __ret          = -1;
     char *          __src_text     ;
-    ssize_t         __len           ;
+    size_t          __len           ;
 
     if ( NULL == ___fd ) {
 		_prEFn(" input source ERROR. " );
