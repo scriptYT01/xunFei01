@@ -66,7 +66,7 @@ static int text_to_speech_from_file_continuE_loop( int ___len , const char * ___
 		if (MSP_TTS_FLAG_DATA_END == __synth_status) {
 			break;
         }
-#if 1
+#if 0
 		_prEFn(">");
 		usleep(150*1000); //防止频繁占用CPU
 #else
@@ -99,7 +99,7 @@ int text_to_speech_from_file_continue(FILE * ___fd , const char* params)
 	int             __ret          = -1;
     char *          __src_text     ;
     size_t          __len          ;
-    ssize_t         __ilen         ;
+    ssize_t         __size         ;
 
     if ( NULL == ___fd ) {
 		_prEFn(" input source ERROR. " );
@@ -109,17 +109,19 @@ int text_to_speech_from_file_continue(FILE * ___fd , const char* params)
     while ( 1 ) {
         __src_text      = NULL ;
         __len           = 0 ;
-        __ilen          = getline( & __src_text , & __len , ___fd ) ;
+        __size          = getline( & __src_text , & __len , ___fd ) ;
 
-	    if ( __ilen < 0 ) {
+	    if ( __size < 0 ) {
 		    _prEFn(" input source read error :  %s " , strerror( errno ) );
             if ( NULL != __src_text ) { free( __src_text ) ; }
 		    if ( ___fd ) { fclose( ___fd); }
             return __ret ;
         }
 
+		_prEFn(" input source len %d , size %d" , __len , __size );
 	    __ret = 
-            text_to_speech_from_file_continuE_loop( __len , __src_text , params ) ;
+            //text_to_speech_from_file_continuE_loop( __len , __src_text , params ) ;
+            text_to_speech_from_file_continuE_loop( __size , __src_text , params ) ;
 
 	    if ( MSP_SUCCESS != __ret ) {
             if ( NULL != __src_text ) { free( __src_text ) ; }

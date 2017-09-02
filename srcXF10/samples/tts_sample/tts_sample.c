@@ -68,32 +68,32 @@ int text_to_speech(const char* src_text, const char* des_path, const char* param
 
 	if (NULL == src_text || NULL == des_path)
 	{
-		printf("params is error!\n");
+		_prEFn("params is error!");
 		return ret;
 	}
 	fp = fopen(des_path, "wb");
 	if (NULL == fp)
 	{
-		printf("open %s error.\n", des_path);
+		_prEFn("open %s error.", des_path);
 		return ret;
 	}
 	/* 开始合成 */
 	sessionID = QTTSSessionBegin(params, &ret);
 	if (MSP_SUCCESS != ret)
 	{
-		printf("QTTSSessionBegin failed, error code: %d.\n", ret);
+		_prEFn("QTTSSessionBegin failed, error code: %d.", ret);
 		fclose(fp);
 		return ret;
 	}
 	ret = QTTSTextPut(sessionID, src_text, (unsigned int)strlen(src_text), NULL);
 	if (MSP_SUCCESS != ret)
 	{
-		printf("QTTSTextPut failed, error code: %d.\n",ret);
+		_prEFn("QTTSTextPut failed, error code: %d.",ret);
 		QTTSSessionEnd(sessionID, "TextPutError");
 		fclose(fp);
 		return ret;
 	}
-	printf("正在合成 ...\n");
+	_prEFn("正在合成 ...");
 	fwrite(&wav_hdr, sizeof(wav_hdr) ,1, fp); //添加wav音频头，使用采样率为16000
 	while (1) 
 	{
@@ -108,13 +108,13 @@ int text_to_speech(const char* src_text, const char* des_path, const char* param
 		}
 		if (MSP_TTS_FLAG_DATA_END == synth_status)
 			break;
-		printf(">");
+		_prEFn(">");
 		usleep(150*1000); //防止频繁占用CPU
 	}
-	printf("\n");
+	_prEFn("");
 	if (MSP_SUCCESS != ret)
 	{
-		printf("QTTSAudioGet failed, error code: %d.\n",ret);
+		_prEFn("QTTSAudioGet failed, error code: %d.",ret);
 		QTTSSessionEnd(sessionID, "AudioGetError");
 		fclose(fp);
 		return ret;
@@ -133,7 +133,7 @@ int text_to_speech(const char* src_text, const char* des_path, const char* param
 	ret = QTTSSessionEnd(sessionID, "Normal");
 	if (MSP_SUCCESS != ret)
 	{
-		printf("QTTSSessionEnd failed, error code: %d.\n",ret);
+		_prEFn("QTTSSessionEnd failed, error code: %d.",ret);
 	}
 
 	return ret;
@@ -178,26 +178,26 @@ int main(int ___argc, char* ___argv[])
 	ret = MSPLogin(NULL, NULL, login_params);//第一个参数是用户名，第二个参数是密码，第三个参数是登录参数，用户名和密码可在http://www.xfyun.cn注册获取
 	if (MSP_SUCCESS != ret)
 	{
-		printf("MSPLogin failed, error code: %d.\n", ret);
+		_prEFn("MSPLogin failed, error code: %d.", ret);
 		goto exit ;//登录失败，退出登录
 	}
     if ( ___argc == 2 ) { // 0 para -> 1 , 1 para -> 2 
         if ( 
                 1 == strlen( ___argv[1] )  
                 && '-' == ___argv[1][0] ) {
-            printf("\n###########################################################################\n");
-            printf("## 语音合成（Text To Speech，TTS）continue ##\n");
-            printf("###########################################################################\n\n");
+            _prEFn("\n###########################################################################");
+            _prEFn("## 语音合成（Text To Speech，TTS）continue ##");
+            _prEFn("###########################################################################\n");
             text_to_speech_from_file_continue( stdin , session_begin_params ) ;
             goto exit ;
         }
     }
 
-	printf("\n###########################################################################\n");
-	printf("## 语音合成（Text To Speech，TTS）技术能够自动将任意文字实时转换为连续的 ##\n");
-	printf("## 自然语音，是一种能够在任何时间、任何地点，向任何人提供语音信息服务的  ##\n");
-	printf("## 高效便捷手段，非常符合信息时代海量数据、动态更新和个性化查询的需求。  ##\n");
-	printf("###########################################################################\n\n");
+	_prEFn("\n###########################################################################");
+	_prEFn("## 语音合成（Text To Speech，TTS）技术能够自动将任意文字实时转换为连续的 ##");
+	_prEFn("## 自然语音，是一种能够在任何时间、任何地点，向任何人提供语音信息服务的  ##");
+	_prEFn("## 高效便捷手段，非常符合信息时代海量数据、动态更新和个性化查询的需求。  ##");
+	_prEFn("###########################################################################\n");
 	/* 文本合成 */
 
     char          * __bufTEXT        = NULL ;
@@ -208,17 +208,17 @@ int main(int ___argc, char* ___argv[])
         __fname = ___argv[1] ; // use the parameter 1 
         __bufTEXT        = malloc( 4096 ) ;
         if ( 0 == __bufTEXT ) {
-	        printf(" error : malloc buffer \n" ) ;
+	        _prEFn(" error : malloc buffer " ) ;
             exit( 32 ) ;
         }
         __fd = open( __fname , O_RDONLY ) ;
         if ( 0 > __fd ) {
-	        printf(" error : open <%s> \n" , __fname ) ;
+	        _prEFn(" error : open <%s> " , __fname ) ;
             exit( 33 ) ;
         }
         __len = read( __fd , __bufTEXT , 4095 ) ;
         if ( __len < 0 ) {
-	        printf(" error : read <%s> \n" , __fname ) ;
+	        _prEFn(" error : read <%s> " , __fname ) ;
             exit( 34 ) ;
         }
         __bufTEXT[4095] = 0 ;
@@ -228,17 +228,17 @@ int main(int ___argc, char* ___argv[])
         __bufTEXT        = (char*) __text ;
     }
 
-	printf("开始合成 ...%d %s --> %s \n" , ___argc , __bufTEXT , filename );
+	_prEFn("开始合成 ...%d %s --> %s " , ___argc , __bufTEXT , filename );
 	ret = text_to_speech(__bufTEXT, filename, session_begin_params);
 	if (MSP_SUCCESS != ret)
 	{
-		printf("text_to_speech failed, error code: %d.\n", ret);
+		_prEFn("text_to_speech failed, error code: %d.", ret);
 	}
-	printf("合成完毕\n");
+	_prEFn("合成完毕");
 
 exit:
     if ( 0 ) {
-	    printf("按任意键退出 ...\n");
+	    _prEFn("按任意键退出 ...");
 	    getchar();
     }
 	MSPLogout(); //退出登录
