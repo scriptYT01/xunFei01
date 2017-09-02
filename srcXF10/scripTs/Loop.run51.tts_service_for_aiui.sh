@@ -20,6 +20,6 @@ do
     echo
     
 
-    [ 1 == "$1" ] || exit
+    [ 1 == "$1" ] && exit
     sleep 1
 done

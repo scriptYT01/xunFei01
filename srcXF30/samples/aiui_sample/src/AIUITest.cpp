@@ -269,6 +269,12 @@ void AIUITester::_waveCMDauto01()
     _lastNlp01 = -1 ;
     _lastNlp02 = -1 ;
     writeAiui(false);
+
+    while ( 1 ) {
+	    cerr << " ======= aiui start unit it is killed. " << endl ;
+        sleep( 100 ) ;
+    }
+
     if ( 0 ) {
         __i01 = _sleepWaitForState02( 100000 , 200 , &_lastEventType11 , AIUIConstant::STATE_WORKING ) ;
 	    cerr << " 33 repeate ("  << __i01 << ") time , result : " << SSTR( _lastEventType11 ) << " --> " << _stateToStr( _lastEventType11 ) << endl;
