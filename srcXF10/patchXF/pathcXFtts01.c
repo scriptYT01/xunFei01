@@ -15,7 +15,18 @@
 #include "msp_errors.h"
 
 #define _outPCM( len , buf ) fwrite( buf , len , 1 , stdout ) 
-#define _outPCMzero( len ) { char __zero = 0 ; int __ii ; for ( __ii = __zero ; __ii > 0 ; __ii -- ) { fwrite( &__zero , 1 , 1 , stdout ) ; } ; }
+#define _outPCMzero2( len ) { \
+    char __zeroP[2] = { 0  , 1  } ; \
+    char __zeroN[2] = { 0  , 0  } ; \
+    int __ii ; \
+    int __cnt01=0 ; \
+    for ( __ii = (len>>1) ; __ii > 0 ; __ii -- ) { \
+        if ( __ii & 1 ) { fwrite( &__zeroP , 2 , 1 , stdout ) ; } \
+        else            { fwrite( &__zeroN , 2 , 1 , stdout ) ; } \
+        __cnt01 ++ ; \
+    } ; \
+	if ( 1 ) {_prEFn( "cnt(%d)" , __cnt01 ); } \
+}
 #define _pcmByte_1s     (16000*2)
 #define _pcmByte_10ms   (_pcmByte_1s/100)
 #define _pcmByte_100ms  (_pcmByte_1s/10)
@@ -88,7 +99,7 @@ static int text_to_speech_from_file_continuE_loop( int ___len , const char * ___
     __patchZeroLen = _pcmByteAlign - __patchZeroLen ;
     __patchZeroLen += _pcmByteAlign ;
 
-    _outPCMzero( __patchZeroLen ) ;
+    _outPCMzero2( __patchZeroLen ) ;
 
 	_prEFn( "END(%d)(%d)(%d)" , ___len , __totalLEN , __patchZeroLen );
 
@@ -136,6 +147,12 @@ int text_to_speech_from_file_continue(FILE * ___fd , const char* params)
         }
 
 		_prEFn(" input source len %d , size %d" , __len , __size );
+
+        if ( 0 == strncmp( __src_text , "\n" , sizeof( "\n" ) ) ) {
+		    _prEFn(" skip NULL line " ) ;
+            continue ;
+        }
+
 	    __ret = 
             //text_to_speech_from_file_continuE_loop( __len , __src_text , params ) ;
             text_to_speech_from_file_continuE_loop( __size , __src_text , params ) ;

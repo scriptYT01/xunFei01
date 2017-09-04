@@ -242,6 +242,8 @@ extern char **  _argv ;
 void AIUITester::_waveCMDauto01()
 {
     int __i01 ;
+    time_t __t01 ;
+    time_t __t02 ;
 
     _prEFn( " supply with argv[1] , then use it as the input as wav file name and deal with it. " ) ;
 
@@ -270,8 +272,10 @@ void AIUITester::_waveCMDauto01()
     _lastNlp02 = -1 ;
     writeAiui(false);
 
+    __t01 = time( 0 ) ;
     while ( 1 ) {
-	    cerr << " ======= aiui start unit it is killed. " << endl ;
+        __t02 = time( 0 ) ;
+	    cerr << " ======= aiui start unit it is killed. : " << endl << (__t02 - __t01) ;
         sleep( 100 ) ;
     }
 
