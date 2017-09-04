@@ -15,6 +15,14 @@
 #include "msp_errors.h"
 
 #define _outPCM( len , buf ) fwrite( buf , len , 1 , stdout ) 
+#define _outPCMzero( len ) { char __zero = 0 ; int __ii ; for ( __ii = __zero ; __ii > 0 ; __ii -- ) { fwrite( &__zero , 1 , 1 , stdout ) ; } ; }
+#define _pcmByte_1s     (16000*2)
+#define _pcmByte_10ms   (_pcmByte_1s/100)
+#define _pcmByte_100ms  (_pcmByte_1s/10)
+#define _pcmByte_200ms  (_pcmByte_1s/5)
+#define _pcmBit_1s      (16000*16)
+#define _pcmBit_10ms    (_pcmBit_1s/100)
+#define _pcmByteAlign   _pcmByte_200ms
 
 static int text_to_speech_from_file_continuE_loop( int ___len , const char * ___src_text , const char* params)
 {
@@ -25,6 +33,8 @@ static int text_to_speech_from_file_continuE_loop( int ___len , const char * ___
 	int             __synth_status  = MSP_TTS_FLAG_STILL_HAVE_DATA;
 	const void*     __data ;
 	unsigned int    __totalLEN      = 0;
+	unsigned int    __patchZeroLen  = 0;
+
 
 
 	/* 开始合成 */
@@ -73,7 +83,14 @@ static int text_to_speech_from_file_continuE_loop( int ___len , const char * ___
 		usleep(1*1000); //防止频繁占用CPU
 #endif
 	}
-	_prEFn( "END(%d)(%d)" , ___len , __totalLEN );
+
+    __patchZeroLen = __totalLEN % _pcmByteAlign ;
+    __patchZeroLen = _pcmByteAlign - __patchZeroLen ;
+    __patchZeroLen += _pcmByteAlign ;
+
+    _outPCMzero( __patchZeroLen ) ;
+
+	_prEFn( "END(%d)(%d)(%d)" , ___len , __totalLEN , __patchZeroLen );
 
 	if (MSP_SUCCESS != __ret)
 	{
