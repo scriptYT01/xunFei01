@@ -28,12 +28,15 @@
 	if ( 1 ) {_prEFn( "cnt(%d)" , __cnt01 ); } \
 }
 #define _pcmByte_1s     (16000*2)
+#define _pcmByte_1ms    (_pcmByte_1s/1000)
 #define _pcmByte_10ms   (_pcmByte_1s/100)
 #define _pcmByte_100ms  (_pcmByte_1s/10)
 #define _pcmByte_200ms  (_pcmByte_1s/5)
 #define _pcmBit_1s      (16000*16)
 #define _pcmBit_10ms    (_pcmBit_1s/100)
-#define _pcmByteAlign   _pcmByte_200ms
+//#define _pcmByteAlign   _pcmByte_200ms
+//#define _pcmByteAlign   _pcmByte_10ms
+#define _pcmByteAlign   _pcmByte_1ms
 
 static int text_to_speech_from_file_continuE_loop( int ___len , const char * ___src_text , const char* params)
 {
