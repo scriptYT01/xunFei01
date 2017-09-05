@@ -185,9 +185,11 @@ int main(int ___argc, char* ___argv[])
         if ( 
                 1 == strlen( ___argv[1] )  
                 && '-' == ___argv[1][0] ) {
-            _prEFn("\n###########################################################################");
+            _prEFn("");
+            _prEFn("###########################################################################");
             _prEFn("## 语音合成（Text To Speech，TTS）continue ##");
             _prEFn("###########################################################################\n");
+            _prEFn("");
             text_to_speech_from_file_continue( stdin , session_begin_params ) ;
             goto exit ;
         }
