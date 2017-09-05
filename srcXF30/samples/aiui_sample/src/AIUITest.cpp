@@ -405,7 +405,14 @@ bool WriteAudioThread::runWAT()
     return false;
 }
 
-int __answerCNT = 0 ;
+int __answerCNT_all = 0 ;
+int __answerCNT_ask = 0 ;
+int __answerCNT_answer = 0 ;
+int __answerCNT_unEnv = 0 ;
+int __answerCNT_NotFound = 0 ;
+int __answerCNT_NULL = 0 ;
+int __answerCNT_EE = 0 ;
+
 void TestListener::onEvent(IAIUIEvent& event)
 {
     _lastEventType00 = event.getEventType() ;
@@ -512,7 +519,7 @@ void TestListener::onEvent(IAIUIEvent& event)
 
                     if (NULL != buffer)
                     {
-                        __answerCNT ++ ;
+                        __answerCNT_all ++ ;
                         resultStr = string((char*)buffer->data());
 
                         cerr << "==get json : begin" << endl;
@@ -523,23 +530,28 @@ void TestListener::onEvent(IAIUIEvent& event)
                             //if ( 0 != strncmp( __answer1.c_str() , "jsonError" , strlen( "jsonError" ) ) ) {
                             if ( 0 != __answer1 . find( "jsonError" ) ) {
 
+                                __answerCNT_ask++ ;
+                                __answerCNT_answer++ ;
+
                                 __answer2 = _jsonGetResult14( resultStr , "intent" , "text" , "" , "" ) ;
-                                cerr << __answerCNT << ":get_result81:ask11:" << __answer2 << endl ;
+                                cerr << __answerCNT_ask << ":" << __answerCNT_ask + __answerCNT_unEnv << ":" 
+                                    << __answerCNT_all << __answerCNT_all << ":get_result81:ask11:" << __answer2 << endl ;
 
                                 _aiui -> _outSC . _sendMsg1n( __answer1 ) ;
-                                cerr << "get_result02:answer02:" << __answer1 << endl ;
+                                cerr << __answerCNT_answer << ":" << __answerCNT_all << "get_result02:answer02:" << __answer1 << endl ;
                             } else {
                                 __answer2 = _jsonGetResult14( resultStr , "intent" , "text" , "" , "" ) ;
                                 if ( 0 != __answer2 . find( "jsonError" ) ) {
-                                    cerr << __answerCNT << ":get_result89:unENV:" << __answer2 << endl ;
+                                    __answerCNT_unEnv ++ ;
+                                    cerr << __answerCNT_unEnv << ":" << __answerCNT_all << ":get_result89:unENV:" << __answer2 << endl ;
                                 } else {
-                                    cerr << "get_result97 : jsonError found found. <" << __answer2 << ">" << endl ;
+                                    cerr << __answerCNT_NotFound << ":" << __answerCNT_all << ":get_result97 : jsonError found found. <" << __answer2 << ">" << endl ;
                                 }
                             }
                         } else {
-                            cerr << "get_result99 : NULL found." << endl ;
+                            cerr << __answerCNT_NULL << ":" << __answerCNT_all << ":get_result99 : NULL found." << endl ;
                         }
-                        cerr << "get_resultEE : " << __answerCNT << endl ;
+                        cerr << __answerCNT_EE << ":" << __answerCNT_all << ":get_resultEE : " << __answerCNT_all << endl ;
                     }
                 }
                 cerr << "EVENT_RESULT:end:" << sub << ":" << __func__ << " " << __LINE__ << TSTR << endl;
