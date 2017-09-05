@@ -405,6 +405,7 @@ bool WriteAudioThread::runWAT()
     return false;
 }
 
+int __answerCNT = 0 ;
 void TestListener::onEvent(IAIUIEvent& event)
 {
     _lastEventType00 = event.getEventType() ;
@@ -506,26 +507,39 @@ void TestListener::onEvent(IAIUIEvent& event)
                     string cnt_id = contentId.asString();
                     Buffer* buffer = event.getData()->getBinary(cnt_id.c_str()); // onEvent 52
                     string resultStr;
-                    string __answer ;
+                    string __answer1 ;
+                    string __answer2 ;
 
                     if (NULL != buffer)
                     {
+                        __answerCNT ++ ;
                         resultStr = string((char*)buffer->data());
 
                         cerr << "==get json : begin" << endl;
                         cerr << resultStr << endl;
                         cerr << "==get json : end" << endl;
-                        //__answer = _jsonGetResult14( resultStr , "intent" , "answer" , "text" ) ;
-                        __answer = _jsonGetResult14( resultStr , "intent" , "answer" , "text" , "" ) ;
-                        if ( "" !=  __answer ) {
-                            cerr << "get_answer01:" << __answer << endl ;
-                            //if ( 0 != strncmp( __answer.c_str() , "jsonError" , strlen( "jsonError" ) ) ) {
-                            if ( 0 != _strcmpX1( "jsonError" , __answer.c_str() ) ) {
-                                _aiui -> _outSC . _sendMsg1n( __answer ) ;
+                        __answer1 = _jsonGetResult14( resultStr , "intent" , "answer" , "text" , "" ) ;
+                        if ( "" !=  __answer1 ) {
+                            //if ( 0 != strncmp( __answer1.c_str() , "jsonError" , strlen( "jsonError" ) ) ) {
+                            if ( 0 != __answer1 . find( "jsonError" ) ) {
+
+                                __answer2 = _jsonGetResult14( resultStr , "intent" , "text" , "" , "" ) ;
+                                cerr << __answerCNT << ":get_result81:ask11:" << __answer2 << endl ;
+
+                                _aiui -> _outSC . _sendMsg1n( __answer1 ) ;
+                                cerr << "get_result02:answer02:" << __answer1 << endl ;
+                            } else {
+                                __answer2 = _jsonGetResult14( resultStr , "intent" , "text" , "" , "" ) ;
+                                if ( 0 != __answer2 . find( "jsonError" ) ) {
+                                    cerr << __answerCNT << ":get_result89:unENV:" << __answer2 << endl ;
+                                } else {
+                                    cerr << "get_result97 : jsonError found found. <" << __answer2 << ">" << endl ;
+                                }
                             }
                         } else {
-                            cerr << "no get_answer01 found." << endl ;
+                            cerr << "get_result99 : NULL found." << endl ;
                         }
+                        cerr << "get_resultEE : " << __answerCNT << endl ;
                     }
                 }
                 cerr << "EVENT_RESULT:end:" << sub << ":" << __func__ << " " << __LINE__ << TSTR << endl;
