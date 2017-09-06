@@ -101,7 +101,12 @@ static int text_to_speech_from_file_continuE_loop( int ___len , const char * ___
 		usleep(150*1000); //防止频繁占用CPU
 #else
 		//usleep(1*1000); //防止频繁占用CPU
-		usleep(10*1000); //防止频繁占用CPU
+		//usleep(10*1000); //防止频繁占用CPU
+		//usleep(20*1000); //防止频繁占用CPU
+		//usleep(30*1000); //防止频繁占用CPU
+		//usleep(50*1000); //防止频繁占用CPU
+		//usleep(100*1000); //防止频繁占用CPU
+		usleep(150*1000); //防止频繁占用CPU
 #endif
 	}
 
