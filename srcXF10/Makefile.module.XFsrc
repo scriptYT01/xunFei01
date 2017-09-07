@@ -228,8 +228,8 @@ vb4:=srcXF40/Build.mk
 
 px1:=srcXF10/patchXF/iat_record_sample_patch.c  
 px2:=srcXF10/patchXF/pathcXFbase01.c
-px3:=srcXF10/patchXF/sendResultToSdoutOrTCP.cpp
-px4:=srcXF10/patchXF/sendResultToSdoutOrTCP.h
+px3:=srcXF10/patchXF/superStream.cpp
+px4:=srcXF10/patchXF/superStream.h
 px5:=srcXF10/patchXF/pathcXFtts01.c
 
 

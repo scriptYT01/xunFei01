@@ -19,7 +19,7 @@ LOCAL_MODULE_PATH:=$(TARGET_FS_BUILD)/$(TARGET_TESTSUIT_DIR)/network
 LOCAL_MODULE_PATH:=$(TARGET_FS_BUILD)/ch/xf30
 LOCAL_SRC_FILES := \
 	patchXF/dbmemDebugShow.c \
-	patchXF/sendResultToSdoutOrTCP.cpp \
+	patchXF/superStream.cpp \
 	patchXF/pathcXFbase01.c \
 	samples/aiui_sample/src/cJSON.c \
 	\

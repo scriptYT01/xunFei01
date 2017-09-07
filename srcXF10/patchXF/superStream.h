@@ -29,20 +29,20 @@ enum _enSssType { /* stream type */
     _enSssTcp
 }; /* _enSssType */
 
-class _sendResultToSdoutOrTCP
+class _superStream
 {
     private :
         string _outPath ;
         _enSssType _ossType ;
-        _sendResultToSdoutOrTCP * _nowObj ;
+        _superStream * _nowObj ;
     public :
-        _sendResultToSdoutOrTCP( string ___outPath ) ;
-        ~_sendResultToSdoutOrTCP();
-        _sendResultToSdoutOrTCP * _Obj() ;
+        _superStream( string ___outPath ) ;
+        ~_superStream();
+        _superStream * _Obj() ;
         void _SSo1( string ___msg1 ) ;
         void _SSo2( string ___msg1 , string ___msg2 ) ;
 
-} ; /* class _sendResultToSdoutOrTCP */
+} ; /* class _superStream */
 
 class _streamBase
 {

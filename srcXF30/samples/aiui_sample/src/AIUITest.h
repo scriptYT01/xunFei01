@@ -5,7 +5,7 @@
 *      Author: hj
 */
 
-#include "patchXF/sendResultToSdoutOrTCP.h"
+#include "patchXF/superStream.h"
 
 #ifndef AIUIAGENTTEST_H_
 #define AIUIAGENTTEST_H_
@@ -94,7 +94,7 @@ private:
 
     //string _fname01 = TEST_AUDIO_PATH ;
     string _fname01 ;
-    //_sendResultToSdoutOrTCP * _sendSS ;
+    //_superStream * _sendSS ;
 public:
     _streamController       _outSC    ;
     _streamController       _inSC     ;
