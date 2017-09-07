@@ -819,7 +819,7 @@ void AIUITester::testAiui()
                  // 2 para -- > deal with the para 2 as the outputProtocol , using the automaticly process.
             _fname01 = _argv[1] ;
 
-            _zExit( _outSC . _addPath2<_streamOUT>( _argv[2] , " output-text-to-tts" ) 
+            _zExit( _outSC . _addPath2( _argv[2] , " output-text-to-tts" ) 
                     , "output stream error : <%s> <%s> " , _argv[1] , _argv[2] ) ;
 
             _waveCMDauto01();
