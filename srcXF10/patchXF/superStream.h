@@ -29,20 +29,20 @@ enum _enSsType { /* stream type */
     _enSstTcp
 }; /* _enSsType */
 
-class _streamBase
+class _superStreamBase
 {
     protected :
         _enSsType  _ssType ;
         string      _ssPath ;
         string      _ssComment ;
     public :
-        _streamBase( string ___path , string ___comment ) {
+        _superStreamBase( string ___path , string ___comment ) {
             _ssType     =   _enSstUnknown ;
             _ssPath     =   ___path ;
             _ssComment  =   ___comment ;
-                cerr << " --- _streamBase : " << endl ;
+                cerr << " --- _superStreamBase : " << endl ;
         };
-}; /* class _streamBase */
+}; /* class _superStreamBase */
 
 
 // DoorController
@@ -52,13 +52,13 @@ class _streamController
     protected :
         _enSsDir _ssDir ;
     protected :
-        vector <_streamBase*> _sVec ;
+        vector <_superStreamBase*> _sVec ;
     public:
         _streamController():_ssDir(_enSsdUnknown) {};
         virtual ~_streamController(){};
     public:
         bool _addPath2( string ___path , string ___comment ) {
-            _sVec . push_back( new _streamBase( ___path , ___comment ) ) ;
+            _sVec . push_back( new _superStreamBase( ___path , ___comment ) ) ;
             return true ;
         }
         void _sendMsg1( string ___msg1 ) {
