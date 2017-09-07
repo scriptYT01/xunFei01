@@ -56,7 +56,8 @@ class _streamController
         virtual ~_streamController(){};
     public:
         bool _addPath2( string ___path , string ___comment ) {
-            _sVec . push_back( _superStreamBase::_genSS( 1 , _ssDir , ___path , ___comment ) ) ;
+            _sVec . push_back( _superStreamBase::
+                    _genSS( 1 , _ssDir , ___path , ___comment ) ) ;
             return true ;
         }
         void _sendMsg1( string ___msg1 ) {
