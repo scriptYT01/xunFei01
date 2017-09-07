@@ -6,7 +6,7 @@
 _superStreamBase * 
 _superStreamBase::_genSS( bool _exitIfErr , _enSsDir ___ssDir , string ___path , string ___comment ) {
     _superStreamBase * __ss ;
-    __ss = new _superStreamBase( ___ssDir , ___path , ___comment ) -> _ssOK ;
+    __ss = (new _superStreamBase( ___ssDir , ___path , ___comment ) ) -> _ssOK ;
 
     if ( _exitIfErr ) {
         _zExit( __ss , " create error , exit when error met. exit." ) ;
