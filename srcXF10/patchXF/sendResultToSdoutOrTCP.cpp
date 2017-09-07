@@ -6,10 +6,10 @@ _sendResultToSdoutOrTCP::_sendResultToSdoutOrTCP( string ___outPath )
         _outPath( ___outPath ) 
 {
     if ( "-" == _outPath ) {
-        _ossType = _enOssStdout ;
+        _ossType = _enSssStdout ;
     } 
 
-    assert ( _ossType != _enOssUnknown ) ;
+    assert ( _ossType != _enSssUnknown ) ;
     _nowObj = this ;
 } // _sendResultToSdoutOrTCP::_sendResultToSdoutOrTCP
 
