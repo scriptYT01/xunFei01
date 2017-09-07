@@ -29,21 +29,6 @@ enum _enSssType { /* stream type */
     _enSssTcp
 }; /* _enSssType */
 
-class _superStream
-{
-    private :
-        string _outPath ;
-        _enSssType _ossType ;
-        _superStream * _nowObj ;
-    public :
-        _superStream( string ___outPath ) ;
-        ~_superStream();
-        _superStream * _Obj() ;
-        void _SSo1( string ___msg1 ) ;
-        void _SSo2( string ___msg1 , string ___msg2 ) ;
-
-} ; /* class _superStream */
-
 class _streamBase
 {
     protected :
