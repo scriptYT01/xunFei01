@@ -32,18 +32,16 @@ enum _enSsType { /* stream type */
 class _superStreamBase
 {
     protected :
-        _enSsType  _ssType ;
-        string      _ssPath ;
-        string      _ssComment ;
+        _enSsDir            _ssDir  ;
+        _enSsType           _ssType ;
+        string              _ssPath ;
+        string              _ssComment ;
+        _superStreamBase *  _ssOK ;
     public :
-        _superStreamBase( string ___path , string ___comment ) {
-            _ssType     =   _enSstUnknown ;
-            _ssPath     =   ___path ;
-            _ssComment  =   ___comment ;
-                cerr << " --- _superStreamBase : " << endl ;
-        };
+        _superStreamBase( _enSsDir ___ssDir , string ___path , string ___comment ) ;
+        ~_superStreamBase( ){} ;
+        static _superStreamBase * _genSS(  _enSsDir ___ssDir , string ___path , string ___comment ) ;
 }; /* class _superStreamBase */
-
 
 // DoorController
 class _streamController 
@@ -58,7 +56,7 @@ class _streamController
         virtual ~_streamController(){};
     public:
         bool _addPath2( string ___path , string ___comment ) {
-            _sVec . push_back( new _superStreamBase( ___path , ___comment ) ) ;
+            _sVec . push_back( _superStreamBase::_genSS( _ssDir , ___path , ___comment ) ) ;
             return true ;
         }
         void _sendMsg1( string ___msg1 ) {
