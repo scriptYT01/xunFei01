@@ -77,7 +77,6 @@ class _streamController
         _streamController():_sccType(_enSccUnknown) {};
         virtual ~_streamController(){};
     public:
-        //_outSC< _streamBase > . _addPath2( _argv[2] , " output-stream " ) ;
         template <class TSS1>
             bool _addPath2( string ___path , string ___comment ) {
                 //_sVec . push_back( ___path , ___comment , (_streamBase*) (new TSS1( ___path , ___comment )) ) ;

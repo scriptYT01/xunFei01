@@ -95,12 +95,11 @@ private:
     //string _fname01 = TEST_AUDIO_PATH ;
     string _fname01 ;
 public:
-    _streamController       _outSC    ;
-    _streamController       _inSC     ;
+    _streamControllerIN     _outSC    ;
+    _streamControllerOUT    _inSC     ;
 public:
-	AIUITester() ;
-
-	~AIUITester();
+    AIUITester() ;
+    ~AIUITester();
 private:
 
 	void createAgent();
