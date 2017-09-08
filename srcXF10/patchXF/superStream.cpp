@@ -6,20 +6,23 @@
 void _superStreamBase::_ssOut( const char *___fmt , ... ) { 
     char    __buf1024[1024] ;
     va_list __args ;
+    int     __len ;
 
     if ( ___fmt ) {
         va_start(__args, ___fmt);
-        vsnprintf(__buf1024 , 1023 , ___fmt, __args );
+        __len = vsnprintf(__buf1024 , 1023 , ___fmt, __args );
         va_end(__args);
 
-        _ssWriteNonblock() ; 
+        if ( __len ) {
+            _ssWriteNonblock( __len , __buf1024 ) ; 
+        }
     }
 } /* _superStreamBase::_ssOut */
 
-void _superStreamBase::_ssWriteNonblock() {
+void _superStreamBase::_ssWriteNonblock( int ___len , const char * ___buf ) {
 } /* _superStreamBase::_ssWriteNonblock */
 
-void _superStreamBase::_ssWriteBlock() {
+void _superStreamBase::_ssWriteBlock( int ___len , const char * ___buf ) {
 } /* _superStreamBase::_ssWriteBlock */
 
 _superStreamBase * 
@@ -58,7 +61,7 @@ _superStreamBase::_superStreamBase( _enSsDir ___ssDir , string ___path , string 
     _ssType     =   _enSstUnknown   ;
     _ssPath     =   ___path         ;
     _ssComment  =   ___comment      ;
-    _ssFP       =   NULL            ;
+    _ssFP       =   -1              ;
     cerr << " --- _superStreamBase : " << endl ;
 
     _ssOK = this ;
@@ -71,7 +74,7 @@ _ssCin::_ssCin( _enSsDir ___ssDir , string ___path , string ___comment )
         _ssOK = NULL ;
     } else {
         _ssType     =   _enSstCin   ;
-        _ssFP       =   stdin       ;
+        _ssFP       =   0           ;
     }
 } /* _ssCin::_ssCin */
 
@@ -81,8 +84,8 @@ _ssCout::_ssCout( _enSsDir ___ssDir , string ___path , string ___comment )
     if ( ___ssDir != _enSsdOut ) {
         _ssOK = NULL ;
     } else {
-        _ssType     =   _enSstCout   ;
-        _ssFP       =   stdout       ;
+        _ssType     =   _enSstCout  ;
+        _ssFP       =   1           ;
     }
 } /* _ssCout::_ssCout */
 
@@ -92,8 +95,8 @@ _ssCerr::_ssCerr( _enSsDir ___ssDir , string ___path , string ___comment )
     if ( ___ssDir != _enSsdOut ) {
         _ssOK = NULL ;
     } else {
-        _ssType     =   _enSstCerr   ;
-        _ssFP       =   stderr        ;
+        _ssType     =   _enSstCerr  ;
+        _ssFP       =   2           ;
     }
 } /* _ssCerr::_ssCerr */
 

@@ -40,15 +40,15 @@ class _superStreamBase
         string                  _ssPath     ;
         string                  _ssComment  ;
         _superStreamBase    *   _ssOK       ;
-        FILE                *   _ssFP       ;
+        int                     _ssFP       ;
     public :
         _superStreamBase( _enSsDir ___ssDir , string ___path , string ___comment ) ;
         ~_superStreamBase( ){} ;
         static _superStreamBase * _genSS( bool _exitIfErr ,  _enSsDir ___ssDir , string ___path , string ___comment ) ;
     public :
         void _ssOut( const char *___fmt , ... ) ;
-        void _ssWriteNonblock() ;
-        void _ssWriteBlock() ;
+        void _ssWriteNonblock( int ___len , const char * ___buf ) ;
+        void _ssWriteBlock( int ___len , const char * ___buf ) ;
 
 }; /* class _superStreamBase */
 
