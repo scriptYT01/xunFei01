@@ -16,6 +16,12 @@
 
 using namespace std;
 
+enum _enEaction {
+    _enEreopen,     // tryReopen when err occurs.
+    _enEignore,     // ignore when err occurs.
+    _enEexit        // exit when err occurs.
+}; /* _enEaction */
+
 enum _enSsDir {
     _enSsdUnknown,
     _enSsdOutIn,
@@ -46,9 +52,9 @@ class _superStreamBase
         ~_superStreamBase( ){} ;
         static _superStreamBase * _genSS( bool _exitIfErr ,  _enSsDir ___ssDir , string ___path , string ___comment ) ;
     public :
-        void _ssOut( const char *___fmt , ... ) ;
-        void _ssWriteNonblock( int ___len , const char * ___buf ) ;
-        void _ssWriteBlock( int ___len , const char * ___buf ) ;
+        void _ssOut(            _enEaction ___eAction , const char *___fmt , ... ) ;
+        void _ssWriteNonblock(  _enEaction ___eAction , int ___len , const char * ___buf ) ;
+        void _ssWriteBlock(     _enEaction ___eAction , int ___len , const char * ___buf ) ;
 
 }; /* class _superStreamBase */
 
