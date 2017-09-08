@@ -24,20 +24,22 @@ enum _enSsDir {
 
 enum _enSsType { /* stream type */
     _enSstUnknown,
-    _enSstOut,
-    _enSstIn,
-    _enSstStdout,
-    _enSstTcp
+    _enSstTcpConnectTo,
+    _enSstTcpListen1,
+    _enSstCin,
+    _enSstCerr,
+    _enSstCout
 }; /* _enSsType */
 
 class _superStreamBase
 {
     protected :
-        _enSsDir            _ssDir  ;
-        _enSsType           _ssType ;
-        string              _ssPath ;
-        string              _ssComment ;
-        _superStreamBase *  _ssOK ;
+        _enSsDir                _ssDir      ;
+        _enSsType               _ssType     ;
+        string                  _ssPath     ;
+        string                  _ssComment  ;
+        _superStreamBase    *   _ssOK       ;
+        FILE                *   _ssFP       ;
     public :
         _superStreamBase( _enSsDir ___ssDir , string ___path , string ___comment ) ;
         ~_superStreamBase( ){} ;
@@ -57,6 +59,13 @@ class _ssCout : public _superStreamBase
         _ssCout( _enSsDir ___ssDir , string ___path , string ___comment ) ;
         ~_ssCout( ){} ;
 } ; /* class _ssCout */
+
+class _ssCerr : public _superStreamBase
+{
+    public :
+        _ssCerr( _enSsDir ___ssDir , string ___path , string ___comment ) ;
+        ~_ssCerr( ){} ;
+} ; /* class _ssCerr */
 
 // DoorController
 class _streamController 

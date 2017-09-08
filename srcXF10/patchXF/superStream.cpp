@@ -39,6 +39,7 @@ _superStreamBase::_superStreamBase( _enSsDir ___ssDir , string ___path , string 
     _ssType     =   _enSstUnknown   ;
     _ssPath     =   ___path         ;
     _ssComment  =   ___comment      ;
+    _ssFP       =   NULL            ;
     cerr << " --- _superStreamBase : " << endl ;
 
     _ssOK = this ;
@@ -47,9 +48,33 @@ _superStreamBase::_superStreamBase( _enSsDir ___ssDir , string ___path , string 
 _ssCin::_ssCin( _enSsDir ___ssDir , string ___path , string ___comment ) 
     : _superStreamBase( ___ssDir , ___path , ___comment ) 
 {
+    if ( ___ssDir != _enSsdIn ) {
+        _ssOK = NULL ;
+    } else {
+        _ssType     =   _enSstCin   ;
+        _ssFP       =   stdin       ;
+    }
 } /* _ssCin::_ssCin */
 
 _ssCout::_ssCout( _enSsDir ___ssDir , string ___path , string ___comment ) 
     : _superStreamBase( ___ssDir , ___path , ___comment ) 
 {
+    if ( ___ssDir != _enSsdOut ) {
+        _ssOK = NULL ;
+    } else {
+        _ssType     =   _enSstCout   ;
+        _ssFP       =   stdout       ;
+    }
 } /* _ssCout::_ssCout */
+
+_ssCerr::_ssCerr( _enSsDir ___ssDir , string ___path , string ___comment ) 
+    : _superStreamBase( ___ssDir , ___path , ___comment ) 
+{
+    if ( ___ssDir != _enSsdOut ) {
+        _ssOK = NULL ;
+    } else {
+        _ssType     =   _enSstCerr   ;
+        _ssFP       =   stderr        ;
+    }
+} /* _ssCerr::_ssCerr */
+
