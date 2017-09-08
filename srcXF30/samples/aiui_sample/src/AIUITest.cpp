@@ -275,7 +275,12 @@ void AIUITester::_waveCMDauto01()
     __t01 = time( 0 ) ;
     while ( 1 ) {
         __t02 = time( 0 ) ;
-	    cerr << " ======= aiui start unit it is killed. : " << endl << (__t02 - __t01) ;
+	    cerr 
+            << " ======= aiui start unit it is killed. : " 
+            << _argv[0]
+            << endl 
+            << (__t02 - __t01) << endl 
+            ;
         sleep( 100 ) ;
     }
 
