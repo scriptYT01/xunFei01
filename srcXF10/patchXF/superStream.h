@@ -17,6 +17,7 @@ using namespace std;
 
 enum _enSsDir {
     _enSsdUnknown,
+    _enSsdOutIn,
     _enSsdOut,
     _enSsdIn
 }; /* _enSsDir */
@@ -42,6 +43,20 @@ class _superStreamBase
         ~_superStreamBase( ){} ;
         static _superStreamBase * _genSS( bool _exitIfErr ,  _enSsDir ___ssDir , string ___path , string ___comment ) ;
 }; /* class _superStreamBase */
+
+class _ssCin : public _superStreamBase
+{
+    public : 
+        _ssCin( _enSsDir ___ssDir , string ___path , string ___comment ) ;
+        ~_ssCin( ){} ;
+} ; /* class _ssCin */
+
+class _ssCout : public _superStreamBase
+{
+    public :
+        _ssCout( _enSsDir ___ssDir , string ___path , string ___comment ) ;
+        ~_ssCout( ){} ;
+} ; /* class _ssCout */
 
 // DoorController
 class _streamController 
