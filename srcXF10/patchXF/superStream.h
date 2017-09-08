@@ -44,6 +44,11 @@ class _superStreamBase
         _superStreamBase( _enSsDir ___ssDir , string ___path , string ___comment ) ;
         ~_superStreamBase( ){} ;
         static _superStreamBase * _genSS( bool _exitIfErr ,  _enSsDir ___ssDir , string ___path , string ___comment ) ;
+    public :
+        void _ssOut() ;
+        void _ssOutNonblock() ;
+        void _ssOutBlock() ;
+
 }; /* class _superStreamBase */
 
 class _ssCin : public _superStreamBase
