@@ -4,14 +4,14 @@
 /* _superStream */
 
 void _superStreamBase::_ssOut() { 
-    _ssOutNonblock() ; 
+    _ssWriteNonblock() ; 
 } /* _superStreamBase::_ssOut */
 
-void _superStreamBase::_ssOutNonblock() {
-} /* _superStreamBase::_ssOutNonblock */
+void _superStreamBase::_ssWriteNonblock() {
+} /* _superStreamBase::_ssWriteNonblock */
 
-void _superStreamBase::_ssOutBlock() {
-} /* _superStreamBase::_ssOutBlock */
+void _superStreamBase::_ssWriteBlock() {
+} /* _superStreamBase::_ssWriteBlock */
 
 _superStreamBase * 
 _superStreamBase::_genSS( bool _exitIfErr , _enSsDir ___ssDir , string ___path , string ___comment ) {
