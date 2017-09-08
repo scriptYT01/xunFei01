@@ -278,6 +278,8 @@ void AIUITester::_waveCMDauto01()
 	    cerr 
             << " ======= aiui start unit it is killed. : " 
             << _argv[0]
+            << " "
+            << basename(_argv[0])
             << endl 
             << (__t02 - __t01) << endl 
             ;
