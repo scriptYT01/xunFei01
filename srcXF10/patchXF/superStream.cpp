@@ -3,8 +3,17 @@
 
 /* _superStream */
 
-void _superStreamBase::_ssOut() { 
-    _ssWriteNonblock() ; 
+void _superStreamBase::_ssOut( const char *___fmt , ... ) { 
+    char    __buf1024[1024] ;
+    va_list __args ;
+
+    if ( ___fmt ) {
+        va_start(__args, ___fmt);
+        vsnprintf(__buf1024 , 1023 , ___fmt, __args );
+        va_end(__args);
+
+        _ssWriteNonblock() ; 
+    }
 } /* _superStreamBase::_ssOut */
 
 void _superStreamBase::_ssWriteNonblock() {

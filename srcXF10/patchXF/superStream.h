@@ -4,6 +4,7 @@
 #define     __SENDRESULTTOSDOUTORTCP_H
 
 #include <stdio.h>
+#include <stdarg.h>
 #include <assert.h>
 
 #include <string>
@@ -45,7 +46,7 @@ class _superStreamBase
         ~_superStreamBase( ){} ;
         static _superStreamBase * _genSS( bool _exitIfErr ,  _enSsDir ___ssDir , string ___path , string ___comment ) ;
     public :
-        void _ssOut() ;
+        void _ssOut( const char *___fmt , ... ) ;
         void _ssWriteNonblock() ;
         void _ssWriteBlock() ;
 
