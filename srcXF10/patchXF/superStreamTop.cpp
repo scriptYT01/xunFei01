@@ -27,10 +27,22 @@ _superStreamBase::_genSS( bool _exitIfErr , _enSsDir ___ssDir , string ___path ,
             case _enSsdIn :
                 __ssTop = new _ssCin( ___ssDir , ___path , ___comment ) ;
                 break ;
+            case _enSsdOut :
+                __ssTop = new _ssCerr( ___ssDir , ___path , ___comment ) ;
+                break ;
                 __ssTop = new _ssCout( ___ssDir , ___path , ___comment ) ;
                 break ;
             default :
                 break ;
+        }
+    } else {
+        if ( 0 == ___path . find( "tcpto:" ) ) {
+            __ssTop = new _ssTcpConnectTo( ___ssDir , ___path , ___comment ) ;
+        } else {
+            if ( 0 == ___path . find( "tcpl1:" ) ) {
+                __ssTop = new _ssListen1( ___ssDir , ___path , ___comment ) ;
+            } else {
+            }
         }
     }
 

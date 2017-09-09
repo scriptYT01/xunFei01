@@ -57,8 +57,8 @@ class _superStreamBase
         void _ssWriteBlock(     _enErrAction ___eAction , int ___len , const char * ___buf ) ;
         void _ssReadNonblock(  _enErrAction ___eAction , int ___len , const char * ___buf ) ;
         void _ssReadBlock(     _enErrAction ___eAction , int ___len , const char * ___buf ) ;
-    protected :
-        bool _ssOpenOrReopen() ;
+    private :
+        virtual bool _ssOpenOrReopen() = 0 ;
 
 }; /* class _superStreamBase */
 
@@ -67,6 +67,8 @@ class _ssCin : public _superStreamBase
     public : 
         _ssCin( _enSsDir ___ssDir , string ___path , string ___comment ) ;
         ~_ssCin( ){} ;
+    private :
+        bool _ssOpenOrReopen() ;
 } ; /* class _ssCin */
 
 class _ssCout : public _superStreamBase
@@ -74,6 +76,8 @@ class _ssCout : public _superStreamBase
     public :
         _ssCout( _enSsDir ___ssDir , string ___path , string ___comment ) ;
         ~_ssCout( ){} ;
+    private :
+        bool _ssOpenOrReopen() ;
 } ; /* class _ssCout */
 
 class _ssCerr : public _superStreamBase
@@ -81,7 +85,27 @@ class _ssCerr : public _superStreamBase
     public :
         _ssCerr( _enSsDir ___ssDir , string ___path , string ___comment ) ;
         ~_ssCerr( ){} ;
+    private :
+        bool _ssOpenOrReopen() ;
 } ; /* class _ssCerr */
+
+class _ssTcpConnectTo : public _superStreamBase
+{
+    public :
+        _ssTcpConnectTo( _enSsDir ___ssDir , string ___path , string ___comment ) ;
+        ~_ssTcpConnectTo( ){} ;
+    private :
+        bool _ssOpenOrReopen() ;
+} ; /* class _ssTcpConnectTo */
+
+class _ssListen1 : public _superStreamBase
+{
+    public :
+        _ssListen1( _enSsDir ___ssDir , string ___path , string ___comment ) ;
+        ~_ssListen1( ){} ;
+    private :
+        bool _ssOpenOrReopen() ;
+} ; /* class _ssListen1 */
 
 
 
