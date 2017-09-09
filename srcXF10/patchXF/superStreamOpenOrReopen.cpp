@@ -1,18 +1,10 @@
 #include "superStream.h"
 
 
-bool _ssCin::_ssOpenOrReopen( )
+bool _superStreamBase::_ssOpenOrReopen( )
 {
+    _ssFP   = 1 ;
+    _ssOK   = this ;
     return true ;
-} /* _ssCin::_ssOpenOrReopen */
-
-bool _ssCout::_ssOpenOrReopen( )
-{
-    return true ;
-} /* _ssCout::_ssOpenOrReopen */
-
-bool _ssCerr::_ssOpenOrReopen( )
-{
-    return true ;
-} /* _ssCerr::_ssOpenOrReopen */
+} /* _superStreamBase::_ssOpenOrReopen */
 
