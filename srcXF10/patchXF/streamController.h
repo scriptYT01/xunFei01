@@ -25,7 +25,7 @@ class _streamController
         }
         void _sendMsg1n( string ___msg1 ) { _sendMsg1( ___msg1 + "\n" ); }
     public :
-        void _scPrintf(         _enEaction ___eAction , const char *___fmt , ... ) ;
+        void _scPrintf(         _enErrAction ___eAction , const char *___fmt , ... ) ;
 }; /* class _streamController */
 
 class _streamControllerIN : public _streamController 

@@ -17,11 +17,11 @@
 
 using namespace std;
 
-enum _enEaction {
+enum _enErrAction {
     _enEreopen,     // tryReopen when err occurs.
     _enEignore,     // ignore when err occurs.
     _enEexit        // exit when err occurs.
-}; /* _enEaction */
+}; /* _enErrAction */
 
 enum _enSsDir {
     _enSsdUnknown,
@@ -53,10 +53,10 @@ class _superStreamBase
         ~_superStreamBase( ){} ;
         static _superStreamBase * _genSS( bool _exitIfErr ,  _enSsDir ___ssDir , string ___path , string ___comment ) ;
     private :
-        void _ssWriteNonblock(  _enEaction ___eAction , int ___len , const char * ___buf ) ;
-        void _ssWriteBlock(     _enEaction ___eAction , int ___len , const char * ___buf ) ;
-        void _ssReadNonblock(  _enEaction ___eAction , int ___len , const char * ___buf ) ;
-        void _ssReadBlock(     _enEaction ___eAction , int ___len , const char * ___buf ) ;
+        void _ssWriteNonblock(  _enErrAction ___eAction , int ___len , const char * ___buf ) ;
+        void _ssWriteBlock(     _enErrAction ___eAction , int ___len , const char * ___buf ) ;
+        void _ssReadNonblock(  _enErrAction ___eAction , int ___len , const char * ___buf ) ;
+        void _ssReadBlock(     _enErrAction ___eAction , int ___len , const char * ___buf ) ;
 
 }; /* class _superStreamBase */
 

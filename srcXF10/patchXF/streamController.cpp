@@ -1,6 +1,6 @@
 #include "streamController.h"
 
-void _streamController::_scPrintf( _enEaction ___eAction , const char *___fmt , ... ) { 
+void _streamController::_scPrintf( _enErrAction ___eAction , const char *___fmt , ... ) { 
     char    __buf1024[1024] ;
     va_list __args ;
     int     __len ;

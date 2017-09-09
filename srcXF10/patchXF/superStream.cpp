@@ -5,16 +5,16 @@
 static bool _fd_valid1_invalid0( int ___fd ) {
 } /* _fd_valid1_invalid0 */
 
-void _superStreamBase::_ssReadNonblock( _enEaction ___eAction , int ___len , const char * ___buf ) {
+void _superStreamBase::_ssReadNonblock( _enErrAction ___eAction , int ___len , const char * ___buf ) {
 } /* _superStreamBase::_ssReadNonblock */
 
-void _superStreamBase::_ssReadBlock( _enEaction ___eAction , int ___len , const char * ___buf ) {
+void _superStreamBase::_ssReadBlock( _enErrAction ___eAction , int ___len , const char * ___buf ) {
 } /* _superStreamBase::_ssReadBlock */
 
-void _superStreamBase::_ssWriteNonblock( _enEaction ___eAction , int ___len , const char * ___buf ) {
+void _superStreamBase::_ssWriteNonblock( _enErrAction ___eAction , int ___len , const char * ___buf ) {
 } /* _superStreamBase::_ssWriteNonblock */
 
-void _superStreamBase::_ssWriteBlock( _enEaction ___eAction , int ___len , const char * ___buf ) {
+void _superStreamBase::_ssWriteBlock( _enErrAction ___eAction , int ___len , const char * ___buf ) {
 } /* _superStreamBase::_ssWriteBlock */
 
 _superStreamBase * 
