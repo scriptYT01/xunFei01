@@ -53,6 +53,7 @@ class _superStreamBase
         static _superStreamBase * _genSS( bool _exitIfErr ,  _enSsDir ___ssDir , string ___path , string ___comment ) ;
     public :
         void _ssOut(            _enEaction ___eAction , const char *___fmt , ... ) ;
+    private :
         void _ssWriteNonblock(  _enEaction ___eAction , int ___len , const char * ___buf ) ;
         void _ssWriteBlock(     _enEaction ___eAction , int ___len , const char * ___buf ) ;
 
