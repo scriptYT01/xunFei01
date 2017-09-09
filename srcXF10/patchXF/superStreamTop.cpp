@@ -94,5 +94,17 @@ _ssCerr::_ssCerr( _enSsDir ___ssDir , string ___path , string ___comment )
         _ssType     =   _enSstCerr  ;
 } /* _ssCerr::_ssCerr */
 
+_ssTcpConnectTo::_ssTcpConnectTo( _enSsDir ___ssDir , string ___path , string ___comment ) 
+    : _superStreamBase( ___ssDir , ___path , ___comment ) 
+{
+        _ssType     =   _enSstCerr  ;
+} /* _ssTcpConnectTo::_ssTcpConnectTo */
+
+_ssListen1::_ssListen1( _enSsDir ___ssDir , string ___path , string ___comment ) 
+    : _superStreamBase( ___ssDir , ___path , ___comment ) 
+{
+        _ssType     =   _enSstCerr  ;
+} /* _ssListen1::_ssListen1 */
+
 
 
