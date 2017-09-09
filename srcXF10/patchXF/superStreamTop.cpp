@@ -59,6 +59,11 @@ _superStreamBase::_superStreamBase( _enSsDir ___ssDir , string ___path , string 
     _ssOK = this ;
 }; /* _superStreamBase::_superStreamBase */
 
+
+
+
+
+
 _ssCin::_ssCin( _enSsDir ___ssDir , string ___path , string ___comment ) 
     : _superStreamBase( ___ssDir , ___path , ___comment ) 
 {
@@ -66,7 +71,7 @@ _ssCin::_ssCin( _enSsDir ___ssDir , string ___path , string ___comment )
         _ssOK = NULL ;
     } else {
         _ssType     =   _enSstCin   ;
-        _ssFP       =   0           ;
+        _ssOpenOrReopen();
     }
 } /* _ssCin::_ssCin */
 
@@ -77,7 +82,7 @@ _ssCout::_ssCout( _enSsDir ___ssDir , string ___path , string ___comment )
         _ssOK = NULL ;
     } else {
         _ssType     =   _enSstCout  ;
-        _ssFP       =   1           ;
+        _ssOpenOrReopen();
     }
 } /* _ssCout::_ssCout */
 
@@ -88,7 +93,9 @@ _ssCerr::_ssCerr( _enSsDir ___ssDir , string ___path , string ___comment )
         _ssOK = NULL ;
     } else {
         _ssType     =   _enSstCerr  ;
-        _ssFP       =   2           ;
+        _ssOpenOrReopen();
     }
 } /* _ssCerr::_ssCerr */
+
+
 

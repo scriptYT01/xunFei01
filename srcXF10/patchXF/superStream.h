@@ -68,7 +68,7 @@ class _ssCin : public _superStreamBase
         _ssCin( _enSsDir ___ssDir , string ___path , string ___comment ) ;
         ~_ssCin( ){} ;
     protected :
-        bool _ssOpenOrReopen() {};
+        bool _ssOpenOrReopen() ;
 } ; /* class _ssCin */
 
 class _ssCout : public _superStreamBase
@@ -77,7 +77,7 @@ class _ssCout : public _superStreamBase
         _ssCout( _enSsDir ___ssDir , string ___path , string ___comment ) ;
         ~_ssCout( ){} ;
     protected :
-        bool _ssOpenOrReopen() {};
+        bool _ssOpenOrReopen() ;
 } ; /* class _ssCout */
 
 class _ssCerr : public _superStreamBase
@@ -86,7 +86,7 @@ class _ssCerr : public _superStreamBase
         _ssCerr( _enSsDir ___ssDir , string ___path , string ___comment ) ;
         ~_ssCerr( ){} ;
     protected :
-        /* bool _ssOpenOrReopen() {}; */
+        bool _ssOpenOrReopen() ;
 } ; /* class _ssCerr */
 
 
