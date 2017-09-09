@@ -57,8 +57,8 @@ class _superStreamBase
         void _ssWriteBlock(     _enErrAction ___eAction , int ___len , const char * ___buf ) ;
         void _ssReadNonblock(  _enErrAction ___eAction , int ___len , const char * ___buf ) ;
         void _ssReadBlock(     _enErrAction ___eAction , int ___len , const char * ___buf ) ;
-    private :
-        bool _ssOpenOrReopen() = 0 ;
+    protected :
+        virtual bool _ssOpenOrReopen() = 0 ;
 
 }; /* class _superStreamBase */
 
@@ -67,6 +67,8 @@ class _ssCin : public _superStreamBase
     public : 
         _ssCin( _enSsDir ___ssDir , string ___path , string ___comment ) ;
         ~_ssCin( ){} ;
+    protected :
+        bool _ssOpenOrReopen() {};
 } ; /* class _ssCin */
 
 class _ssCout : public _superStreamBase
@@ -74,6 +76,8 @@ class _ssCout : public _superStreamBase
     public :
         _ssCout( _enSsDir ___ssDir , string ___path , string ___comment ) ;
         ~_ssCout( ){} ;
+    protected :
+        bool _ssOpenOrReopen() {};
 } ; /* class _ssCout */
 
 class _ssCerr : public _superStreamBase
@@ -81,6 +85,8 @@ class _ssCerr : public _superStreamBase
     public :
         _ssCerr( _enSsDir ___ssDir , string ___path , string ___comment ) ;
         ~_ssCerr( ){} ;
+    protected :
+        /* bool _ssOpenOrReopen() {}; */
 } ; /* class _ssCerr */
 
 
