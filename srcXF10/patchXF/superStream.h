@@ -57,6 +57,8 @@ class _superStreamBase
         void _ssWriteBlock(     _enErrAction ___eAction , int ___len , const char * ___buf ) ;
         void _ssReadNonblock(  _enErrAction ___eAction , int ___len , const char * ___buf ) ;
         void _ssReadBlock(     _enErrAction ___eAction , int ___len , const char * ___buf ) ;
+    private :
+        bool _ssOpenOrReopen() = 0 ;
 
 }; /* class _superStreamBase */
 

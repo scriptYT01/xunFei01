@@ -15,15 +15,10 @@ class _streamController
         _streamController():_ssDir(_enSsdUnknown) {};
         virtual ~_streamController(){};
     public:
-        bool _addPath2( string ___path , string ___comment ) {
-            _sVec . push_back( _superStreamBase::
-                    _genSS( 1 , _ssDir , ___path , ___comment ) ) ;
-            return true ;
-        }
-        void _sendMsg1( string ___msg1 ) {
-            cout << ___msg1 ;
-        }
-        void _sendMsg1n( string ___msg1 ) { _sendMsg1( ___msg1 + "\n" ); }
+        bool _addPath2( string ___path , string ___comment ) ;
+        void _sendMsg1( string ___msg1 ) ;
+        void _sendMsg1n( string ___msg1 ) ;
+
     public :
         void _scPrintf(         _enErrAction ___eAction , const char *___fmt , ... ) ;
 }; /* class _streamController */
