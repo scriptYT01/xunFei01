@@ -231,6 +231,9 @@ px2:=srcXF10/patchXF/pathcXFbase01.c
 px3:=srcXF10/patchXF/superStream.cpp
 px4:=srcXF10/patchXF/superStream.h
 px5:=srcXF10/patchXF/pathcXFtts01.c
+px6:=srcXF10/patchXF/streamController.cpp
+px7:=srcXF10/patchXF/streamController.h
+
 
 
 XFlist:= 
@@ -245,7 +248,7 @@ XFlist+= XF70
 XFlist+= XF81 XF82 XF83 XF84
 XFlist+= XF91 XF92 
 XFlist+= vb1 vb2 vb3 vb4 
-XFlist+= px1 px2 px3 px4 px5
+XFlist+= px1 px2 px3 px4 px5 px6 px7 
 
 $(call VIMobj,$(XFlist))
 

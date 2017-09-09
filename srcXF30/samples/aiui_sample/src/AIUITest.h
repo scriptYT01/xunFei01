@@ -5,7 +5,8 @@
 *      Author: hj
 */
 
-#include "patchXF/superStream.h"
+/* #include "patchXF/superStream.h" */
+#include "patchXF/streamController.h"
 
 #ifndef AIUIAGENTTEST_H_
 #define AIUIAGENTTEST_H_

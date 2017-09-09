@@ -5,21 +5,11 @@
 static bool _fd_valid1_invalid0( int ___fd ) {
 } /* _fd_valid1_invalid0 */
 
-void _superStreamBase::_ssOut( _enEaction ___eAction , const char *___fmt , ... ) { 
-    char    __buf1024[1024] ;
-    va_list __args ;
-    int     __len ;
+void _superStreamBase::_ssReadNonblock( _enEaction ___eAction , int ___len , const char * ___buf ) {
+} /* _superStreamBase::_ssReadNonblock */
 
-    if ( ___fmt ) {
-        va_start(__args, ___fmt);
-        __len = vsnprintf(__buf1024 , 1023 , ___fmt, __args );
-        va_end(__args);
-
-        if ( __len ) {
-            _ssWriteNonblock( ___eAction , __len , __buf1024 ) ; 
-        }
-    }
-} /* _superStreamBase::_ssOut */
+void _superStreamBase::_ssReadBlock( _enEaction ___eAction , int ___len , const char * ___buf ) {
+} /* _superStreamBase::_ssReadBlock */
 
 void _superStreamBase::_ssWriteNonblock( _enEaction ___eAction , int ___len , const char * ___buf ) {
 } /* _superStreamBase::_ssWriteNonblock */
