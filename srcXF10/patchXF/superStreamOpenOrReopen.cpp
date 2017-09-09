@@ -24,15 +24,13 @@ bool _ssCerr::_ssOpenOrReopen( )
 
 bool _ssTcpConnectTo::_ssOpenOrReopen( )
 {
-    _ssFP   = 2 ;
-    _ssOK   = this ;
+    _ssOK   = NULL ;
     return true ;
 } /* _ssTcpConnectTo::_ssOpenOrReopen */
 
 bool _ssListen1::_ssOpenOrReopen( )
 {
-    _ssFP   = 2 ;
-    _ssOK   = this ;
+    _ssOK   = NULL ;
     return true ;
 } /* _ssListen1::_ssOpenOrReopen */
 
