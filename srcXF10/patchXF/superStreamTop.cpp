@@ -2,7 +2,24 @@
 
 
 /* _superStream */
+
 static bool _fd_valid1_invalid0( int ___fd ) {
+    bool __rt ;
+    if ( ___fd < 0 ) { __rt = false ; }
+    else {
+        if (fcntl(___fd, F_GETFL) == -1 && errno == EBADF) 
+            __rt = false ;
+        else 
+            __rt = true ;
+    }
+    return __rt ;
+} /* _fd_valid1_invalid0 */
+
+static int _valid_fd_or_errFD( int ___fd ) {
+    int __rt ;
+    if ( _fd_valid1_invalid0( ___fd ) ) __rt = ___fd ;
+    else __rt = 2 ;
+    return __rt ;
 } /* _fd_valid1_invalid0 */
 
 void _superStreamBase::_ssReadNonblock( _enErrAction ___eAction , int ___len , const char * ___buf ) {
@@ -12,6 +29,11 @@ void _superStreamBase::_ssReadBlock( _enErrAction ___eAction , int ___len , cons
 } /* _superStreamBase::_ssReadBlock */
 
 void _superStreamBase::_ssWriteNonblock( _enErrAction ___eAction , int ___len , const char * ___buf ) {
+    int __fd ;
+
+    __fd = _valid_fd_or_errFD( _ssFD ) 
+    if ( 1 ) { write( __fd , ___buf , ___len ) ; }
+
 } /* _superStreamBase::_ssWriteNonblock */
 
 void _superStreamBase::_ssWriteBlock( _enErrAction ___eAction , int ___len , const char * ___buf ) {
@@ -67,7 +89,7 @@ void _superStreamBase::_superStreamInit( _enSsType ___ssType , _enSsDir ___ssDir
     _ssDir      =   ___ssDir        ;
     _ssPath     =   ___path         ;
     _ssComment  =   ___comment      ;
-    _ssFP       =   -1              ;
+    _ssFD       =   -1              ;
     cerr << " --- _superStreamInit : " << endl ;
 
     _ssOK = this ;
