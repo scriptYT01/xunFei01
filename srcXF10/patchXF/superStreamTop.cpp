@@ -1,6 +1,5 @@
 #include "superStream.h"
 
-#include <errno.h>
 
 /* _superStream */
 

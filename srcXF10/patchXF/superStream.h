@@ -4,7 +4,6 @@
 
 #include "patchXF/pathcXFbase.h"
 
-
 #include <string>
 #include <iostream>
 #include <vector>
