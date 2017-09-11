@@ -276,7 +276,7 @@ void AIUITester::_waveCMDauto01()
     while ( 1 ) {
         __t02 = time( 0 ) ;
         _dbgSC . _scPrintf( _enEignore , 
-            " ======= 1 aiui start unit it is killed. : %s , %s : %d " 
+            " ======= 1 aiui start unit it is killed. : %s , %s : %d \n" 
             , _argv[0]
             , basename(_argv[0])
             , (__t02 - __t01) 
@@ -819,7 +819,9 @@ void AIUITester::testAiui()
         << _argc 
         << endl
         ;
-    _zExit( _dbgSC . _addPath2( "stderr" , " debug-text-to-tts" ) 
+    _zExit( _dbgSC . _addPath2( "stderr"    , " debug-text-to-tts1" ) 
+            , "debug stream error : <%s> <%s> " , _argv[1] , _argv[2] ) ;
+    _zExit( _dbgSC . _addPath2( "-"         , " debug-text-to-tts2" ) 
             , "debug stream error : <%s> <%s> " , _argv[1] , _argv[2] ) ;
 
     switch ( _argc ) {
