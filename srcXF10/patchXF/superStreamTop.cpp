@@ -60,16 +60,16 @@ _superStreamBase::_genSS( bool _exitIfErr , _enSsDir ___ssDir , string ___path ,
 
 } /*_superStreamBase::_genSS */
 
-_superStreamBase::_superStreamBase( _enSsDir ___ssDir , string ___path , string ___comment ) {
+void _superStreamBase::_superStreamInit( _enSsType ___ssType , _enSsDir ___ssDir , string ___path , string ___comment ) {
+    _ssType     =   ___ssType       ;
     _ssDir      =   ___ssDir        ;
-    _ssType     =   _enSstUnknown   ;
     _ssPath     =   ___path         ;
     _ssComment  =   ___comment      ;
     _ssFP       =   -1              ;
-    cerr << " --- _superStreamBase : " << endl ;
+    cerr << " --- _superStreamInit : " << endl ;
 
     _ssOK = this ;
-}; /* _superStreamBase::_superStreamBase */
+}; /* _superStreamBase::_superStreamInit */
 
 
 
@@ -77,33 +77,33 @@ _superStreamBase::_superStreamBase( _enSsDir ___ssDir , string ___path , string 
 
 
 _ssCin::_ssCin( _enSsDir ___ssDir , string ___path , string ___comment ) 
-    : _superStreamBase( ___ssDir , ___path , ___comment ) 
 {
-        _ssType     =   _enSstCin   ;
+    _superStreamInit( _enSstCin , ___ssDir , ___path , ___comment ) ;
+    _ssOpenOrReopen();
 } /* _ssCin::_ssCin */
 
 _ssCout::_ssCout( _enSsDir ___ssDir , string ___path , string ___comment ) 
-    : _superStreamBase( ___ssDir , ___path , ___comment ) 
 {
-        _ssType     =   _enSstCout  ;
+    _superStreamInit( _enSstCout , ___ssDir , ___path , ___comment ) ;
+    _ssOpenOrReopen();
 } /* _ssCout::_ssCout */
 
 _ssCerr::_ssCerr( _enSsDir ___ssDir , string ___path , string ___comment ) 
-    : _superStreamBase( ___ssDir , ___path , ___comment ) 
 {
-        _ssType     =   _enSstCerr  ;
+    _superStreamInit( _enSstCerr , ___ssDir , ___path , ___comment ) ;
+    _ssOpenOrReopen();
 } /* _ssCerr::_ssCerr */
 
 _ssTcpConnectTo::_ssTcpConnectTo( _enSsDir ___ssDir , string ___path , string ___comment ) 
-    : _superStreamBase( ___ssDir , ___path , ___comment ) 
 {
-        _ssType     =   _enSstCerr  ;
+    _superStreamInit( _enSstTcpConnectTo , ___ssDir , ___path , ___comment ) ;
+    _ssOpenOrReopen();
 } /* _ssTcpConnectTo::_ssTcpConnectTo */
 
 _ssListen1::_ssListen1( _enSsDir ___ssDir , string ___path , string ___comment ) 
-    : _superStreamBase( ___ssDir , ___path , ___comment ) 
 {
-        _ssType     =   _enSstCerr  ;
+    _superStreamInit( _enSstTcpListen1 , ___ssDir , ___path , ___comment ) ;
+    _ssOpenOrReopen();
 } /* _ssListen1::_ssListen1 */
 
 

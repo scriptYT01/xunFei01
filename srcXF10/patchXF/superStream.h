@@ -48,8 +48,9 @@ class _superStreamBase
         string                  _ssComment  ;
         _superStreamBase    *   _ssOK       ;
         int                     _ssFP       ;
+        void _superStreamInit( _enSsType ___ssType , _enSsDir ___ssDir , string ___path , string ___comment ) ;
     public :
-        _superStreamBase( _enSsDir ___ssDir , string ___path , string ___comment ) ;
+        _superStreamBase(){} ;
         ~_superStreamBase( ){} ;
         static _superStreamBase * _genSS( bool _exitIfErr ,  _enSsDir ___ssDir , string ___path , string ___comment ) ;
     private :
