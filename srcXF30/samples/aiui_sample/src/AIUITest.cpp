@@ -275,6 +275,12 @@ void AIUITester::_waveCMDauto01()
     __t01 = time( 0 ) ;
     while ( 1 ) {
         __t02 = time( 0 ) ;
+        _dbgSC . _scPrintf( _enEignore , 
+            " ======= aiui start unit it is killed. : %s , %s : %d " 
+            , _argv[0]
+            , basename(_argv[0])
+            , (__t02 - __t01) 
+            ) ;
 	    cerr 
             << " ======= aiui start unit it is killed. : " 
             << _argv[0]
@@ -544,7 +550,7 @@ void TestListener::onEvent(IAIUIEvent& event)
                                 cerr << __answerCNT_ask << ":" << __answerCNT_ask + __answerCNT_unEnv << ":" 
                                     << __answerCNT_all << __answerCNT_all << ":get_result81:ask11:" << __answer2 << endl ;
 
-                                _aiui -> _outSC . _sendMsg1n( __answer1 ) ;
+                                _aiui -> _outSC . _scPrintf( _enEignore , "%s\n" , __answer1.c_str() ) ;
                                 cerr << __answerCNT_answer << ":" << __answerCNT_all << "get_result02:answer02:" << __answer1 << endl ;
                             } else {
                                 __answer2 = _jsonGetResult14( resultStr , "intent" , "text" , "" , "" ) ;

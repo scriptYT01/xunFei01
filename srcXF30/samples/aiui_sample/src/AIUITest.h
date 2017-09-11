@@ -98,6 +98,7 @@ private:
 public:
     _streamControllerIN     _outSC    ;
     _streamControllerOUT    _inSC     ;
+    _streamControllerOUT    _dbgSC    ;
 public:
     AIUITester() ;
     ~AIUITester();

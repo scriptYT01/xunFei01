@@ -16,9 +16,6 @@ class _streamController
         virtual ~_streamController(){};
     public:
         bool _addPath2( string ___path , string ___comment ) ;
-        void _sendMsg1( string ___msg1 ) ;
-        void _sendMsg1n( string ___msg1 ) ;
-
     public :
         void _scPrintf(         _enErrAction ___eAction , const char *___fmt , ... ) ;
 }; /* class _streamController */
