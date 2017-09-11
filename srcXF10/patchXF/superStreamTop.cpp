@@ -28,22 +28,25 @@ _superStreamBase::_genSS( bool _exitIfErr , _enSsDir ___ssDir , string ___path ,
                 __ssTop = new _ssCin( ___ssDir , ___path , ___comment ) ;
                 break ;
             case _enSsdOut :
-                __ssTop = new _ssCerr( ___ssDir , ___path , ___comment ) ;
-                break ;
                 __ssTop = new _ssCout( ___ssDir , ___path , ___comment ) ;
                 break ;
             default :
                 break ;
         }
-    } else {
-        if ( 0 == ___path . find( "tcpto:" ) ) {
-            __ssTop = new _ssTcpConnectTo( ___ssDir , ___path , ___comment ) ;
-        } else {
-            if ( 0 == ___path . find( "tcpl1:" ) ) {
-                __ssTop = new _ssListen1( ___ssDir , ___path , ___comment ) ;
-            } else {
-            }
+    } else if ( ___path == "stdin" ) {
+        if ( ___ssDir == _enSsdIn ) {
+            __ssTop = new _ssCerr( ___ssDir , ___path , ___comment ) ;
         }
+    } else if ( ___path == "stdout" || ___path == "stderr" ) {
+        if ( ___ssDir == _enSsdOut ) {
+            __ssTop = new _ssCerr( ___ssDir , ___path , ___comment ) ;
+        }
+    } else if ( 0 == ___path . find( "tcpto:" ) ) {
+        __ssTop = new _ssTcpConnectTo( ___ssDir , ___path , ___comment ) ;
+    } else if ( 0 == ___path . find( "tcpl1:" ) ) {
+        __ssTop = new _ssListen1( ___ssDir , ___path , ___comment ) ;
+    } else {
+        if ( 1 ) _prExit( " create error Type error , exit when error met. exit." ) ;
     }
 
     if ( NULL == __ssTop  ) {
