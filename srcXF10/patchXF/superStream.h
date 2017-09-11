@@ -53,11 +53,11 @@ class _superStreamBase
         _superStreamBase(){} ;
         ~_superStreamBase( ){} ;
         static _superStreamBase * _genSS( bool _exitIfErr ,  _enSsDir ___ssDir , string ___path , string ___comment ) ;
-    private :
+    public :
         void _ssWriteNonblock(  _enErrAction ___eAction , int ___len , const char * ___buf ) ;
         void _ssWriteBlock(     _enErrAction ___eAction , int ___len , const char * ___buf ) ;
-        void _ssReadNonblock(  _enErrAction ___eAction , int ___len , const char * ___buf ) ;
-        void _ssReadBlock(     _enErrAction ___eAction , int ___len , const char * ___buf ) ;
+        void _ssReadNonblock(   _enErrAction ___eAction , int ___len , const char * ___buf ) ;
+        void _ssReadBlock(      _enErrAction ___eAction , int ___len , const char * ___buf ) ;
     private :
         virtual bool _ssOpenOrReopen() = 0 ;
 
