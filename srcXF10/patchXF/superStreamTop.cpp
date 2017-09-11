@@ -1,13 +1,15 @@
 #include "superStream.h"
 
+#include <errno.h>
 
 /* _superStream */
 
-static bool _fd_valid1_invalid0( int ___fd ) {
+bool _fd_valid1_invalid0( int ___fd ) {
     bool __rt ;
     if ( ___fd < 0 ) { __rt = false ; }
     else {
-        if (fcntl(___fd, F_GETFL) == -1 && errno == EBADF) 
+        //if (fcntl(___fd, F_GETFL) == -1 && errno == EBADF) 
+        if (fcntl(___fd, F_GETFL) == -1 && errno == EBADFD) 
             __rt = false ;
         else 
             __rt = true ;
@@ -31,7 +33,7 @@ void _superStreamBase::_ssReadBlock( _enErrAction ___eAction , int ___len , cons
 void _superStreamBase::_ssWriteNonblock( _enErrAction ___eAction , int ___len , const char * ___buf ) {
     int __fd ;
 
-    __fd = _valid_fd_or_errFD( _ssFD ) 
+    __fd = _valid_fd_or_errFD( _ssFD ) ;
     if ( 1 ) { write( __fd , ___buf , ___len ) ; }
 
 } /* _superStreamBase::_ssWriteNonblock */

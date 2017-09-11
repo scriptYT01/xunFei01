@@ -1,12 +1,9 @@
 
-#ifndef     __SENDRESULTTOSDOUTORTCP_H
-#define     __SENDRESULTTOSDOUTORTCP_H
+#ifndef     __SUPERSTREAM_H
+#define     __SUPERSTREAM_H
 
 #include "patchXF/pathcXFbase.h"
 
-#include <stdio.h>
-#include <stdarg.h>
-#include <assert.h>
 
 #include <string>
 #include <iostream>

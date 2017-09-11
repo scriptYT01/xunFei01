@@ -7,6 +7,12 @@
 #include <unistd.h>
 #include <libgen.h>
 #include <string.h>
+#include <fcntl.h>
+#include <stdarg.h>
+#include <assert.h>
+#include <error.h>
+#include <err.h>
+
 
 
 
