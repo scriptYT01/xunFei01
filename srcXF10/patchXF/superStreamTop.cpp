@@ -46,17 +46,16 @@ _superStreamBase::_genSS( bool _exitIfErr , _enSsDir ___ssDir , string ___path ,
     } else if ( 0 == ___path . find( "tcpl1:" ) ) {
         __ssTop = new _ssListen1( ___ssDir , ___path , ___comment ) ;
     } else {
-        if ( 1 ) _prExit( " create error Type error , exit when error met. exit." ) ;
+        if ( 1 ) _prExit( " create error para error , exit when error met. exit." ) ;
     }
 
     if ( NULL == __ssTop  ) {
         _nExit( _exitIfErr , " create error Type error , exit when error met. exit." ) ;
-    } else {
+    }
 
-        __ssRt = __ssTop -> _ssOK ;
-        if ( _exitIfErr ) {
-            _zExit( __ssRt , " create error Para error, exit when error met. exit." ) ;
-        }
+    __ssRt = __ssTop -> _ssOK ;
+    if ( _exitIfErr ) {
+        _zExit( __ssRt , " create error Para error, exit when error met. exit." ) ;
     }
 
     return __ssRt ;
