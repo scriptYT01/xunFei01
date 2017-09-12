@@ -102,7 +102,7 @@ _superStreamBase::_genSS( bool _exitIfErr , _enSsDir ___ssDir , const char * ___
     _superStreamBase * __ssTop  = NULL ;
     _superStreamBase * __ssRt   = NULL;
 
-    if ( ___path == "-" ) {
+    if ( 0 == _strcmpXX( "-" , ___path ) ) {
         switch ( ___ssDir ) {
             case _enSsdIn :
                 __ssTop = new _ssCin( ___ssDir , ___path , ___comment ) ;
@@ -113,9 +113,9 @@ _superStreamBase::_genSS( bool _exitIfErr , _enSsDir ___ssDir , const char * ___
             default :
                 break ;
         }
-    } else if ( ___path == "stdin" ) {
+    } else if ( 0 == _strcmpXX( ___path , "stdin" )) {
         __ssTop = new _ssCerr( ___ssDir , ___path , ___comment ) ;
-    } else if ( ___path == "stdout" || ___path == "stderr" ) {
+    } else if ( 0 == _strcmpXX( ___path , "stdout" ) || 0 == _strcmpXX( ___path , "stderr" )) {
         __ssTop = new _ssCerr( ___ssDir , ___path , ___comment ) ;
     } else if ( 0 == _strcmpX1( "tcpto:" , ___path ) ) {
         __ssTop = new _ssTcpConnectTo( ___ssDir , ___path , ___comment ) ;
