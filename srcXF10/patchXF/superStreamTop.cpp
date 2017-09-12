@@ -143,8 +143,8 @@ _superStreamBase::_genSS( bool _exitIfErr , _enSsDir ___ssDir , const char * ___
 void _superStreamBase::_superStreamInit( _enSsType ___ssType , _enSsDir ___ssDir , const char * ___path , const char * ___comment ) {
     _ssType     =   ___ssType       ;
     _ssDir      =   ___ssDir        ;
-    _ssPath     =   ___path         ;
-    _ssComment  =   ___comment      ;
+    _ssPath     =   strdup( ___path )         ;
+    _ssComment  =   strdup( ___comment )      ;
     _ssFD       =   -1              ;
     cerr << " --- _superStreamInit : " << endl ;
 

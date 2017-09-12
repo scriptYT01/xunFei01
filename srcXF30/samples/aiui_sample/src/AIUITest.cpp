@@ -813,6 +813,9 @@ void AIUITester::usage()
 
 void AIUITester::testAiui()
 {
+    extern string  _progNameS ;
+    string  __ss ;
+
 	//		AIUISetting::setSaveDataLog(true);
 	AIUISetting::setAIUIDir(TEST_ROOT_DIR);
 	AIUISetting::initLogger(LOG_DIR);
@@ -824,10 +827,13 @@ void AIUITester::testAiui()
         << _argc 
         << endl
         ;
-    extern string  _progNameS ;
-    _zExit( _dbgSC . _addPath2( ">:/tmp/log.01." + _progNameS + ".txt"    , " debug-text-01 " ) 
+
+    __ss = ">:/tmp/log.01." + _progNameS + ".txt"    ;
+    _zExit( _dbgSC . _addPath2( __ss . c_str()      , " debug-text-01 " ) 
             , "debug stream error : <%s> <%s> " , _argv[1] , _argv[2] ) ;
-    _zExit( _dbgS2 . _addPath2( ">:/tmp/log.02." + _progNameS + ".txt"    , " debug-text-02 " ) 
+
+    __ss = ">:/tmp/log.02." + _progNameS + ".txt"    ;
+    _zExit( _dbgS2 . _addPath2( __ss . c_str()      , " debug-text-02 " ) 
             , "debug stream error : <%s> <%s> " , _argv[1] , _argv[2] ) ;
 
     switch ( _argc ) {
