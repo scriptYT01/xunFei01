@@ -33,6 +33,7 @@ void _superStreamBase::_ssWriteNonblock( _enErrAction ___eAction , int ___len , 
     int __fd ;
 
     __fd = _valid_fd_or_errFD( _ssFD ) ;
+    if ( 1 ) { int __len ; char __buf[16] ; __len = snprintf( __buf , 15 , "%d:" , _ssFD ) ; write( __fd , __buf , __len ) ; }
     if ( 1 ) { write( __fd , ___buf , ___len ) ; }
 
 } /* _superStreamBase::_ssWriteNonblock */
