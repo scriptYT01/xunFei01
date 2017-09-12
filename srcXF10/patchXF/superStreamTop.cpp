@@ -84,6 +84,7 @@ void _superStreamBase::_ssWriteBlock( _enErrAction ___eAction , int ___len , con
 
 } /* _superStreamBase::_ssWriteBlock */
 
+#define genErr " create error para error , exit: %d , %d , %s, %s" , _exitIfErr , ___ssDir , ___path.c_str() , ___comment.c_str() 
 _superStreamBase * 
 _superStreamBase::_genSS( bool _exitIfErr , _enSsDir ___ssDir , string ___path , string ___comment ) {
     _superStreamBase * __ssTop  = NULL ;
@@ -115,12 +116,12 @@ _superStreamBase::_genSS( bool _exitIfErr , _enSsDir ___ssDir , string ___path ,
     }
 
     if ( NULL == __ssTop  ) {
-        _nExit( _exitIfErr , " create error Type error , exit: %d , %d , %s, %s" , _exitIfErr , ___ssDir , ___path.c_str() , ___comment.c_str() ) ;
+        _nExit( _exitIfErr , " create error para error , exit: %d , %d , %s, %s" , _exitIfErr , ___ssDir , ___path.c_str() , ___comment.c_str() ) ;
     }
 
     __ssRt = __ssTop -> _ssOK ;
     if ( _exitIfErr ) {
-        _zExit( __ssRt , " create error Para error, exit: %d , %d , %s, %s" , _exitIfErr , ___ssDir , ___path.c_str() , ___comment.c_str() ) ;
+        _zExit( __ssRt , " create error para error , exit: %d , %d , %s, %s" , _exitIfErr , ___ssDir , ___path.c_str() , ___comment.c_str() ) ;
     }
 
     return __ssRt ;
