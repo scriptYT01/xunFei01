@@ -36,6 +36,9 @@ void _superStreamBase::_ssTryReopneIfNeeded( _enErrAction ___eAction )
     }
 } /* _superStreamBase::_ssTryReopneIfNeeded */
 
+void _superStreamBase::_ssDumpSelf( ) {
+} /* _superStreamBase::_ssDumpSelf */
+
 void _superStreamBase::_ssReadNonblock( _enErrAction ___eAction , int ___len , const char * ___buf ) {
 } /* _superStreamBase::_ssReadNonblock */
 

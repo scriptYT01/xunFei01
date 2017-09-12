@@ -18,6 +18,7 @@ class _streamController
         bool _addPath2( string ___path , string ___comment ) ;
     public :
         void _scPrintf(         _enErrAction ___eAction , const char *___fmt , ... ) ;
+        void _scDumpSS() ;
 }; /* class _streamController */
 
 class _streamControllerIN : public _streamController 
