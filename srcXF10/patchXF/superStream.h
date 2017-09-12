@@ -60,7 +60,7 @@ class _superStreamBase
         void _superStreamInit( _enSsType ___ssType , _enSsDir ___ssDir , string ___path , string ___comment ) ;
         static int              _valid_fd_or_errFD( int ___fd ) ;
         static bool             _fd_valid1_invalid0( int ___fd ) ;
-        void                    _ssReopneIfNeeded( _enErrAction ___eAction ) ;
+        void                    _ssTryReopneIfNeeded( _enErrAction ___eAction ) ;
     public :
         _superStreamBase(){ _memZS( _ssInfoW ) ; _memZS( _ssInfoR ) ; } ;
         ~_superStreamBase( ){} ;
