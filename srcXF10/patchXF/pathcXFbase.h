@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <stdint.h>
 #include <libgen.h>
 #include <string.h>
 #include <fcntl.h>
@@ -56,6 +57,8 @@ typedef struct tWAVEFORMATEX {
 
 #define X_paraAtoi( must , idx , iii ) _paraAtoi( must , ___argc , ___argv , idx , _strX( iii ) , & iii ) 
 #define X_paraAtoS( must , idx , sss ) _paraAtoS( must , ___argc , ___argv , idx , _strX( sss ) , &(sss) ) 
+#define _memZS( om )    memset( & om    , 0 , sizeof( om    ) ) 
+#define _memZP( om )    memset( om      , 0 , sizeof( (*om) ) ) 
 
 #ifdef __cplusplus
 extern "C" {

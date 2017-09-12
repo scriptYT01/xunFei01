@@ -3,25 +3,35 @@
 
 /* _superStream */
 
-bool _fd_valid1_invalid0( int ___fd ) {
+bool _superStreamBase::_fd_valid1_invalid0( int *___fd ) {
     bool __rt ;
-    if ( ___fd < 0 ) { __rt = false ; }
+    if ( ___fd == NULL ) { __rt = false ; }
+    else if ( *___fd < 0 ) { __rt = false ; }
     else {
-        //if (fcntl(___fd, F_GETFL) == -1 && errno == EBADF) 
-        if (fcntl(___fd, F_GETFL) == -1 && errno == EBADFD) 
+        if (fcntl(*___fd, F_GETFL) == -1 && errno == EBADF) {
             __rt = false ;
-        else 
+            *___fd = -1 ;/* force fd to invalid */
+        } else 
             __rt = true ;
     }
     return __rt ;
 } /* _fd_valid1_invalid0 */
 
-static int _valid_fd_or_errFD( int ___fd ) {
+int _superStreamBase::_valid_fd_or_errFD( int *___fd ) {
     int __rt ;
-    if ( _fd_valid1_invalid0( ___fd ) ) __rt = ___fd ;
+    if ( _fd_valid1_invalid0( ___fd ) ) __rt = *___fd ;
     else __rt = 2 ;
     return __rt ;
 } /* _fd_valid1_invalid0 */
+
+void _superStreamBase::_ssReopneIfNeeded( _enErrAction ___eAction ) 
+{
+    if ( 0 == _fd_valid1_invalid0( & _ssFD ) ) {
+        if ( ___eAction == _enEreopen ) {
+            _ssReopneIfNeeded();
+        }
+    }
+} /* _superStreamBase::_ssReopneIfNeeded */
 
 void _superStreamBase::_ssReadNonblock( _enErrAction ___eAction , int ___len , const char * ___buf ) {
 } /* _superStreamBase::_ssReadNonblock */
@@ -30,15 +40,45 @@ void _superStreamBase::_ssReadBlock( _enErrAction ___eAction , int ___len , cons
 } /* _superStreamBase::_ssReadBlock */
 
 void _superStreamBase::_ssWriteNonblock( _enErrAction ___eAction , int ___len , const char * ___buf ) {
-    int __fd ;
 
-    __fd = _valid_fd_or_errFD( _ssFD ) ;
-    if ( 1 ) { int __len ; char __buf[16] ; __len = snprintf( __buf , 15 , "%d:" , _ssFD ) ; write( __fd , __buf , __len ) ; }
-    if ( 1 ) { write( __fd , ___buf , ___len ) ; }
+    _ssReopneIfNeeded( ___eAction ) ;
 
+    if ( _fd_canWrite( & _ssFD ) ) {
+        _ssWriteBlock( ___eAction , ___len , ___buf ) ;
+    } else {
+        _ssInfoW . _tryCnt ++ ;
+        _ssInfoW . _tryLen += ___len ;
+        _ssInfoW . _skipCnt ++ ;
+        _ssInfoW . _skipLen += ___len ;
+    }
 } /* _superStreamBase::_ssWriteNonblock */
 
 void _superStreamBase::_ssWriteBlock( _enErrAction ___eAction , int ___len , const char * ___buf ) {
+    _ssInfoW . _tryCnt ++ ;
+    _ssInfoW . _tryLen += ___len ;
+
+    _ssReopneIfNeeded( ___eAction ) ;
+
+    if ( _fd_valid1_invalid0( & _ssFD ) ) {
+        int __Len ;
+        __Len = write( __fd , ___buf , ___len ) ; 
+        if ( __Len <= 0 ) {
+            _ssInfoW . _skipCnt ++ ;
+            _ssInfoW . _skipLen += ___len ;
+        } else if ( __Len == ___len ) {
+            _ssInfoW . _succCnt ++ ;
+            _ssInfoW . _succLen += ___len ;
+        } else {
+            _ssInfoW . _succCnt ++ ;
+            _ssInfoW . _succLen += __Len ;
+            _ssInfoW . _skipCnt ++ ;
+            _ssInfoW . _skipLen += ___len - __Len ;
+        }
+    } else {
+        _ssInfoW . _skipCnt ++ ;
+        _ssInfoW . _skipLen += ___len ;
+    }
+
 } /* _superStreamBase::_ssWriteBlock */
 
 _superStreamBase * 

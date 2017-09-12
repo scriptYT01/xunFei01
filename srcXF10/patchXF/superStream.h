@@ -35,6 +35,16 @@ enum _enSsType { /* stream type */
     _enSstCout
 }; /* _enSsType */
 
+struct _superStreamInfoX {
+    uint64_t                _tryCnt     ;
+    uint64_t                _tryLen     ;
+    uint64_t                _skipCnt    ;
+    uint64_t                _skipLen    ;
+    uint64_t                _succCnt    ;
+    uint64_t                _succLen    ;
+} ;
+typedef struct _superStreamInfoX _superStreamInfo ; 
+
 class _superStreamBase
 {
     protected :
@@ -44,9 +54,15 @@ class _superStreamBase
         string                  _ssComment  ;
         _superStreamBase    *   _ssOK       ;
         int                     _ssFD       ;
+        _superStreamInfo        _ssInfoW    ; 
+        _superStreamInfo        _ssInfoR    ; 
+
         void _superStreamInit( _enSsType ___ssType , _enSsDir ___ssDir , string ___path , string ___comment ) ;
+        static int              _valid_fd_or_errFD( int ___fd ) ;
+        static bool             _fd_valid1_invalid0( int ___fd ) ;
+        void                    _ssReopneIfNeeded( _enErrAction ___eAction ) ;
     public :
-        _superStreamBase(){} ;
+        _superStreamBase(){ _memZS( _ssInfoW ) ; _memZS( _ssInfoR ) ; } ;
         ~_superStreamBase( ){} ;
         static _superStreamBase * _genSS( bool _exitIfErr ,  _enSsDir ___ssDir , string ___path , string ___comment ) ;
     public :
