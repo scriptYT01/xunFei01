@@ -15,7 +15,7 @@ class _streamController
         _streamController():_ssDir(_enSsdUnknown) {};
         virtual ~_streamController(){};
     public:
-        bool _addPath2( string ___path , string ___comment ) ;
+        bool _addPath2( const char * ___path , const char * ___comment ) ;
     public :
         void _scPrintf(         _enErrAction ___eAction , const char *___fmt , ... ) ;
         void _scDumpSS() ;

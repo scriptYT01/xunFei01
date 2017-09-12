@@ -39,19 +39,19 @@ bool _ssListen1::_ssOpenOrReopen( )
 
 bool _ssFileOut::_ssOpenOrReopen( )
 {
-    string  __path ;
+    const char *  __path ;
     int     __fd = -1 ;
     if ( _ssDir != _enSsdOut )  return false ;
     if ( _fd_valid1_invalid0( & _ssFD ) ) {
         return true ;
     }
-    if ( 0 == _ssPath . find( ">:" ) ) {
-        __path = _ssPath . substr( 2 ) ;
-        __fd = open( __path . c_str() , O_WRONLY | O_CREAT , 0666 ) ;
+    if ( 0 == _strcmpX1( ">:" , _ssPath ) ) {
+        __path = _ssPath + 2 ;
+        __fd = open( __path     , O_WRONLY | O_CREAT , 0666 ) ;
     }
-    if ( 0 == _ssPath . find( ">>:" ) ) {
-        __path = _ssPath . substr( 3 ) ;
-        __fd = open( __path . c_str() , O_WRONLY | O_CREAT | O_APPEND , S_IRUSR ) ;
+    if ( 0 == _strcmpX1( ">>:"  , _ssPath ) ) {
+        __path = _ssPath + 3 ;
+        __fd = open( __path     , O_WRONLY | O_CREAT | O_APPEND , S_IRUSR ) ;
     }
     if ( __fd >= 0 ) {
         _ssFD   = __fd ;

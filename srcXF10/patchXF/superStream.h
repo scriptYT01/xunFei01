@@ -51,14 +51,15 @@ class _superStreamBase
     protected :
         _enSsDir                _ssDir      ;
         _enSsType               _ssType     ;
-        string                  _ssPath     ;
-        string                  _ssComment  ;
+        const char *            _ssPath     ;
+        const char *            _ssComment  ;
         _superStreamBase    *   _ssOK       ;
         int                     _ssFD       ;
         _superStreamInfo        _ssInfoW    ; 
         _superStreamInfo        _ssInfoR    ; 
 
-        void _superStreamInit( _enSsType ___ssType , _enSsDir ___ssDir , string ___path , string ___comment ) ;
+    protected :
+        void _superStreamInit( _enSsType ___ssType , _enSsDir ___ssDir , const char * ___path , const char * ___comment ) ;
         static int              _valid_fd_or_errFD( int * ___fd ) ;
         static bool             _fd_valid1_invalid0( int * ___fd ) ;
         static bool             _fd_canWrite( int *___fd ) ;
@@ -66,7 +67,7 @@ class _superStreamBase
     public :
         _superStreamBase(){ _memZS( _ssInfoW ) ; _memZS( _ssInfoR ) ; } ;
         ~_superStreamBase( ){} ;
-        static _superStreamBase * _genSS( bool _exitIfErr ,  _enSsDir ___ssDir , string ___path , string ___comment ) ;
+        static _superStreamBase * _genSS( bool _exitIfErr ,  _enSsDir ___ssDir , const char * ___path , const char * ___comment ) ;
     public :
         void _ssDumpSelf( ) ;
         void _ssWriteNonblock(  _enErrAction ___eAction , int ___len , const char * ___buf ) ;
@@ -81,7 +82,7 @@ class _superStreamBase
 class _ssCin : public _superStreamBase
 {
     public : 
-        _ssCin( _enSsDir ___ssDir , string ___path , string ___comment ) ;
+        _ssCin( _enSsDir ___ssDir , const char * ___path , const char * ___comment ) ;
         ~_ssCin( ){} ;
     private :
         bool _ssOpenOrReopen() ;
@@ -90,7 +91,7 @@ class _ssCin : public _superStreamBase
 class _ssCout : public _superStreamBase
 {
     public :
-        _ssCout( _enSsDir ___ssDir , string ___path , string ___comment ) ;
+        _ssCout( _enSsDir ___ssDir , const char * ___path , const char * ___comment ) ;
         ~_ssCout( ){} ;
     private :
         bool _ssOpenOrReopen() ;
@@ -99,7 +100,7 @@ class _ssCout : public _superStreamBase
 class _ssCerr : public _superStreamBase
 {
     public :
-        _ssCerr( _enSsDir ___ssDir , string ___path , string ___comment ) ;
+        _ssCerr( _enSsDir ___ssDir , const char * ___path , const char * ___comment ) ;
         ~_ssCerr( ){} ;
     private :
         bool _ssOpenOrReopen() ;
@@ -108,7 +109,7 @@ class _ssCerr : public _superStreamBase
 class _ssTcpConnectTo : public _superStreamBase
 {
     public :
-        _ssTcpConnectTo( _enSsDir ___ssDir , string ___path , string ___comment ) ;
+        _ssTcpConnectTo( _enSsDir ___ssDir , const char * ___path , const char * ___comment ) ;
         ~_ssTcpConnectTo( ){} ;
     private :
         bool _ssOpenOrReopen() ;
@@ -117,7 +118,7 @@ class _ssTcpConnectTo : public _superStreamBase
 class _ssListen1 : public _superStreamBase
 {
     public :
-        _ssListen1( _enSsDir ___ssDir , string ___path , string ___comment ) ;
+        _ssListen1( _enSsDir ___ssDir , const char * ___path , const char * ___comment ) ;
         ~_ssListen1( ){} ;
     private :
         bool _ssOpenOrReopen() ;
@@ -126,7 +127,7 @@ class _ssListen1 : public _superStreamBase
 class _ssFileOut : public _superStreamBase
 {
     public :
-        _ssFileOut( _enSsDir ___ssDir , string ___path , string ___comment ) ;
+        _ssFileOut( _enSsDir ___ssDir , const char * ___path , const char * ___comment ) ;
         ~_ssFileOut( ){} ;
     private :
         bool _ssOpenOrReopen() ;

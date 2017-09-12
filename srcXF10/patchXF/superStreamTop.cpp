@@ -37,6 +37,15 @@ void _superStreamBase::_ssTryReopneIfNeeded( _enErrAction ___eAction )
 } /* _superStreamBase::_ssTryReopneIfNeeded */
 
 void _superStreamBase::_ssDumpSelf( ) {
+    _prEFn( "_ssDir      '%d'" , _ssDir      ) ;
+    _prEFn( "_ssType     '%d'" , _ssType     ) ;
+    _prEFn( "_ssPath     '%s'" , _ssPath     ) ;
+    _prEFn( "_ssComment  '%s'" , _ssComment  ) ;
+    _prEFn( "_ssOK       '%p'" , _ssOK       ) ;
+    _prEFn( "_ssFD       '%d'" , _ssFD       ) ;
+
+        //_superStreamInfo        _ssInfoW    ; 
+        //_superStreamInfo        _ssInfoR    ; 
 } /* _superStreamBase::_ssDumpSelf */
 
 void _superStreamBase::_ssReadNonblock( _enErrAction ___eAction , int ___len , const char * ___buf ) {
@@ -87,9 +96,9 @@ void _superStreamBase::_ssWriteBlock( _enErrAction ___eAction , int ___len , con
 
 } /* _superStreamBase::_ssWriteBlock */
 
-#define genErr " create error para error , exit: %d , %d , %s, %s" , _exitIfErr , ___ssDir , ___path.c_str() , ___comment.c_str() 
+#define genErr " create error para error , exit: %d , %d , %s, %s" , _exitIfErr , ___ssDir , ___path , ___comment 
 _superStreamBase * 
-_superStreamBase::_genSS( bool _exitIfErr , _enSsDir ___ssDir , string ___path , string ___comment ) {
+_superStreamBase::_genSS( bool _exitIfErr , _enSsDir ___ssDir , const char * ___path , const char * ___comment ) {
     _superStreamBase * __ssTop  = NULL ;
     _superStreamBase * __ssRt   = NULL;
 
@@ -108,30 +117,30 @@ _superStreamBase::_genSS( bool _exitIfErr , _enSsDir ___ssDir , string ___path ,
         __ssTop = new _ssCerr( ___ssDir , ___path , ___comment ) ;
     } else if ( ___path == "stdout" || ___path == "stderr" ) {
         __ssTop = new _ssCerr( ___ssDir , ___path , ___comment ) ;
-    } else if ( 0 == ___path . find( "tcpto:" ) ) {
+    } else if ( 0 == _strcmpX1( "tcpto:" , ___path ) ) {
         __ssTop = new _ssTcpConnectTo( ___ssDir , ___path , ___comment ) ;
-    } else if ( 0 == ___path . find( "tcpl1:" ) ) {
+    } else if ( 0 == _strcmpX1( "tcpl1:" , ___path ) ) {
         __ssTop = new _ssListen1( ___ssDir , ___path , ___comment ) ;
-    } else if ( 0 == ___path . find( ">:" ) || 0 == ___path . find( ">>:" ) ) {
+    } else if ( 0 == _strcmpX1( ">:" , ___path ) || 0 == _strcmpX1( ">>:" , ___path ) ) {
         __ssTop = new _ssFileOut( ___ssDir , ___path , ___comment ) ;
     } else {
-        if ( 1 ) _prExit( " create error para error , exit: %d , %d , %s, %s" , _exitIfErr , ___ssDir , ___path.c_str() , ___comment.c_str() ) ;
+        if ( 1 ) _prExit( " create error para error , exit: %d , %d , %s, %s" , _exitIfErr , ___ssDir , ___path , ___comment ) ;
     }
 
     if ( NULL == __ssTop  ) {
-        _nExit( _exitIfErr , " create error para error , exit: %d , %d , %s, %s" , _exitIfErr , ___ssDir , ___path.c_str() , ___comment.c_str() ) ;
+        _nExit( _exitIfErr , " create error para error , exit: %d , %d , %s, %s" , _exitIfErr , ___ssDir , ___path , ___comment ) ;
     }
 
     __ssRt = __ssTop -> _ssOK ;
     if ( _exitIfErr ) {
-        _zExit( __ssRt , " create error para error , exit: %d , %d , %s, %s" , _exitIfErr , ___ssDir , ___path.c_str() , ___comment.c_str() ) ;
+        _zExit( __ssRt , " create error para error , exit: %d , %d , %s, %s" , _exitIfErr , ___ssDir , ___path , ___comment ) ;
     }
 
     return __ssRt ;
 
 } /*_superStreamBase::_genSS */
 
-void _superStreamBase::_superStreamInit( _enSsType ___ssType , _enSsDir ___ssDir , string ___path , string ___comment ) {
+void _superStreamBase::_superStreamInit( _enSsType ___ssType , _enSsDir ___ssDir , const char * ___path , const char * ___comment ) {
     _ssType     =   ___ssType       ;
     _ssDir      =   ___ssDir        ;
     _ssPath     =   ___path         ;
@@ -147,37 +156,37 @@ void _superStreamBase::_superStreamInit( _enSsType ___ssType , _enSsDir ___ssDir
 
 
 
-_ssCin::_ssCin( _enSsDir ___ssDir , string ___path , string ___comment ) 
+_ssCin::_ssCin( _enSsDir ___ssDir , const char * ___path , const char * ___comment ) 
 {
     _superStreamInit( _enSstCin , ___ssDir , ___path , ___comment ) ;
     _ssOpenOrReopen();
 } /* _ssCin::_ssCin */
 
-_ssCout::_ssCout( _enSsDir ___ssDir , string ___path , string ___comment ) 
+_ssCout::_ssCout( _enSsDir ___ssDir , const char * ___path , const char * ___comment ) 
 {
     _superStreamInit( _enSstCout , ___ssDir , ___path , ___comment ) ;
     _ssOpenOrReopen();
 } /* _ssCout::_ssCout */
 
-_ssCerr::_ssCerr( _enSsDir ___ssDir , string ___path , string ___comment ) 
+_ssCerr::_ssCerr( _enSsDir ___ssDir , const char * ___path , const char * ___comment ) 
 {
     _superStreamInit( _enSstCerr , ___ssDir , ___path , ___comment ) ;
     _ssOpenOrReopen();
 } /* _ssCerr::_ssCerr */
 
-_ssTcpConnectTo::_ssTcpConnectTo( _enSsDir ___ssDir , string ___path , string ___comment ) 
+_ssTcpConnectTo::_ssTcpConnectTo( _enSsDir ___ssDir , const char * ___path , const char * ___comment ) 
 {
     _superStreamInit( _enSstTcpConnectTo , ___ssDir , ___path , ___comment ) ;
     _ssOpenOrReopen();
 } /* _ssTcpConnectTo::_ssTcpConnectTo */
 
-_ssListen1::_ssListen1( _enSsDir ___ssDir , string ___path , string ___comment ) 
+_ssListen1::_ssListen1( _enSsDir ___ssDir , const char * ___path , const char * ___comment ) 
 {
     _superStreamInit( _enSstTcpListen1 , ___ssDir , ___path , ___comment ) ;
     _ssOpenOrReopen();
 } /* _ssListen1::_ssListen1 */
 
-_ssFileOut::_ssFileOut( _enSsDir ___ssDir , string ___path , string ___comment ) 
+_ssFileOut::_ssFileOut( _enSsDir ___ssDir , const char * ___path , const char * ___comment ) 
 {
     _superStreamInit( _enSstFileOut , ___ssDir , ___path , ___comment ) ;
     _ssOpenOrReopen();

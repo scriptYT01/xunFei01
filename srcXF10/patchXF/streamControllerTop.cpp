@@ -45,7 +45,7 @@ void _streamController::_scPrintf( _enErrAction ___eAction , const char *___fmt 
 } /* _streamController::_scPrintf */
 
 
-bool _streamController::_addPath2( string ___path , string ___comment ) {
+bool _streamController::_addPath2( const char * ___path , const char * ___comment ) {
     _sVec . push_back( _superStreamBase::
             _genSS( 1 , _ssDir , ___path , ___comment ) ) ;
     return true ;
