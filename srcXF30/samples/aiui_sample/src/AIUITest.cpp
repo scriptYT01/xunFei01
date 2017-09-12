@@ -819,9 +819,10 @@ void AIUITester::testAiui()
         << _argc 
         << endl
         ;
-    _zExit( _dbgSC . _addPath2( "stderr"    , " debug-text-to-tts1" ) 
+    extern string  _progNameS ;
+    _zExit( _dbgSC . _addPath2( ">:/tmp/log.01." + _progNameS + ".txt"    , " debug-text-01 " ) 
             , "debug stream error : <%s> <%s> " , _argv[1] , _argv[2] ) ;
-    _zExit( _dbgSC . _addPath2( "-"         , " debug-text-to-tts2" ) 
+    _zExit( _dbgS2 . _addPath2( ">:/tmp/log.02." + _progNameS + ".txt"    , " debug-text-02 " ) 
             , "debug stream error : <%s> <%s> " , _argv[1] , _argv[2] ) ;
 
     switch ( _argc ) {

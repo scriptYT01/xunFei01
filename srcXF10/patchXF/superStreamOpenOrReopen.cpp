@@ -34,3 +34,9 @@ bool _ssListen1::_ssOpenOrReopen( )
     return true ;
 } /* _ssListen1::_ssOpenOrReopen */
 
+bool _ssFileOut::_ssOpenOrReopen( )
+{
+    _ssOK   = NULL ;
+    return true ;
+} /* _ssFileOut::_ssOpenOrReopen */
+

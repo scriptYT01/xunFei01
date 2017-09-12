@@ -28,6 +28,7 @@ enum _enSsDir {
 
 enum _enSsType { /* stream type */
     _enSstUnknown,
+    _enSstFileOut,
     _enSstTcpConnectTo,
     _enSstTcpListen1,
     _enSstCin,
@@ -58,8 +59,9 @@ class _superStreamBase
         _superStreamInfo        _ssInfoR    ; 
 
         void _superStreamInit( _enSsType ___ssType , _enSsDir ___ssDir , string ___path , string ___comment ) ;
-        static int              _valid_fd_or_errFD( int ___fd ) ;
-        static bool             _fd_valid1_invalid0( int ___fd ) ;
+        static int              _valid_fd_or_errFD( int * ___fd ) ;
+        static bool             _fd_valid1_invalid0( int * ___fd ) ;
+        static bool             _fd_canWrite( int *___fd ) ;
         void                    _ssTryReopneIfNeeded( _enErrAction ___eAction ) ;
     public :
         _superStreamBase(){ _memZS( _ssInfoW ) ; _memZS( _ssInfoR ) ; } ;
@@ -119,6 +121,15 @@ class _ssListen1 : public _superStreamBase
     private :
         bool _ssOpenOrReopen() ;
 } ; /* class _ssListen1 */
+
+class _ssFileOut : public _superStreamBase
+{
+    public :
+        _ssFileOut( _enSsDir ___ssDir , string ___path , string ___comment ) ;
+        ~_ssFileOut( ){} ;
+    private :
+        bool _ssOpenOrReopen() ;
+} ; /* class _ssFileOut */
 
 
 
