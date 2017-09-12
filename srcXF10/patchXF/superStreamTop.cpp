@@ -111,16 +111,16 @@ _superStreamBase::_genSS( bool _exitIfErr , _enSsDir ___ssDir , string ___path ,
     } else if ( 0 == ___path . find( ">:" ) || 0 == ___path . find( ">>:" ) ) {
         __ssTop = new _ssFileOut( ___ssDir , ___path , ___comment ) ;
     } else {
-        if ( 1 ) _prExit( " create error para error , exit when error met. exit." ) ;
+        if ( 1 ) _prExit( " create error para error , exit: %d , %d , %s, %s" , _exitIfErr , ___ssDir , ___path.c_str() , ___comment.c_str() ) ;
     }
 
     if ( NULL == __ssTop  ) {
-        _nExit( _exitIfErr , " create error Type error , exit when error met. exit." ) ;
+        _nExit( _exitIfErr , " create error Type error , exit: %d , %d , %s, %s" , _exitIfErr , ___ssDir , ___path.c_str() , ___comment.c_str() ) ;
     }
 
     __ssRt = __ssTop -> _ssOK ;
     if ( _exitIfErr ) {
-        _zExit( __ssRt , " create error Para error, exit when error met. exit." ) ;
+        _zExit( __ssRt , " create error Para error, exit: %d , %d , %s, %s" , _exitIfErr , ___ssDir , ___path.c_str() , ___comment.c_str() ) ;
     }
 
     return __ssRt ;
