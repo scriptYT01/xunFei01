@@ -100,14 +100,16 @@ string AIUITester::_vadToStr( int ___eventID )
     return __str ;
 } // AIUITester::_vadToStr
 
+#define _dbG1( fmt , ... )  _dbgSC . _scPrintf( _enEreopen , fmt , ## __VA_ARGS__ )
+#define _dbG1n( fmt , ... ) _dbG1( fmt "\n" , ## __VA_ARGS__ )
+
 void AIUITester::_dumpStatus()
 {
-    cerr << _eventToStr( _lastEventType00 ) << endl ;
-    cerr << _stateToStr( _lastEventType11 ) << endl ;
-    cerr << " =--7= sleep : " << SSTR( _lastEventType31 ) << " =--8= " << endl ;
-    cerr << _vadToStr( _lastEventType41 ) << endl ;
-    cerr << " =--8= error : " << SSTR( _lastEventType61 ) << " =--0= " << endl ;
-
+    _dbG1( " %s \n" ,  _eventToStr( _lastEventType00 ).c_str() ) ;
+    _dbG1( " %s \n" ,  _stateToStr( _lastEventType11 ).c_str() ) ;
+    _dbG1( " %s %s %s \n" ,  " =--7= sleep : " , SSTR( _lastEventType31 ).c_str() , " =--8= " ) ;
+    _dbG1( " %s \n" ,  _vadToStr( _lastEventType41 ).c_str() ) ;
+    _dbG1( " %s %s %s \n" ,  " =--8= error : " , SSTR( _lastEventType61 ).c_str() , " =--0= " ) ;
 } // AIUITester::_dumpStatus
 
 // wait the ___wanted event equal to ___dst , first appears, then exit;or timeout will exit.
@@ -245,6 +247,7 @@ void AIUITester::_waveCMDauto01()
     time_t __t01 ;
     time_t __t02 ;
 
+    _dbG1( " supply with argv[1] , then use it as the input as wav file name and deal with it. " ) ;
     _prEFn( " supply with argv[1] , then use it as the input as wav file name and deal with it. " ) ;
 
     if ( _argc != 2 && _argc != 3 ) {
@@ -252,9 +255,9 @@ void AIUITester::_waveCMDauto01()
         exit(33);
     }
 
-	//cerr << "\n _waveCMDauto01 start "  << _argc << "\n\n\n"<< endl;
+	_dbG1( "\n _waveCMDauto01 start : %d " , _argc );
     _dumpStatus();
-	//cerr << "\n _waveCMDauto01 0121 "   << _argc << "\n\n\n" << endl;
+	_dbG1( "\n _waveCMDauto01 0121  : %d " , _argc );
 
     createAgent();
     //sleep(1);

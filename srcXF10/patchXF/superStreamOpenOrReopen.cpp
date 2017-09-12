@@ -47,11 +47,11 @@ bool _ssFileOut::_ssOpenOrReopen( )
     }
     if ( 0 == _ssPath . find( ">:" ) ) {
         __path = _ssPath . substr( 2 ) ;
-        __fd = open( __path . c_str() , O_WRONLY | O_CREAT ) ;
+        __fd = open( __path . c_str() , O_WRONLY | O_CREAT , 0666 ) ;
     }
     if ( 0 == _ssPath . find( ">>:" ) ) {
         __path = _ssPath . substr( 3 ) ;
-        __fd = open( __path . c_str() , O_WRONLY | O_CREAT | O_APPEND ) ;
+        __fd = open( __path . c_str() , O_WRONLY | O_CREAT | O_APPEND , S_IRUSR ) ;
     }
     if ( __fd >= 0 ) {
         _ssFD   = __fd ;
