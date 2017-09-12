@@ -136,7 +136,7 @@ void _superStreamBase::_superStreamInit( _enSsType ___ssType , _enSsDir ___ssDir
     _ssFD       =   -1              ;
     cerr << " --- _superStreamInit : " << endl ;
 
-    _ssOK = this ;
+    _ssOK       = NULL ;
 }; /* _superStreamBase::_superStreamInit */
 
 
@@ -146,26 +146,20 @@ void _superStreamBase::_superStreamInit( _enSsType ___ssType , _enSsDir ___ssDir
 
 _ssCin::_ssCin( _enSsDir ___ssDir , string ___path , string ___comment ) 
 {
-    if ( ___ssDir == _enSsdIn )  {
-        _superStreamInit( _enSstCin , ___ssDir , ___path , ___comment ) ;
-        _ssOpenOrReopen();
-    }
+    _superStreamInit( _enSstCin , ___ssDir , ___path , ___comment ) ;
+    _ssOpenOrReopen();
 } /* _ssCin::_ssCin */
 
 _ssCout::_ssCout( _enSsDir ___ssDir , string ___path , string ___comment ) 
 {
-    if ( ___ssDir == _enSsdOut )  {
-        _superStreamInit( _enSstCout , ___ssDir , ___path , ___comment ) ;
-        _ssOpenOrReopen();
-    }
+    _superStreamInit( _enSstCout , ___ssDir , ___path , ___comment ) ;
+    _ssOpenOrReopen();
 } /* _ssCout::_ssCout */
 
 _ssCerr::_ssCerr( _enSsDir ___ssDir , string ___path , string ___comment ) 
 {
-    if ( ___ssDir == _enSsdOut )  {
-        _superStreamInit( _enSstCerr , ___ssDir , ___path , ___comment ) ;
-        _ssOpenOrReopen();
-    }
+    _superStreamInit( _enSstCerr , ___ssDir , ___path , ___comment ) ;
+    _ssOpenOrReopen();
 } /* _ssCerr::_ssCerr */
 
 _ssTcpConnectTo::_ssTcpConnectTo( _enSsDir ___ssDir , string ___path , string ___comment ) 
@@ -182,10 +176,8 @@ _ssListen1::_ssListen1( _enSsDir ___ssDir , string ___path , string ___comment )
 
 _ssFileOut::_ssFileOut( _enSsDir ___ssDir , string ___path , string ___comment ) 
 {
-    if ( ___ssDir == _enSsdOut )  {
-        _superStreamInit( _enSstFileOut , ___ssDir , ___path , ___comment ) ;
-        _ssOpenOrReopen();
-    }
+    _superStreamInit( _enSstFileOut , ___ssDir , ___path , ___comment ) ;
+    _ssOpenOrReopen();
 } /* _ssFileOut::_ssFileOut */
 
 
