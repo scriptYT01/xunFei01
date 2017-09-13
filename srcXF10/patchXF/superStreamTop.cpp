@@ -44,8 +44,36 @@ void _superStreamBase::_ssDumpSelf( ) {
     _prEFn( "_ssOK       '%p'" , _ssOK       ) ;
     _prEFn( "_ssFD       '%d'" , _ssFD       ) ;
 
-        //_superStreamInfo        _ssInfoW    ; 
-        //_superStreamInfo        _ssInfoR    ; 
+    _prEFn( "_ssInfoW " 
+            " tryCnt  %4lld" 
+            " tryLen  %4lld" 
+            " skipCnt %4lld" 
+            " skipLen %4lld" 
+            " succCnt %4lld" 
+            " succLen %4lld" 
+            , _ssInfoW . _tryCnt     
+            , _ssInfoW . _tryLen     
+            , _ssInfoW . _skipCnt    
+            , _ssInfoW . _skipLen    
+            , _ssInfoW . _succCnt    
+            , _ssInfoW . _succLen    
+            ) ;
+
+    _prEFn( "_ssInfoR " 
+            " tryCnt  %4lld" 
+            " tryLen  %4lld" 
+            " skipCnt %4lld" 
+            " skipLen %4lld" 
+            " succCnt %4lld" 
+            " succLen %4lld" 
+            , _ssInfoR . _tryCnt     
+            , _ssInfoR . _tryLen     
+            , _ssInfoR . _skipCnt    
+            , _ssInfoR . _skipLen    
+            , _ssInfoR . _succCnt    
+            , _ssInfoR . _succLen    
+            ) ;
+
 } /* _superStreamBase::_ssDumpSelf */
 
 void _superStreamBase::_ssReadNonblock( _enErrAction ___eAction , int ___len , const char * ___buf ) {
