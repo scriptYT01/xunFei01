@@ -434,19 +434,19 @@ void TestListener::onEvent(IAIUIEvent& event)
                 switch ( _lastEventType11 ) { // onEvent    11
                     case AIUIConstant::STATE_IDLE:
                         {
-                            cerr << "EVENT_STATE:" << "IDLE" << endl;
+                            _aiui -> _dpS1n( "EVENT_STATE:%s" , "IDLE" );
                         } 
                         break;
 
                     case AIUIConstant::STATE_READY:
                         {
-                            cerr << "EVENT_STATE:" << "READY" << endl;
+                            _aiui -> _dpS1n( "EVENT_STATE:%s" , "STATE_READY" );
                         } 
                         break;
 
                     case AIUIConstant::STATE_WORKING:
                         {
-                            cerr << "EVENT_STATE:" << "WORKING" << endl;
+                            _aiui -> _dpS1n( "EVENT_STATE:%s" , "WORKING" );
                         } 
                         break;
                 }
@@ -455,14 +455,14 @@ void TestListener::onEvent(IAIUIEvent& event)
 
         case AIUIConstant::EVENT_WAKEUP: // onEvent    2
             {
-                cerr << "EVENT_WAKEUP:" << event.getInfo() << endl;
+                _aiui -> _dpS1n( "EVENT_WAKEUP:%s" , event.getInfo() );
             } 
             break;
 
         case AIUIConstant::EVENT_SLEEP: // onEvent 3
             {
                 _lastEventType31 = event.getArg1() ;
-                cerr << "EVENT_SLEEP:arg1=" << _lastEventType31 << endl; // onEvent 31
+                _aiui -> _dpS1n( "EVENT_SLEEP:arg1=:%d" , _lastEventType31 ) ;// onEvent 31
             } 
             break;
 
@@ -472,19 +472,21 @@ void TestListener::onEvent(IAIUIEvent& event)
                 switch ( _lastEventType41 ) { // onEvent 41
                     case AIUIConstant::VAD_BOS:
                         {
-                            cerr << "EVENT_VAD:" << "BOS" << endl;
+                            _aiui -> _dpS1n( "EVENT_VAD:%s" , "BOS" ) ;// onEvent 41
                         } 
                         break;
 
                     case AIUIConstant::VAD_EOS:
                         {
-                            cerr << "EVENT_VAD:" << "EOS" << endl;
+                            _aiui -> _dpS1n( "EVENT_VAD:%s" , "EOS" ) ;// onEvent 41
                         } 
                         break;
 
                     case AIUIConstant::VAD_VOL:
                         {
-                            if(0) { cerr << "EVENT_VAD:" << "VOL" << endl;}
+                            if(0) { 
+                                _aiui -> _dpS1n( "EVENT_VAD:%s" , "VOL" ) ;// onEvent 41
+                            }
                         } 
                         break;
                 }
@@ -498,14 +500,14 @@ void TestListener::onEvent(IAIUIEvent& event)
                 Json::Reader reader;
 
                 if (!reader.parse(event.getInfo(), bizParamJson, false)) {
-                    cerr << "parse error!" << endl << event.getInfo() << endl;
+                    _aiui -> _dpS1n( "parse error! %s" , event.getInfo() ) ;
                     break;
                 }
                 Json::Value data = (bizParamJson["data"])[0];
                 Json::Value params = data["params"];
                 Json::Value content = (data["content"])[0];
                 string sub = params["sub"].asString();
-                cerr << "EVENT_RESULT:start:" << sub << __func__ << " " << __LINE__ << endl; // onEvent 51
+                _aiui -> _dpS1n( "EVENT_RESULT:start:%s %s %d " , sub.c_str() , __func__ , __LINE__ );
 
                 if (sub == "nlp")
                 {
@@ -517,7 +519,7 @@ void TestListener::onEvent(IAIUIEvent& event)
 
                     if (contentId.empty())
                     {
-                        cerr << "Content Id is empty" << endl;
+                        _aiui -> _dpS1n( "Content Id is empty" ) ;
                         break;
                     }
 
@@ -555,18 +557,20 @@ void TestListener::onEvent(IAIUIEvent& event)
                                 __answer2 = _jsonGetResult14( resultStr , "intent" , "text" , "" , "" ) ;
                                 if ( 0 != __answer2 . find( "jsonError" ) ) {
                                     __answerCNT_unEnv ++ ;
-                                    cerr << __answerCNT_unEnv << ":" << __answerCNT_all << ":get_result89:unENV:" << __answer2 << endl ;
+                                    _aiui -> _dpS1n( "%d : %d " ":get_result89:unENV:%s" 
+                                            , __answerCNT_unEnv , __answerCNT_all , __answer2.c_str() );
                                 } else {
-                                    cerr << __answerCNT_NotFound << ":" << __answerCNT_all << ":get_result97 : jsonError found found. <" << __answer2 << ">" << endl ;
+                                    _aiui -> _dpS1n( "%d : %d " ":get_result97 : jsonError found found. <%s>"
+                                            , __answerCNT_NotFound , __answerCNT_all , __answer2.c_str() );
                                 }
                             }
                         } else {
-                            cerr << __answerCNT_NULL << ":" << __answerCNT_all << ":get_result99 : NULL found." << endl ;
+                            _aiui -> _dpS1n( "%d : %d " ":get_result99 : NULL found." , __answerCNT_NULL , __answerCNT_all ) ;
                         }
-                        cerr << __answerCNT_EE << ":" << __answerCNT_all << ":get_resultEE : " << __answerCNT_all << endl ;
+                        _aiui -> _dpS1n( "%d : %d " ":get_resultEE:%d" , __answerCNT_EE , __answerCNT_all , __answerCNT_all ) ;
                     }
                 }
-                cerr << "EVENT_RESULT:end:" << sub << ":" << __func__ << " " << __LINE__ << TSTR << endl;
+                _aiui -> _dpS1n( "EVENT_RESULT:end:%s : %s %d , %d" , sub.c_str() , __func__ , __LINE__ , time(0) );
 
             }
             break;
@@ -574,7 +578,7 @@ void TestListener::onEvent(IAIUIEvent& event)
         case AIUIConstant::EVENT_ERROR: // onEvent 6
             {
                 _lastEventType61 = event.getArg1() ;
-                cerr << "EVENT_ERROR:" << _lastEventType61 << endl; // onEvent 61
+                _aiui -> _dpS1n( "EVENT_ERROR:%d " , _lastEventType61 ) ;
             } 
             break;
     }
@@ -643,7 +647,7 @@ void AIUITester::writeAiui(bool repeat)
 		return;
 
 	if (writeThread == NULL) {
-	    cerr << "\n open file <" << _fname01 << "> as input \n\n\n" << endl;
+        _dpS1n( "\n open file <%s> as input \n\n\n" , _fname01.c_str() );
 		//writeThread = new WriteAudioThread(agent, TEST_AUDIO_PATH,  repeat);
 		writeThread = new WriteAudioThread(agent, _fname01,  repeat);
 		writeThread->runWAT();
@@ -707,7 +711,7 @@ void AIUITester::readCmd()
 
     _prEFn( " supply no argv[1] , then wait for the stdin's cmd " );
     
-	cerr << "input cmd:" << endl;
+   _dpS1n( "input cmd:" ); 
 
 	string cmd;
 	while (true)
@@ -716,78 +720,69 @@ void AIUITester::readCmd()
 
 		if (cmd == "c")
 		{
-			cerr << "createAgent" << endl; // AIUITester::readCmd
+			_dpS1n( "createAgent" ); // AIUITester::readCmd
 			createAgent();
 		} else if (cmd == "w") {
-			cerr << "wakeup" << endl;
+			_dpS1n( "wakeup" );
 			wakeup();
 		} else if (cmd == "s") {
-			cerr << "start" << endl;
+			_dpS1n( "start" );
 			start();
 		} else if (cmd == "st") {
-			cerr << "stop" << endl;
+			_dpS1n( "stop" );
 			stop();
 		} else if (cmd == "d") {
-			cerr << "destroy" << endl; // AIUITester::readCmd
+			_dpS1n( "destroy" ); // AIUITester::readCmd
 			destory();
 		} else if (cmd == "r") {
-			cerr << "reset" << endl;
+			_dpS1n( "reset" );
 			reset();
 		} else if (cmd == "e") {
-			cerr << "exit" << endl;
+			_dpS1n( "exit" );
 			break;
 		} else if (cmd == "wr") {
-			cerr << "writeAiui" << endl;
+			_dpS1n( "writeAiui" );
 			writeAiui(false);
 		} else if (cmd == "wrr") {
-			cerr << "writeAiui repeatly" << endl; // AIUITester::readCmd
+			_dpS1n( "writeAiui repeatly" ); // AIUITester::readCmd
 			writeAiui(true);
 		} else if (cmd == "swrt" || cmd == "stwr"|| cmd == "S") {
-			cerr << "stopWriteThread" << endl;
+			_dpS1n( "stopWriteThread" );
 			stopWriteThread();
 		} else if (cmd == "wrt") {
-			cerr << "writeText" << endl;
+			_dpS1n( "writeText" );
 			writeText();
 		} else if (cmd == "q") {
 			destory();
 			break;
 		} else if (cmd == "ww") {
-			cerr << "stop-wakeup-writeAiui" << endl; // AIUITester::readCmd
+			_dpS1n( "stop-wakeup-writeAiui" ); // AIUITester::readCmd
 			stopWriteThread();
-			//cerr << "111" << endl;
-            //usleep(1000);
-            //sleep(5);
-			//cerr << "222" << endl;
 			wakeup();
 			start();
 			wakeup();
-			//cerr << "333" << endl;
-            //usleep(1000000);
-            //sleep(10);
-			//cerr << "444" << endl;
 			writeAiui(false);
-			//cerr << "555" << endl;
 			;
 		} else if (cmd == "h") { // AIUITester::readCmd
             dbmemDebugShow();
 
 
-			cerr 
-			<< "c    : createAgent"             << endl 
-			<< "w    : wakeup"                  << endl 
-			<< "s    : start"                   << endl 
-			<< "st   : stop"                    << endl 
-			<< "d    : destroy"                 << endl 
-			<< "r    : reset"                   << endl 
-			<< "e    : exit"                    << endl 
-			<< "wr   : writeAiui"               << endl 
-			<< "wrr  : writeAiui repeatly"      << endl 
-			<< "swrt : stopWriteThread"         << endl 
-			<< "wrt  : writeText"               << endl 
-			<< "ww   : stop-wakeup-writeAiui"   << endl
-            ;
-		} else {
-			cerr << "invalid cmd, input again." << endl; // AIUITester::readCmd
+			_dpS1n( 
+                    "c    : createAgent"             "\n"
+                    "w    : wakeup"                  "\n"
+                    "s    : start"                   "\n"
+                    "st   : stop"                    "\n"
+                    "d    : destroy"                 "\n"
+                    "r    : reset"                   "\n"
+                    "e    : exit"                    "\n"
+                    "wr   : writeAiui"               "\n"
+                    "wrr  : writeAiui repeatly"      "\n"
+                    "swrt : stopWriteThread"         "\n"
+                    "wrt  : writeText"               "\n"
+                    "ww   : stop-wakeup-writeAiui"   "\n"
+                    ) ;
+        } else {
+			_dpS1n( "invalid cmd, input again." ); // AIUITester::readCmd
 		}
         _dumpStatus();
 	} // while
