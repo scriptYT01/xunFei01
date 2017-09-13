@@ -28,7 +28,7 @@ bool _superStreamBase::_fd_canWrite( int *___fd ) {
 } /* _fd_canWrite */
 
 bool _superStreamBase::_fd_canRead( int *___fd ) {
-} /* _fd_canWrite */
+} /* _fd_canRead */
 
 void _superStreamBase::_ssTryReopneIfNeeded( _enErrAction ___eAction ) 
 {
@@ -43,6 +43,7 @@ void _superStreamBase::_ssSelfTest01( ) {
 } /* _superStreamBase::_ssSelfTest01 */
 
 void _superStreamBase::_ssDumpSelf( ) {
+    _prEFn( "" );
     _prEFn( "_ssDir      '%d'" , _ssDir      ) ;
     _prEFn( "_ssType     '%d'" , _ssType     ) ;
     _prEFn( "_ssPath     '%s'" , _ssPath     ) ;
@@ -79,6 +80,7 @@ void _superStreamBase::_ssDumpSelf( ) {
             , _ssInfoR . _succCnt    
             , _ssInfoR . _succLen    
             ) ;
+    _prEFn( "" );
 
 } /* _superStreamBase::_ssDumpSelf */
 
@@ -93,8 +95,10 @@ void _superStreamBase::_ssWriteNonblock( _enErrAction ___eAction , int ___len , 
     _ssTryReopneIfNeeded( ___eAction ) ;
 
     if ( _fd_canWrite( & _ssFD ) ) {
+        if ( 1 ) _prEFn( " can Write at once " );
         _ssWriteBlock( ___eAction , ___len , ___buf ) ;
     } else {
+        if ( 1 ) _prEFn( " can NOT Write at once " );
         _ssInfoW . _tryCnt ++ ;
         _ssInfoW . _tryLen += ___len ;
         _ssInfoW . _skipCnt ++ ;
