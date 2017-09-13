@@ -128,7 +128,7 @@ void _superStreamBase::_ssWriteNonblock( _enErrAction ___eAction , int ___len , 
     _ssTryReopneIfNeeded( ___eAction ) ;
 
     if ( _fd_canWrite( & _ssFD ) ) {
-        if ( 1 ) _prEFn( " can Write at once " );
+        if ( 0 ) _prEFn( " can Write at once " );
         _ssWriteBlock( ___eAction , ___len , ___buf ) ;
     } else {
         if ( 1 ) _prEFn( " can NOT Write at once " );

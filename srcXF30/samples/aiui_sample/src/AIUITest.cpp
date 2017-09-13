@@ -245,7 +245,7 @@ void AIUITester::_waveCMDauto01()
     time_t __t01 ;
     time_t __t02 ;
 
-    if ( 1 ) { 
+    if ( 0 ) { 
         _dbgS1 . _scSelfTest01() ; 
         _prExit( " debuging SS " );
     } 

@@ -55,13 +55,14 @@ void _streamController::_scSelfTest01( ) {
 
     /* _scSelfTest01 */
     _scDumpSS() ; /* _ssDumpSelf */
-    if ( 0 ) write( 6 , "yyyy\n" , 5 ) ; /* force use the fd 6 */
+    if ( 1 ) write( 6 , "yyyy\n" , 5 ) ; /* force use the fd 6 */
     _scPrintf( _enEreopen , " aaaa" ) ;
 
     _scDumpSS() ; /* _ssDumpSelf */
-    if ( 0 ) write( 6 , "zzzz\n" , 5 ) ; /* force use the fd 6 */
+    if ( 1 ) write( 6 , "zzzz\n" , 5 ) ; /* force use the fd 6 */
     _scPrintf( _enEreopen , " bbbb" ) ; /* _scPrintf _ssWriteNonblock */
 
+    _scDumpSS() ; /* _ssDumpSelf */
     _scDumpSS() ; /* _ssDumpSelf */
 
 } /* _streamController::_scSelfTest01 */
