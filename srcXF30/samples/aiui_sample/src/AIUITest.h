@@ -96,8 +96,8 @@ private:
     //string _fname01 = TEST_AUDIO_PATH ;
     string _fname01 ;
 public:
-    _streamControllerIN     _outSC    ;
-    _streamControllerOUT    _inSC     ;
+    _streamControllerIN     _inSC     ;
+    _streamControllerOUT    _outSC    ;
     _streamControllerOUT    _dbgS1    ;
     _streamControllerOUT    _dbgS2    ;
 public:
