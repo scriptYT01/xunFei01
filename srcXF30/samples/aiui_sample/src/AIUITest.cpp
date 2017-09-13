@@ -255,7 +255,6 @@ void AIUITester::_waveCMDauto01()
 
 
     if ( _argc != 2 && _argc != 3 ) {
-	    // cerr << "\n useage : " << _argv[0] << " <wave_input.wav>\n\n\n" << _argc << endl;
 	    _dpS1( "\n useage : " " %s %d " " <wave_input.wav>\n\n\n"  , _argv[0] , _argc ) ;
         exit(33);
     }
@@ -267,13 +266,13 @@ void AIUITester::_waveCMDauto01()
     createAgent();
     //sleep(1);
     __i01 = _sleepWaitForState01( 100000 , 10 , &_lastEventType11 , AIUIConstant::STATE_READY ) ;
-	cerr << " 11 repeate ("  << __i01 << ") time , result : " << SSTR( _lastEventType11 ) << " --> " << _stateToStr( _lastEventType11 ) << endl;
+	_dpS1 ( " 11 repeate (%d) time , result : %d --> %s \n" , __i01 , _lastEventType11 , _stateToStr( _lastEventType11 ).c_str() ) ;
     if ( 0 ) { exit(11); }
 
     //stopWriteThread();
     wakeup();
     __i01 = _sleepWaitForState01( 100000 , 100 , &_lastEventType11 , AIUIConstant::STATE_WORKING ) ;
-	cerr << " 22 repeate ("  << __i01 << ") time , result : " << SSTR( _lastEventType11 ) << " --> " << _stateToStr( _lastEventType11 ) << endl;
+	_dpS1 ( " 22 repeate (%d) time , result : %d --> %s \n" , __i01 , _lastEventType11 , _stateToStr( _lastEventType11 ).c_str() ) ;
     if ( 0 ) { exit(22); }
 
     _lastNlp01 = -1 ;
@@ -283,38 +282,28 @@ void AIUITester::_waveCMDauto01()
     __t01 = time( 0 ) ;
     while ( 1 ) {
         __t02 = time( 0 ) ;
-        _dbgS1 . _scPrintf( _enEignore , 
-            " ======= 1 aiui start unit it is killed. : %s , %s : %d \n" 
-            , _argv[0]
-            , basename(_argv[0])
-            , (__t02 - __t01) 
-            ) ;
-	    cerr 
-            << " ======= 2 aiui start unit it is killed. : " 
-            << _argv[0]
-            << " "
-            << basename(_argv[0])
-            << endl 
-            << (__t02 - __t01) << endl 
-            ;
+        _dpS1 ( 
+                " ======= 1 aiui start unit it is killed. : %s , %s : %d \n" 
+                , _argv[0]
+                , basename(_argv[0])
+                , (__t02 - __t01) 
+                ) ;
         sleep( 100 ) ;
     }
 
     if ( 0 ) {
         __i01 = _sleepWaitForState02( 100000 , 200 , &_lastEventType11 , AIUIConstant::STATE_WORKING ) ;
-	    cerr << " 33 repeate ("  << __i01 << ") time , result : " << SSTR( _lastEventType11 ) << " --> " << _stateToStr( _lastEventType11 ) << endl;
+	    _dpS1 ( " 33 repeate (%d) time , result : %d --> %s \n" , __i01 , _lastEventType11 , _stateToStr( _lastEventType11 ).c_str() ) ;
     } 
     if ( _fname01 != "-" ) 
     {
         __i01 = _sleepWaitForState11( 100000 , 200 , &_lastNlp01 , &_lastNlp02 , 4 ) ;
-	    cerr << " 34 NLP result ("  << __i01 << ") time , result : " << SSTR( _lastNlp01 ) 
-            << " -- " << SSTR( _lastNlp02 ) << " -- " << TSTR << endl ;
+	    _dpS1 ( " 44 NLP result (%d) time , result : %d -- %d --> %s \n" , __i01 , _lastNlp01 , _lastNlp02 , time(0) ) ;
     }
     if ( _fname01 == "-" ) 
     {
         __i01 = _sleepWaitForState11( 100 * 1000000 , 200 , &_lastNlp01 , &_lastNlp02 , 4 ) ;
-	    cerr << " 35 NLP result ("  << __i01 << ") time , result : " << SSTR( _lastNlp01 ) 
-            << " -- " << SSTR( _lastNlp02 ) << " -- " << TSTR << endl ;
+	    _dpS1 ( " 44 NLP result (%d) time , result : %d -- %d --> %s \n" , __i01 , _lastNlp01 , _lastNlp02 , time(0) ) ;
     }
 
     if ( 1 ) { _prEFn( " nothing got " ) ; exit(33); }
@@ -327,7 +316,7 @@ void AIUITester::_waveCMDauto01()
     sleep(1);
     writeAiui(false);
 
-	cerr << "\n _waveCMDauto01 end \n\n\n" << _argc << endl;
+	_dpS1( "\n _waveCMDauto01 end : %d \n\n\n" , _argc ) ;
 
 } // AIUITester::_waveCMDauto01
 
