@@ -71,7 +71,6 @@ class _superStreamBase
         static _superStreamBase * _genSS( bool _exitIfErr ,  _enSsDir ___ssDir , const char * ___path , const char * ___comment ) ;
     public :
         void _ssDumpSelf( ) ;
-        void _ssSelfTest01( ) ;
         void _ssWriteNonblock(  _enErrAction ___eAction , int ___len , const char * ___buf ) ;
         void _ssWriteBlock(     _enErrAction ___eAction , int ___len , const char * ___buf ) ;
         void _ssReadNonblock(   _enErrAction ___eAction , int ___len , const char * ___buf ) ;

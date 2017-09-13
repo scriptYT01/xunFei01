@@ -81,9 +81,6 @@ void _superStreamBase::_ssTryReopneIfNeeded( _enErrAction ___eAction )
     }
 } /* _superStreamBase::_ssTryReopneIfNeeded */
 
-void _superStreamBase::_ssSelfTest01( ) {
-} /* _superStreamBase::_ssSelfTest01 */
-
 void _superStreamBase::_ssDumpSelf( ) {
     _prEFn( "" );
     _prEFn( "_ssDir      '%d'" , _ssDir      ) ;

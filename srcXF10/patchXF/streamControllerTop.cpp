@@ -51,3 +51,18 @@ bool _streamController::_addPath2( const char * ___path , const char * ___commen
     return true ;
 } /* _streamController::_addPath2 */
 
+void _streamController::_scSelfTest01( ) {
+
+    /* _scSelfTest01 */
+    _scDumpSS() ; /* _ssDumpSelf */
+    if ( 0 ) write( 6 , "yyyy\n" , 5 ) ; /* force use the fd 6 */
+    _scPrintf( _enEreopen , " aaaa" ) ;
+
+    _scDumpSS() ; /* _ssDumpSelf */
+    if ( 0 ) write( 6 , "zzzz\n" , 5 ) ; /* force use the fd 6 */
+    _scPrintf( _enEreopen , " bbbb" ) ; /* _scPrintf _ssWriteNonblock */
+
+    _scDumpSS() ; /* _ssDumpSelf */
+
+} /* _streamController::_scSelfTest01 */
+

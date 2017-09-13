@@ -100,16 +100,14 @@ string AIUITester::_vadToStr( int ___eventID )
     return __str ;
 } // AIUITester::_vadToStr
 
-#define _dbG1( fmt , ... )  _dbgSC . _scPrintf( _enEreopen , fmt , ## __VA_ARGS__ )
-#define _dbG1n( fmt , ... ) _dbG1( fmt "\n" , ## __VA_ARGS__ )
 
 void AIUITester::_dumpStatus()
 {
-    _dbG1( " %s \n" ,  _eventToStr( _lastEventType00 ).c_str() ) ;
-    _dbG1( " %s \n" ,  _stateToStr( _lastEventType11 ).c_str() ) ;
-    _dbG1( " %s %s %s \n" ,  " =--7= sleep : " , SSTR( _lastEventType31 ).c_str() , " =--8= " ) ;
-    _dbG1( " %s \n" ,  _vadToStr( _lastEventType41 ).c_str() ) ;
-    _dbG1( " %s %s %s \n" ,  " =--8= error : " , SSTR( _lastEventType61 ).c_str() , " =--0= " ) ;
+    _dpS1( " %s \n" ,  _eventToStr( _lastEventType00 ).c_str() ) ;
+    _dpS1( " %s \n" ,  _stateToStr( _lastEventType11 ).c_str() ) ;
+    _dpS1( " %s %s %s \n" ,  " =--7= sleep : " , SSTR( _lastEventType31 ).c_str() , " =--8= " ) ;
+    _dpS1( " %s \n" ,  _vadToStr( _lastEventType41 ).c_str() ) ;
+    _dpS1( " %s %s %s \n" ,  " =--8= error : " , SSTR( _lastEventType61 ).c_str() , " =--0= " ) ;
 } // AIUITester::_dumpStatus
 
 // wait the ___wanted event equal to ___dst , first appears, then exit;or timeout will exit.
@@ -247,30 +245,23 @@ void AIUITester::_waveCMDauto01()
     time_t __t01 ;
     time_t __t02 ;
 
-    _dbG1( " supply with argv[1] , then use it as the input as wav file name and deal with it. " ) ;
+    if ( 1 ) { 
+        _dbgS1 . _scSelfTest01() ; 
+        _prExit( " debuging SS " );
+    } 
+
+    _dpS1( " supply with argv[1] , then use it as the input as wav file name and deal with it. " ) ;
     _prEFn( " supply with argv[1] , then use it as the input as wav file name and deal with it. " ) ;
 
-    /* _ssSelfTest01 */
-    _dbgSC . _scDumpSS() ; /* _ssDumpSelf */
-    write( 6 , "yyyy\n" , 5 ) ;
-    _dbG1( " aaaa" ) ;
-
-    _dbgSC . _scDumpSS() ; /* _ssDumpSelf */
-    write( 6 , "zzzz\n" , 5 ) ;
-    _dbG1( " bbbb" ) ; /* _scPrintf _ssWriteNonblock */
-
-    _dbgSC . _scDumpSS() ; /* _ssDumpSelf */
-
-    _prExit( " debuging SS " );
 
     if ( _argc != 2 && _argc != 3 ) {
 	    cerr << "\n useage : " << _argv[0] << " <wave_input.wav>\n\n\n" << _argc << endl;
         exit(33);
     }
 
-	_dbG1( "\n _waveCMDauto01 start : %d " , _argc );
+	_dpS1( "\n _waveCMDauto01 start : %d " , _argc );
     _dumpStatus();
-	_dbG1( "\n _waveCMDauto01 0121  : %d " , _argc );
+	_dpS1( "\n _waveCMDauto01 0121  : %d " , _argc );
 
     createAgent();
     //sleep(1);
@@ -291,7 +282,7 @@ void AIUITester::_waveCMDauto01()
     __t01 = time( 0 ) ;
     while ( 1 ) {
         __t02 = time( 0 ) ;
-        _dbgSC . _scPrintf( _enEignore , 
+        _dbgS1 . _scPrintf( _enEignore , 
             " ======= 1 aiui start unit it is killed. : %s , %s : %d \n" 
             , _argv[0]
             , basename(_argv[0])
@@ -840,7 +831,7 @@ void AIUITester::testAiui()
         ;
 
     __ss = ">:/tmp/log.01." + _progNameS + ".txt"    ;
-    _zExit( _dbgSC . _addPath2( __ss . c_str()      , " debug-text-01 " ) 
+    _zExit( _dbgS1 . _addPath2( __ss . c_str()      , " debug-text-01 " ) 
             , "debug stream error : <%s> <%s> " , _argv[1] , _argv[2] ) ;
 
     __ss = ">:/tmp/log.02." + _progNameS + ".txt"    ;
