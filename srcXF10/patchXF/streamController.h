@@ -43,4 +43,7 @@ class _streamControllerOUT : public _streamController
 #define _dpS3( fmt , ... )  _dbgS3 . _scPrintf( _enEreopen , fmt , ## __VA_ARGS__ )
 #define _dpS3n( fmt , ... ) _dpS3( fmt "\n" , ## __VA_ARGS__ )
 
+#define _dpOUT( fmt , ... )  _outSC . _scPrintf( _enEignore , fmt , ## __VA_ARGS__ )
+#define _dpOUTn( fmt , ... ) _dpOUT( fmt "\n" , ## __VA_ARGS__ )
+
 #endif

@@ -532,9 +532,9 @@ void TestListener::onEvent(IAIUIEvent& event)
                         __answerCNT_all ++ ;
                         resultStr = string((char*)buffer->data());
 
-                        cerr << "==get json : begin" << endl;
-                        cerr << resultStr << endl;
-                        cerr << "==get json : end" << endl;
+                        _aiui -> _dpS1n( "==get json : begin" ) ;
+                        _aiui -> _dpS1n( "%s" , resultStr.c_str() ) ;
+                        _aiui -> _dpS1n( "==get json : end" ) ;
                         __answer1 = _jsonGetResult14( resultStr , "intent" , "answer" , "text" , "" ) ;
                         if ( "" !=  __answer1 ) {
                             //if ( 0 != strncmp( __answer1.c_str() , "jsonError" , strlen( "jsonError" ) ) ) {
@@ -544,11 +544,13 @@ void TestListener::onEvent(IAIUIEvent& event)
                                 __answerCNT_answer++ ;
 
                                 __answer2 = _jsonGetResult14( resultStr , "intent" , "text" , "" , "" ) ;
-                                cerr << __answerCNT_ask << ":" << __answerCNT_ask + __answerCNT_unEnv << ":" 
-                                    << __answerCNT_all << __answerCNT_all << ":get_result81:ask11:" << __answer2 << endl ;
+                                _aiui -> _dpS1n( " %d : %d : %d " ":get_result81:ask11:%s" 
+                                        , __answerCNT_ask ,  __answerCNT_ask + __answerCNT_unEnv 
+                                        , __answerCNT_all , __answer2.c_str() ) ;
 
-                                _aiui -> _outSC . _scPrintf( _enEignore , "%s\n" , __answer1.c_str() ) ;
-                                cerr << __answerCNT_answer << ":" << __answerCNT_all << "get_result02:answer02:" << __answer1 << endl ;
+                                _aiui -> _dpOUT( "%s\n" , __answer1.c_str() ) ;
+                                _aiui -> _dpS1n( " %d : %d : " "get_result02:answer02:%s" 
+                                        , __answerCNT_answer , __answerCNT_all , __answer1.c_str() );
                             } else {
                                 __answer2 = _jsonGetResult14( resultStr , "intent" , "text" , "" , "" ) ;
                                 if ( 0 != __answer2 . find( "jsonError" ) ) {
