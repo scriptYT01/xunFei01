@@ -811,11 +811,7 @@ void AIUITester::testAiui()
 
     usage() ;
 
-	cerr 
-        << " input argc: " 
-        << _argc 
-        << endl
-        ;
+	cerr << " input argc: " << _argc << endl ;
 
     __ss = ">:/tmp/log.01." + _progNameS + ".txt"    ;
     _zExit( _dbgS1 . _addPath2( __ss . c_str()      , " debug-text-01 " ) 
