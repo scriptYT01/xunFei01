@@ -131,7 +131,7 @@ void _superStreamBase::_ssWriteNonblock( _enErrAction ___eAction , int ___len , 
         if ( 0 ) _prEFn( " can Write at once " );
         _ssWriteBlock( ___eAction , ___len , ___buf ) ;
     } else {
-        if ( 1 ) _prEFn( " can NOT Write at once " );
+        if ( 1 ) _prEFn( " can NOT Write at once : %d : %s , %s " , _ssFD , _ssPath , _ssComment );
         _ssInfoW . _tryCnt ++ ;
         _ssInfoW . _tryLen += ___len ;
         _ssInfoW . _skipCnt ++ ;
@@ -167,12 +167,15 @@ void _superStreamBase::_ssWriteBlock( _enErrAction ___eAction , int ___len , con
 
 } /* _superStreamBase::_ssWriteBlock */
 
-#define genErr " create error para error , exit: %d , %d , %s, %s" , _exitIfErr , ___ssDir , ___path , ___comment 
+//#define gen01   " %d , %d , %s, %s" , _exitIfErr , ___ssDir , ___path , ___comment 
+//#define genErr  " create error para error , exit: " gen01
+#define gen02   _prSFn( " %d , %d , %s, %s" , _exitIfErr , ___ssDir , ___path , ___comment )
 _superStreamBase * 
 _superStreamBase::_genSS( bool _exitIfErr , _enSsDir ___ssDir , const char * ___path , const char * ___comment ) {
     _superStreamBase * __ssTop  = NULL ;
     _superStreamBase * __ssRt   = NULL;
 
+    gen02 ;
     if ( 0 == _strcmpXX( "-" , ___path ) ) {
         switch ( ___ssDir ) {
             case _enSsdIn :
