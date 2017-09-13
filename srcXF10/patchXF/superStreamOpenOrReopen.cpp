@@ -42,7 +42,7 @@ bool _ssFileOut::_ssOpenOrReopen( )
     const char *  __path ;
     int     __fd = -1 ;
     if ( _ssDir != _enSsdOut )  return false ;
-    if ( _fd_valid1_invalid0( & _ssFD ) ) {
+    if ( _FD_valid1_invalid0_close( & _ssFD ) ) {
         return true ;
     }
     if ( 0 == _strcmpX1( ">:" , _ssPath ) ) {

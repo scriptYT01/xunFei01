@@ -61,7 +61,7 @@ class _superStreamBase
     protected :
         void _superStreamInit( _enSsType ___ssType , _enSsDir ___ssDir , const char * ___path , const char * ___comment ) ;
         static int              _valid_fd_or_errFD( int * ___fd ) ;
-        static bool             _fd_valid1_invalid0( int * ___fd ) ;
+        static bool             _FD_valid1_invalid0_close( int * ___fd ) ;
         static bool             _fd_canWrite( int *___fd ) ;
         static bool             _fd_canRead(  int *___fd ) ;
         void                    _ssTryReopneIfNeeded( _enErrAction ___eAction ) ;

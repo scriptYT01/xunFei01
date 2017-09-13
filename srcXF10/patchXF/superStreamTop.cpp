@@ -3,28 +3,70 @@
 
 /* _superStream */
 
-bool _superStreamBase::_fd_valid1_invalid0( int *___fd ) {
+bool _superStreamBase::_FD_valid1_invalid0_close( int *___fd ) {
     bool __rt ;
     if ( ___fd == NULL ) { __rt = false ; }
     else if ( *___fd < 0 ) { __rt = false ; }
     else {
         if (fcntl(*___fd, F_GETFL) == -1 && errno == EBADF) {
             __rt = false ;
+            close( *___fd ) ;
             *___fd = -1 ;/* force fd to invalid */
         } else 
             __rt = true ;
     }
     return __rt ;
-} /* _fd_valid1_invalid0 */
+} /* _FD_valid1_invalid0_close */
 
 int _superStreamBase::_valid_fd_or_errFD( int *___fd ) {
     int __rt ;
-    if ( _fd_valid1_invalid0( ___fd ) ) __rt = *___fd ;
+    if ( _FD_valid1_invalid0_close( ___fd ) ) __rt = *___fd ;
     else __rt = 2 ;
     return __rt ;
 } /* _valid_fd_or_errFD */
 
 bool _superStreamBase::_fd_canWrite( int *___fd ) {
+    struct pollfd __pfds[1] ;
+    int __rt ;
+
+    if ( 0 == _FD_valid1_invalid0_close( ___fd ) ) return false ;
+    __pfds[0].fd = *___fd ;
+    __pfds[0].events = POLLOUT ;
+    __pfds[0].revents = 0 ;
+
+    __rt = poll(__pfds, 1, 0);
+
+    if ( __rt < 0 ) {
+        close( *___fd ) ; *___fd = -1 ;
+        return false ; /* error 1*/
+    }
+    
+    if ( __rt == 0 ) {
+        return false ; /* can NOT write , normal */
+    }
+
+    if ( __pfds[0].revents & POLLERR ) {
+        _prEFn( "POLLERR state : %d : %s " , *___fd , strerror(errno) ) ;
+        close( *___fd ) ; *___fd = -1 ;
+        return false ;
+    }
+
+    if ( __pfds[0].revents & POLLHUP ) {
+        close( *___fd ) ; *___fd = -1 ;
+        return false ;
+    }
+
+    if ( __pfds[0].revents & POLLNVAL ) {
+        close( *___fd ) ; *___fd = -1 ;
+        return false ;
+    }
+
+    if(__pfds[0].revents & POLLOUT) {
+        return true ;
+    }
+
+    _prEFn( "unknown state" ) ;
+    return false ;
 } /* _fd_canWrite */
 
 bool _superStreamBase::_fd_canRead( int *___fd ) {
@@ -32,7 +74,7 @@ bool _superStreamBase::_fd_canRead( int *___fd ) {
 
 void _superStreamBase::_ssTryReopneIfNeeded( _enErrAction ___eAction ) 
 {
-    if ( 0 == _fd_valid1_invalid0( & _ssFD ) ) {
+    if ( 0 == _FD_valid1_invalid0_close( & _ssFD ) ) {
         if ( ___eAction == _enEreopen ) {
             _ssOpenOrReopen();
         }
@@ -52,12 +94,9 @@ void _superStreamBase::_ssDumpSelf( ) {
     _prEFn( "_ssFD       '%d'" , _ssFD       ) ;
 
     _prEFn( "_ssInfoW " 
-            " tryCnt  %4lld" 
-            " tryLen  %4lld" 
-            " skipCnt %4lld" 
-            " skipLen %4lld" 
-            " succCnt %4lld" 
-            " succLen %4lld" 
+            " tryCnt,Len  %4lld %4lld " 
+            " skipCnt,Len %4lld %4lld " 
+            " succCnt,Len %4lld %4lld " 
             , _ssInfoW . _tryCnt     
             , _ssInfoW . _tryLen     
             , _ssInfoW . _skipCnt    
@@ -67,12 +106,9 @@ void _superStreamBase::_ssDumpSelf( ) {
             ) ;
 
     _prEFn( "_ssInfoR " 
-            " tryCnt  %4lld" 
-            " tryLen  %4lld" 
-            " skipCnt %4lld" 
-            " skipLen %4lld" 
-            " succCnt %4lld" 
-            " succLen %4lld" 
+            " tryCnt,Len  %4lld %4lld " 
+            " skipCnt,Len %4lld %4lld " 
+            " succCnt,Len %4lld %4lld " 
             , _ssInfoR . _tryCnt     
             , _ssInfoR . _tryLen     
             , _ssInfoR . _skipCnt    
@@ -112,7 +148,7 @@ void _superStreamBase::_ssWriteBlock( _enErrAction ___eAction , int ___len , con
 
     _ssTryReopneIfNeeded( ___eAction ) ;
 
-    if ( _fd_valid1_invalid0( & _ssFD ) ) {
+    if ( _FD_valid1_invalid0_close( & _ssFD ) ) {
         int __Len ;
         __Len = write( _ssFD , ___buf , ___len ) ; 
         if ( __Len <= 0 ) {
