@@ -63,6 +63,7 @@ class _superStreamBase
         static int              _valid_fd_or_errFD( int * ___fd ) ;
         static bool             _fd_valid1_invalid0( int * ___fd ) ;
         static bool             _fd_canWrite( int *___fd ) ;
+        static bool             _fd_canRead(  int *___fd ) ;
         void                    _ssTryReopneIfNeeded( _enErrAction ___eAction ) ;
     public :
         _superStreamBase(){ _memZS( _ssInfoW ) ; _memZS( _ssInfoR ) ; } ;
@@ -70,6 +71,7 @@ class _superStreamBase
         static _superStreamBase * _genSS( bool _exitIfErr ,  _enSsDir ___ssDir , const char * ___path , const char * ___comment ) ;
     public :
         void _ssDumpSelf( ) ;
+        void _ssSelfTest01( ) ;
         void _ssWriteNonblock(  _enErrAction ___eAction , int ___len , const char * ___buf ) ;
         void _ssWriteBlock(     _enErrAction ___eAction , int ___len , const char * ___buf ) ;
         void _ssReadNonblock(   _enErrAction ___eAction , int ___len , const char * ___buf ) ;

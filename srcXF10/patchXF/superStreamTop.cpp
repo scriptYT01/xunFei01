@@ -27,6 +27,9 @@ int _superStreamBase::_valid_fd_or_errFD( int *___fd ) {
 bool _superStreamBase::_fd_canWrite( int *___fd ) {
 } /* _fd_canWrite */
 
+bool _superStreamBase::_fd_canRead( int *___fd ) {
+} /* _fd_canWrite */
+
 void _superStreamBase::_ssTryReopneIfNeeded( _enErrAction ___eAction ) 
 {
     if ( 0 == _fd_valid1_invalid0( & _ssFD ) ) {
@@ -35,6 +38,9 @@ void _superStreamBase::_ssTryReopneIfNeeded( _enErrAction ___eAction )
         }
     }
 } /* _superStreamBase::_ssTryReopneIfNeeded */
+
+void _superStreamBase::_ssSelfTest01( ) {
+} /* _superStreamBase::_ssSelfTest01 */
 
 void _superStreamBase::_ssDumpSelf( ) {
     _prEFn( "_ssDir      '%d'" , _ssDir      ) ;

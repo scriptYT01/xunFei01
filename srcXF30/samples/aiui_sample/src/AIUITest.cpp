@@ -250,13 +250,14 @@ void AIUITester::_waveCMDauto01()
     _dbG1( " supply with argv[1] , then use it as the input as wav file name and deal with it. " ) ;
     _prEFn( " supply with argv[1] , then use it as the input as wav file name and deal with it. " ) ;
 
+    /* _ssSelfTest01 */
     _dbgSC . _scDumpSS() ; /* _ssDumpSelf */
     write( 6 , "yyyy\n" , 5 ) ;
     _dbG1( " aaaa" ) ;
 
     _dbgSC . _scDumpSS() ; /* _ssDumpSelf */
     write( 6 , "zzzz\n" , 5 ) ;
-    _dbG1( " bbbb" ) ;
+    _dbG1( " bbbb" ) ; /* _scPrintf _ssWriteNonblock */
 
     _dbgSC . _scDumpSS() ; /* _ssDumpSelf */
 
