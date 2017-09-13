@@ -8,11 +8,11 @@ class _streamController
 {
     private :
     protected :
-        _enSsDir _ssDir ;
+        _enSsDir _scDir ;
     protected :
         vector <_superStreamBase*> _sVec ;
     public:
-        _streamController():_ssDir(_enSsdUnknown) {};
+        _streamController():_scDir(_enSsdUnknown) {};
         virtual ~_streamController(){};
     public:
         bool _addPath2( const char * ___path , const char * ___comment ) ;
@@ -25,14 +25,14 @@ class _streamController
 class _streamControllerIN : public _streamController 
 {
     public :
-        _streamControllerIN(){ _ssDir=_enSsdIn; };
+        _streamControllerIN(){ _scDir=_enSsdIn; };
         ~_streamControllerIN(){};
 } ; /* class _streamControllerIN */
 
 class _streamControllerOUT : public _streamController 
 {
     public :
-        _streamControllerOUT(){ _ssDir=_enSsdOut; };
+        _streamControllerOUT(){ _scDir=_enSsdOut; };
         ~_streamControllerOUT(){};
 } ; /* class _streamControllerOUT */
 

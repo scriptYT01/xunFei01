@@ -135,6 +135,8 @@ class _ssFileOut : public _superStreamBase
 } ; /* class _ssFileOut */
 
 
+#define _dbSS1   _prSFn( " %d , %d , %s, %s" , _exitIfErr , ___ssDir , ___path , ___comment )
+#define _dbSS2   _prSFn( " %d , %d , %s, %s" , _ssDir , _ssType , _ssPath , _ssComment )
 
 #endif //     __SENDRESULTTOSDOUTORTCP_H
 

@@ -3,7 +3,9 @@
 
 bool _ssCin::_ssOpenOrReopen( )
 {
+    _dbSS2   ;
     if ( _ssDir != _enSsdIn )  return false ;
+    _dbSS2   ;
     _ssFD   = 0 ;
     _ssOK   = this ;
     return true ;

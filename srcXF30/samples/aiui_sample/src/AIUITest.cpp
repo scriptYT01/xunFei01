@@ -853,7 +853,7 @@ void AIUITester::testAiui()
             _zExit( _outSC . _addPath2( _argv[2] , " output-text-to-tts_1 " ) 
                     , "output stream error : <%s> <%s> " , _argv[1] , _argv[2] ) ;
 
-            _nExit( 1 , " output-text-to-tts_2 " ) 
+            _nExit( 0 , " debuging output-text-to-tts_2 " ) 
 
             _waveCMDauto01();
             break ;
