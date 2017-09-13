@@ -23,6 +23,10 @@ int _lastEventType41 = -1 ;
 int _lastEventType61 = -1 ;
 int _lastNlp01 = -1 ;
 int _lastNlp02 = -1 ;
+time_t _initT01 = 0 ;
+time_t _initT02 = 0 ;
+int    _initT03 = 0 ;
+int    _initT09 = 0 ;
 
 char _numstr[21]; // enough to hold all numbers up to 64-bits
 
@@ -551,6 +555,9 @@ void TestListener::onEvent(IAIUIEvent& event)
                                         , __answerCNT_all , __answer2.c_str() ) ;
 
                                 _aiui -> _dpOUT( "%s\n" , __answer1.c_str() ) ;
+                                _initT02 = time(0) ; _initT03 = _initT02 - _initT01 ; _initT09 ++ ;
+                                cerr << __answer1 << " : " << TSTR << " : " << _initT03 << " : " << SSTR( _initT09 ) << endl ; 
+
                                 _aiui -> _dpS1n( " %d : %d : " "get_result02:answer02:%s" 
                                         , __answerCNT_answer , __answerCNT_all , __answer1.c_str() );
                             } else {
@@ -590,6 +597,7 @@ AIUITester::AIUITester()
     , writeThread(NULL)
     , _fname01 ( TEST_AUDIO_PATH )
 {
+    _initT01 = time(0) ;
 }
 
 AIUITester::~AIUITester()
