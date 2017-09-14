@@ -6,8 +6,8 @@ endif
 
 
 
-kp1:=kpvioce01/src/kp01_main.cpp
-kp2:=kpvioce01/incude/kp___base.h
+kp1:=kpvoice01/src/kp01_main.cpp
+kp2:=kpvoice01/incude/kp___base.h
 
 
 KPlist:= 
