@@ -11,7 +11,7 @@ kp2:=kpvioce01/incude/kp___base.h
 
 
 KPlist:= 
-#KPlist+= kp1 kp2 
+KPlist+= kp1 kp2 
 
 $(call VIMobj,$(KPlist))
 
@@ -19,7 +19,7 @@ help_OBJs+= help_obj__sKP
 help_obj__sKP:
 	@echo
 	@echo '         [$(makePATHkp1)]'
-	@#echo ' KPu      KPupdate -> $(shell basename $(KPsrc1))/ $(shell basename $(KPsrc2))/ -->  $(KPdst1)/'
+#	@echo ' KPu      KPupdate -> $(shell basename $(KPsrc1))/ $(shell basename $(KPsrc2))/ -->  $(KPdst1)/'
 	$(call VIMhelp,$(KPlist))
 
 ifneq ($(VV13838311),$(strip $(VV)))
