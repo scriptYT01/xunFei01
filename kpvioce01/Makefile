@@ -1,0 +1,5 @@
+
+all :
+
+m:
+	vim Makefile
