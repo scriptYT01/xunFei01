@@ -586,6 +586,9 @@ void TestListener::onEvent(IAIUIEvent& event)
             {
                 _lastEventType61 = event.getArg1() ;
                 _aiui -> _dpS1n( "EVENT_ERROR:%d " , _lastEventType61 ) ;
+
+                _initT02 = time(0) ; _initT03 = _initT02 - _initT01 ; _initT09 ++ ;
+                cerr << "EVENT_ERROR:" << SSTR( _lastEventType61 )  << " : " << TSTR << " : " << _initT03 << " : " << SSTR( _initT09 ) << endl ; 
             } 
             break;
     }

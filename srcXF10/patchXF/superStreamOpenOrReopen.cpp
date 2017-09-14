@@ -49,11 +49,11 @@ bool _ssFileOut::_ssOpenOrReopen( )
     }
     if ( 0 == _strcmpX1( ">:" , _ssPath ) ) {
         __path = _ssPath + 2 ;
-        __fd = open( __path     , O_WRONLY | O_CREAT , 0666 ) ;
+        __fd = open( __path     , O_WRONLY | O_CREAT | O_TRUNC , 0666 ) ;
     }
     if ( 0 == _strcmpX1( ">>:"  , _ssPath ) ) {
         __path = _ssPath + 3 ;
-        __fd = open( __path     , O_WRONLY | O_CREAT | O_APPEND , S_IRUSR ) ;
+        __fd = open( __path     , O_WRONLY | O_CREAT | O_APPEND , 0666 ) ;
     }
     if ( __fd >= 0 ) {
         _ssFD   = __fd ;
