@@ -7,7 +7,7 @@ endif
 
 
 kp1:=kpvoice01/src/kp01_main.cpp
-kp2:=kpvoice01/incude/kp___base.h
+kp2:=kpvoice01/include/kp___base.h
 kp3:=kpvoice01/Makefile
 
 
