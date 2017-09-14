@@ -8,10 +8,11 @@ endif
 
 kp1:=kpvoice01/src/kp01_main.cpp
 kp2:=kpvoice01/incude/kp___base.h
+kp3:=kpvoice01/Makefile
 
 
 KPlist:= 
-KPlist+= kp1 kp2 
+KPlist+= kp1 kp2 kp3
 
 $(call VIMobj,$(KPlist))
 
