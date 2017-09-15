@@ -132,6 +132,9 @@ XFu XFupdate : XFgenDate
 	$(rsync1)    $(XFsrc4)/  	$(XFdst4)/
 	$(rsync1)    $(XFsrc5)/  	$(XFdst5)/
 	@#
+	$(rsync1)    $(XFsrc5)/base01/  					$(XFdst1)/patchXF/base01/
+	$(rsync1)    $(XFsrc5)/ssuperStream01/  			$(XFdst1)/patchXF/ssuperStream01/
+	@#
 	$(rsync1)    $(XFsrc1)/patchXF/  	$(XFdst3)/patchXF/
 	@#
 	rm -fr $(XFi386DST11)/
