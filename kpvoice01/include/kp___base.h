@@ -66,7 +66,18 @@
     using namespace std;
 #endif
 
-
+#define _sleep_1ms      usleep( 1000 ) 
+#define _sleep_2ms      usleep( 2000 ) 
+#define _sleep_3ms      usleep( 3000 ) 
+#define _sleep_5ms      usleep( 5000 ) 
+#define _sleep_10ms     usleep( 10000 ) 
+#define _sleep_20ms     usleep( 20000 ) 
+#define _sleep_30ms     usleep( 30000 ) 
+#define _sleep_50ms     usleep( 50000 ) 
+#define _sleep_100ms    usleep( 100000 ) 
+#define _sleep_200ms    usleep( 200000 ) 
+#define _sleep_300ms    usleep( 300000 ) 
+#define _sleep_500ms    usleep( 500000 ) 
 
 
 #endif
