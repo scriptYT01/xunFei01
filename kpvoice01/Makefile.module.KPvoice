@@ -9,6 +9,7 @@ endif
 kp1:=kpvoice01/src/kp01_main.cpp
 kp2:=kpvoice01/include/kp___base.h
 kp3:=kpvoice01/Makefile
+kp4:=kpvoice01/kp01/kp01_tcpListen_01_base.cpp
 
 XFk XFkpUpdate : XFgenDate
 	@echo
@@ -20,7 +21,7 @@ XFk XFkpUpdate : XFgenDate
 
 
 KPlist:= 
-KPlist+= kp1 kp2 kp3
+KPlist+= kp1 kp2 kp3 kp4
 
 $(call VIMobj,$(KPlist))
 
