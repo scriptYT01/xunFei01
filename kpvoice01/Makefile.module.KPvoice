@@ -6,10 +6,17 @@ endif
 
 
 
-kp1:=kpvoice01/src/kp01_main.cpp
-kp2:=kpvoice01/include/kp___base.h
-kp3:=kpvoice01/Makefile
-kp4:=kpvoice01/kp01/kp01_tcpListen_01_base.cpp
+kp11:=kpvoice01/src/kp01_main.cpp
+kp12:=kpvoice01/include/kp___base.h
+kp13:=kpvoice01/Makefile
+kp14:=kpvoice01/kp01/kp01_tcpListen_01_base.cpp
+
+kp21:=kpvoice01/ssuperStream01/streamController.h
+kp22:=kpvoice01/ssuperStream01/streamControllerTop.cpp
+kp23:=kpvoice01/ssuperStream01/superStream.h
+kp24:=kpvoice01/ssuperStream01/superStreamOpenOrReopen.cpp
+kp25:=kpvoice01/ssuperStream01/superStreamTop.cpp
+
 
 XFk XFkpUpdate : XFgenDate
 	@echo
@@ -21,7 +28,8 @@ XFk XFkpUpdate : XFgenDate
 
 
 KPlist:= 
-KPlist+= kp1 kp2 kp3 kp4
+KPlist+= kp11 kp12 kp13 kp14  \
+		 kp21 kp22 kp23 kp24 kp25
 
 $(call VIMobj,$(KPlist))
 

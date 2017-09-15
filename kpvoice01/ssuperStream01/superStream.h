@@ -2,13 +2,13 @@
 #ifndef     __SUPERSTREAM_H
 #define     __SUPERSTREAM_H
 
-#include "patchXF/pathcXFbase.h"
+#include "base01.h"
 
-#include <string>
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <functional>
+//#include <string>
+//#include <iostream>
+//#include <vector>
+//#include <algorithm>
+//#include <functional>
 
 
 using namespace std;

@@ -20,4 +20,6 @@ testing/src/
 kpvoice01/src/
 kpvoice01/include/
 kpvoice01/kp01/
+kpvoice01/base01/
+kpvoice01/ssuperStream01/
 

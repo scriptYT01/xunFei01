@@ -1,7 +1,8 @@
 #common makefile header
 
 
-DIR_INC = include
+DIR_INC1:=include ssuperStream01 base01
+DIR_INC9:=$(foreach aa1,$(DIR_INC1),-I$(aa1))
 DIR_BIN = bin/
 
 TARGET	= kpServer01.i386.bin
@@ -17,11 +18,15 @@ endif
 all : clean $(BIN_TARGET) 
 
 CROSS_COMPILE = 
-CFLAGS = -g -Wall -Werror -I$(DIR_INC) -I$(KDIR2) -I.
+CFLAGS = -g -Wall -Werror $(DIR_INC9) -I$(KDIR2) -I.
 
 LDFLAGS += -lc -lstdc++
 
-SRCs1:=$(wildcard src/*.c src/*.cpp kp01/*.c kp01/*.cpp )
+SRCs1:=$(wildcard \
+	base01/*.c base01/*.cpp \
+	ssuperStream01/*.c ssuperStream01/*.cpp \
+	src/*.c src/*.cpp \
+	kp01/*.c kp01/*.cpp )
 OBJECTS := $(patsubst %.cpp,%.o,$(patsubst %.c,%.o,$(SRCs1)))
 
 $(BIN_TARGET) : $(OBJECTS)
