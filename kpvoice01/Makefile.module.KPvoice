@@ -10,6 +10,14 @@ kp1:=kpvoice01/src/kp01_main.cpp
 kp2:=kpvoice01/include/kp___base.h
 kp3:=kpvoice01/Makefile
 
+XFk XFkpUpdate : XFgenDate
+	@echo
+	$(rsync1)    $(XFsrc5)/  	$(XFdst5)/
+	@#
+	$(XFu_only_cmd1)
+	@echo ' dst -->     $(XFdst5)'
+	@echo
+
 
 KPlist:= 
 KPlist+= kp1 kp2 kp3
@@ -20,7 +28,7 @@ help_OBJs+= help_obj__sKP
 help_obj__sKP:
 	@echo
 	@echo '         [$(makePATHkp1)]'
-#	@echo ' KPu      KPupdate -> $(shell basename $(KPsrc1))/ $(shell basename $(KPsrc2))/ -->  $(KPdst1)/'
+	@echo ' XFk      XFkpUpdate -> '
 	$(call VIMhelp,$(KPlist))
 
 ifneq ($(VV13838311),$(strip $(VV)))

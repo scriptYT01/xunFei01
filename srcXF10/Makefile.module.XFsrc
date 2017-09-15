@@ -121,14 +121,6 @@ export XFdelete1:= \
 ssh login:
 	ssh $(login)
 
-XFk XFkpUpdate : XFgenDate
-	@echo
-	$(rsync1)    $(XFsrc5)/  	$(XFdst5)/
-	@#
-	$(XFu_only_cmd1)
-	@echo ' dst -->     $(XFdst5)'
-	@echo
-
 XFu_only_cmd1:= echo kk | nc 127.0.0.1 58111
 XFu_only_cmd1:= nc 127.0.0.1 58111 < /dev/null 
 XFu_only_cmd2:= $(adbViomi) shell killall ymClient13001_tty.bin 
