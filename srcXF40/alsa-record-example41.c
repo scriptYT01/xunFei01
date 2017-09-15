@@ -18,7 +18,7 @@
 #include <stdlib.h>
 #include <alsa/asoundlib.h>
 
-#include "patchXF/pathcXFbase.h"
+#include "base01.h"
 	      
 char *  _dev_name01 = "default" ;
 int     _chAmount = 2 ;
