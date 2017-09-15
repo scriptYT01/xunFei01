@@ -14,6 +14,10 @@
  * 30 ms -> 480 sample -> 2 * 480 byte == 960 byte 
  */
 
+int32_t _time1 = _timeNow ;
+int32_t _time2  ;
+int32_t _time3  ;
+
 _ssListen1 * _tcpRaw     = new _ssListen1( _enSsdOut , "tcpL1:" _kpListenIP ":" _kpTcp_rawpcm   , " when connected , try to output RAW-pcm " ) ;
 _ssListen1 * _tcpReduce  = new _ssListen1( _enSsdOut , "tcpL1:" _kpListenIP ":" _kpTcp_filtered , " when connected , try to output noise-reduce-pcm " ) ;
 _ssListen1 * _tcpSpeaker = new _ssListen1( _enSsdIn  , "tcpL1:" _kpListenIP ":" _kpTcp_speaker  , " when connected , try to input pcm for speaker" ) ;
@@ -24,7 +28,9 @@ int main( int ___argc , char ** ___argv ) {
     while ( 1 ) {
 
         if ( __i01 % 33 == 1 ) {
-            _prSFn( " --- %d %d " , _timeNow , __i01 ) ;
+            _time2 = _timeNow ;
+            _time3 = _time2 - _time1 ;
+            _prSFn( " --- %10d %10d , %10d " , _time2 , _time3 , __i01 ) ;
             _ffstdout ;
         }
 
