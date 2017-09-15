@@ -6,6 +6,14 @@
 #define     _kpTcp_speaker  47815
 
 int main( int ___argc , char ** ___argv ) {
+
+    int __i01 = 1 ;
+    while ( 1 ) {
+        _prSFn( " --- %d %d " , _timeNow , __i01++ ) ;
+        _ffstdout ;
+        usleep( 1000000 ) ;
+    }
+
     return 0 ;
 } /* main */
 

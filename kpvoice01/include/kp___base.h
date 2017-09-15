@@ -19,6 +19,7 @@
 //#include <include/linux/delay.h>
 
 
+#define _timeNow    ((int)time(0))
 
 #define _strX( aa ) # aa
 
@@ -26,6 +27,8 @@
 #define _prOOn( fmt , ... ) _prOO(  fmt "\n" , ## __VA_ARGS__ )
 #define _prSF(  fmt , ... ) printf( "=-=:%s %d %s: " fmt , basename((char*)__FILE__), __LINE__, __func__ , ## __VA_ARGS__ )
 #define _prSFn( fmt , ... ) _prSF( fmt "\n" , ## __VA_ARGS__ )
+#define _ffstdout   fdatasync( 1 )
+#define _ffstderr   fdatasync( 2 )
 
 #define _prEF(  fmt , ... ) fprintf( stderr , "=-=:%s %d %s: " fmt , basename((char*)__FILE__), __LINE__, __func__ , ## __VA_ARGS__ )
 #define _prEFn( fmt , ... ) _prEF( fmt "\n" , ## __VA_ARGS__ )

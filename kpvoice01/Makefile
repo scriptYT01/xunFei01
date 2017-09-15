@@ -40,6 +40,9 @@ $(BIN_TARGET) : $(OBJECTS)
 c clean:
 	@rm -f *.o $(BIN_TARGET) $(OBJECTS)
 
+t test :
+	bin/kpServer01.i386.bin
+
 .PHONY:clean
 
 #common makefile foot
