@@ -35,8 +35,8 @@ int main( int ___argc , char ** ___argv ) {
         }
 
         __i01 ++ ;
-        if ( 0 )    { _sleep_30ms ; } 
-        else        { _sleep_500ms ; }
+        if ( 0 )    { _sleep_30ms   ; } 
+        else        { _sleep_500ms  ; }
     }
 
     return 0 ;
