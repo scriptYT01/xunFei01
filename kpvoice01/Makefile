@@ -7,7 +7,7 @@ DIR_BIN = bin/
 TARGET	= kpServer01.i386.bin
 BIN_TARGET = $(DIR_BIN)/$(TARGET)
 
-KDIR1:=/usr/src/kernels/$(shell uname -r)
+KDIR1:=/usr/src/kernels/$(shell uname -r) /usr/src/kernels/*
 KDIR2:=$(firstword $(wildcard $(KDIR1)))
 
 ifeq (,$(KDIR2))

@@ -15,7 +15,8 @@
 #include <err.h>
 #include <errno.h>
 #include <poll.h>
-#include <include/linux/delay.h>
+//#include <include/asm/delay.h>
+//#include <include/linux/delay.h>
 
 
 
