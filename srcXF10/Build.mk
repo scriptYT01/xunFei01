@@ -79,9 +79,9 @@ LOCAL_MODULE := iat_record_sample18.x1000.bin
 LOCAL_MODULE_TAGS := iat_record_sample18
 LOCAL_MODULE_PATH:=$(TARGET_FS_BUILD)/ch/xf10
 LOCAL_SRC_FILES := \
-	patchXF/pathcXFbase01.c                             			\
-	patchXF/pathcXFbase02.c                             			\
+	patchXF/base01/base01_01.c                             			\
 	patchXF/iat_record_sample_patch.c                             	\
+	patchXF/pathcXFtts01.c                                          \
 	samples/iat_record_sample/linuxrec.c                            \
 	samples/iat_record_sample/speech_recognizer.c                   \
 	samples/iat_record_sample/iat_record_sample.c
@@ -90,5 +90,6 @@ LOCAL_LDLIBS := -Ldevice/common/system/usr/lib -L$(LOCAL_PATH)/libs/mipsX1000 -l
 #LOCAL_CFLAGS := -I../tinyalsa/include
 #LOCAL_CFLAGS := -I../alsa-lib/include
 LOCAL_CFLAGS := -Iexternal/alsa-lib/include -I$(LOCAL_PATH) -Wall -Werror
+LOCAL_CFLAGS += -Iexternal/xfClient10/patchXF -Iexternal/xfClient10/patchXF/base01 -Iexternal/xfClient10/patchXF/ssuperStream01 
 include $(BUILD_EXECUTABLE)
 

@@ -6,7 +6,8 @@
 */
 
 /* #include "patchXF/superStream.h" */
-#include "patchXF/streamController.h"
+#include "streamController.h"
+//#include "patchXF/pathcXFbase.h"
 
 #ifndef AIUIAGENTTEST_H_
 #define AIUIAGENTTEST_H_
@@ -35,7 +36,6 @@
 #define LOG_DIR "./AIUI/log"
 #endif
 
-#include "patchXF/pathcXFbase.h"
 
 using namespace aiui;
 using namespace std;
