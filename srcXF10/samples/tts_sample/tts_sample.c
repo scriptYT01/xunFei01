@@ -17,7 +17,9 @@
 #include "msp_cmn.h"
 #include "msp_errors.h"
 
-#include "patchXF/pathcXFbase.h"
+//#include "patchXF/pathcXFbase.h"
+// text_to_speech_from_file_continue
+#include "pathcXFtts01.h"
 
 /* wav音频头部格式 */
 typedef struct _wave_pcm_hdr

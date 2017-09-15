@@ -1,7 +1,7 @@
 #common makefile header
 
-DIR_INC = ./
-DIR_INC = ./include
+DIR_INC1:=include . patchXF/ patchXF/base01 patchXF/ssuperStream01
+DIR_INC9:=$(foreach aa1,$(DIR_INC1),-I$(aa1))
 
 DIR_BIN = ./
 DIR_BIN = bin/
@@ -40,7 +40,7 @@ endef
 export  RUN01
 
 CROSS_COMPILE = 
-CFLAGS = -g -Wall -I$(DIR_INC) -I.
+CFLAGS = -g -Wall $(DIR_INC9) 
 
 ifdef LINUX64
 LDFLAGS := -L$(DIR_LIB)/x64
