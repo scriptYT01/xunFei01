@@ -126,16 +126,16 @@ XFu_only_cmd1:= nc 127.0.0.1 58111 < /dev/null
 XFu_only_cmd2:= $(adbViomi) shell killall ymClient13001_tty.bin 
 XFu XFupdate : XFgenDate
 	@echo
-	$(rsync1)    $(XFsrc1)/  	$(XFdst1)/
+	$(rsync1)    $(XFsrc1)/  							$(XFdst1)/
+	$(rsync1)    $(XFsrc5)/base01/  					$(XFdst1)/patchXF/base01/
+	$(rsync1)    $(XFsrc5)/ssuperStream01/  			$(XFdst1)/patchXF/ssuperStream01/
+	@#
 	$(rsync1)    $(XFsrc2)/  	$(XFdst2)/
 	$(rsync1)    $(XFsrc3)/  	$(XFdst3)/
 	$(rsync1)    $(XFsrc4)/  	$(XFdst4)/
 	$(rsync1)    $(XFsrc5)/  	$(XFdst5)/
 	@#
-	$(rsync1)    $(XFsrc5)/base01/  					$(XFdst1)/patchXF/base01/
-	$(rsync1)    $(XFsrc5)/ssuperStream01/  			$(XFdst1)/patchXF/ssuperStream01/
-	@#
-	$(rsync1)    $(XFsrc1)/patchXF/  	$(XFdst3)/patchXF/
+	$(rsync1)    $(XFdst1)/patchXF/  	$(XFdst3)/patchXF/
 	@#
 	rm -fr $(XFi386DST11)/
 	mkdir -p $(XFi386DST11)
