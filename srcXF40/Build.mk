@@ -9,7 +9,8 @@ LOCAL_MODULE_PATH:=$(TARGET_FS_BUILD)/ch/xf40
 LOCAL_SRC_FILES := \
 	alsa-record-example41.c
 LOCAL_LDLIBS := -Ldevice/common/system/usr/lib -lc -lasound 
-LOCAL_CFLAGS := -Iexternal/alsa-lib/include -Wall -Werror -Iexternal/xfClient10
+LOCAL_CFLAGS := -Iexternal/alsa-lib/include -Wall -Werror -Iexternal/xfClient10 
+LOCAL_CFLAGS += -Iexternal/xfClient10/patchXF -Iexternal/xfClient10/patchXF/base01 -Iexternal/xfClient10/patchXF/ssuperStream01 
 include $(BUILD_EXECUTABLE)
 
 # alsa-record-example42.c
