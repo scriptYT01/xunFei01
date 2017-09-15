@@ -7,10 +7,17 @@ DIR_BIN = bin/
 TARGET	= kpServer01.i386.bin
 BIN_TARGET = $(DIR_BIN)/$(TARGET)
 
+KDIR1:=/usr/src/kernels/$(shell uname -r)
+KDIR2:=$(firstword $(wildcard $(KDIR1)))
+
+ifeq (,$(KDIR2))
+$(error ' kernel source dir $(KDIR1) empty : $(KDIR2)' )
+endif
+
 all : clean $(BIN_TARGET) 
 
 CROSS_COMPILE = 
-CFLAGS = -g -Wall -Werror -I$(DIR_INC) -I.
+CFLAGS = -g -Wall -Werror -I$(DIR_INC) -I$(KDIR2) -I.
 
 LDFLAGS += -lc -lstdc++
 
