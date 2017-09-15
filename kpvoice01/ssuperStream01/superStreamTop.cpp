@@ -70,6 +70,8 @@ bool _superStreamBase::_fd_canWrite( int *___fd ) {
 } /* _fd_canWrite */
 
 bool _superStreamBase::_fd_canRead( int *___fd ) {
+    _prEFn( "under constructing " ) ;
+    return false ;
 } /* _fd_canRead */
 
 void _superStreamBase::_ssTryReopneIfNeeded( _enErrAction ___eAction ) 
