@@ -53,7 +53,7 @@ LDFLAGS := -L./
 #LDFLAGS += -lmsc 
 LDFLAGS += -lmsc -Werror
 
-OBJECTS := $(patsubst %.c,%.o,$(wildcard *.c patchXF/*.c))
+OBJECTS := $(patsubst %.c,%.o,$(wildcard *.c patchXF/*.c patchXF/base01/*.c  patchXF/ssuperStream01/*.c ))
 
 $(BIN_TARGET) : $(OBJECTS)
 	$(CROSS_COMPILE)gcc $(CFLAGS) $^ -o $@ $(LDFLAGS)
