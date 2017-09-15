@@ -134,6 +134,15 @@ class _ssFileOut : public _superStreamBase
         bool _ssOpenOrReopen() ;
 } ; /* class _ssFileOut */
 
+class _ssFileIn : public _superStreamBase
+{
+    public :
+        _ssFileIn( _enSsDir ___ssDir , const char * ___path , const char * ___comment ) ;
+        ~_ssFileIn( ){} ;
+    private :
+        bool _ssOpenOrReopen() ;
+} ; /* class _ssFileIn */
+
 
 #define _dbSS1   _prEFn( " %d , %d , %s, %s" , _exitIfErr , ___ssDir , ___path , ___comment )
 #define _dbSS2   _prEFn( " %d , %d , %s, %s" , _ssDir , _ssType , _ssPath , _ssComment )

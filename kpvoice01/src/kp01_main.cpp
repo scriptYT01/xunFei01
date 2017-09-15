@@ -18,13 +18,22 @@ int32_t _time1 = _timeNow ;
 int32_t _time2  ;
 int32_t _time3  ;
 
-_ssListen1 * _tcpRaw     = new _ssListen1( _enSsdOut , "tcpL1:" _kpListenIP ":" _kpTcp_rawpcm   , " when connected , try to output RAW-pcm " ) ;
-_ssListen1 * _tcpReduce  = new _ssListen1( _enSsdOut , "tcpL1:" _kpListenIP ":" _kpTcp_filtered , " when connected , try to output noise-reduce-pcm " ) ;
-_ssListen1 * _tcpSpeaker = new _ssListen1( _enSsdIn  , "tcpL1:" _kpListenIP ":" _kpTcp_speaker  , " when connected , try to input pcm for speaker" ) ;
+_ssFileOut * _fSpeaker          = NULL ;
+_ssFileIn  * _fGenRawPcm        = NULL ;
+_ssFileIn  * _fGenReducePcm     = NULL ;
+
+_ssListen1 * _tcpRaw            = NULL ;
+_ssListen1 * _tcpReduce         = NULL ;
+_ssListen1 * _tcpSpeaker        = NULL ;
 
 int main( int ___argc , char ** ___argv ) {
 
     int __i01 = 1 ;
+
+    _tcpRaw     = new _ssListen1( _enSsdOut , "tcpL1:" _kpListenIP ":" _kpTcp_rawpcm   , " when connected , try to output RAW-pcm " ) ;
+    _tcpReduce  = new _ssListen1( _enSsdOut , "tcpL1:" _kpListenIP ":" _kpTcp_filtered , " when connected , try to output noise-reduce-pcm " ) ;
+    _tcpSpeaker = new _ssListen1( _enSsdIn  , "tcpL1:" _kpListenIP ":" _kpTcp_speaker  , " when connected , try to input pcm for speaker" ) ;
+
     while ( 1 ) {
 
         if ( __i01 % 33 == 1 ) {
@@ -33,6 +42,8 @@ int main( int ___argc , char ** ___argv ) {
             _prSFn( " --- %10d %10d , %10d " , _time2 , _time3 , __i01 ) ;
             _ffstdout ;
         }
+
+        if ( 
 
         __i01 ++ ;
         if ( 0 )    { _sleep_30ms   ; } 
