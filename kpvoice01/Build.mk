@@ -16,6 +16,6 @@ LOCAL_SRC_FILES := \
 #LOCAL_LDLIBS := -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc -laiui -lc -lpthread -lstdc++ -ldl
 LOCAL_LDLIBS := -lc -lpthread -lstdc++ -ldl
 LOCAL_CFLAGS := -Iexternal/xfClient10
-LOCAL_CFLAGS := 
+LOCAL_CFLAGS := -I$(LOCAL_PATH)/base01
 include $(BUILD_EXECUTABLE)
 

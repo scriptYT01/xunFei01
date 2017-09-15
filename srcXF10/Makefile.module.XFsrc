@@ -226,9 +226,10 @@ vb2:=srcXF20/Build.mk
 vb3:=srcXF30/Build.mk
 vb4:=srcXF40/Build.mk
 
-px1:=srcXF10/patchXF/iat_record_sample_patch.c  
-px2:=srcXF10/patchXF/pathcXFbase01.c
-px3:=srcXF10/patchXF/pathcXFtts01.c
+px1:=srcXF10/patchXF/dbmem.c
+px2:=srcXF10/patchXF/dbmemDebugShow.c
+px3:=srcXF10/patchXF/iat_record_sample_patch.c  
+px4:=srcXF10/patchXF/pathcXFtts01.c
 
 
 
@@ -244,7 +245,7 @@ XFlist+= XF70
 XFlist+= XF81 XF82 XF83 XF84
 XFlist+= XF91 XF92 
 XFlist+= vb1 vb2 vb3 vb4 
-XFlist+= px1 px2 
+XFlist+= px1 px2 px3 px4 
 
 $(call VIMobj,$(XFlist))
 
