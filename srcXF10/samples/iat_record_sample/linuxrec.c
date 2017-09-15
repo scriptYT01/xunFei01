@@ -24,8 +24,7 @@
 #define dbg
 #endif
 
-#include "patchXF/pathcXFbase.h"
-#include "patchXF/pathcXFiatRec.h"
+#include "pathcXFiatRec.h"
 
 /* Do not change the sequence */
 enum {
