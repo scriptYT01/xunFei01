@@ -49,14 +49,15 @@ typedef struct _superStreamInfoX _superStreamInfo ;
 class _superStreamBase
 {
     protected :
-        _enSsDir                _ssDir      ;
-        _enSsType               _ssType     ;
-        const char *            _ssPath     ;
-        const char *            _ssComment  ;
-        _superStreamBase    *   _ssOK       ;
-        int                     _ssFD       ;
-        _superStreamInfo        _ssInfoW    ; 
-        _superStreamInfo        _ssInfoR    ; 
+        _enSsDir                _ssDir          ;
+        _enSsType               _ssType         ;
+        const char *            _ssPath         ;
+        const char *            _ssComment      ;
+        _superStreamBase    *   _ssOK           ;
+        int                     _ssFD           ;
+        _superStreamInfo        _ssInfoW        ; 
+        _superStreamInfo        _ssInfoR        ; 
+        _enErrAction            _ssErrAction    ;
 
     protected :
         void _superStreamInit( _enSsType ___ssType , _enSsDir ___ssDir , const char * ___path , const char * ___comment ) ;
@@ -64,17 +65,18 @@ class _superStreamBase
         static bool             _FD_valid1_invalid0_close( int * ___fd ) ;
         static bool             _fd_canWrite( int *___fd ) ;
         static bool             _fd_canRead(  int *___fd ) ;
-        void                    _ssTryReopneIfNeeded( _enErrAction ___eAction ) ;
     public :
         _superStreamBase(){ _memZS( _ssInfoW ) ; _memZS( _ssInfoR ) ; } ;
         ~_superStreamBase( ){} ;
         static _superStreamBase * _genSS( bool _exitIfErr ,  _enSsDir ___ssDir , const char * ___path , const char * ___comment ) ;
     public :
+        void _ssSetErrAction( _enErrAction ___eAction ) ;
+        void _ssTryReopneIfNeeded( ) ;
         void _ssDumpSelf( ) ;
-        void _ssWriteNonblock(  _enErrAction ___eAction , int ___len , const char * ___buf ) ;
-        void _ssWriteBlock(     _enErrAction ___eAction , int ___len , const char * ___buf ) ;
-        void _ssReadNonblock(   _enErrAction ___eAction , int ___len , const char * ___buf ) ;
-        void _ssReadBlock(      _enErrAction ___eAction , int ___len , const char * ___buf ) ;
+        void _ssWriteNonblock(  int ___len , const char * ___buf ) ;
+        void _ssWriteBlock(     int ___len , const char * ___buf ) ;
+        void _ssReadNonblock(   int ___len , const char * ___buf ) ;
+        void _ssReadBlock(      int ___len , const char * ___buf ) ;
     private :
         virtual bool _ssOpenOrReopen() = 0 ;
 

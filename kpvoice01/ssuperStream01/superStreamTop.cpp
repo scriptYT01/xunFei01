@@ -74,14 +74,20 @@ bool _superStreamBase::_fd_canRead( int *___fd ) {
     return false ;
 } /* _fd_canRead */
 
-void _superStreamBase::_ssTryReopneIfNeeded( _enErrAction ___eAction ) 
+void _superStreamBase::_ssTryReopneIfNeeded( ) 
 {
     if ( 0 == _FD_valid1_invalid0_close( & _ssFD ) ) {
-        if ( ___eAction == _enEreopen ) {
+        if ( _ssErrAction == _enEreopen ) {
             _ssOpenOrReopen();
         }
     }
 } /* _superStreamBase::_ssTryReopneIfNeeded */
+
+void _superStreamBase::_ssSetErrAction( _enErrAction ___eAction ) 
+{
+   _ssErrAction = ___eAction ;
+   _ssTryReopneIfNeeded();
+} /* _superStreamBase::_ssSetErrAction */
 
 void _superStreamBase::_ssDumpSelf( ) {
     _prEFn( "" );
@@ -119,19 +125,19 @@ void _superStreamBase::_ssDumpSelf( ) {
 
 } /* _superStreamBase::_ssDumpSelf */
 
-void _superStreamBase::_ssReadNonblock( _enErrAction ___eAction , int ___len , const char * ___buf ) {
+void _superStreamBase::_ssReadNonblock( int ___len , const char * ___buf ) {
 } /* _superStreamBase::_ssReadNonblock */
 
-void _superStreamBase::_ssReadBlock( _enErrAction ___eAction , int ___len , const char * ___buf ) {
+void _superStreamBase::_ssReadBlock( int ___len , const char * ___buf ) {
 } /* _superStreamBase::_ssReadBlock */
 
-void _superStreamBase::_ssWriteNonblock( _enErrAction ___eAction , int ___len , const char * ___buf ) {
+void _superStreamBase::_ssWriteNonblock( int ___len , const char * ___buf ) {
 
-    _ssTryReopneIfNeeded( ___eAction ) ;
+    _ssTryReopneIfNeeded( ) ;
 
     if ( _fd_canWrite( & _ssFD ) ) {
         if ( 0 ) _prEFn( " can Write at once " );
-        _ssWriteBlock( ___eAction , ___len , ___buf ) ;
+        _ssWriteBlock( ___len , ___buf ) ;
     } else {
         if ( 1 ) _prEFn( " can NOT Write at once : %d : %s , %s " , _ssFD , _ssPath , _ssComment );
         _ssInfoW . _tryCnt ++ ;
@@ -141,11 +147,11 @@ void _superStreamBase::_ssWriteNonblock( _enErrAction ___eAction , int ___len , 
     }
 } /* _superStreamBase::_ssWriteNonblock */
 
-void _superStreamBase::_ssWriteBlock( _enErrAction ___eAction , int ___len , const char * ___buf ) {
+void _superStreamBase::_ssWriteBlock( int ___len , const char * ___buf ) {
     _ssInfoW . _tryCnt ++ ;
     _ssInfoW . _tryLen += ___len ;
 
-    _ssTryReopneIfNeeded( ___eAction ) ;
+    _ssTryReopneIfNeeded( ) ;
 
     if ( _FD_valid1_invalid0_close( & _ssFD ) ) {
         int __Len ;
