@@ -49,15 +49,15 @@ typedef struct _superStreamInfoX _superStreamInfo ;
 class _superStreamBase
 {
     protected :
+        _enErrAction            _ssErrAction    ;
         _enSsDir                _ssDir          ;
         _enSsType               _ssType         ;
-        const char *            _ssPath         ;
-        const char *            _ssComment      ;
+        const char          *   _ssPath         ;
+        const char          *   _ssComment      ;
         _superStreamBase    *   _ssOK           ;
         int                     _ssFD           ;
         _superStreamInfo        _ssInfoW        ; 
         _superStreamInfo        _ssInfoR        ; 
-        _enErrAction            _ssErrAction    ;
 
     protected :
         void _superStreamInit( _enSsType ___ssType , _enSsDir ___ssDir , const char * ___path , const char * ___comment ) ;
@@ -70,6 +70,7 @@ class _superStreamBase
         ~_superStreamBase( ){} ;
         static _superStreamBase * _genSS( bool _exitIfErr ,  _enSsDir ___ssDir , const char * ___path , const char * ___comment ) ;
     public :
+        bool _isOK() { return _ssOK?true:false ; } ;
         void _ssSetErrAction( _enErrAction ___eAction ) ;
         void _ssTryReopneIfNeeded( ) ;
         void _ssDumpSelf( ) ;
@@ -81,6 +82,8 @@ class _superStreamBase
         virtual bool _ssOpenOrReopen() = 0 ;
 
 }; /* class _superStreamBase */
+
+#define ssOK( aa )  (( aa && aa -> _isOK() )?true:false)
 
 class _ssCin : public _superStreamBase
 {

@@ -31,7 +31,6 @@ _ssListen1 * _tcpReduce         = NULL ;
 _ssListen1 * _tcpSpeaker        = NULL ;
 
 void _usage( int ___argc , char ** ___argv ) {
-
 } /* _usage */
 
 void _paraAnalyze( int ___argc , char ** ___argv ) {
@@ -56,9 +55,15 @@ void _initListen(void) {
 } /* _initListen */
 
 void _testSS(void) {
+    if ( ! ssOK( _fGenRawPcm ) ) {
+        _prExit( " file don't exist. " );
+    }
+
+
 } /* _testSS */
 
 void _fill_data(void) {
+    _prExit( " under constructing... " );
 } /* _fill_data */
 
 int main( int ___argc , char ** ___argv ) {
