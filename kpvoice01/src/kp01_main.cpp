@@ -69,6 +69,7 @@ int main( int ___argc , char ** ___argv ) {
             _time3 = _time2 - _time1 ;
             _prSFn( " --- %10d %10d , %10d " , _time2 , _time3 , __i01 ) ;
             _ffstdout ;
+            if(1) _fGenRawPcm -> _ssDumpSelf();
             if(1) _prExit( " testing " );
         }
 

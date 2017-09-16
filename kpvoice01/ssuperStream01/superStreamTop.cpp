@@ -130,12 +130,13 @@ void _superStreamBase::_ssSetErrAction( _enErrAction ___eAction )
 
 void _superStreamBase::_ssDumpSelf( ) {
     _prEFn( "" );
-    _prEFn( "_ssDir      '%d'" , _ssDir      ) ;
-    _prEFn( "_ssType     '%d'" , _ssType     ) ;
-    _prEFn( "_ssPath     '%s'" , _ssPath     ) ;
-    _prEFn( "_ssComment  '%s'" , _ssComment  ) ;
-    _prEFn( "_ssOK       '%p'" , _ssOK       ) ;
-    _prEFn( "_ssFD       '%d'" , _ssFD       ) ;
+    _prEFn( "_ssErrAction   '%d'" , _ssErrAction    ) ;
+    _prEFn( "_ssDir         '%d'" , _ssDir          ) ;
+    _prEFn( "_ssType        '%d'" , _ssType         ) ;
+    _prEFn( "_ssPath        '%s'" , _ssPath         ) ;
+    _prEFn( "_ssComment     '%s'" , _ssComment      ) ;
+    _prEFn( "_ssOK          '%p'" , _ssOK           ) ;
+    _prEFn( "_ssFD          '%d'" , _ssFD           ) ;
 
     _prEFn( "_ssInfoW " 
             " tryCnt,Len  %4lld %4lld " 
@@ -330,16 +331,17 @@ _superStreamBase::_genSS( bool _exitIfErr , _enSsDir ___ssDir , const char * ___
 } /*_superStreamBase::_genSS */
 
 void _superStreamBase::_superStreamInit( _enSsType ___ssType , _enSsDir ___ssDir , const char * ___path , const char * ___comment ) {
-    _ssType     =   ___ssType       ;
-    _ssDir      =   ___ssDir        ;
-    _ssPath     =   strdup( ___path )         ;
-    _ssComment  =   strdup( ___comment )      ;
-    _ssFD       =   -1              ;
+    _ssType         =   ___ssType               ;
+    _ssDir          =   ___ssDir                ;
+    _ssPath         =   strdup( ___path )       ;
+    _ssComment      =   strdup( ___comment )    ;
+    _ssFD           =   -1                      ;
+    _ssErrAction    =   _enEreopen              ;
 
     _prEFn( "ssType %d , ssDir %d , path %s , comment %s" ,
-           ___ssType , ___ssDir , ___path , ___comment ) ;
+           ___ssType , ___ssDir , ___path , ___comment )    ;
 
-    _ssOK       = NULL ;
+    _ssOK       = NULL                          ;
 }; /* _superStreamBase::_superStreamInit */
 
 
