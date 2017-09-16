@@ -7,9 +7,11 @@ endif
 
 
 kp11:=kpvoice01/src/kp01_main.cpp
-kp12:=kpvoice01/include/kp01_99_top.h
-kp13:=kpvoice01/Makefile
-kp14:=kpvoice01/kp01/kp01_tcpListen_01_base.cpp
+kp12:=kpvoice01/src/kp01_loop.cpp  
+kp13:=kpvoice01/src/kp01_test.cpp
+kp14:=kpvoice01/include/kp01_99_top.h
+kp15:=kpvoice01/Makefile
+kp16:=kpvoice01/kp01/kp01_tcpListen_01_base.cpp
 
 kp21:=kpvoice01/ssuperStream01/streamController.h
 kp22:=kpvoice01/ssuperStream01/streamControllerTop.cpp
@@ -30,7 +32,7 @@ kpkp XFk XFkpUpdate : XFgenDate
 
 
 KPlist:= 
-KPlist+= kp11 kp12 kp13 kp14  
+KPlist+= kp11 kp12 kp13 kp14  kp15 kp16 
 KPlist+= kp21 kp22 kp23 kp24 kp25 
 KPlist+= kp31
 
