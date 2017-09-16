@@ -60,6 +60,7 @@ void _testSS(void) {
     }
 
 
+    _prExit( " testing 3811 99" );
 } /* _testSS */
 
 void _fill_data(void) {
