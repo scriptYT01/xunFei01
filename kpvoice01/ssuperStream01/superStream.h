@@ -58,9 +58,11 @@ class _superStreamBase
         int                         _ssFD           ;
         _superStreamInfo            _ssInfoW        ; 
         _superStreamInfo            _ssInfoR        ; 
-
+        int                         _ssBufAlignSize ;
+        void                        _ssBufDeep      ;
+        const char              *   _ssBufLP        ;
     public :
-                                    _superStreamBase(){ _memZS( _ssInfoW ) ; _memZS( _ssInfoR ) ; } ;
+                                    _superStreamBase(){ _memZS( _ssInfoW ) ; _memZS( _ssInfoR ) ; _ssBufLP = NULL } ;
                                     ~_superStreamBase( ){} ;
         static _superStreamBase *   _genSS( bool _exitIfErr ,  _enSsDir ___ssDir , const char * ___path , const char * ___comment ) ;
 
@@ -76,8 +78,8 @@ class _superStreamBase
         void                        _ssDumpSelf( ) ;
     public :
         void                        _ssSetErrAction( _enErrAction ___eAction ) ;
-        void                        _ssBufSet(  int ___alignSize    ,   int ___deep ) ;
     public :
+        void                        _ssBufSet(  int ___ssBufAlignSize    ,   int ___ssBufDeep ) ;
         int                         _ssBufR(    int ___len          ,   const char * ___buf ) ;
         int                         _ssBufW(    int ___len          ,         char * ___buf ) ;
     public :

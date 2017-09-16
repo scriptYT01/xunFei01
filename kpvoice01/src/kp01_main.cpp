@@ -50,6 +50,9 @@ void _initListen(void) {
     _tcpSpeaker = new _ssListen1( _enSsdIn  
             , "tcpL1:" _kpListenIP ":" _kpTcp_speaker  , " when connected , try to input pcm for speaker" ) ;
 
+    _tcpRaw     -> _ssBufSet( 960 , 1 ) ; 
+    _tcpReduce  -> _ssBufSet( 960 , 1 ) ; 
+    _tcpSpeaker -> _ssBufSet( 960 , 1 ) ; 
 } /* _initListen */
 
 int main( int ___argc , char ** ___argv ) {
