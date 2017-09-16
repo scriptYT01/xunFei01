@@ -126,6 +126,9 @@ void _superStreamBase::_ssDumpSelf( ) {
 } /* _superStreamBase::_ssDumpSelf */
 
 int _superStreamBase::_ssReadNonblock( int ___len , const char * ___buf ) {
+
+    if ( 1 ) _ssDumpSelf() ;
+
     return -1 ;
 } /* _superStreamBase::_ssReadNonblock */
 
