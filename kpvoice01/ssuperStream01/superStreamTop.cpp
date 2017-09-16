@@ -329,7 +329,7 @@ void _superStreamBase::_superStreamInit( _enSsType ___ssType , _enSsDir ___ssDir
     _ssComment  =   strdup( ___comment )      ;
     _ssFD       =   -1              ;
 
-    _prEFn( " --- _superStreamInit : ssType %d , ssDir %d , path %s , comment %s" ,
+    _prEFn( "ssType %d , ssDir %d , path %s , comment %s" ,
            ___ssType , ___ssDir , ___path , ___comment ) ;
 
     _ssOK       = NULL ;
