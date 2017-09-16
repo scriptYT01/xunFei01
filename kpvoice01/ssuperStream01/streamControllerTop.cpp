@@ -14,6 +14,19 @@ void _streamController::_scDumpSS()
     }
 } /* _streamController::_scDumpSS */
 
+void _streamController::_scSetErrAction( _enErrAction ___eAction ) {
+    _superStreamBase *  __sVec ;
+    int                 __i01 ;
+    int                 __size ;
+
+    __size = _sVec . size() ; 
+    for ( __i01 = 0 ; __i01 < __size ; __i01 ++ )
+    {
+        __sVec = _sVec[__i01] ;
+        __sVec -> _ssSetErrAction( ___eAction ) ;
+    }
+} /* _streamController::_scSetErrAction */
+
 void _streamController::_scPrintf( const char *___fmt , ... ) { 
     char                __buf1024[1024] ;
     va_list             __args ;
