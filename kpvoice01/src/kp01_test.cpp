@@ -1,7 +1,8 @@
 #include "kp01_99_top.h"
 
+
 void _testSS(void) {
-    char    __buf1024[1024] ;
+    char    __buf1024[_pcmLenRaw] ;
     int     __len ;
 
     if ( ! ssOK( _fGenRawPcm ) ) {
@@ -22,3 +23,25 @@ void _testSS(void) {
     if(0) _prExit( " testing " );
 } /* _testSS */
 
+void _testTL1(void) {
+    char    __buf1024[_pcmLenRaw] ;
+    int     __len ;
+
+    if ( _tcpRaw -> _fd_canWrite() ) {
+        if(1) _prEFn( " can Write " ) ;
+        __len = _fGenRawPcm -> _ssReadNonblock(  _pcmLenRaw , __buf1024 ) ;
+        if ( __len != _pcmLenRaw ) {
+            __len = _fGenRawPcm -> _ssReadNonblock(  _pcmLenRaw , __buf1024 ) ;
+        }
+        if ( __len != _pcmLenRaw ) {
+            if(1) _prEFn( " dataSource error " ) ;
+        } else {
+            __len = _tcpRaw -> _ssWriteNonblock(  _pcmLenRaw , __buf1024 ) ;
+            if(1) _prEFn( " output data len : %d " , ___len ) ;
+        }
+    } else {
+        if(1) _prEFn( " can NOT Write " ) ;
+    }
+
+    if(1) _prExit( " testing " );
+} /* _testTL1 */
