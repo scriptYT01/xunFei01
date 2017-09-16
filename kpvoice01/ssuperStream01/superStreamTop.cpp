@@ -275,5 +275,11 @@ _ssFileOut::_ssFileOut( _enSsDir ___ssDir , const char * ___path , const char * 
     _ssOpenOrReopen();
 } /* _ssFileOut::_ssFileOut */
 
+_ssFileIn::_ssFileIn( _enSsDir ___ssDir , const char * ___path , const char * ___comment ) 
+{
+    _superStreamInit( _enSstFileOut , ___ssDir , ___path , ___comment ) ;
+    _ssOpenOrReopen();
+} /* _ssFileIn::_ssFileIn */
+
 
 
