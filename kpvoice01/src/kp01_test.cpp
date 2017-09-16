@@ -28,7 +28,7 @@ void _testTL1(void) {
     int     __len ;
 
     if ( _tcpRaw -> 
-            _fd_canWrite() ) {
+            _canWrite( true ) ) {
         if(1) _prEFn( " can Write " ) ;
         __len = _fGenRawPcm -> _ssReadNonblock(  _pcmLenRaw , __buf1024 ) ;
         if ( __len != _pcmLenRaw ) {
@@ -38,7 +38,7 @@ void _testTL1(void) {
             if(1) _prEFn( " dataSource error " ) ;
         } else {
             __len = _tcpRaw -> _ssWriteNonblock(  _pcmLenRaw , __buf1024 ) ;
-            if(1) _prEFn( " output data len : %d " , ___len ) ;
+            if(1) _prEFn( " output data len : %d " , __len ) ;
         }
     } else {
         if(1) _prEFn( " can NOT Write " ) ;
