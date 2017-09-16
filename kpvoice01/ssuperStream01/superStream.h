@@ -74,10 +74,10 @@ class _superStreamBase
         void _ssSetErrAction( _enErrAction ___eAction ) ;
         void _ssTryReopneIfNeeded( ) ;
         void _ssDumpSelf( ) ;
-        void _ssWriteNonblock(  int ___len , const char * ___buf ) ;
-        void _ssWriteBlock(     int ___len , const char * ___buf ) ;
-        void _ssReadNonblock(   int ___len , const char * ___buf ) ;
-        void _ssReadBlock(      int ___len , const char * ___buf ) ;
+        int  _ssWriteNonblock(  int ___len , const char * ___buf ) ;
+        int  _ssWriteBlock(     int ___len , const char * ___buf ) ;
+        int  _ssReadNonblock(   int ___len , const char * ___buf ) ;
+        int  _ssReadBlock(      int ___len , const char * ___buf ) ;
     private :
         virtual bool _ssOpenOrReopen() = 0 ;
 

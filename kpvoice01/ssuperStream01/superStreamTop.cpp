@@ -125,19 +125,22 @@ void _superStreamBase::_ssDumpSelf( ) {
 
 } /* _superStreamBase::_ssDumpSelf */
 
-void _superStreamBase::_ssReadNonblock( int ___len , const char * ___buf ) {
+int _superStreamBase::_ssReadNonblock( int ___len , const char * ___buf ) {
+    return -1 ;
 } /* _superStreamBase::_ssReadNonblock */
 
-void _superStreamBase::_ssReadBlock( int ___len , const char * ___buf ) {
+int _superStreamBase::_ssReadBlock( int ___len , const char * ___buf ) {
+    return -1 ;
 } /* _superStreamBase::_ssReadBlock */
 
-void _superStreamBase::_ssWriteNonblock( int ___len , const char * ___buf ) {
+int _superStreamBase::_ssWriteNonblock( int ___len , const char * ___buf ) {
+    int __wLen = 0 ;
 
     _ssTryReopneIfNeeded( ) ;
 
     if ( _fd_canWrite( & _ssFD ) ) {
         if ( 0 ) _prEFn( " can Write at once " );
-        _ssWriteBlock( ___len , ___buf ) ;
+        __wLen = _ssWriteBlock( ___len , ___buf ) ;
     } else {
         if ( 1 ) _prEFn( " can NOT Write at once : %d : %s , %s " , _ssFD , _ssPath , _ssComment );
         _ssInfoW . _tryCnt ++ ;
@@ -145,9 +148,12 @@ void _superStreamBase::_ssWriteNonblock( int ___len , const char * ___buf ) {
         _ssInfoW . _skipCnt ++ ;
         _ssInfoW . _skipLen += ___len ;
     }
+    return __wLen ;
 } /* _superStreamBase::_ssWriteNonblock */
 
-void _superStreamBase::_ssWriteBlock( int ___len , const char * ___buf ) {
+int _superStreamBase::_ssWriteBlock( int ___len , const char * ___buf ) {
+    int __wLen = 0 ;
+
     _ssInfoW . _tryCnt ++ ;
     _ssInfoW . _tryLen += ___len ;
 
@@ -162,17 +168,20 @@ void _superStreamBase::_ssWriteBlock( int ___len , const char * ___buf ) {
         } else if ( __Len == ___len ) {
             _ssInfoW . _succCnt ++ ;
             _ssInfoW . _succLen += ___len ;
+            __wLen = __Len ;
         } else {
             _ssInfoW . _succCnt ++ ;
             _ssInfoW . _succLen += __Len ;
             _ssInfoW . _skipCnt ++ ;
             _ssInfoW . _skipLen += ___len - __Len ;
+            __wLen = __Len ;
         }
     } else {
         _ssInfoW . _skipCnt ++ ;
         _ssInfoW . _skipLen += ___len ;
     }
 
+    return __wLen ;
 } /* _superStreamBase::_ssWriteBlock */
 
 _superStreamBase * 

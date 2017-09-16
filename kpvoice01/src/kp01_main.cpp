@@ -55,10 +55,22 @@ void _initListen(void) {
 } /* _initListen */
 
 void _testSS(void) {
+    char    __buf1024[1024] ;
+    int     __len ;
+
     if ( ! ssOK( _fGenRawPcm ) ) {
         _prExit( " file don't exist. " );
     }
 
+    __len = _fGenRawPcm -> 
+        _ssReadNonblock(  9 , __buf1024 ) ;
+    if ( __len ) {
+        _prEF( "received <%d> [" , __len ); 
+        write( 2 , __buf1024 , __len ) ;
+        write( 2 , "]\n" , 2 ) ;
+    } else {
+        _prEF( "nothing received <%d> " , __len ); 
+    }
 
     _prExit( " testing 3811 99" );
 } /* _testSS */
