@@ -42,7 +42,7 @@ bool _superStreamBase::_fd_canWrite( int *___fd ) {
     }
     
     if ( __rt == 0 ) {
-        return false ; /* can NOT write , normal */
+        return false ; /* can NOT Write , normal */
     }
 
     if ( __pfds[0].revents & POLLERR ) {
@@ -70,7 +70,46 @@ bool _superStreamBase::_fd_canWrite( int *___fd ) {
 } /* _fd_canWrite */
 
 bool _superStreamBase::_fd_canRead( int *___fd ) {
-    _prEFn( "under constructing " ) ;
+    struct pollfd __pfds[1] ;
+    int __rt ;
+
+    if ( 0 == _FD_valid1_invalid0_close( ___fd ) ) return false ;
+    __pfds[0].fd = *___fd ;
+    __pfds[0].events = POLLIN ;
+    __pfds[0].revents = 0 ;
+
+    __rt = poll(__pfds, 1, 0);
+
+    if ( __rt < 0 ) {
+        close( *___fd ) ; *___fd = -1 ;
+        return false ; /* error 1*/
+    }
+    
+    if ( __rt == 0 ) {
+        return false ; /* can NOT read , normal */
+    }
+
+    if ( __pfds[0].revents & POLLERR ) {
+        _prEFn( "POLLERR state : %d : %s " , *___fd , strerror(errno) ) ;
+        close( *___fd ) ; *___fd = -1 ;
+        return false ;
+    }
+
+    if ( __pfds[0].revents & POLLHUP ) {
+        close( *___fd ) ; *___fd = -1 ;
+        return false ;
+    }
+
+    if ( __pfds[0].revents & POLLNVAL ) {
+        close( *___fd ) ; *___fd = -1 ;
+        return false ;
+    }
+
+    if(__pfds[0].revents & POLLIN) {
+        return true ;
+    }
+
+    _prEFn( "unknown state" ) ;
     return false ;
 } /* _fd_canRead */
 
@@ -125,15 +164,57 @@ void _superStreamBase::_ssDumpSelf( ) {
 
 } /* _superStreamBase::_ssDumpSelf */
 
-int _superStreamBase::_ssReadNonblock( int ___len , const char * ___buf ) {
+int _superStreamBase::_ssReadNonblock( int ___len , char * ___buf ) {
+    int __rLen = 0 ;
 
-    if ( 1 ) _ssDumpSelf() ;
+    _ssTryReopneIfNeeded( ) ;
 
-    return -1 ;
+    if ( _fd_canRead( & _ssFD ) ) {
+        if ( 0 ) _prEFn( " can Read at once " );
+        __rLen = _ssReadBlock( ___len , ___buf ) ;
+    } else {
+        if ( 1 ) _prEFn( " can NOT Read at once : %d : %s , %s " , _ssFD , _ssPath , _ssComment );
+        _ssInfoW . _tryCnt ++ ;
+        _ssInfoW . _tryLen += ___len ;
+        _ssInfoW . _skipCnt ++ ;
+        _ssInfoW . _skipLen += ___len ;
+    }
+
+    if ( 0 ) _ssDumpSelf() ;
+    return __rLen ;
 } /* _superStreamBase::_ssReadNonblock */
 
-int _superStreamBase::_ssReadBlock( int ___len , const char * ___buf ) {
-    return -1 ;
+int _superStreamBase::_ssReadBlock( int ___len , char * ___buf ) {
+    int __rLen = 0 ;
+
+    _ssInfoW . _tryCnt ++ ;
+    _ssInfoW . _tryLen += ___len ;
+
+    _ssTryReopneIfNeeded( ) ;
+
+    if ( _FD_valid1_invalid0_close( & _ssFD ) ) {
+        int __Len ;
+        __Len = read( _ssFD , ___buf , ___len ) ;  // _ssReadBlock
+        if ( __Len <= 0 ) {
+            _ssInfoW . _skipCnt ++ ;
+            _ssInfoW . _skipLen += ___len ;
+        } else if ( __Len == ___len ) {
+            _ssInfoW . _succCnt ++ ;
+            _ssInfoW . _succLen += ___len ; // _ssReadBlock
+            __rLen = __Len ;
+        } else {
+            _ssInfoW . _succCnt ++ ;
+            _ssInfoW . _succLen += __Len ;
+            _ssInfoW . _skipCnt ++ ;
+            _ssInfoW . _skipLen += ___len - __Len ; // _ssReadBlock
+            __rLen = __Len ;
+        }
+    } else {
+        _ssInfoW . _skipCnt ++ ;
+        _ssInfoW . _skipLen += ___len ;
+    }
+
+    return __rLen ;
 } /* _superStreamBase::_ssReadBlock */
 
 int _superStreamBase::_ssWriteNonblock( int ___len , const char * ___buf ) {
@@ -164,7 +245,7 @@ int _superStreamBase::_ssWriteBlock( int ___len , const char * ___buf ) {
 
     if ( _FD_valid1_invalid0_close( & _ssFD ) ) {
         int __Len ;
-        __Len = write( _ssFD , ___buf , ___len ) ; 
+        __Len = write( _ssFD , ___buf , ___len ) ;  // _ssWriteBlock
         if ( __Len <= 0 ) {
             _ssInfoW . _skipCnt ++ ;
             _ssInfoW . _skipLen += ___len ;
@@ -176,7 +257,7 @@ int _superStreamBase::_ssWriteBlock( int ___len , const char * ___buf ) {
             _ssInfoW . _succCnt ++ ;
             _ssInfoW . _succLen += __Len ;
             _ssInfoW . _skipCnt ++ ;
-            _ssInfoW . _skipLen += ___len - __Len ;
+            _ssInfoW . _skipLen += ___len - __Len ; // _ssWriteBlock
             __wLen = __Len ;
         }
     } else {
