@@ -22,6 +22,17 @@ LOCAL_SRC_FILES := \
 	patchXF/ssuperStream01/superStreamOpenOrReopen.cpp \
 	patchXF/ssuperStream01/superStreamTop.cpp \
 	patchXF/ssuperStream01/streamControllerTop.cpp \
+    patchXF/ssuperStream01/streamControllerTop.cpp            \
+    patchXF/ssuperStream01/superStreamBuf.cpp                 \
+    patchXF/ssuperStream01/superStreamCheck.cpp               \
+    patchXF/ssuperStream01/superStreamChilds.cpp              \
+    patchXF/ssuperStream01/superStreamConf.cpp                \
+    patchXF/ssuperStream01/superStreamDump.cpp                \
+    patchXF/ssuperStream01/superStreamInit.cpp                \
+    patchXF/ssuperStream01/superStreamOpenOrReopen.cpp        \
+    patchXF/ssuperStream01/superStreamRW.cpp                  \
+    patchXF/ssuperStream01/superStreamStatus.cpp              \
+    patchXF/ssuperStream01/superStreamTop.cpp                 \
 	patchXF/base01/base01_01.c \
 	samples/aiui_sample/src/cJSON.c \
 	\
