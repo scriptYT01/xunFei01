@@ -165,7 +165,7 @@ void _superStreamBase::_ssDumpSelf( ) {
 } /* _superStreamBase::_ssDumpSelf */
 
 int _superStreamBase::_ssReadNonblock( int ___len , char * ___buf ) {
-    int __rLen = 0 ;
+    int __rLen = -3 ;
 
     _ssTryReopneIfNeeded( ) ;
 
@@ -185,7 +185,7 @@ int _superStreamBase::_ssReadNonblock( int ___len , char * ___buf ) {
 } /* _superStreamBase::_ssReadNonblock */
 
 int _superStreamBase::_ssReadBlock( int ___len , char * ___buf ) {
-    int __rLen = 0 ;
+    int __rLen = -2 ;
 
     _ssInfoW . _tryCnt ++ ;
     _ssInfoW . _tryLen += ___len ;

@@ -69,10 +69,10 @@ void _testSS(void) {
         write( 2 , __buf1024 , __len ) ;
         write( 2 , "]\n" , 2 ) ;
     } else {
-        _prEF( "nothing received <%d> " , __len ); 
+        _prEFn( "nothing received <%d> " , __len ); 
     }
 
-    _prExit( " testing 3811 99" );
+    if(0) _prExit( " testing " );
 } /* _testSS */
 
 void _fill_data(void) {
@@ -91,11 +91,12 @@ int main( int ___argc , char ** ___argv ) {
 
     while ( 1 ) {
 
-        if ( __i01 % 33 == 1 ) {
+        if ( __i01 % 33 == 32 ) {
             _time2 = _timeNow ;
             _time3 = _time2 - _time1 ;
             _prSFn( " --- %10d %10d , %10d " , _time2 , _time3 , __i01 ) ;
             _ffstdout ;
+            if(1) _prExit( " testing " );
         }
 
         if ( 1 ) _testSS() ; 
