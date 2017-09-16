@@ -18,9 +18,9 @@ int32_t _time1 = _timeNow ;
 int32_t _time2  ;
 int32_t _time3  ;
 
-char * _FrawPcm     = "/tmp/t.in.pcmRaw.txt" ;
-char * _FreducePcm  = "/tmp/t.in.pcmReduce.txt" ;
-char * _FspekerPcm  = "/tmp/t.in.speker.txt" ;
+const char * _FrawPcm     = "/tmp/t.in.pcmRaw.txt" ;
+const char * _FreducePcm  = "/tmp/t.in.pcmReduce.txt" ;
+const char * _FspekerPcm  = "/tmp/t.in.speker.txt" ;
 
 _ssFileIn  * _fGenRawPcm        = NULL ;
 _ssFileIn  * _fGenReducePcm     = NULL ;
@@ -45,17 +45,28 @@ void _paraAnalyze( int ___argc , char ** ___argv ) {
 
 } /* _paraAnalyze */
 
+void _initListen(void) {
+    _tcpRaw     = new _ssListen1( _enSsdOut 
+            , "tcpL1:" _kpListenIP ":" _kpTcp_rawpcm   , " when connected , try to output RAW-pcm " ) ;
+    _tcpReduce  = new _ssListen1( _enSsdOut 
+            , "tcpL1:" _kpListenIP ":" _kpTcp_filtered , " when connected , try to output noise-reduce-pcm " ) ;
+    _tcpSpeaker = new _ssListen1( _enSsdIn  
+            , "tcpL1:" _kpListenIP ":" _kpTcp_speaker  , " when connected , try to input pcm for speaker" ) ;
+
+} /* _initListen */
+
+void _fill_data(void) {
+} /* _fill_data */
+
 int main( int ___argc , char ** ___argv ) {
 
     int __i01 = 1 ;
 
     _usage( ___argc , ___argv ) ;
+
     _paraAnalyze( ___argc , ___argv ) ;
 
-
-    _tcpRaw     = new _ssListen1( _enSsdOut , "tcpL1:" _kpListenIP ":" _kpTcp_rawpcm   , " when connected , try to output RAW-pcm " ) ;
-    _tcpReduce  = new _ssListen1( _enSsdOut , "tcpL1:" _kpListenIP ":" _kpTcp_filtered , " when connected , try to output noise-reduce-pcm " ) ;
-    _tcpSpeaker = new _ssListen1( _enSsdIn  , "tcpL1:" _kpListenIP ":" _kpTcp_speaker  , " when connected , try to input pcm for speaker" ) ;
+    _initListen() ;
 
     while ( 1 ) {
 
@@ -66,7 +77,7 @@ int main( int ___argc , char ** ___argv ) {
             _ffstdout ;
         }
 
-        if ( 
+        if ( 0 ) _fill_data() ; 
 
         __i01 ++ ;
         if ( 0 )    { _sleep_30ms   ; } 
