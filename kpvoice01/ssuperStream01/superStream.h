@@ -56,6 +56,7 @@ class _superStreamBase
         const char              *   _ssComment      ;
         _superStreamBase        *   _ssOK           ;
         int                         _ssFD           ;
+        int                         _ssF2           ;
         _superStreamInfo            _ssInfoW        ; 
         _superStreamInfo            _ssInfoR        ; 
         int                         _ssBufAlignSize ;

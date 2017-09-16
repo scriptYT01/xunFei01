@@ -41,6 +41,7 @@ void _superStreamBase::_ssDumpSelf( ) {
     _prEFn( "_ssComment     '%s'" , _ssComment      ) ;
     _prEFn( "_ssOK          '%p'" , _ssOK           ) ;
     _prEFn( "_ssFD          '%d'" , _ssFD           ) ;
+    _prEFn( "_ssF2          '%d'" , _ssF2           ) ;
 
     _prEFn( "_ssInfoW " 
             " tryCnt,Len  %4lld %4lld " 
