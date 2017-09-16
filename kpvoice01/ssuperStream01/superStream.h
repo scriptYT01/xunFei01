@@ -49,40 +49,46 @@ typedef struct _superStreamInfoX _superStreamInfo ;
 class _superStreamBase
 {
     protected :
-        _enErrAction            _ssErrAction    ;
-        _enSsDir                _ssDir          ;
-        _enSsType               _ssType         ;
-        const char          *   _ssPath         ;
-        const char          *   _ssComment      ;
-        _superStreamBase    *   _ssOK           ;
-        int                     _ssFD           ;
-        _superStreamInfo        _ssInfoW        ; 
-        _superStreamInfo        _ssInfoR        ; 
+        _enErrAction                _ssErrAction    ;
+        _enSsDir                    _ssDir          ;
+        _enSsType                   _ssType         ;
+        const char              *   _ssPath         ;
+        const char              *   _ssComment      ;
+        _superStreamBase        *   _ssOK           ;
+        int                         _ssFD           ;
+        _superStreamInfo            _ssInfoW        ; 
+        _superStreamInfo            _ssInfoR        ; 
+
+    public :
+                                    _superStreamBase(){ _memZS( _ssInfoW ) ; _memZS( _ssInfoR ) ; } ;
+                                    ~_superStreamBase( ){} ;
+        static _superStreamBase *   _genSS( bool _exitIfErr ,  _enSsDir ___ssDir , const char * ___path , const char * ___comment ) ;
 
     protected :
-        void _superStreamInit( _enSsType ___ssType , _enSsDir ___ssDir , const char * ___path , const char * ___comment ) ;
-        static int              _valid_fd_or_errFD( int * ___fd ) ;
-        static bool             _FD_valid1_invalid0_close( int * ___fd ) ;
-        static bool             _fd_canWrite( int *___fd ) ;
-        static bool             _fd_canRead(  int *___fd ) ;
+        void                        _superStreamInit( _enSsType ___ssType , _enSsDir ___ssDir , const char * ___path , const char * ___comment ) ;
+        static int                  _valid_fd_or_errFD( int * ___fd ) ;
+        static bool                 _fd_canWrite( int *___fd ) ;
+        static bool                 _fd_canRead(  int *___fd ) ;
     public :
-        _superStreamBase(){ _memZS( _ssInfoW ) ; _memZS( _ssInfoR ) ; } ;
-        ~_superStreamBase( ){} ;
-        static _superStreamBase * _genSS( bool _exitIfErr ,  _enSsDir ___ssDir , const char * ___path , const char * ___comment ) ;
+        static bool                 _FD_valid1_invalid0_close( int * ___fd ) ;
+        bool                        _isOK() { return _ssOK?true:false ; } ;
+        void                        _ssTryReopneIfNeeded( ) ;
+        void                        _ssDumpSelf( ) ;
     public :
-        bool _isOK() { return _ssOK?true:false ; } ;
-        void _ssSetErrAction( _enErrAction ___eAction ) ;
-        void _ssTryReopneIfNeeded( ) ;
-        void _ssDumpSelf( ) ;
-
-        int  _ssWriteNonblock(  int ___len , const char * ___buf ) ;
-        int  _ssWriteBlock(     int ___len , const char * ___buf ) ;
-        int  _ssReadNonblock(   int ___len ,       char * ___buf ) ;
-        int  _ssReadBlock(      int ___len ,       char * ___buf ) ;
+        void                        _ssSetErrAction( _enErrAction ___eAction ) ;
+        void                        _ssBufSet(  int ___alignSize    ,   int ___deep ) ;
+    public :
+        int                         _ssBufR(    int ___len          ,   const char * ___buf ) ;
+        int                         _ssBufW(    int ___len          ,         char * ___buf ) ;
+    public :
+        int                         _ssWriteNonblock(  int ___len , const char * ___buf ) ;
+        int                         _ssWriteBlock(     int ___len , const char * ___buf ) ;
+        int                         _ssReadNonblock(   int ___len ,       char * ___buf ) ;
+        int                         _ssReadBlock(      int ___len ,       char * ___buf ) ;
     private :
-        int  _ssReadReal( int ___len , char * ___buf ) ;
+        int                         _ssReadReal( int ___len , char * ___buf ) ;
     private :
-        virtual bool _ssOpenOrReopen() = 0 ;
+        virtual bool                _ssOpenOrReopen() = 0 ;
 
 }; /* class _superStreamBase */
 
