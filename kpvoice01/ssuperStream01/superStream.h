@@ -72,6 +72,9 @@ class _superStreamBase
         static bool                 _fd_canWrite( int *___fd ) ;
         static bool                 _fd_canRead(  int *___fd ) ;
     public :
+        bool                        _canWrite(  bool ___reopen ) ;
+        bool                        _canRead(   bool ___reopen ) ;
+    public :
         static bool                 _FD_valid1_invalid0_close( int * ___fd ) ;
         bool                        _isOK() { return _ssOK?true:false ; } ;
         void                        _ssTryReopneIfNeeded( ) ;

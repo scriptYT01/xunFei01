@@ -7,6 +7,22 @@ int _superStreamBase::_valid_fd_or_errFD( int *___fd ) {
     return __rt ;
 } /* _valid_fd_or_errFD */
 
+bool _superStreamBase::_canWrite(  bool ___reopen ) {
+    if ( ! _ssOK ) return false ;
+    if ( _fd_canWrite( &_ssFD ) ) return true ;
+    if ( ! ___reopen ) return false ;
+    _ssOpenOrReopen() ;
+    return _fd_canWrite( &_ssFD ) ;
+} /* _superStreamBase::_canWrite */
+
+bool _superStreamBase::_canRead(   bool ___reopen ) {
+    if ( ! _ssOK ) return false ;
+    if ( _fd_canRead( &_ssFD ) ) return true ;
+    if ( ! ___reopen ) return false ;
+    _ssOpenOrReopen() ;
+    return _fd_canRead( &_ssFD ) ;
+} /* _superStreamBase::_canRead */
+
 bool _superStreamBase::_fd_canWrite( int *___fd ) {
     struct pollfd __pfds[1] ;
     int __rt ;

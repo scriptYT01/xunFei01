@@ -27,7 +27,8 @@ void _testTL1(void) {
     char    __buf1024[_pcmLenRaw] ;
     int     __len ;
 
-    if ( _tcpRaw -> _fd_canWrite() ) {
+    if ( _tcpRaw -> 
+            _fd_canWrite() ) {
         if(1) _prEFn( " can Write " ) ;
         __len = _fGenRawPcm -> _ssReadNonblock(  _pcmLenRaw , __buf1024 ) ;
         if ( __len != _pcmLenRaw ) {
