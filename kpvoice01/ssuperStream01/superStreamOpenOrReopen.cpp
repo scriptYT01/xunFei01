@@ -35,8 +35,29 @@ bool _ssTcpConnectTo::_ssOpenOrReopen( )
 
 bool _ssListen1::_ssOpenOrReopen( )
 {
-    _ssOK   = NULL ;
-    return true ;
+    const char *  __path ;
+    int     __fd = -1 ;
+    if ( _FD_valid1_invalid0_close( & _ssFD ) ) {
+        return true ;
+    }
+    if ( 0 != _strcmpX1( "tcpL1:" , _ssPath ) ) {
+        _ssOK   = NULL ;
+        return false ;
+    }
+
+    if ( ! _FD_valid1_invalid0_close( & _ssF2 ) ) {
+        _ssOpenTCPListenServerPort() ;
+    }
+    if ( ! _FD_valid1_invalid0_close( & _ssF2 ) ) {
+        _ssFD   = -10001   ;
+        _ssF2   = -10002   ;
+        _ssOK   = NULL ;
+        return false ;
+    }
+
+
+    _ssOK   = this ;
+    return (_ssFD < 0)?false:true ;
 } /* _ssListen1::_ssOpenOrReopen */
 
 bool _ssFileOut::_ssOpenOrReopen( )
