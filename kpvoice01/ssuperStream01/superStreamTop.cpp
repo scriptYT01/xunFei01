@@ -200,11 +200,12 @@ int _superStreamBase::_ssReadReal( int ___len , char * ___buf ) {
     __rLen = read( _ssFD , ___buf , ___len ) ;  // _ssReadBlock
 
     if ( __rLen == 0 ) {
-        if(1) _prEFn( " 0 --> file end" ) ;
         _ssFD = -1 ;
         _ssTryReopneIfNeeded( ) ;// try reopen it
         if ( _fd_canRead( & _ssFD ) ) {  // if reopen ok.
             __rLen = read( _ssFD , ___buf , ___len ) ;  // _ssReadBlock re-read.
+        } else {
+            if(1) _prEFn( " 0 --> file end , re-read failed." ) ;
         }
     }
     return __rLen ;
