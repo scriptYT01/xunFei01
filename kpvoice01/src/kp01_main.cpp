@@ -55,6 +55,9 @@ void _initListen(void) {
 
 } /* _initListen */
 
+void _testSS(void) {
+} /* _testSS */
+
 void _fill_data(void) {
 } /* _fill_data */
 
@@ -77,7 +80,8 @@ int main( int ___argc , char ** ___argv ) {
             _ffstdout ;
         }
 
-        if ( 0 ) _fill_data() ; 
+        if ( 1 ) _testSS() ; 
+        else     _fill_data() ; 
 
         __i01 ++ ;
         if ( 0 )    { _sleep_30ms   ; } 
