@@ -46,6 +46,7 @@ c clean:
 	@rm -f *.o $(BIN_TARGET) $(OBJECTS)
 
 t test :
+	@echo;echo;echo;echo;echo;echo;echo;echo;echo
 	bin/kpServer01.i386.bin
 
 .PHONY:clean

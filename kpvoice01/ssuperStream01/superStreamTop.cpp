@@ -199,7 +199,7 @@ int _superStreamBase::_ssReadBlock( int ___len , char * ___buf ) {
             _ssInfoW . _skipCnt ++ ;
             _ssInfoW . _skipLen += ___len ;
             if ( __Len == 0 ) {
-                _ssOK = NULL ;
+                //_ssOK = NULL ;
                 _ssFD = -1 ;
             } else { // less than 0
                 if(1)   _prExit( " ---- %d " , __Len ) ;

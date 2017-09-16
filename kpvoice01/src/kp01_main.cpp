@@ -1,6 +1,4 @@
 #include "kp01_99_top.h"
-#include "superStream.h"
-//#include "streamController.h"
 
 #define     _kpListenIP     "127.0.0.1"
 #define     _kpTcp_rawpcm   "47811"
@@ -53,32 +51,6 @@ void _initListen(void) {
             , "tcpL1:" _kpListenIP ":" _kpTcp_speaker  , " when connected , try to input pcm for speaker" ) ;
 
 } /* _initListen */
-
-void _testSS(void) {
-    char    __buf1024[1024] ;
-    int     __len ;
-
-    if ( ! ssOK( _fGenRawPcm ) ) {
-        _prExit( " file don't exist. " );
-    }
-
-    __len = _fGenRawPcm -> 
-        _ssReadNonblock(  9 , __buf1024 ) ;
-//_ssReadBlock
-    if ( __len > 0 ) {
-        _prEF( "received <%d> [" , __len ); 
-        write( 2 , __buf1024 , __len ) ;
-        write( 2 , "]\n" , 2 ) ;
-    } else {
-        _prEFn( "nothing received <%d> " , __len ); 
-    }
-
-    if(0) _prExit( " testing " );
-} /* _testSS */
-
-void _fill_data(void) {
-    _prExit( " under constructing... " );
-} /* _fill_data */
 
 int main( int ___argc , char ** ___argv ) {
 
