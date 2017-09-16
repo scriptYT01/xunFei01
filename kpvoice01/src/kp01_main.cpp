@@ -64,6 +64,7 @@ void _testSS(void) {
 
     __len = _fGenRawPcm -> 
         _ssReadNonblock(  9 , __buf1024 ) ;
+//_ssReadBlock
     if ( __len > 0 ) {
         _prEF( "received <%d> [" , __len ); 
         write( 2 , __buf1024 , __len ) ;

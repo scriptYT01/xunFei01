@@ -165,7 +165,7 @@ void _superStreamBase::_ssDumpSelf( ) {
 } /* _superStreamBase::_ssDumpSelf */
 
 int _superStreamBase::_ssReadNonblock( int ___len , char * ___buf ) {
-    int __rLen = -3 ;
+    int __rLen = -3333 ;
 
     _ssTryReopneIfNeeded( ) ;
 
@@ -185,7 +185,7 @@ int _superStreamBase::_ssReadNonblock( int ___len , char * ___buf ) {
 } /* _superStreamBase::_ssReadNonblock */
 
 int _superStreamBase::_ssReadBlock( int ___len , char * ___buf ) {
-    int __rLen = -2 ;
+    int __rLen = -2222 ;
 
     _ssInfoW . _tryCnt ++ ;
     _ssInfoW . _tryLen += ___len ;
@@ -198,6 +198,12 @@ int _superStreamBase::_ssReadBlock( int ___len , char * ___buf ) {
         if ( __Len <= 0 ) {
             _ssInfoW . _skipCnt ++ ;
             _ssInfoW . _skipLen += ___len ;
+            if ( __Len == 0 ) {
+                _ssOK = NULL ;
+                _ssFD = -1 ;
+            } else { // less than 0
+                if(1)   _prExit( " ---- %d " , __Len ) ;
+            }
         } else if ( __Len == ___len ) {
             _ssInfoW . _succCnt ++ ;
             _ssInfoW . _succLen += ___len ; // _ssReadBlock
@@ -212,6 +218,7 @@ int _superStreamBase::_ssReadBlock( int ___len , char * ___buf ) {
     } else {
         _ssInfoW . _skipCnt ++ ;
         _ssInfoW . _skipLen += ___len ;
+        if(1)   _prExit( " === " ) ;
     }
 
     return __rLen ;
