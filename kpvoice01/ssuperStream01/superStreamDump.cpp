@@ -1,10 +1,42 @@
 #include "superStream.h"
 
+static const char * _strEA( int ___aa ) {
+    switch ( ___aa ) {
+        _caseXstr( _enEreopen ) ;
+        _caseXstr( _enEignore ) ;
+        _caseXstr( _enEexit   ) ;
+        default : return __func__ ;
+    }
+} /* _strEA */
+
+static const char * _strDI( int ___aa ) {
+    switch ( ___aa ) {
+        _caseXstr( _enSsdUnknown ) ;
+        _caseXstr( _enSsdOutIn   ) ;
+        _caseXstr( _enSsdOut     ) ;
+        _caseXstr( _enSsdIn      ) ;
+        default : return __func__ ;
+    }
+} /* _strDI */
+
+static const char * _strTT( int ___aa ) {
+    switch ( ___aa ) {
+        _caseXstr( _enSstUnknown       ) ;
+        _caseXstr( _enSstFileOut       ) ;
+        _caseXstr( _enSstTcpConnectTo  ) ;
+        _caseXstr( _enSstTcpListen1    ) ;
+        _caseXstr( _enSstCin           ) ;
+        _caseXstr( _enSstCerr          ) ;
+        _caseXstr( _enSstCout          ) ;
+        default : return __func__ ;
+    }
+} /* _strTT */
+
 void _superStreamBase::_ssDumpSelf( ) {
     _prEFn( "" );
-    _prEFn( "_ssErrAction   '%d'" , _ssErrAction    ) ;
-    _prEFn( "_ssDir         '%d'" , _ssDir          ) ;
-    _prEFn( "_ssType        '%d'" , _ssType         ) ;
+    _prEFn( "_ssErrAction   '%d' : %s" , _ssErrAction , _strEA( _ssErrAction    ) ) ;
+    _prEFn( "_ssDir         '%d' : %s" , _ssDir       , _strDI( _ssDir          ) ) ;
+    _prEFn( "_ssType        '%d' : %s" , _ssType      , _strTT( _ssType         ) ) ;
     _prEFn( "_ssPath        '%s'" , _ssPath         ) ;
     _prEFn( "_ssComment     '%s'" , _ssComment      ) ;
     _prEFn( "_ssOK          '%p'" , _ssOK           ) ;

@@ -21,6 +21,7 @@
 #define _timeNow    ((int)time(0))
 
 #define _strX( aa ) # aa
+#define _caseXstr( aa )    case aa : return _strX( aa ) 
 
 #define _prOO(  fmt , ... ) printf( fmt      , ## __VA_ARGS__ )
 #define _prOOn( fmt , ... ) _prOO(  fmt "\n" , ## __VA_ARGS__ )

@@ -14,26 +14,26 @@
 using namespace std;
 
 enum _enErrAction {
-    _enEreopen,     // tryReopen when err occurs.
-    _enEignore,     // ignore when err occurs.
-    _enEexit        // exit when err occurs.
+    _enEreopen          ,   // tryReopen when err occurs.
+    _enEignore          ,   // ignore when err occurs.
+    _enEexit                // exit when err occurs.
 }; /* _enErrAction */
 
 enum _enSsDir {
-    _enSsdUnknown,
-    _enSsdOutIn,
-    _enSsdOut,
-    _enSsdIn
+    _enSsdUnknown           ,
+    _enSsdOutIn             ,
+    _enSsdOut               ,
+    _enSsdIn                
 }; /* _enSsDir */
 
 enum _enSsType { /* stream type */
-    _enSstUnknown,
-    _enSstFileOut,
-    _enSstTcpConnectTo,
-    _enSstTcpListen1,
-    _enSstCin,
-    _enSstCerr,
-    _enSstCout
+    _enSstUnknown           ,
+    _enSstFileOut           ,
+    _enSstTcpConnectTo      ,
+    _enSstTcpListen1        ,
+    _enSstCin               ,
+    _enSstCerr              ,
+    _enSstCout                
 }; /* _enSsType */
 
 struct _superStreamInfoX {
@@ -59,10 +59,10 @@ class _superStreamBase
         _superStreamInfo            _ssInfoW        ; 
         _superStreamInfo            _ssInfoR        ; 
         int                         _ssBufAlignSize ;
-        void                        _ssBufDeep      ;
+        int                         _ssBufDeep      ;
         const char              *   _ssBufLP        ;
     public :
-                                    _superStreamBase(){ _memZS( _ssInfoW ) ; _memZS( _ssInfoR ) ; _ssBufLP = NULL } ;
+                                    _superStreamBase(){ _memZS( _ssInfoW ) ; _memZS( _ssInfoR ) ; _ssBufLP = NULL ; } ;
                                     ~_superStreamBase( ){} ;
         static _superStreamBase *   _genSS( bool _exitIfErr ,  _enSsDir ___ssDir , const char * ___path , const char * ___comment ) ;
 
