@@ -195,6 +195,21 @@ int _superStreamBase::_ssReadNonblock( int ___len , char * ___buf ) {
     return __rLen ;
 } /* _superStreamBase::_ssReadNonblock */
 
+int _superStreamBase::_ssReadReal( int ___len , char * ___buf ) {
+    int __rLen ;
+    __rLen = read( _ssFD , ___buf , ___len ) ;  // _ssReadBlock
+
+    if ( __rLen == 0 ) {
+        if(1) _prEFn( " 0 --> file end" ) ;
+        _ssFD = -1 ;
+        _ssTryReopneIfNeeded( ) ;// try reopen it
+        if ( _fd_canRead( & _ssFD ) ) {  // if reopen ok.
+            __rLen = read( _ssFD , ___buf , ___len ) ;  // _ssReadBlock re-read.
+        }
+    }
+    return __rLen ;
+} /* _superStreamBase::_ssReadReal */
+
 int _superStreamBase::_ssReadBlock( int ___len , char * ___buf ) {
     int __rLen = -2222 ;
 
@@ -205,17 +220,12 @@ int _superStreamBase::_ssReadBlock( int ___len , char * ___buf ) {
 
     if ( _FD_valid1_invalid0_close( & _ssFD ) ) {
         int __Len ;
-        __Len = read( _ssFD , ___buf , ___len ) ;  // _ssReadBlock
-        if ( __Len <= 0 ) {
+        __Len = _ssReadReal( ___len , ___buf ) ;  // _ssReadBlock
+        if ( __Len <= 0 ) { // less than 0
             _ssInfoW . _skipCnt ++ ;
             _ssInfoW . _skipLen += ___len ;
-            if ( __Len == 0 ) {
-                //_ssOK = NULL ;
-                if(1) _prEFn( " 0 --> file end" ) ;
-                _ssFD = -1 ;
-            } else { // less than 0
-                if(1)   _prExit( " ---- %d " , __Len ) ;
-            }
+            if(0)   _prExit( " ---- %d " , __Len ) ;
+            __rLen = -2241 ;
         } else if ( __Len == ___len ) {
             _ssInfoW . _succCnt ++ ;
             _ssInfoW . _succLen += ___len ; // _ssReadBlock

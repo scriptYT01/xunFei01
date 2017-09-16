@@ -80,6 +80,8 @@ class _superStreamBase
         int  _ssReadNonblock(   int ___len ,       char * ___buf ) ;
         int  _ssReadBlock(      int ___len ,       char * ___buf ) ;
     private :
+        int  _ssReadReal( int ___len , char * ___buf ) ;
+    private :
         virtual bool _ssOpenOrReopen() = 0 ;
 
 }; /* class _superStreamBase */
