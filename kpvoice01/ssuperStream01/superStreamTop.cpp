@@ -4,15 +4,25 @@
 /* _superStream */
 
 bool _superStreamBase::_FD_valid1_invalid0_close( int *___fd ) {
-    bool __rt ;
+    bool    __rt ;
+    int     __st ;
+
     if ( ___fd == NULL ) { __rt = false ; }
     else if ( *___fd < 0 ) { __rt = false ; }
     else {
-        if (fcntl(*___fd, F_GETFL) == -1 && errno == EBADF) {
-            __rt = false ;
-            close( *___fd ) ;
-            *___fd = -1 ;/* force fd to invalid */
+        __st =  fcntl(*___fd, F_GETFL) ;
+        if ( __st < 0 ) {
+            if( errno == EBADF ) {
+                __rt = false ;
+                close( *___fd ) ;
+                *___fd = -1 ;/* force fd to invalid */
+            } else {
+                _prExit( "unKnown" );
+            }
         } else 
+            if ( __st != 0 ) {
+                _prEFn( " state : %d" , __st ) ;
+            }
             __rt = true ;
     }
     return __rt ;
@@ -201,6 +211,7 @@ int _superStreamBase::_ssReadBlock( int ___len , char * ___buf ) {
             _ssInfoW . _skipLen += ___len ;
             if ( __Len == 0 ) {
                 //_ssOK = NULL ;
+                if(1) _prEFn( " 0 --> file end" ) ;
                 _ssFD = -1 ;
             } else { // less than 0
                 if(1)   _prExit( " ---- %d " , __Len ) ;
