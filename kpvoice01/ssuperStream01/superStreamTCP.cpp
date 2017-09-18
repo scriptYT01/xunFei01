@@ -56,6 +56,7 @@ bool _TTcp::_ttAnalyzeL3( ) {
 
 bool _TTcp::_ttTryListen01( const char * ___ttPath ) {
 
+    int __yes = 1 ;
 
     _zExit( _ttAnalyzeL1( ___ttPath ) , " path error ? %s" , ___ttPath ) ;
     _zExit( _ttAnalyzeL2( ) , " convert error " ) ;
@@ -69,6 +70,8 @@ bool _TTcp::_ttTryListen01( const char * ___ttPath ) {
         return false ;
     }
 
+    _nExit( setsockopt(_ttFd , SOL_SOCKET, SO_REUSEADDR, &__yes, sizeof(int)) , " set reuse error " );
+
     _zExit( _ttAnalyzeL3() , " addr or port error " ) ;
 
 
@@ -81,18 +84,19 @@ bool _TTcp::_ttTryListen01( const char * ___ttPath ) {
     }
 
     _ttLd = _setNonblocking( _ttFd ) ;
-    if (_ttLd) { _prExit( " nonblock rt value , should be zero , but now %d " , _ttLd ) ; }
+    _nExit( _ttLd , " nonblock rt value , should be zero , but now %d " , _ttLd ) ; 
 
-//    _ttLd = listen(_ttFd, 10);
-//    if ( _ttLd < 0 ) {
-//        close(_ttBd) ;
-//        close(_ttFd) ;
-//        _prErrno() ;
-//        dumpExit(1) ;
-//        return false ;
-//    }
+    _ttLd = listen(_ttFd, 10);
+    if ( _ttLd != 0 ) {
+        close(_ttBd) ;
+        close(_ttFd) ;
+        _prErrno() ;
+        dumpExit(1) ;
+        return false ;
+    }
 
-    sleep(10000);
+    _dumpSelf();
+    sleep(100);
     dumpExit(1) ;
     return true ;
 } /* _TTcp::_ttTryListen01 */
