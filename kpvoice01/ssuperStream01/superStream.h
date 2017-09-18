@@ -54,17 +54,16 @@ bool                 _FD_valid1_invalid0_close( int * ___fd ) ;
 
 class _TTcp {
     public :
-        int                         _ttF2           ;
-        int                         _ttF3           ;
+        int                         _ttFd       ;
     public :
-        bool                        _ttTryListen01( const char * ___ttPath ) ;
-        //bool                        _ttAnalyzeL1( const char * ___tcpPath , struct sockaddr_in * ___sAddr ) ;
-        bool                        _ttAnalyzeL1( const char * ___tcpPath ) ;
+                                    _TTcp() { _ttFd = -1000001 ; _ttpath = NULL ; }
+    public :
+        bool                        _ttTryListen01(     const char * ___ttPath ) ;
+        bool                        _ttAnalyzeL1(       const char * ___tcpPath ) ;
         bool                        _ttAnalyzeL2();
         bool                        _ttAnalyzeL3();
         void                        _dumpSelf() ;
     private :
-        int                         _ttFd       ;
         int                         _ttBd       ;
         int                         _ttLd       ;
         struct sockaddr_in          _ttSaddr    ;

@@ -12,8 +12,7 @@ bool _TTcp::_ttAnalyzeL1( const char * ___tcpPath ) {
         free( _tthost ) ;
     }
     if ( 0 != _strcmpX1( "tcpL1:" , ___tcpPath ) ) {
-        _ttF2     = -500002 ;
-        _ttF3     = -500003 ;
+        _ttFd     = -500002 ;
         _nExit( 0 , " errorPath " ) ;
         return false ;
     }
@@ -60,8 +59,7 @@ bool _TTcp::_ttTryListen01( const char * ___ttPath ) {
     _zExit( _ttAnalyzeL1( ___ttPath ) , " path error ? %s" , ___ttPath ) ;
     _zExit( _ttAnalyzeL2( ) , " convert error " ) ;
 
-    _ttF2   = -300002 ;
-    _ttF3   = -300003 ;
+    _ttFd   = -300002 ;
 
     _ttFd = socket(AF_INET, SOCK_STREAM, 0);
     if ( _ttFd < 0 ) {
@@ -93,8 +91,6 @@ bool _TTcp::_ttTryListen01( const char * ___ttPath ) {
 //        return false ;
 //    }
 
-    _ttF2 = _ttFd ;
-    //_ttF3 = _ttBd ;
     dumpExit(1) ;
     return true ;
 } /* _TTcp::_ttTryListen01 */
@@ -108,14 +104,14 @@ bool _ssListen1::_ssOpenTCPListenServerPortAcceptSock( )
 {
 
     if ( _FD_valid1_invalid0_close( & _ssFD ) ) {
-        if ( _FD_valid1_invalid0_close( & _tTcp._ttF2 ) ) { // A:1,1 
+        if ( _FD_valid1_invalid0_close( & _tTcp._ttFd ) ) { // A:1,1 
             return false ;
         }
         _prExit( " C:1,0 --> unknow what happen. please check and run again. ");
     }
 
 
-    if ( _FD_valid1_invalid0_close( & _tTcp._ttF2 ) ) {
+    if ( _FD_valid1_invalid0_close( & _tTcp._ttFd ) ) {
         return false ; // B:0,1 
     }
 

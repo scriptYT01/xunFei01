@@ -40,7 +40,7 @@ void _superStreamBase::_dumpSelf( ) {
     _prEFn( "_ssPath        '%s'" , _ssPath         ) ;
     _prEFn( "_ssComment     '%s'" , _ssComment      ) ;
     _prEFn( "_ssOK          '%p'" , _ssOK           ) ;
-    _prEFn( "_ssFD,2,3      '%d,%d,%d'" , _ssFD , _tTcp._ttF2, _tTcp._ttF3 ) ;
+    _prEFn( "_ssFD,2,3      '%d,%d'" , _ssFD , _tTcp._ttFd ) ;
 
     _prEFn( "_ssInfoW " 
             " tryCnt,Len  %4lld %4lld " 
@@ -70,6 +70,8 @@ void _superStreamBase::_dumpSelf( ) {
 } /* _superStreamBase::_dumpSelf */
 
 void _TTcp::_dumpSelf( ) {
-    _prEFn( "_ttFD2,3      '%d,%d'" , _ttF2, _ttF3 ) ;
+    _prEFn( "_ttFd,Bd,Ld       '%d,%d,%d'" , _ttFd , _ttBd, _ttLd ) ;
+
+    _prEFn( "path , host , port , _ttplen       '%s , %s , %s , %d'" , _ttpath , _tthost , _ttport , _ttplen ) ;
 } /* _TTcp::_dumpSelf */
 
