@@ -50,6 +50,8 @@ class _TTcp {
     public :
         int                         _ssF2           ;
         int                         _ssF3           ;
+    public :
+        bool                        _tryListen01( const char * ___ttPath ) ;
     private :
 } ; /* _TTcp */
 

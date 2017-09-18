@@ -29,29 +29,7 @@ bool _superStreamBase::_tcpAnalyzeL1( const char * ___tcpPath , struct sockaddr_
     return true ;
 } /* _ssListen1::_tcpAnalyzeL1 */
 
-// SSFD , SSF2  : FD -> child , F2 -> the accepted listen port.
-// A  1    1    -> ok                    : all ok
-// B  0    1    -> ok                    : child failed , but listen ok
-// C  1    0    -> unkown what happen    : warn and exit.
-// D  0    0    -> fail                  : let try to open the listen port.
-bool _ssListen1::_ssOpenTCPListenServerPortAcceptSock( )
-{
-    int __fd ;
-    int __bd ;
-    int __ld ;
-    struct sockaddr_in __serv_addr;
-
-
-    if ( _FD_valid1_invalid0_close( & _ssFD ) ) {
-        if ( _FD_valid1_invalid0_close( & _tTcp._ssF2 ) ) { // A:1,1 
-            return false ;
-        }
-        _prExit( " C:1,0 --> unknow what happen. please check and run again. ");
-    }
-    if ( _FD_valid1_invalid0_close( & _tTcp._ssF2 ) ) {
-        return false ; // B:0,1 
-    }
-
+bool _tTcp::_tryListen01( const char * ___ttPath ) {
     // D:0,0
     if ( 0 != _strcmpX1( "tcpL1:" , _ssPath ) ) {
         _ssFD           = -200001 ;
@@ -61,7 +39,7 @@ bool _ssListen1::_ssOpenTCPListenServerPortAcceptSock( )
         return false ;
     }
 
-    _ssFD   = -300001 ;
+    _ssFD         = -300001 ;
     _tTcp._ssF2   = -300002 ;
     _tTcp._ssF3   = -300003 ;
 
@@ -98,8 +76,37 @@ bool _ssListen1::_ssOpenTCPListenServerPortAcceptSock( )
 
     _tTcp._ssF2 = __fd ;
     //_ssF3 = __bd ;
-
     ssDumpExit(0) ;
     return true ;
+} /* _tTcp::_tryListen01 */
+
+// SSFD , SSF2  : FD -> child , F2 -> the accepted listen port.
+// A  1    1    -> ok                    : all ok
+// B  0    1    -> ok                    : child failed , but listen ok
+// C  1    0    -> unkown what happen    : warn and exit.
+// D  0    0    -> fail                  : let try to open the listen port.
+bool _ssListen1::_ssOpenTCPListenServerPortAcceptSock( )
+{
+    int __fd ;
+    int __bd ;
+    int __ld ;
+    struct sockaddr_in __serv_addr;
+
+
+    if ( _FD_valid1_invalid0_close( & _ssFD ) ) {
+        if ( _FD_valid1_invalid0_close( & _tTcp._ssF2 ) ) { // A:1,1 
+            return false ;
+        }
+        _prExit( " C:1,0 --> unknow what happen. please check and run again. ");
+    }
+
+
+    if ( _FD_valid1_invalid0_close( & _tTcp._ssF2 ) ) {
+        return false ; // B:0,1 
+    }
+
+    // D:0,0
+    return _tTcp . _tryListen01( _ssPath ) ; 
+
 } /* void _ssListen1::_ssOpenTCPListenServerPortAcceptSock */
 
