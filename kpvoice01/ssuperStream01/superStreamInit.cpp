@@ -60,8 +60,8 @@ void _superStreamBase::_superStreamInit( _enSsType ___ssType , _enSsDir ___ssDir
     _ssPath         =   strdup( ___path )       ;
     _ssComment      =   strdup( ___comment )    ;
     _ssFD           =   -900001                 ;
-    _tTcp._ssF2     =   -900002                 ;
-    _tTcp._ssF3     =   -900003                 ;
+    _tTcp._ttF2     =   -900002                 ;
+    _tTcp._ttF3     =   -900003                 ;
     _ssErrAction    =   _enEreopen              ;
 
     _prEFn( "ssType %d , ssDir %d , path %s , comment %s" ,

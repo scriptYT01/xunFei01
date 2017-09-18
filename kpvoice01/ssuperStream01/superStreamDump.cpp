@@ -40,7 +40,7 @@ void _superStreamBase::_ssDumpSelf( ) {
     _prEFn( "_ssPath        '%s'" , _ssPath         ) ;
     _prEFn( "_ssComment     '%s'" , _ssComment      ) ;
     _prEFn( "_ssOK          '%p'" , _ssOK           ) ;
-    _prEFn( "_ssFD,2,3      '%d,%d,%d'" , _ssFD , _tTcp._ssF2, _tTcp._ssF3 ) ;
+    _prEFn( "_ssFD,2,3      '%d,%d,%d'" , _ssFD , _tTcp._ttF2, _tTcp._ttF3 ) ;
 
     _prEFn( "_ssInfoW " 
             " tryCnt,Len  %4lld %4lld " 

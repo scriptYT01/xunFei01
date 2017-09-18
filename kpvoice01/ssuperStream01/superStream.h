@@ -48,11 +48,16 @@ typedef struct _superStreamInfoX _superStreamInfo ;
 
 class _TTcp {
     public :
-        int                         _ssF2           ;
-        int                         _ssF3           ;
+        int                         _ttF2           ;
+        int                         _ttF3           ;
     public :
-        bool                        _tryListen01( const char * ___ttPath ) ;
+        bool                        _ttTryListen01( const char * ___ttPath ) ;
+        bool                        _ttAnalyzeL1( const char * ___tcpPath , struct sockaddr_in * ___sAddr ) ;
     private :
+        int                         _ttFd ;
+        int                         _ttBd ;
+        int                         _ttLd ;
+    struct sockaddr_in __serv_addr;
 } ; /* _TTcp */
 
 class _superStreamBase
@@ -82,7 +87,6 @@ class _superStreamBase
         static bool                 _fd_canWrite( int *___fd ) ;
         static bool                 _fd_canRead(  int *___fd ) ;
         static int                  _setNonblocking(int ___fd) ;
-        static bool                 _tcpAnalyzeL1( const char * ___tcpPath , struct sockaddr_in * ___sAddr ) ;
     public :
         bool                        _canWrite(  bool ___reopen ) ;
         bool                        _canRead(   bool ___reopen ) ;

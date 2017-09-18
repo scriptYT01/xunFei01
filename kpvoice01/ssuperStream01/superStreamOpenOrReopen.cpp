@@ -40,7 +40,7 @@ bool _ssListen1::_ssOpenOrReopen( )
     }
 
     _ssOpenTCPListenServerPortAcceptSock() ;
-    if ( 0 == _FD_valid1_invalid0_close( &_tTcp._ssF2 ) ) { //if ( _ssF2 < 0 ) {
+    if ( 0 == _FD_valid1_invalid0_close( &_tTcp._ttF2 ) ) { //if ( _ttF2 < 0 ) {
         ssDumpExit(1);
         return false ;
     }
