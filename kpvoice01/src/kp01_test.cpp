@@ -43,6 +43,16 @@ void _testTL1(void) {
     } else {
         if(1) _prEFn( " can NOT Write " ) ;
         if(1) _tcpRaw -> _dumpSelf() ;
+        while(1) {
+            if(1) _prOOn( "\n-0-" ) ;
+
+            if ( _tcpRaw -> _canWrite( true ) ) { 
+                if(1) _prOO( "-1-" ) ;
+            } else {
+                if(2) _prOO( "-2-" ) ;
+            };
+            sleep(1);
+        }
     }
 
     if(0) _tcpRaw -> _dumpSelf();

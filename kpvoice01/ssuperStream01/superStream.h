@@ -64,6 +64,9 @@ class _TTcp {
         bool                        _ttAnalyzeL3();
         void                        _dumpSelf() ;
         bool                        _ttTryAcceptClient( );
+    public :
+        bool                        _canWrite(  bool ___reopen ) ;
+        bool                        _canRead(   bool ___reopen ) ;
     private :
         int                         _ttBd           ;
         int                         _ttLd           ;
@@ -168,6 +171,9 @@ class _ssListen1 : public _superStreamBase
     public :
         _ssListen1( _enSsDir ___ssDir , const char * ___path , const char * ___comment ) ;
         ~_ssListen1( ){} ;
+    public :
+        bool                        _canWrite(  bool ___reopen ) ;
+        bool                        _canRead(   bool ___reopen ) ;
     private :
         bool _ssOpenOrReopen() ;
         bool _ssOpenTCPListenServerPortAcceptSock() ;

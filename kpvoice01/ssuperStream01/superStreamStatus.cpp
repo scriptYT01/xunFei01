@@ -16,6 +16,22 @@ bool _superStreamBase::_canRead(   bool ___reopen ) {
     return _fd_canRead( &_ssFD ) ;
 } /* _superStreamBase::_canRead */
 
+bool _TTcp::_canWrite(  bool ___reopen ) {
+    return false ;
+} /* _TTcp::_canWrite */
+
+bool _TTcp::_canRead(   bool ___reopen ) {
+    return false ;
+} /* _TTcp::_canRead */
+
+bool _ssListen1::_canWrite(  bool ___reopen ) {
+    return _tTcp . _canWrite( ___reopen ) ;
+} /* _ssListen1::_canWrite */
+
+bool _ssListen1::_canRead(   bool ___reopen ) {
+    return _tTcp . _canRead( ___reopen ) ;
+} /* _ssListen1::_canRead */
+
 
 int _valid_fd_or_errFD( int *___fd ) {
     int __rt ;
