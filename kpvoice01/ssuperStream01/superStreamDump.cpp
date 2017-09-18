@@ -69,3 +69,7 @@ void _superStreamBase::_dumpSelf( ) {
 
 } /* _superStreamBase::_dumpSelf */
 
+void _TTcp::_dumpSelf( ) {
+    _prEFn( "_ttFD2,3      '%d,%d'" , _ttF2, _ttF3 ) ;
+} /* _TTcp::_dumpSelf */
+
