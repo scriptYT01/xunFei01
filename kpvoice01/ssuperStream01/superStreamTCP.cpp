@@ -7,9 +7,10 @@
 // D  0    0    -> fail                  : let try to open the listen port.
 bool _ssListen1::_ssOpenTCPListenServerPortAcceptSock( )
 {
-    int listenfd = 0; 
-    //int connfd = 0;
-    struct sockaddr_in serv_addr;
+    int __fd ;
+    int __bd ;
+    int __ld ;
+    struct sockaddr_in __serv_addr;
 
 
     if ( _FD_valid1_invalid0_close( & _ssFD ) ) {
@@ -29,23 +30,41 @@ bool _ssListen1::_ssOpenTCPListenServerPortAcceptSock( )
         _ssOK   = NULL ;
         return false ;
     }
+
     _ssFD   = -300001 ;
     _ssF2   = -300002 ;
 
-    listenfd = socket(AF_INET, SOCK_STREAM, 0);
-    memset(&serv_addr, '0', sizeof(serv_addr));
-    //memset(sendBuff, '0', sizeof(sendBuff));
+    __fd = socket(AF_INET, SOCK_STREAM, 0);
+    if ( __fd < 0 ) {
+        _prErrno() ;
+        ssDumpExit(1) ;
+        return false ;
+    }
+    memset(&__serv_addr, '0', sizeof(__serv_addr));
 
-    serv_addr.sin_family = AF_INET;
-    serv_addr.sin_addr.s_addr = htonl(INADDR_ANY);
-    serv_addr.sin_port = htons(5000);
+    __serv_addr.sin_family = AF_INET;
+    __serv_addr.sin_addr.s_addr = htonl(INADDR_ANY);
+    __serv_addr.sin_port = htons(5000);
 
-    bind(listenfd, (struct sockaddr*)&serv_addr, sizeof(serv_addr));
+    __bd = bind(__fd, (struct sockaddr*)&__serv_addr, sizeof(__serv_addr));
+    if ( __bd < 0 ) {
+        close(__fd) ;
+        _prErrno() ;
+        ssDumpExit(1) ;
+        return false ;
+    }
 
-    listen(listenfd, 10);
+    __ld = listen(__fd, 10);
+    if ( __ld < 0 ) {
+        close(__bd) ;
+        close(__fd) ;
+        _prErrno() ;
+        ssDumpExit(1) ;
+        return false ;
+    }
 
-    _ssF2 = listenfd ;
+    _ssF2 = __fd ;
 
-    ssDumpExit(1) ;
+    ssDumpExit(0) ;
 } /* void _ssListen1::_ssOpenTCPListenServerPortAcceptSock */
 
