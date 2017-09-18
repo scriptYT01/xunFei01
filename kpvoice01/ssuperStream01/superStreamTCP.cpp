@@ -83,10 +83,8 @@ bool _TTcp::_ttTryListen01( const char * ___ttPath ) {
         return false ;
     }
 
-#if 0
     _ttLd = _setNonblocking( _ttFd ) ;
     _nExit( _ttLd , " nonblock rt value , should be zero , but now %d " , _ttLd ) ; 
-#endif
 
     _ttLd = listen(_ttFd, 10);
     if ( _ttLd != 0 ) {
@@ -97,7 +95,7 @@ bool _TTcp::_ttTryListen01( const char * ___ttPath ) {
         return false ;
     }
 
-    if ( 1 ) {
+    if ( 0 ) {
         struct sockaddr_storage remoteaddr;
         int _newFD ;
         socklen_t addrlen;
@@ -114,8 +112,8 @@ bool _TTcp::_ttTryListen01( const char * ___ttPath ) {
 
     }
 
-    sleep(100);
-    dumpExit(1) ;
+    //sleep(100);
+    dumpExit(0) ;
     return true ;
 } /* _TTcp::_ttTryListen01 */
 
