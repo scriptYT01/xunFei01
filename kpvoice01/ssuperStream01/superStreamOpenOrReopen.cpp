@@ -46,10 +46,14 @@ bool _ssListen1::_ssOpenOrReopen( )
     }
 
     // try accept the connect.
+    if ( _tTcp . _ttTryAcceptClient() ) {
+        _ssOK   = this ;
+        return  true ;
+    } else {
+        dumpExit(1);
+        return  false ;
+    }
 
-    dumpExit(1);
-    _ssOK   = this ;
-    return  true ;
     //return (_ssFD < 0)?false:true ;
 } /* _ssListen1::_ssOpenOrReopen */
 

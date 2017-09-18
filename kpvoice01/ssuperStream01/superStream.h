@@ -63,14 +63,18 @@ class _TTcp {
         bool                        _ttAnalyzeL2();
         bool                        _ttAnalyzeL3();
         void                        _dumpSelf() ;
+        bool                        _ttTryAcceptClient( );
     private :
-        int                         _ttBd       ;
-        int                         _ttLd       ;
-        struct sockaddr_in          _ttSaddr    ;
-        char                      * _ttpath     ;
-        char                      * _tthost     ;
-        char                      * _ttport     ;
-        int                         _ttplen     ;
+        int                         _ttBd           ;
+        int                         _ttLd           ;
+        struct sockaddr_in          _ttSaddr        ;
+        char                      * _ttpath         ;
+        char                      * _tthost         ;
+        char                      * _ttport         ;
+        int                         _ttplen         ;
+        struct sockaddr_storage     _ttRemoteaddr   ;
+        int                         _ttClientFD     ;
+        socklen_t                   _ttAddrlen      ;
 } ; /* _TTcp */
 
 class _superStreamBase

@@ -44,6 +44,6 @@ void _testTL1(void) {
         if(1) _prEFn( " can NOT Write " ) ;
     }
 
-    if(1) _tcpRaw -> _dumpSelf();
-    if(1) _prExit( " testing " );
+    if(0) _tcpRaw -> _dumpSelf();
+    if(0) _prExit( " testing " );
 } /* _testTL1 */

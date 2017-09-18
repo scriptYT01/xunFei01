@@ -18,7 +18,7 @@ bool _FD_valid1_invalid0_close( int *___fd ) {
             }
         } else 
             if ( __st != 0 ) {
-                _prEFn( " state : %d" , __st ) ;
+                if(0) _prErrno( " fd : %d , state : %d" , *___fd , __st ) ;
             }
             __rt = true ;
     }

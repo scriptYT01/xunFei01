@@ -34,7 +34,7 @@
 #define _ffstdout   fdatasync( 1 )
 #define _ffstderr   fdatasync( 2 )
 
-#define _prErrno() _prEFn( "errorno %d , %s" , errno , strerror( errno ) ) 
+#define _prErrno(fmt , ... ) _prEFn( "errorno %d , %s " fmt , errno , strerror( errno ) ,  ## __VA_ARGS__ ) 
 
 #define _prEF(  fmt , ... ) fprintf( stderr , "=-=:%s %d %s: " fmt , basename((char*)__FILE__), __LINE__, __func__ , ## __VA_ARGS__ )
 #define _prEFn( fmt , ... ) _prEF( fmt "\n" , ## __VA_ARGS__ )

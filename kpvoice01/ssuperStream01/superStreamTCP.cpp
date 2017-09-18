@@ -95,22 +95,6 @@ bool _TTcp::_ttTryListen01( const char * ___ttPath ) {
         return false ;
     }
 
-    if ( 0 ) {
-        struct sockaddr_storage remoteaddr;
-        int _newFD ;
-        socklen_t addrlen;
-
-        _dumpSelf();
-        _prEFn( " before : %d " , _timeNow );
-        addrlen = sizeof( remoteaddr ) ;
-        _newFD = accept( _ttFd , ( struct sockaddr *) &remoteaddr , & addrlen ) ;
-        _prEFn( " after  : %d , %d " , _timeNow , _newFD );
-        if ( _newFD < 0 ) { 
-            if ( errno != EAGAIN ) { // EWOULDBLOCK == EAGAIN == 11
-                _prErrno() ; }
-        }
-
-    }
 
     //sleep(100);
     dumpExit(0) ;
@@ -142,3 +126,30 @@ bool _ssListen1::_ssOpenTCPListenServerPortAcceptSock( )
 
 } /* void _ssListen1::_ssOpenTCPListenServerPortAcceptSock */
 
+bool _TTcp::_ttTryAcceptClient( ) {
+
+    if ( 0 == _FD_valid1_invalid0_close( &_ttFd ) ) { 
+        return false ;
+    }
+    if ( 1 == _FD_valid1_invalid0_close( &_ttClientFD ) ) { //if ( _ttFd < 0 ) {
+        return true ;
+    }
+
+
+    if(1)   _dumpSelf();
+    if(1)   _prEFn( " before : %d " , _timeNow );
+
+    _ttAddrlen = sizeof( _ttRemoteaddr ) ;
+    _ttClientFD = accept( _ttFd , ( struct sockaddr *) &_ttRemoteaddr , & _ttAddrlen ) ;
+
+    if(1)   _prEFn( " after  : %d , %d " , _timeNow , _ttClientFD );
+
+    if ( _ttClientFD < 0 ) { 
+        if ( errno != EAGAIN ) { // EWOULDBLOCK == EAGAIN == 11
+            _prErrno() ; 
+        }
+        return false ;
+    }
+
+    return true ;
+} /* _TTcp::_ttTryAcceptClient */

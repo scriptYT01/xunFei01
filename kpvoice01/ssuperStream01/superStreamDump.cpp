@@ -34,13 +34,13 @@ static const char * _strTT( int ___aa ) {
 
 void _superStreamBase::_dumpSelf( ) {
     _prEFn( "" );
-    _prEFn( "_ssErrAction   '%d' : %s" , _ssErrAction , _strEA( _ssErrAction    ) ) ;
-    _prEFn( "_ssDir         '%d' : %s" , _ssDir       , _strDI( _ssDir          ) ) ;
-    _prEFn( "_ssType        '%d' : %s" , _ssType      , _strTT( _ssType         ) ) ;
-    _prEFn( "_ssPath        '%s'" , _ssPath         ) ;
-    _prEFn( "_ssComment     '%s'" , _ssComment      ) ;
-    _prEFn( "_ssOK          '%p'" , _ssOK           ) ;
-    _prEFn( "_ssFD,2,3      '%d,%d'" , _ssFD , _tTcp._ttFd ) ;
+    _prEFn( "_ssErrAction   '%d' : %s"  , _ssErrAction , _strEA( _ssErrAction     ) ) ;
+    _prEFn( "_ssDir         '%d' : %s"  , _ssDir       , _strDI( _ssDir           ) ) ;
+    _prEFn( "_ssType        '%d' : %s"  , _ssType      , _strTT( _ssType          ) ) ;
+    _prEFn( "_ssPath        '%s'"       , _ssPath                                   ) ;
+    _prEFn( "_ssComment     '%s'"       , _ssComment                                ) ;
+    _prEFn( "_ssOK          '%p'"       , _ssOK                                     ) ;
+    _prEFn( "_ssFD,tcpFD    '%d,%d'"    , _ssFD , _tTcp._ttFd                       ) ;
 
     _prEFn( "_ssInfoW " 
             " tryCnt,Len  %4lld %4lld " 
