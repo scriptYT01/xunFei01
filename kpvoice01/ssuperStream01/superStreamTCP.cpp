@@ -7,7 +7,9 @@ bool _TTcp::_ttAnalyzeL1( const char * ___tcpPath ) {
         if ( 0 == _strcmpXX( _ttpath , ___tcpPath ) ) {
             return true ;
         }
-        _prExit( " path can not be reset " ) ;
+        _nExit( 1 , " path can not be reset " ) ; // this line can be comment
+        free( _ttpath ) ;
+        free( _tthost ) ;
     }
     if ( 0 != _strcmpX1( "tcpL1:" , ___tcpPath ) ) {
         _ttF2     = -500002 ;
@@ -28,20 +30,25 @@ bool _TTcp::_ttAnalyzeL1( const char * ___tcpPath ) {
 
     _tthost = strdup( _ttpath ) ;
     _tthost[ _ttplen ] = 0 ;
-    _nExit( 1 , " <%s> <%d> <%s> <%s> " , _ttpath , _ttplen , _tthost , _ttport ) ;
+    _nExit( 0 , " <%s> <%d> <%s> <%s> " , _ttpath , _ttplen , _tthost , _ttport ) ;
 
     return true ;
 } /* _TTcp::_ttAnalyzeL1 */
+
 bool _TTcp::_ttAnalyzeL2( ) {
-    
     return true ;
 } /* _TTcp::_ttAnalyzeL2 */
+
 bool _TTcp::_ttAnalyzeL3( ) {
 
     memset(&_ttSaddr, '0', sizeof(_ttSaddr));
 
     _ttSaddr . sin_family = AF_INET;
-    _ttSaddr . sin_addr.s_addr = htonl(INADDR_ANY);
+    //_ttSaddr . sin_addr.s_addr = htonl(INADDR_ANY);
+    //inet_pton(AF_INET, _tthost &( _ttSaddr . sin_addr ));
+    //inet_pton(AF_INET, "192.0.2.33", &(sa.sin_addr));
+    //inet_pton(AF_INET, "192.0.2.33", &( _ttSaddr . sin_addr ));
+    inet_pton(AF_INET, _tthost, &( _ttSaddr . sin_addr ));
     _ttSaddr . sin_port = htons( atoi( _ttport) );
 
     return true ;
@@ -88,7 +95,7 @@ bool _TTcp::_ttTryListen01( const char * ___ttPath ) {
 
     _ttF2 = _ttFd ;
     //_ttF3 = _ttBd ;
-    dumpExit(0) ;
+    dumpExit(1) ;
     return true ;
 } /* _TTcp::_ttTryListen01 */
 
