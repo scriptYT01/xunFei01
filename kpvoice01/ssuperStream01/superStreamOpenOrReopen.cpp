@@ -40,11 +40,14 @@ bool _ssListen1::_ssOpenOrReopen( )
     }
 
     _ssOpenTCPListenServerPortAcceptSock() ;
-    if ( _ssF2 < 0 ) {
+    if ( 0 == _FD_valid1_invalid0_close( &_ssF2 ) ) { //if ( _ssF2 < 0 ) {
         ssDumpExit(1);
         return false ;
     }
 
+    // try accept the connect.
+
+    ssDumpExit(1);
     _ssOK   = this ;
     return  true ;
     //return (_ssFD < 0)?false:true ;

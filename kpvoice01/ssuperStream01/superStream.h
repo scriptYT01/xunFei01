@@ -57,6 +57,7 @@ class _superStreamBase
         _superStreamBase        *   _ssOK           ;
         int                         _ssFD           ;
         int                         _ssF2           ;
+        int                         _ssF3           ;
         _superStreamInfo            _ssInfoW        ; 
         _superStreamInfo            _ssInfoR        ; 
         int                         _ssBufAlignSize ;
@@ -72,6 +73,7 @@ class _superStreamBase
         static int                  _valid_fd_or_errFD( int * ___fd ) ;
         static bool                 _fd_canWrite( int *___fd ) ;
         static bool                 _fd_canRead(  int *___fd ) ;
+        static int                  _setNonblocking(int ___fd) ;
     public :
         bool                        _canWrite(  bool ___reopen ) ;
         bool                        _canRead(   bool ___reopen ) ;

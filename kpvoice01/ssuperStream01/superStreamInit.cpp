@@ -59,8 +59,9 @@ void _superStreamBase::_superStreamInit( _enSsType ___ssType , _enSsDir ___ssDir
     _ssDir          =   ___ssDir                ;
     _ssPath         =   strdup( ___path )       ;
     _ssComment      =   strdup( ___comment )    ;
-    _ssFD           =   -1                      ;
-    _ssF2           =   -1                      ;
+    _ssFD           =   -900001                 ;
+    _ssF2           =   -900002                 ;
+    _ssF3           =   -900003                 ;
     _ssErrAction    =   _enEreopen              ;
 
     _prEFn( "ssType %d , ssDir %d , path %s , comment %s" ,

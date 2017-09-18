@@ -27,12 +27,14 @@ bool _ssListen1::_ssOpenTCPListenServerPortAcceptSock( )
     if ( 0 != _strcmpX1( "tcpL1:" , _ssPath ) ) {
         _ssFD   = -200001 ;
         _ssF2   = -200002 ;
+        _ssF3   = -200003 ;
         _ssOK   = NULL ;
         return false ;
     }
 
     _ssFD   = -300001 ;
     _ssF2   = -300002 ;
+    _ssF3   = -300003 ;
 
     __fd = socket(AF_INET, SOCK_STREAM, 0);
     if ( __fd < 0 ) {
@@ -47,24 +49,29 @@ bool _ssListen1::_ssOpenTCPListenServerPortAcceptSock( )
     __serv_addr.sin_port = htons(5000);
 
     __bd = bind(__fd, (struct sockaddr*)&__serv_addr, sizeof(__serv_addr));
-    if ( __bd < 0 ) {
+    if ( __bd != 0 ) {
         close(__fd) ;
         _prErrno() ;
         ssDumpExit(1) ;
         return false ;
     }
 
-    __ld = listen(__fd, 10);
-    if ( __ld < 0 ) {
-        close(__bd) ;
-        close(__fd) ;
-        _prErrno() ;
-        ssDumpExit(1) ;
-        return false ;
-    }
+    __ld = _setNonblocking( __fd ) ;
+    if (__ld) { _prExit( " nonblock rt value , should be zero , but now %d " , __ld ) ; }
+
+//    __ld = listen(__fd, 10);
+//    if ( __ld < 0 ) {
+//        close(__bd) ;
+//        close(__fd) ;
+//        _prErrno() ;
+//        ssDumpExit(1) ;
+//        return false ;
+//    }
 
     _ssF2 = __fd ;
+    //_ssF3 = __bd ;
 
     ssDumpExit(0) ;
+    return true ;
 } /* void _ssListen1::_ssOpenTCPListenServerPortAcceptSock */
 
