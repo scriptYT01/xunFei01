@@ -46,6 +46,13 @@ struct _superStreamInfoX {
 } ;
 typedef struct _superStreamInfoX _superStreamInfo ; 
 
+class _TTcp {
+    public :
+        int                         _ssF2           ;
+        int                         _ssF3           ;
+    private :
+} ; /* _TTcp */
+
 class _superStreamBase
 {
     protected :
@@ -56,8 +63,7 @@ class _superStreamBase
         const char              *   _ssComment      ;
         _superStreamBase        *   _ssOK           ;
         int                         _ssFD           ;
-        int                         _ssF2           ;
-        int                         _ssF3           ;
+        _TTcp                       _tTcp           ;
         _superStreamInfo            _ssInfoW        ; 
         _superStreamInfo            _ssInfoR        ; 
         int                         _ssBufAlignSize ;
