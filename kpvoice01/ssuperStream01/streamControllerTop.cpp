@@ -10,7 +10,7 @@ void _streamController::_scDumpSS()
     for ( __i01 = 0 ; __i01 < __size ; __i01 ++ )
     {
         __sVec = _sVec[__i01] ;
-        __sVec -> _ssDumpSelf( ) ;
+        __sVec -> _dumpSelf( ) ;
     }
 } /* _streamController::_scDumpSS */
 
@@ -61,16 +61,16 @@ bool _streamController::_addPath2( const char * ___path , const char * ___commen
 void _streamController::_scSelfTest01( ) {
 
     /* _scSelfTest01 */
-    _scDumpSS() ; /* _ssDumpSelf */
+    _scDumpSS() ; /* _dumpSelf */
     if ( 1 ) write( 6 , "yyyy\n" , 5 ) ; /* force use the fd 6 */
     _scPrintf( " aaaa" ) ;
 
-    _scDumpSS() ; /* _ssDumpSelf */
+    _scDumpSS() ; /* _dumpSelf */
     if ( 1 ) write( 6 , "zzzz\n" , 5 ) ; /* force use the fd 6 */
     _scPrintf( " bbbb" ) ; /* _scPrintf _ssWriteNonblock */
 
-    _scDumpSS() ; /* _ssDumpSelf */
-    _scDumpSS() ; /* _ssDumpSelf */
+    _scDumpSS() ; /* _dumpSelf */
+    _scDumpSS() ; /* _dumpSelf */
 
 } /* _streamController::_scSelfTest01 */
 

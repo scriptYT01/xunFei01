@@ -32,7 +32,7 @@ static const char * _strTT( int ___aa ) {
     }
 } /* _strTT */
 
-void _superStreamBase::_ssDumpSelf( ) {
+void _superStreamBase::_dumpSelf( ) {
     _prEFn( "" );
     _prEFn( "_ssErrAction   '%d' : %s" , _ssErrAction , _strEA( _ssErrAction    ) ) ;
     _prEFn( "_ssDir         '%d' : %s" , _ssDir       , _strDI( _ssDir          ) ) ;
@@ -67,5 +67,5 @@ void _superStreamBase::_ssDumpSelf( ) {
             ) ;
     _prEFn( "" );
 
-} /* _superStreamBase::_ssDumpSelf */
+} /* _superStreamBase::_dumpSelf */
 

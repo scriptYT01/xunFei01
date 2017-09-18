@@ -41,13 +41,13 @@ bool _ssListen1::_ssOpenOrReopen( )
 
     _ssOpenTCPListenServerPortAcceptSock() ;
     if ( 0 == _FD_valid1_invalid0_close( &_tTcp._ttF2 ) ) { //if ( _ttF2 < 0 ) {
-        ssDumpExit(1);
+        dumpExit(1);
         return false ;
     }
 
     // try accept the connect.
 
-    ssDumpExit(1);
+    dumpExit(1);
     _ssOK   = this ;
     return  true ;
     //return (_ssFD < 0)?false:true ;

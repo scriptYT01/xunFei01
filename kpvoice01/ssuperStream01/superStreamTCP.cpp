@@ -37,14 +37,13 @@ bool _TTcp::_ttAnalyzeL1( const char * ___tcpPath , struct sockaddr_in * ___sAdd
 bool _TTcp::_ttTryListen01( const char * ___ttPath ) {
 
 
-    _ssFD         = -300001 ;
-    _tTcp._ttF2   = -300002 ;
-    _tTcp._ttF3   = -300003 ;
+    _ttF2   = -300002 ;
+    _ttF3   = -300003 ;
 
-    __fd = socket(AF_INET, SOCK_STREAM, 0);
-    if ( __fd < 0 ) {
+    _ttFd = socket(AF_INET, SOCK_STREAM, 0);
+    if ( _ttFd < 0 ) {
         _prErrno() ;
-        ssDumpExit(1) ;
+        dumpExit(1) ;
         return false ;
     }
     memset(&__serv_addr, '0', sizeof(__serv_addr));
@@ -52,29 +51,29 @@ bool _TTcp::_ttTryListen01( const char * ___ttPath ) {
     _nExit( _ttAnalyzeL1( _ssPath , & __serv_addr ) , " path error ? %s" , _ssPath ) ;
 
 
-    __bd = bind(__fd, (struct sockaddr*)&__serv_addr, sizeof(__serv_addr));
+    __bd = bind(_ttFd, (struct sockaddr*)&__serv_addr, sizeof(__serv_addr));
     if ( __bd != 0 ) {
-        close(__fd) ;
+        close(_ttFd) ;
         _prErrno() ;
-        ssDumpExit(1) ;
+        dumpExit(1) ;
         return false ;
     }
 
-    __ld = _setNonblocking( __fd ) ;
+    __ld = _setNonblocking( _ttFd ) ;
     if (__ld) { _prExit( " nonblock rt value , should be zero , but now %d " , __ld ) ; }
 
-//    __ld = listen(__fd, 10);
+//    __ld = listen(_ttFd, 10);
 //    if ( __ld < 0 ) {
 //        close(__bd) ;
-//        close(__fd) ;
+//        close(_ttFd) ;
 //        _prErrno() ;
-//        ssDumpExit(1) ;
+//        dumpExit(1) ;
 //        return false ;
 //    }
 
-    _tTcp._ttF2 = __fd ;
+    _ttF2 = _ttFd ;
     //_ttF3 = __bd ;
-    ssDumpExit(0) ;
+    dumpExit(0) ;
     return true ;
 } /* _TTcp::_ttTryListen01 */
 

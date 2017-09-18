@@ -53,6 +53,7 @@ class _TTcp {
     public :
         bool                        _ttTryListen01( const char * ___ttPath ) ;
         bool                        _ttAnalyzeL1( const char * ___tcpPath , struct sockaddr_in * ___sAddr ) ;
+        void                        _dumpSelf() ;
     private :
         int                         _ttFd ;
         int                         _ttBd ;
@@ -94,7 +95,7 @@ class _superStreamBase
         static bool                 _FD_valid1_invalid0_close( int * ___fd ) ;
         bool                        _isOK() { return _ssOK?true:false ; } ;
         void                        _ssTryReopneIfNeeded( ) ;
-        void                        _ssDumpSelf( ) ;
+        void                        _dumpSelf( ) ;
     public :
         void                        _ssSetErrAction( _enErrAction ___eAction ) ;
     public :
@@ -182,7 +183,7 @@ class _ssFileIn : public _superStreamBase
 
 #define _dbSS1   _prEFn( " %d , %d , %s, %s" , _exitIfErr , ___ssDir , ___path , ___comment )
 #define _dbSS2   _prEFn( " %d , %d , %s, %s" , _ssDir , _ssType , _ssPath , _ssComment )
-#define ssDumpExit(ena)    if(ena) {_ssDumpSelf(); _prExit( "debuging." );}
+#define dumpExit(ena)    if(ena) {_dumpSelf(); _prExit( "debuging." );}
 
 #endif //     __SENDRESULTTOSDOUTORTCP_H
 
