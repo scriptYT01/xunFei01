@@ -7,6 +7,10 @@
 // D  0    0    -> fail                  : let try to open the listen port.
 bool _ssListen1::_ssOpenTCPListenServerPortAcceptSock( )
 {
+    int listenfd = 0; 
+    //int connfd = 0;
+    struct sockaddr_in serv_addr;
+
 
     if ( _FD_valid1_invalid0_close( & _ssFD ) ) {
         if ( _FD_valid1_invalid0_close( & _ssF2 ) ) { // A:1,1 
@@ -25,8 +29,22 @@ bool _ssListen1::_ssOpenTCPListenServerPortAcceptSock( )
         _ssOK   = NULL ;
         return false ;
     }
+    _ssFD   = -300001 ;
+    _ssF2   = -300002 ;
 
+    listenfd = socket(AF_INET, SOCK_STREAM, 0);
+    memset(&serv_addr, '0', sizeof(serv_addr));
+    //memset(sendBuff, '0', sizeof(sendBuff));
 
+    serv_addr.sin_family = AF_INET;
+    serv_addr.sin_addr.s_addr = htonl(INADDR_ANY);
+    serv_addr.sin_port = htons(5000);
+
+    bind(listenfd, (struct sockaddr*)&serv_addr, sizeof(serv_addr));
+
+    listen(listenfd, 10);
+
+    _ssF2 = listenfd ;
 
     ssDumpExit(1) ;
 } /* void _ssListen1::_ssOpenTCPListenServerPortAcceptSock */

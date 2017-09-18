@@ -17,6 +17,7 @@ LOCAL_SRC_FILES :=                                				\
     ssuperStream01/superStreamOpenOrReopen.cpp        \
     ssuperStream01/superStreamRW.cpp                  \
     ssuperStream01/superStreamStatus.cpp              \
+	ssuperStream01/superStreamTCP.cpp				  \
     ssuperStream01/superStreamTop.cpp                 \
 	src/kp01_loop.cpp 							      \
 	src/kp01_main.cpp 							      \
