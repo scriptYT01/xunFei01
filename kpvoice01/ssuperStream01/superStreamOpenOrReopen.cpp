@@ -40,19 +40,14 @@ bool _ssListen1::_ssOpenOrReopen( )
     }
 
     _ssOpenTCPListenServerPortAcceptSock() ;
-    ssDumpExit(1);
-    if ( _ssF2 < 0 ) return false ;
-
-    if ( ! _FD_valid1_invalid0_close( & _ssF2 ) ) {
-        _ssFD   = -10001   ;
-        _ssF2   = -10002   ;
-        _ssOK   = NULL ;
+    if ( _ssF2 < 0 ) {
+        ssDumpExit(1);
         return false ;
     }
 
-
     _ssOK   = this ;
-    return (_ssFD < 0)?false:true ;
+    return  true ;
+    //return (_ssFD < 0)?false:true ;
 } /* _ssListen1::_ssOpenOrReopen */
 
 bool _ssFileOut::_ssOpenOrReopen( )
