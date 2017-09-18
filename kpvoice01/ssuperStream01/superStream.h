@@ -65,8 +65,8 @@ class _TTcp {
         void                        _dumpSelf() ;
         bool                        _ttTryAcceptClient( );
     public :
-        bool                        _canWrite(  bool ___reopen ) ;
-        bool                        _canRead(   bool ___reopen ) ;
+        bool                        _canWrite(  ) ;
+        bool                        _canRead(   ) ;
     private :
         int                         _ttBd           ;
         int                         _ttLd           ;

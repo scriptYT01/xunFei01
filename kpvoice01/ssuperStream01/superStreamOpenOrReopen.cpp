@@ -50,8 +50,8 @@ bool _ssListen1::_ssOpenOrReopen( )
         _ssOK   = this ;
         return  true ;
     } else {
-        dumpExit(1);
-        return  false ;
+        if (0)  dumpExit(1);
+        return  false ; // ignore
     }
 
     //return (_ssFD < 0)?false:true ;
