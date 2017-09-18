@@ -43,12 +43,13 @@ bool _TTcp::_ttAnalyzeL3( ) {
     memset(&_ttSaddr, '0', sizeof(_ttSaddr));
 
     _ttSaddr . sin_family = AF_INET;
-    //_ttSaddr . sin_addr.s_addr = htonl(INADDR_ANY);
+    _ttSaddr . sin_addr.s_addr = htonl(INADDR_ANY);
     //inet_pton(AF_INET, _tthost &( _ttSaddr . sin_addr ));
     //inet_pton(AF_INET, "192.0.2.33", &(sa.sin_addr));
     //inet_pton(AF_INET, "192.0.2.33", &( _ttSaddr . sin_addr ));
-    inet_pton(AF_INET, _tthost, &( _ttSaddr . sin_addr ));
-    _ttSaddr . sin_port = htons( atoi( _ttport) );
+    //inet_pton(AF_INET, _tthost, &( _ttSaddr . sin_addr ));
+    //_ttSaddr . sin_port = htons( atoi( _ttport) );
+    _ttSaddr . sin_port = htons( 56789 );
 
     return true ;
 } /* _TTcp::_ttAnalyzeL3 */
@@ -91,6 +92,7 @@ bool _TTcp::_ttTryListen01( const char * ___ttPath ) {
 //        return false ;
 //    }
 
+    sleep(10000);
     dumpExit(1) ;
     return true ;
 } /* _TTcp::_ttTryListen01 */
