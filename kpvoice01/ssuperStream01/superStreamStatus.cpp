@@ -17,7 +17,12 @@ bool _superStreamBase::_canRead(   bool ___reopen ) {
 } /* _superStreamBase::_canRead */
 
 bool _TTcp::_canWrite(  bool ___reopen ) {
-    return false ;
+    if ( _ttFd < 0 ) return false ;
+
+    if (1) {
+        if(1)   _dumpSelf();
+    }
+    return _fd_canWrite( &_ttClientFD ) ;
 } /* _TTcp::_canWrite */
 
 bool _TTcp::_canRead(   bool ___reopen ) {

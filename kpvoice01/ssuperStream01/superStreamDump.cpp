@@ -71,7 +71,7 @@ void _superStreamBase::_dumpSelf( ) {
 } /* _superStreamBase::_dumpSelf */
 
 void _TTcp::_dumpSelf( ) {
-    _prEFn( "_ttFd,Bd,Ld       '%d,%d,%d'" , _ttFd , _ttBd, _ttLd ) ;
+    _prEFn( "_ttFd,Bd,Ld       '%d,%d,%d'" "_ttClientFD %d" , _ttFd , _ttBd, _ttLd , _ttClientFD) ;
 
     _prEFn( "path , host , port , _ttplen       '%s , %s , %s , %d'" , _ttpath , _tthost , _ttport , _ttplen ) ;
 } /* _TTcp::_dumpSelf */

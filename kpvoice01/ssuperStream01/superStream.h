@@ -56,7 +56,7 @@ class _TTcp {
     public :
         int                         _ttFd       ;
     public :
-                                    _TTcp() { _ttFd = -1000001 ; _ttpath = NULL ; }
+                                    _TTcp() { _ttClientFD = -1000002 ; _ttFd = -1000001 ; _ttpath = NULL ; }
     public :
         bool                        _ttTryListen01(     const char * ___ttPath ) ;
         bool                        _ttAnalyzeL1(       const char * ___tcpPath ) ;
