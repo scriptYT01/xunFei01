@@ -74,6 +74,7 @@ class _superStreamBase
         static bool                 _fd_canWrite( int *___fd ) ;
         static bool                 _fd_canRead(  int *___fd ) ;
         static int                  _setNonblocking(int ___fd) ;
+        static bool                 _tcpAnalyzeL1( const char * ___tcpPath , struct sockaddr_in * ___sAddr ) ;
     public :
         bool                        _canWrite(  bool ___reopen ) ;
         bool                        _canRead(   bool ___reopen ) ;

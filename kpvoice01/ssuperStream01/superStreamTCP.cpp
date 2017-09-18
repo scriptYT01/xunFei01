@@ -1,5 +1,34 @@
 #include "superStream.h"
 
+bool _superStreamBase::_tcpAnalyzeL1( const char * ___tcpPath , struct sockaddr_in * ___sAddr ) {
+    char * __path ;
+    char * __host ;
+    char * __port ;
+    int    __len  ;
+    
+
+    __path = (char *)___tcpPath ;
+    __path += 6 ;
+    __port = strchr( __path , ':' ) ;
+    __len = __port - __path ;
+    if ( NULL == __port || __len < 2 ) {
+        return false ;
+    }
+    __port ++ ;
+
+    __host = strdup( __path ) ;
+    __host[ __len ] = 0 ;
+    _nExit( 1 , " <%s> <%d> <%s> <%s> " , __path , __len , __host , __port ) ;
+
+
+
+
+    ___sAddr -> sin_family = AF_INET;
+    ___sAddr -> sin_addr.s_addr = htonl(INADDR_ANY);
+    ___sAddr -> sin_port = htons(5000);
+    return true ;
+} /* _ssListen1::_tcpAnalyzeL1 */
+
 // SSFD , SSF2  : FD -> child , F2 -> the accepted listen port.
 // A  1    1    -> ok                    : all ok
 // B  0    1    -> ok                    : child failed , but listen ok
@@ -44,9 +73,8 @@ bool _ssListen1::_ssOpenTCPListenServerPortAcceptSock( )
     }
     memset(&__serv_addr, '0', sizeof(__serv_addr));
 
-    __serv_addr.sin_family = AF_INET;
-    __serv_addr.sin_addr.s_addr = htonl(INADDR_ANY);
-    __serv_addr.sin_port = htons(5000);
+    _nExit( _tcpAnalyzeL1( _ssPath , & __serv_addr ) , " path error ? %s" , _ssPath ) ;
+
 
     __bd = bind(__fd, (struct sockaddr*)&__serv_addr, sizeof(__serv_addr));
     if ( __bd != 0 ) {
