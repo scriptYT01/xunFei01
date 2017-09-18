@@ -65,6 +65,7 @@ void _superStreamBase::_dumpSelf( ) {
             , _ssInfoR . _succCnt    
             , _ssInfoR . _succLen    
             ) ;
+    _tTcp . _dumpSelf();
     _prEFn( "" );
 
 } /* _superStreamBase::_dumpSelf */
