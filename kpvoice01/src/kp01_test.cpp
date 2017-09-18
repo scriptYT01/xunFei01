@@ -27,13 +27,22 @@ void _testTL1(void) {
     char    __buf1024[_pcmLenRaw] ;
     int     __len ;
 
-    while(1) {
-        if(1) _prOOn( "\n-0-" ) ;
-
+    while(0) {
+        if(0) _prOOn( "\n-0-" ) ;
         if ( _tcpRaw -> _canWrite( true ) ) { 
-            if(1) _prOO( "-1-" ) ;
+            if(1) _prOO( "-1ok-" ) ;
         } else {
-            if(2) _prOO( "-2-" ) ;
+            if(2) _prOO( "-1fa-" ) ;
+        };
+        sleep(2);
+    }
+
+    while(0) {
+        if(0) _prOOn( "\n-0-" ) ;
+        if ( _tcpRaw -> _canRead( true ) ) { 
+            if(1) _prOO( "-1ok-" ) ;
+        } else {
+            if(2) _prOO( "-1fa-" ) ;
         };
         sleep(2);
     }
@@ -43,17 +52,20 @@ void _testTL1(void) {
         if(1) _prEFn( " can Write " ) ;
         __len = _fGenRawPcm -> _ssReadNonblock(  _pcmLenRaw , __buf1024 ) ;
         if ( __len != _pcmLenRaw ) {
+            if(1) _prEFn( " re- read data len : %d " , __len ) ;
             __len = _fGenRawPcm -> _ssReadNonblock(  _pcmLenRaw , __buf1024 ) ;
+        } else {
+            if(1) _prEFn( " first-shot read data len : %d " , __len ) ;
         }
         if ( __len != _pcmLenRaw ) {
             if(1) _prEFn( " dataSource error " ) ;
         } else {
-            __len = _tcpRaw -> _ssWriteNonblock(  _pcmLenRaw , __buf1024 ) ;
+            __len = _fSpeaker -> _ssWriteNonblock(  _pcmLenRaw , __buf1024 ) ;
             if(1) _prEFn( " output data len : %d " , __len ) ;
         }
     } else {
         if(1) _prEFn( " can NOT Write " ) ;
-        if(1) _tcpRaw -> _dumpSelf() ;
+        if(0) _tcpRaw -> _dumpSelf() ;
     }
 
     if(0) _tcpRaw -> _dumpSelf();

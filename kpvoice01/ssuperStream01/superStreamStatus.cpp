@@ -18,13 +18,14 @@ bool _superStreamBase::_canRead(   bool ___reopen ) {
 
 bool _TTcp::_canWrite(  ) {
     if ( _ttFd < 0 ) return false ;
-
-    if(1)   _dumpSelf();
+    if(0)   _dumpSelf();
     return _fd_canWrite( &_ttClientFD ) ;
 } /* _TTcp::_canWrite */
 
 bool _TTcp::_canRead(   ) {
-    return false ;
+    if ( _ttFd < 0 ) return false ;
+    if(0)   _dumpSelf();
+    return _fd_canRead( &_ttClientFD ) ;
 } /* _TTcp::_canRead */
 
 bool _ssListen1::_canWrite(  bool ___reopen ) {
@@ -35,7 +36,10 @@ bool _ssListen1::_canWrite(  bool ___reopen ) {
 } /* _ssListen1::_canWrite */
 
 bool _ssListen1::_canRead(   bool ___reopen ) {
-    return _tTcp . _canRead( ) ;
+    if( _tTcp . _canRead( ) ) return true ;
+    if ( ! ___reopen ) return false ;
+    _ssOpenOrReopen();
+    return _tTcp . _canRead() ;
 } /* _ssListen1::_canRead */
 
 
