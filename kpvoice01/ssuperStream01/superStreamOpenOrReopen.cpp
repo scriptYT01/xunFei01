@@ -35,8 +35,6 @@ bool _ssTcpConnectTo::_ssOpenOrReopen( )
 
 bool _ssListen1::_ssOpenOrReopen( )
 {
-    const char *  __path ;
-    int     __fd = -1 ;
     if ( _FD_valid1_invalid0_close( & _ssFD ) ) {
         return true ;
     }

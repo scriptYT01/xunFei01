@@ -143,6 +143,7 @@ class _ssListen1 : public _superStreamBase
         ~_ssListen1( ){} ;
     private :
         bool _ssOpenOrReopen() ;
+        void _ssOpenTCPListenServerPort() ;
 } ; /* class _ssListen1 */
 
 class _ssFileOut : public _superStreamBase
