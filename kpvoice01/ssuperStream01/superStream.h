@@ -46,19 +46,32 @@ struct _superStreamInfoX {
 } ;
 typedef struct _superStreamInfoX _superStreamInfo ; 
 
+int                  _valid_fd_or_errFD( int * ___fd ) ;
+bool                 _fd_canWrite( int *___fd ) ;
+bool                 _fd_canRead(  int *___fd ) ;
+int                  _setNonblocking(int ___fd) ;
+bool                 _FD_valid1_invalid0_close( int * ___fd ) ;
+
 class _TTcp {
     public :
         int                         _ttF2           ;
         int                         _ttF3           ;
     public :
         bool                        _ttTryListen01( const char * ___ttPath ) ;
-        bool                        _ttAnalyzeL1( const char * ___tcpPath , struct sockaddr_in * ___sAddr ) ;
+        //bool                        _ttAnalyzeL1( const char * ___tcpPath , struct sockaddr_in * ___sAddr ) ;
+        bool                        _ttAnalyzeL1( const char * ___tcpPath ) ;
+        bool                        _ttAnalyzeL2();
+        bool                        _ttAnalyzeL3();
         void                        _dumpSelf() ;
     private :
-        int                         _ttFd ;
-        int                         _ttBd ;
-        int                         _ttLd ;
-    struct sockaddr_in __serv_addr;
+        int                         _ttFd       ;
+        int                         _ttBd       ;
+        int                         _ttLd       ;
+        struct sockaddr_in          _ttSaddr    ;
+        char                      * _ttpath     ;
+        char                      * _tthost     ;
+        char                      * _ttport     ;
+        int                         _ttplen     ;
 } ; /* _TTcp */
 
 class _superStreamBase
@@ -84,15 +97,10 @@ class _superStreamBase
 
     protected :
         void                        _superStreamInit( _enSsType ___ssType , _enSsDir ___ssDir , const char * ___path , const char * ___comment ) ;
-        static int                  _valid_fd_or_errFD( int * ___fd ) ;
-        static bool                 _fd_canWrite( int *___fd ) ;
-        static bool                 _fd_canRead(  int *___fd ) ;
-        static int                  _setNonblocking(int ___fd) ;
     public :
         bool                        _canWrite(  bool ___reopen ) ;
         bool                        _canRead(   bool ___reopen ) ;
     public :
-        static bool                 _FD_valid1_invalid0_close( int * ___fd ) ;
         bool                        _isOK() { return _ssOK?true:false ; } ;
         void                        _ssTryReopneIfNeeded( ) ;
         void                        _dumpSelf( ) ;

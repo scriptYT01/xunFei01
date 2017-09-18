@@ -1,12 +1,5 @@
 #include "superStream.h"
 
-int _superStreamBase::_valid_fd_or_errFD( int *___fd ) {
-    int __rt ;
-    if ( _FD_valid1_invalid0_close( ___fd ) ) __rt = *___fd ;
-    else __rt = 2 ;
-    return __rt ;
-} /* _valid_fd_or_errFD */
-
 bool _superStreamBase::_canWrite(  bool ___reopen ) {
     if ( ! _ssOK ) return false ;
     if ( _fd_canWrite( &_ssFD ) ) return true ;
@@ -23,7 +16,15 @@ bool _superStreamBase::_canRead(   bool ___reopen ) {
     return _fd_canRead( &_ssFD ) ;
 } /* _superStreamBase::_canRead */
 
-bool _superStreamBase::_fd_canWrite( int *___fd ) {
+
+int _valid_fd_or_errFD( int *___fd ) {
+    int __rt ;
+    if ( _FD_valid1_invalid0_close( ___fd ) ) __rt = *___fd ;
+    else __rt = 2 ;
+    return __rt ;
+} /* _valid_fd_or_errFD */
+
+bool _fd_canWrite( int *___fd ) {
     struct pollfd __pfds[1] ;
     int __rt ;
 
@@ -67,7 +68,7 @@ bool _superStreamBase::_fd_canWrite( int *___fd ) {
     return false ;
 } /* _fd_canWrite */
 
-bool _superStreamBase::_fd_canRead( int *___fd ) {
+bool _fd_canRead( int *___fd ) {
     struct pollfd __pfds[1] ;
     int __rt ;
 
@@ -111,7 +112,7 @@ bool _superStreamBase::_fd_canRead( int *___fd ) {
     return false ;
 } /* _fd_canRead */
 
-int _superStreamBase::_setNonblocking(int fd)
+int _setNonblocking(int fd)
 {
     int flags;
 
@@ -126,4 +127,4 @@ int _superStreamBase::_setNonblocking(int fd)
     flags = 1;
     return ioctl(fd, FIOBIO, &flags);
 #endif
-} /* _superStreamBase::_setNonblocking */
+} /* _setNonblocking */
