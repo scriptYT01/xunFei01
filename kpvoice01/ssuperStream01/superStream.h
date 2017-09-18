@@ -143,7 +143,7 @@ class _ssListen1 : public _superStreamBase
         ~_ssListen1( ){} ;
     private :
         bool _ssOpenOrReopen() ;
-        void _ssOpenTCPListenServerPort() ;
+        bool _ssOpenTCPListenServerPortAcceptSock() ;
 } ; /* class _ssListen1 */
 
 class _ssFileOut : public _superStreamBase
@@ -167,6 +167,7 @@ class _ssFileIn : public _superStreamBase
 
 #define _dbSS1   _prEFn( " %d , %d , %s, %s" , _exitIfErr , ___ssDir , ___path , ___comment )
 #define _dbSS2   _prEFn( " %d , %d , %s, %s" , _ssDir , _ssType , _ssPath , _ssComment )
+#define ssDumpExit(ena)    if(ena) {_ssDumpSelf(); _prExit( "debuging." );}
 
 #endif //     __SENDRESULTTOSDOUTORTCP_H
 
