@@ -1,6 +1,6 @@
 #include "superStream.h"
 
-bool _FD_valid1_invalid0_close( int *___fd ) {
+bool S_fd_valid1_invalid0_close( int *___fd ) {
     bool    __rt ;
     int     __st ;
 
@@ -23,5 +23,5 @@ bool _FD_valid1_invalid0_close( int *___fd ) {
             __rt = true ;
     }
     return __rt ;
-} /* _FD_valid1_invalid0_close */
+} /* S_fd_valid1_invalid0_close */
 

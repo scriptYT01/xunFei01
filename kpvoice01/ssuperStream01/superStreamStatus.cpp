@@ -2,30 +2,30 @@
 
 bool _superStreamBase::_canWrite(  bool ___reopen ) {
     if ( ! _ssOK ) return false ;
-    if ( _fd_canWrite( &_ssFD ) ) return true ;
+    if ( S_fd_canWrite( &_ssFD ) ) return true ;
     if ( ! ___reopen ) return false ;
     _ssOpenOrReopen() ;
-    return _fd_canWrite( &_ssFD ) ;
+    return S_fd_canWrite( &_ssFD ) ;
 } /* _superStreamBase::_canWrite */
 
 bool _superStreamBase::_canRead(   bool ___reopen ) {
     if ( ! _ssOK ) return false ;
-    if ( _fd_canRead( &_ssFD ) ) return true ;
+    if ( S_fd_canRead( &_ssFD ) ) return true ;
     if ( ! ___reopen ) return false ;
     _ssOpenOrReopen() ;
-    return _fd_canRead( &_ssFD ) ;
+    return S_fd_canRead( &_ssFD ) ;
 } /* _superStreamBase::_canRead */
 
 bool _TTcp::_canWrite(  ) {
     if ( _ttFd < 0 ) return false ;
     if(0)   dumpSelfX();
-    return _fd_canWrite( &_ttClientFD ) ;
+    return S_fd_canWrite( &_ttClientFD ) ;
 } /* _TTcp::_canWrite */
 
 bool _TTcp::_canRead(   ) {
     if ( _ttFd < 0 ) return false ;
     if(0)   dumpSelfX();
-    return _fd_canRead( &_ttClientFD ) ;
+    return S_fd_canRead( &_ttClientFD ) ;
 } /* _TTcp::_canRead */
 
 bool _ssListen1::_canWrite(  bool ___reopen ) {
@@ -43,18 +43,18 @@ bool _ssListen1::_canRead(   bool ___reopen ) {
 } /* _ssListen1::_canRead */
 
 
-int _valid_fd_or_errFD( int *___fd ) {
+int S_valid_fd_or_errFD( int *___fd ) {
     int __rt ;
-    if ( _FD_valid1_invalid0_close( ___fd ) ) __rt = *___fd ;
+    if ( S_fd_valid1_invalid0_close( ___fd ) ) __rt = *___fd ;
     else __rt = 2 ;
     return __rt ;
-} /* _valid_fd_or_errFD */
+} /* S_valid_fd_or_errFD */
 
-bool _fd_canWrite( int *___fd ) {
+bool S_fd_canWrite( int *___fd ) {
     struct pollfd __pfds[1] ;
     int __rt ;
 
-    if ( 0 == _FD_valid1_invalid0_close( ___fd ) ) return false ;
+    if ( 0 == S_fd_valid1_invalid0_close( ___fd ) ) return false ;
     __pfds[0].fd = *___fd ;
     __pfds[0].events = POLLOUT ;
     __pfds[0].revents = 0 ;
@@ -92,13 +92,13 @@ bool _fd_canWrite( int *___fd ) {
 
     _prEFn( "unknown state" ) ;
     return false ;
-} /* _fd_canWrite */
+} /* S_fd_canWrite */
 
-bool _fd_canRead( int *___fd ) {
+bool S_fd_canRead( int *___fd ) {
     struct pollfd __pfds[1] ;
     int __rt ;
 
-    if ( 0 == _FD_valid1_invalid0_close( ___fd ) ) return false ;
+    if ( 0 == S_fd_valid1_invalid0_close( ___fd ) ) return false ;
     __pfds[0].fd = *___fd ;
     __pfds[0].events = POLLIN ;
     __pfds[0].revents = 0 ;
@@ -136,9 +136,9 @@ bool _fd_canRead( int *___fd ) {
 
     _prEFn( "unknown state" ) ;
     return false ;
-} /* _fd_canRead */
+} /* S_fd_canRead */
 
-int _setNonblocking(int fd)
+int S_setNonblocking(int fd)
 {
     int flags;
 
@@ -153,4 +153,4 @@ int _setNonblocking(int fd)
     flags = 1;
     return ioctl(fd, FIOBIO, &flags);
 #endif
-} /* _setNonblocking */
+} /* S_setNonblocking */

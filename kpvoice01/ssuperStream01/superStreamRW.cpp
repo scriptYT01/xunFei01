@@ -5,7 +5,7 @@ int _superStreamBase::_ssReadNonblock( int ___len , char * ___buf ) {
 
     _ssTryReopneIfNeeded( ) ;
 
-    if ( _fd_canRead( & _ssFD ) ) {
+    if ( S_fd_canRead( & _ssFD ) ) {
         if ( 0 ) _prEFn( " can Read at once " );
         __rLen = _ssReadBlock( ___len , ___buf ) ;
     } else {
@@ -27,7 +27,7 @@ int _superStreamBase::_ssReadReal( int ___len , char * ___buf ) {
     if ( __rLen == 0 ) {
         _ssFD = -1 ;
         _ssTryReopneIfNeeded( ) ;// try reopen it
-        if ( _fd_canRead( & _ssFD ) ) {  // if reopen ok.
+        if ( S_fd_canRead( & _ssFD ) ) {  // if reopen ok.
             __rLen = read( _ssFD , ___buf , ___len ) ;  // _ssReadBlock re-read.
         } else {
             if(1) _prEFn( " 0 --> file end , re-read failed." ) ;
@@ -44,7 +44,7 @@ int _superStreamBase::_ssReadBlock( int ___len , char * ___buf ) {
 
     _ssTryReopneIfNeeded( ) ;
 
-    if ( _FD_valid1_invalid0_close( & _ssFD ) ) {
+    if ( S_fd_valid1_invalid0_close( & _ssFD ) ) {
         int __Len ;
         __Len = _ssReadReal( ___len , ___buf ) ;  // _ssReadBlock
         if ( __Len <= 0 ) { // less than 0
@@ -77,7 +77,7 @@ int _superStreamBase::_ssWriteNonblock( int ___len , const char * ___buf ) {
 
     _ssTryReopneIfNeeded( ) ;
 
-    if ( _fd_canWrite( & _ssFD ) ) {
+    if ( S_fd_canWrite( & _ssFD ) ) {
         if ( 0 ) _prEFn( " can Write at once " );
         __wLen = _ssWriteBlock( ___len , ___buf ) ;
     } else {
@@ -98,7 +98,7 @@ int _superStreamBase::_ssWriteBlock( int ___len , const char * ___buf ) {
 
     _ssTryReopneIfNeeded( ) ;
 
-    if ( _FD_valid1_invalid0_close( & _ssFD ) ) {
+    if ( S_fd_valid1_invalid0_close( & _ssFD ) ) {
         int __Len ;
         __Len = write( _ssFD , ___buf , ___len ) ;  // _ssWriteBlock
         if ( __Len <= 0 ) {

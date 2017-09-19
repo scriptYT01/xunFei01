@@ -46,11 +46,11 @@ struct _superStreamInfoX {
 } ;
 typedef struct _superStreamInfoX _superStreamInfo ; 
 
-int                  _valid_fd_or_errFD( int * ___fd ) ;
-bool                 _fd_canWrite( int *___fd ) ;
-bool                 _fd_canRead(  int *___fd ) ;
-int                  _setNonblocking(int ___fd) ;
-bool                 _FD_valid1_invalid0_close( int * ___fd ) ;
+int                  S_valid_fd_or_errFD( int * ___fd ) ;
+bool                 S_fd_canWrite( int *___fd ) ;
+bool                 S_fd_canRead(  int *___fd ) ;
+int                  S_setNonblocking(int ___fd) ;
+bool                 S_fd_valid1_invalid0_close( int * ___fd ) ;
 
 class _TTcp {
     public :

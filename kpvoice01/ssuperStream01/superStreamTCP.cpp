@@ -83,7 +83,7 @@ bool _TTcp::_ttTryListen01( const char * ___ttPath ) {
         return false ;
     }
 
-    _ttLd = _setNonblocking( _ttFd ) ;
+    _ttLd = S_setNonblocking( _ttFd ) ;
     _nExit( _ttLd , " nonblock rt value , should be zero , but now %d " , _ttLd ) ; 
 
     _ttLd = listen(_ttFd, 10);
@@ -109,15 +109,15 @@ bool _TTcp::_ttTryListen01( const char * ___ttPath ) {
 bool _ssListen1::_ssOpenTCPListenServerPortAcceptSock( )
 {
 
-    if ( _FD_valid1_invalid0_close( & _ssFD ) ) {
-        if ( _FD_valid1_invalid0_close( & _tTcp._ttFd ) ) { // A:1,1 
+    if ( S_fd_valid1_invalid0_close( & _ssFD ) ) {
+        if ( S_fd_valid1_invalid0_close( & _tTcp._ttFd ) ) { // A:1,1 
             return false ;
         }
         _prExit( " C:1,0 --> unknow what happen. please check and run again. ");
     }
 
 
-    if ( _FD_valid1_invalid0_close( & _tTcp._ttFd ) ) {
+    if ( S_fd_valid1_invalid0_close( & _tTcp._ttFd ) ) {
         return false ; // B:0,1 
     }
 
@@ -128,10 +128,10 @@ bool _ssListen1::_ssOpenTCPListenServerPortAcceptSock( )
 
 bool _TTcp::_ttTryAcceptClient( ) {
 
-    if ( 0 == _FD_valid1_invalid0_close( &_ttFd ) ) { 
+    if ( 0 == S_fd_valid1_invalid0_close( &_ttFd ) ) { 
         return false ;
     }
-    if ( 1 == _FD_valid1_invalid0_close( &_ttClientFD ) ) { //if ( _ttFd < 0 ) {
+    if ( 1 == S_fd_valid1_invalid0_close( &_ttClientFD ) ) { //if ( _ttFd < 0 ) {
         return true ;
     }
 

@@ -35,12 +35,12 @@ bool _ssTcpConnectTo::_ssOpenOrReopen( )
 
 bool _ssListen1::_ssOpenOrReopen( )
 {
-    if ( _FD_valid1_invalid0_close( & _ssFD ) ) {
+    if ( S_fd_valid1_invalid0_close( & _ssFD ) ) {
         return true ;
     }
 
     _ssOpenTCPListenServerPortAcceptSock() ;
-    if ( 0 == _FD_valid1_invalid0_close( &_tTcp._ttFd ) ) { //if ( _ttFd < 0 ) {
+    if ( 0 == S_fd_valid1_invalid0_close( &_tTcp._ttFd ) ) { //if ( _ttFd < 0 ) {
         dumpExit(1);
         return false ;
     }
@@ -62,7 +62,7 @@ bool _ssFileOut::_ssOpenOrReopen( )
     const char *  __path ;
     int     __fd = -1 ;
     if ( _ssDir == _enSsdOut )  {
-        if ( _FD_valid1_invalid0_close( & _ssFD ) ) {
+        if ( S_fd_valid1_invalid0_close( & _ssFD ) ) {
             return true ;
         }
         if ( 0 == _strcmpX1( ">:" , _ssPath ) ) {
@@ -99,7 +99,7 @@ bool _ssFileIn::_ssOpenOrReopen( )
     const char *  __path ;
     int     __fd = -1 ;
     if ( _ssDir == _enSsdIn )  {
-        if ( _FD_valid1_invalid0_close( & _ssFD ) ) {
+        if ( S_fd_valid1_invalid0_close( & _ssFD ) ) {
             return true ;
         }
         if ( 0 == _strcmpX1( "<:" , _ssPath ) ) {
