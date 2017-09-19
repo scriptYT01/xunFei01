@@ -43,6 +43,10 @@ void _superStreamBase::_dumpSelf( const char * ___file , int ___lineno , const c
     _prEFn( "_ssOK          '%p'"       , _ssOK                                     ) ;
     _prEFn( "_ssFD,tcpFD    '%d,%d'"    , _ssFD , _tTcp._ttFd                       ) ;
 
+    if ( _ssType == _enSstTcpListen1 ) {
+        _tTcp.dumpSelfX();
+    }
+
     _prEFn( "_ssInfoW " 
             " tryCnt,Len  %4lld %4lld " 
             " skipCnt,Len %4lld %4lld " 
