@@ -105,6 +105,7 @@ class _superStreamBase
     protected :
         void                        _superStreamInit( _enSsType ___ssType , _enSsDir ___ssDir , const char * ___path , const char * ___comment ) ;
         int                     *   _getDataFD( ) ;
+        int                     *   _getTcpListenFD( ) ;
     public :
         bool                        _canWrite(  bool ___reopen ) ;
         bool                        _canRead(   bool ___reopen ) ;

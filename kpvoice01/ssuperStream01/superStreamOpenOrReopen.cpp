@@ -35,12 +35,14 @@ bool _ssTcpConnectTo::_ssOpenOrReopen( )
 
 bool _ssListen1::_ssOpenOrReopen( )
 {
-    if ( S_fd_valid1_invalid0_close( & _ssFD ) ) {
+    int *__dataFD = _getDataFD() ;
+
+    if ( S_fd_valid1_invalid0_close( __dataFD ) ) {
         return true ;
     }
 
     _ssOpenTCPListenServerPortAcceptSock() ;
-    if ( 0 == S_fd_valid1_invalid0_close( &_tTcp._ttFd ) ) { //if ( _ttFd < 0 ) {
+    if ( 0 == S_fd_valid1_invalid0_close( &(_tTcp._ttFd) ) ) { //if ( _ttFd < 0 ) {
         dumpExit(1);
         return false ;
     }

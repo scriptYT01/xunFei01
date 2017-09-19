@@ -15,7 +15,18 @@ int * _superStreamBase::_getDataFD( ) {
             _prExit( " unknow type : %d ." , _ssType );
             break ;
     }
-} /* _superStreamBase::_getDataFD( ) */
+} /* _superStreamBase::_getDataFD */
+
+int * _superStreamBase::_getTcpListenFD( ) {
+    switch ( _ssType ) {
+        case _enSstTcpConnectTo :
+        case _enSstTcpListen1   :
+            return   &(_tTcp . _ttFd) ;
+        default:
+            _prExit( " unknow type : %d ." , _ssType );
+            break ;
+    }
+} /* _superStreamBase::_getTcpListenFD( ) */
 
 int _superStreamBase::_ssReadNonblock( int ___len , char * ___buf ) {
     int __rLen = -3333 ;

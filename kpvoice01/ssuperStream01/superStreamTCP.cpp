@@ -101,23 +101,25 @@ bool _TTcp::_ttTryListen01( const char * ___ttPath ) {
     return true ;
 } /* _TTcp::_ttTryListen01 */
 
-// SSFD , SSF2  : FD -> child , F2 -> the accepted listen port.
-// A  1    1    -> ok                    : all ok
-// B  0    1    -> ok                    : child failed , but listen ok
-// C  1    0    -> unkown what happen    : warn and exit.
-// D  0    0    -> fail                  : let try to open the listen port.
+// clildFD , listenFD  : clildFD -> dataFD , listenFD -> the accepted listen port.
+// A  1    1            -> ok                    : all ok
+// B  0    1            -> ok                    : child failed , but listen ok
+// C  1    0            -> unkown what happen    : warn and exit.
+// D  0    0            -> fail                  : let try to open the listen port.
 bool _ssListen1::_ssOpenTCPListenServerPortAcceptSock( )
 {
+    int *__dataFD   = _getDataFD() ;
+    int *__listenFD = _getTcpListenFD();
 
-    if ( S_fd_valid1_invalid0_close( & _ssFD ) ) {
-        if ( S_fd_valid1_invalid0_close( & _tTcp._ttFd ) ) { // A:1,1 
-            return false ;
+    if ( S_fd_valid1_invalid0_close( __dataFD ) ) {
+        if ( S_fd_valid1_invalid0_close( __listenFD ) ) { // A:1,1 
+            return true ;
         }
         _prExit( " C:1,0 --> unknow what happen. please check and run again. ");
     }
 
 
-    if ( S_fd_valid1_invalid0_close( & _tTcp._ttFd ) ) {
+    if ( S_fd_valid1_invalid0_close( __listenFD ) ) {
         return false ; // B:0,1 
     }
 
