@@ -140,12 +140,14 @@ void _testTL5(void) {
         if ( __len == _pcmLenRaw ) {
             __len = _fSpeaker -> _ssWriteNonblock(  _pcmLenRaw , __buf1024 ) ;
         }
+    } else {
+        _prExit( " what happens ? " );
     }
-    if( 1 ) {
-        if ( 1 || __len > 0 ) {
+    if( 0 ) {
+        if ( __len > 0 ) {
             _fSpeaker     -> dumpSelfX();
             _tcpSpeaker   -> dumpSelfX();
-            _prExit( " testing " );
+            _prExit( " testing : %d " , __len);
         }
     }
 } /* _testTL5 */
