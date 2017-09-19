@@ -13,14 +13,20 @@ kp14:=kpvoice01/include/kp01_99_top.h
 kp15:=kpvoice01/Makefile
 kp16:=kpvoice01/kp01/kp01_tcpListen_01_base.cpp
 
-kp21:=kpvoice01/ssuperStream01/streamController.h
-kp22:=kpvoice01/ssuperStream01/streamControllerTop.cpp
-kp23:=kpvoice01/ssuperStream01/superStream.h
-kp24:=kpvoice01/ssuperStream01/superStreamOpenOrReopen.cpp
-kp25:=kpvoice01/ssuperStream01/superStreamTop.cpp
-kp26:=kpvoice01/ssuperStream01/superStreamTCP.cpp
+kp21:=kpvoice01/ssuperStream01/streamControllerTop.cpp
+kp22:=kpvoice01/ssuperStream01/superStreamBuf.cpp
+kp23:=kpvoice01/ssuperStream01/superStreamCheck.cpp
+kp24:=kpvoice01/ssuperStream01/superStreamChilds.cpp
+kp25:=kpvoice01/ssuperStream01/superStreamConf.cpp
+kp26:=kpvoice01/ssuperStream01/superStreamDump.cpp
+kp27:=kpvoice01/ssuperStream01/superStreamInit.cpp
+kp28:=kpvoice01/ssuperStream01/superStreamOpenOrReopen.cpp
+kp29:=kpvoice01/ssuperStream01/superStreamRW.cpp
+kp31:=kpvoice01/ssuperStream01/superStreamStatus.cpp
+kp32:=kpvoice01/ssuperStream01/superStreamTCP.cpp
+kp33:=kpvoice01/ssuperStream01/superStreamTop.cpp
 
-kp31:=kpvoice01/base01/base01_01.c
+kp41:=kpvoice01/base01/base01_01.c
 
 
 kpkp XFk XFkpUpdate : XFgenDate
@@ -34,8 +40,9 @@ kpkp XFk XFkpUpdate : XFgenDate
 
 KPlist:= 
 KPlist+= kp11 kp12 kp13 kp14 kp15 kp16 
-KPlist+= kp21 kp22 kp23 kp24 kp25 kp26 
-KPlist+= kp31
+KPlist+= kp21 kp22 kp23 kp24 kp25 kp26 kp27 kp28 kp29
+KPlist+= kp31 kp32 kp33
+KPlist+= kp41
 
 $(call VIMobj,$(KPlist))
 
