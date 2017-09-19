@@ -1,7 +1,7 @@
 #include "kp01_99_top.h"
 
 
-void _testSS(void) {
+void _testL0(void) {
     char    __buf1024[_pcmLenRaw] ;
     int     __len ;
 
@@ -21,7 +21,7 @@ void _testSS(void) {
     }
 
     if(0) _prExit( " testing " );
-} /* _testSS */
+} /* _testL0 */
 
 void _testTL1(void) {
     char    __buf1024[_pcmLenRaw] ;
@@ -152,3 +152,18 @@ void _testTL5(void) {
     }
 } /* _testTL5 */
 
+void _testSS(void) {
+    // _superStreamBase 
+    // _canWrite
+    // _ssOpenOrReopen
+    if(0)   
+        _testTL1() ; 
+    if(0)   
+        _testTL2() ; 
+    if(0)   
+        _testTL3() ; 
+    if(0)   
+        _testTL4() ; 
+    if(0)   
+        _testTL5() ; 
+} /* _testSS */

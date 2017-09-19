@@ -69,29 +69,18 @@ int main( int ___argc , char ** ___argv ) {
     while ( 1 ) {
 
         if ( __i01 % 33 == 32 ) {
-            _time2 = _timeNow ;
-            _time3 = _time2 - _time1 ;
-            _prSFn( " --- %10d %10d , %10d " , _time2 , _time3 , __i01 ) ;
-            _ffstdout ;
-            if( 0 ) break ;
+            if ( 1 ) { // gen debug info
+                _time2 = _timeNow ;
+                _time3 = _time2 - _time1 ;
+                _prSFn( " --- %10d %10d , %10d " , _time2 , _time3 , __i01 ) ;
+                _ffstdout ;
+                if( 0 ) break ; // exit....
+            }
         }
 
         if(0)   
             _testSS() ; 
 
-        // _superStreamBase 
-        // _canWrite
-        // _ssOpenOrReopen
-        if(0)   
-            _testTL1() ; 
-        if(0)   
-            _testTL2() ; 
-        if(0)   
-            _testTL3() ; 
-        if(0)   
-            _testTL4() ; 
-        if(0)   
-            _testTL5() ; 
 
         if(1)   
             _fill_data() ; 
