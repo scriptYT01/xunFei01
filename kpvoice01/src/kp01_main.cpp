@@ -47,7 +47,7 @@ void _initListen(void) {
     _tcpReduce  -> _ssBufSet( 960 , 1 ) ; 
     _tcpSpeaker -> _ssBufSet( 960 , 1 ) ; 
 
-    if ( 1 ) {
+    if ( 0 ) {
         _tcpRaw     -> dumpSelfX();
         _tcpReduce  -> dumpSelfX();
         _tcpSpeaker -> dumpSelfX();
@@ -90,6 +90,8 @@ int main( int ___argc , char ** ___argv ) {
             _testTL3() ; 
         if(1)   
             _testTL4() ; 
+        if(0)   
+            _testTL5() ; 
 
         if(0)   
             _fill_data() ; 

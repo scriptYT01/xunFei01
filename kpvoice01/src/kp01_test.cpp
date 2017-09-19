@@ -115,6 +115,22 @@ void _testTL3(void) {
 void _testTL4(void) {
     char    __buf1024[_pcmLenRaw] ;
     int     __len ;
+    while ( 1 ) {
+        __len = _tcpSpeaker -> _ssReadNonblock(  _pcmLenRaw , __buf1024 ) ;
+        if ( __len > 0 ) {
+            _prEF( " len : %d ," , __len ); 
+            write( 2 , __buf1024 , __len ) ;
+            write( 2 , "\n" , 1 ) ;
+        } else {
+            _prEF( " len : %d " , __len ) ;
+        }
+        sleep(1) ;
+    }
+} /* _testTL4 */
+
+void _testTL5(void) {
+    char    __buf1024[_pcmLenRaw] ;
+    int     __len ;
 
     if ( _fSpeaker -> _canWrite( true ) ) {
         __len = _tcpSpeaker -> _ssReadNonblock(  _pcmLenRaw , __buf1024 ) ;
@@ -132,5 +148,5 @@ void _testTL4(void) {
             _prExit( " testing " );
         }
     }
-} /* _testTL4 */
+} /* _testTL5 */
 
