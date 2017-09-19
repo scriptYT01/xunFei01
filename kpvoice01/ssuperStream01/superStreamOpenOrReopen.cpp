@@ -46,13 +46,13 @@ bool _ssListen1::_ssOpenOrReopen( )
         dumpExit(1);
         return false ;
     }
+    _ssOK   = this ; // listen FD ok , 
 
     // try accept the connect.
     if ( _tTcp . _ttTryAcceptClient() ) {
-        _ssOK   = this ;
         return  true ;
     } else {
-        if (0)  dumpExit(1);
+        dumpExit(0);
         return  false ; // ignore
     }
 

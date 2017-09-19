@@ -46,6 +46,14 @@ void _initListen(void) {
     _tcpRaw     -> _ssBufSet( 960 , 1 ) ; 
     _tcpReduce  -> _ssBufSet( 960 , 1 ) ; 
     _tcpSpeaker -> _ssBufSet( 960 , 1 ) ; 
+
+    if ( 1 ) {
+        _tcpRaw     -> dumpSelfX();
+        _tcpReduce  -> dumpSelfX();
+        _tcpSpeaker -> dumpSelfX();
+        _prExit( " debuging " );
+    }
+
 } /* _initListen */
 
 int main( int ___argc , char ** ___argv ) {
