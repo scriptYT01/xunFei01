@@ -44,7 +44,7 @@ void _superStreamBase::_dumpSelf( const char * ___file , int ___lineno , const c
     _prEFn( "_ssFD,tcpFD    '%d,%d'"    , _ssFD , _tTcp._ttFd                       ) ;
 
     if ( _ssType == _enSstTcpListen1 ) {
-        _tTcp.dumpSelfX();
+        _tTcp.dumpSelfY();
     }
 
     _prEFn( "_ssInfoW " 
@@ -70,16 +70,16 @@ void _superStreamBase::_dumpSelf( const char * ___file , int ___lineno , const c
             , _ssInfoR . _succCnt    
             , _ssInfoR . _succLen    
             ) ;
-    _tTcp . dumpSelfX();
     _prEFn( "" );
 
 } /* _superStreamBase::_dumpSelf */
 
 void _TTcp::_dumpSelf( const char * ___file , int ___lineno , const char * ___func ) {
-    _prEFn( "" );
-    _prEFn( " %s - %d - %s " , basename((char*)___file) , ___lineno , ___func );
+    if ( 0 != ___lineno ) {
+        _prEFn( "" );
+        _prEFn( " %s - %d - %s " , basename((char*)___file) , ___lineno , ___func );
+    }
     _prEFn( "_ttFd,Bd,Ld       '%d,%d,%d'" "_ttClientFD %d" , _ttFd , _ttBd, _ttLd , _ttClientFD) ;
-
     _prEFn( "path , host , port , _ttplen       '%s , %s , %s , %d'" , _ttpath , _tthost , _ttport , _ttplen ) ;
 } /* _TTcp::_dumpSelf */
 
