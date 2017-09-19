@@ -55,10 +55,10 @@ bool                 S_fd_valid1_invalid0_close( int * ___fd ) ;
 
 class _TTcp {
     public :
-        int                         _ttFd           ;
+        int                         _ttListenFD           ;
         int                         _ttClientFD     ;
     public :
-                                    _TTcp() { _ttClientFD = -1000002 ; _ttFd = -1000001 ; _ttpath = NULL ; }
+                                    _TTcp() { _ttClientFD = -1000002 ; _ttListenFD = -1000001 ; _ttpath = NULL ; }
     public :
         bool                        _ttTryListen01(     const char * ___ttPath ) ;
         bool                        _ttAnalyzeL1(       const char * ___tcpPath ) ;

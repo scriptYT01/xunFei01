@@ -12,7 +12,7 @@ bool _TTcp::_ttAnalyzeL1( const char * ___tcpPath ) {
         free( _tthost ) ;
     }
     if ( 0 != _strcmpX1( "tcpL1:" , ___tcpPath ) ) {
-        _ttFd     = -500002 ;
+        _ttListenFD     = -500002 ;
         _nExit( 0 , " errorPath " ) ;
         return false ;
     }
@@ -61,35 +61,35 @@ bool _TTcp::_ttTryListen01( const char * ___ttPath ) {
     _zExit( _ttAnalyzeL1( ___ttPath ) , " path error ? %s" , ___ttPath ) ;
     _zExit( _ttAnalyzeL2( ) , " convert error " ) ;
 
-    _ttFd   = -300002 ;
+    _ttListenFD   = -300002 ;
 
-    _ttFd = socket(AF_INET, SOCK_STREAM, 0);
-    if ( _ttFd < 0 ) {
+    _ttListenFD = socket(AF_INET, SOCK_STREAM, 0);
+    if ( _ttListenFD < 0 ) {
         _prErrno() ;
         dumpExit(1) ;
         return false ;
     }
 
-    _nExit( setsockopt(_ttFd , SOL_SOCKET, SO_REUSEADDR, &__yes, sizeof(int)) , " set reuse error " );
+    _nExit( setsockopt(_ttListenFD , SOL_SOCKET, SO_REUSEADDR, &__yes, sizeof(int)) , " set reuse error " );
 
     _zExit( _ttAnalyzeL3() , " addr or port error " ) ;
 
 
-    _ttBd = bind(_ttFd, (struct sockaddr*)&_ttSaddr, sizeof(_ttSaddr));
+    _ttBd = bind(_ttListenFD, (struct sockaddr*)&_ttSaddr, sizeof(_ttSaddr));
     if ( _ttBd != 0 ) {
-        close(_ttFd) ;
+        close(_ttListenFD) ;
         _prErrno() ;
         dumpExit(1) ;
         return false ;
     }
 
-    _ttLd = S_setNonblocking( _ttFd ) ;
+    _ttLd = S_setNonblocking( _ttListenFD ) ;
     _nExit( _ttLd , " nonblock rt value , should be zero , but now %d " , _ttLd ) ; 
 
-    _ttLd = listen(_ttFd, 10);
+    _ttLd = listen(_ttListenFD, 10);
     if ( _ttLd != 0 ) {
         close(_ttBd) ;
-        close(_ttFd) ;
+        close(_ttListenFD) ;
         _prErrno() ;
         dumpExit(1) ;
         return false ;
@@ -130,10 +130,10 @@ bool _ssListen1::_ssOpenTCPListenServerPortAcceptSock( )
 
 bool _TTcp::_ttTryAcceptClient( ) {
 
-    if ( 0 == S_fd_valid1_invalid0_close( &_ttFd ) ) { 
+    if ( 0 == S_fd_valid1_invalid0_close( &_ttListenFD ) ) { 
         return false ;
     }
-    if ( 1 == S_fd_valid1_invalid0_close( &_ttClientFD ) ) { //if ( _ttFd < 0 ) {
+    if ( 1 == S_fd_valid1_invalid0_close( &_ttClientFD ) ) { //if ( _ttListenFD < 0 ) {
         return true ;
     }
 
@@ -142,9 +142,9 @@ bool _TTcp::_ttTryAcceptClient( ) {
     if(0)   _prEFn( " before : %d " , _timeNow );
 
     _ttAddrlen = sizeof( _ttRemoteaddr ) ;
-    _ttClientFD = accept( _ttFd , ( struct sockaddr *) &_ttRemoteaddr , & _ttAddrlen ) ;
+    _ttClientFD = accept( _ttListenFD , ( struct sockaddr *) &_ttRemoteaddr , & _ttAddrlen ) ;
 
-    if(0)   _prEFn( " after  : %d , _ttFd %d , _ttClientFD %d " , _timeNow , _ttFd , _ttClientFD );
+    if(0)   _prEFn( " after  : %d , _ttListenFD %d , _ttClientFD %d " , _timeNow , _ttListenFD , _ttClientFD );
 
     if ( _ttClientFD < 0 ) { 
         if ( errno != EAGAIN ) { // EWOULDBLOCK == EAGAIN == 11

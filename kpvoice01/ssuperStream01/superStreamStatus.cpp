@@ -17,13 +17,13 @@ bool _superStreamBase::_canRead(   bool ___reopen ) {
 } /* _superStreamBase::_canRead */
 
 bool _TTcp::_canWrite(  ) {
-    if ( _ttFd < 0 ) return false ;
+    if ( _ttListenFD < 0 ) return false ;
     if(0)   dumpSelfX();
     return S_fd_canWrite( &_ttClientFD ) ;
 } /* _TTcp::_canWrite */
 
 bool _TTcp::_canRead(   ) {
-    if ( _ttFd < 0 ) return false ;
+    if ( _ttListenFD < 0 ) return false ;
     if(0)   dumpSelfX();
     return S_fd_canRead( &_ttClientFD ) ;
 } /* _TTcp::_canRead */

@@ -21,7 +21,7 @@ int * _superStreamBase::_getTcpListenFD( ) {
     switch ( _ssType ) {
         case _enSstTcpConnectTo :
         case _enSstTcpListen1   :
-            return   &(_tTcp . _ttFd) ;
+            return   &(_tTcp . _ttListenFD) ;
         default:
             _prExit( " unknow type : %d ." , _ssType );
             break ;
