@@ -1,15 +1,33 @@
 #include "superStream.h"
 
+int * _superStreamBase::_getDataFD( ) {
+    switch ( _ssType ) {
+        case _enSstFileOut      :   
+        case _enSstFileIn       :   
+        case _enSstCin          :   
+        case _enSstCerr         :   
+        case _enSstCout         :   
+            return   &(_ssFD) ;
+        case _enSstTcpConnectTo :
+        case _enSstTcpListen1   :
+            return   &(_tTcp . _ttClientFD) ;
+        default:
+            _prExit( " unknow type : %d ." , _ssType );
+            break ;
+    }
+} /* _superStreamBase::_getDataFD( ) */
+
 int _superStreamBase::_ssReadNonblock( int ___len , char * ___buf ) {
     int __rLen = -3333 ;
+    int *__dataFD = _getDataFD() ;
 
     _ssTryReopneIfNeeded( ) ;
 
-    if ( S_fd_canRead( & _ssFD ) ) {
+    if ( S_fd_canRead( __dataFD ) ) {
         if ( 0 ) _prEFn( " can Read at once " );
         __rLen = _ssReadBlock( ___len , ___buf ) ;
     } else {
-        if ( 1 ) _prEFn( " can NOT Read at once : %d : %s , %s " , _ssFD , _ssPath , _ssComment );
+        if ( 1 ) _prEFn( " can NOT Read at once : %d : %s , %s " , *__dataFD , _ssPath , _ssComment );
         _ssInfoW . _tryCnt ++ ;
         _ssInfoW . _tryLen += ___len ;
         _ssInfoW . _skipCnt ++ ;
@@ -22,13 +40,15 @@ int _superStreamBase::_ssReadNonblock( int ___len , char * ___buf ) {
 
 int _superStreamBase::_ssReadReal( int ___len , char * ___buf ) {
     int __rLen ;
-    __rLen = read( _ssFD , ___buf , ___len ) ;  // _ssReadBlock
+    int *__dataFD = _getDataFD() ;
+
+    __rLen = read( *__dataFD , ___buf , ___len ) ;  // _ssReadBlock
 
     if ( __rLen == 0 ) {
-        _ssFD = -1 ;
+        *__dataFD = -1 ;
         _ssTryReopneIfNeeded( ) ;// try reopen it
-        if ( S_fd_canRead( & _ssFD ) ) {  // if reopen ok.
-            __rLen = read( _ssFD , ___buf , ___len ) ;  // _ssReadBlock re-read.
+        if ( S_fd_canRead( __dataFD ) ) {  // if reopen ok.
+            __rLen = read( *__dataFD , ___buf , ___len ) ;  // _ssReadBlock re-read.
         } else {
             if(1) _prEFn( " 0 --> file end , re-read failed." ) ;
         }
@@ -38,13 +58,14 @@ int _superStreamBase::_ssReadReal( int ___len , char * ___buf ) {
 
 int _superStreamBase::_ssReadBlock( int ___len , char * ___buf ) {
     int __rLen = -2222 ;
+    int *__dataFD = _getDataFD() ;
 
     _ssInfoW . _tryCnt ++ ;
     _ssInfoW . _tryLen += ___len ;
 
     _ssTryReopneIfNeeded( ) ;
 
-    if ( S_fd_valid1_invalid0_close( & _ssFD ) ) {
+    if ( S_fd_valid1_invalid0_close( __dataFD ) ) {
         int __Len ;
         __Len = _ssReadReal( ___len , ___buf ) ;  // _ssReadBlock
         if ( __Len <= 0 ) { // less than 0
@@ -74,14 +95,15 @@ int _superStreamBase::_ssReadBlock( int ___len , char * ___buf ) {
 
 int _superStreamBase::_ssWriteNonblock( int ___len , const char * ___buf ) {
     int __wLen = 0 ;
+    int *__dataFD = _getDataFD() ;
 
     _ssTryReopneIfNeeded( ) ;
 
-    if ( S_fd_canWrite( & _ssFD ) ) {
+    if ( S_fd_canWrite( __dataFD ) ) {
         if ( 0 ) _prEFn( " can Write at once " );
         __wLen = _ssWriteBlock( ___len , ___buf ) ;
     } else {
-        if ( 1 ) _prEFn( " can NOT Write at once : %d : %s , %s " , _ssFD , _ssPath , _ssComment );
+        if ( 1 ) _prEFn( " can NOT Write at once : %d : %s , %s " , *__dataFD , _ssPath , _ssComment );
         _ssInfoW . _tryCnt ++ ;
         _ssInfoW . _tryLen += ___len ;
         _ssInfoW . _skipCnt ++ ;
@@ -92,15 +114,16 @@ int _superStreamBase::_ssWriteNonblock( int ___len , const char * ___buf ) {
 
 int _superStreamBase::_ssWriteBlock( int ___len , const char * ___buf ) {
     int __wLen = 0 ;
+    int *__dataFD = _getDataFD() ;
 
     _ssInfoW . _tryCnt ++ ;
     _ssInfoW . _tryLen += ___len ;
 
     _ssTryReopneIfNeeded( ) ;
 
-    if ( S_fd_valid1_invalid0_close( & _ssFD ) ) {
+    if ( S_fd_valid1_invalid0_close( __dataFD ) ) {
         int __Len ;
-        __Len = write( _ssFD , ___buf , ___len ) ;  // _ssWriteBlock
+        __Len = write( *__dataFD , ___buf , ___len ) ;  // _ssWriteBlock
         if ( __Len <= 0 ) {
             _ssInfoW . _skipCnt ++ ;
             _ssInfoW . _skipLen += ___len ;

@@ -29,6 +29,7 @@ enum _enSsDir {
 enum _enSsType { /* stream type */
     _enSstUnknown           ,
     _enSstFileOut           ,
+    _enSstFileIn            ,
     _enSstTcpConnectTo      ,
     _enSstTcpListen1        ,
     _enSstCin               ,
@@ -54,7 +55,8 @@ bool                 S_fd_valid1_invalid0_close( int * ___fd ) ;
 
 class _TTcp {
     public :
-        int                         _ttFd       ;
+        int                         _ttFd           ;
+        int                         _ttClientFD     ;
     public :
                                     _TTcp() { _ttClientFD = -1000002 ; _ttFd = -1000001 ; _ttpath = NULL ; }
     public :
@@ -76,7 +78,6 @@ class _TTcp {
         char                      * _ttport         ;
         int                         _ttplen         ;
         struct sockaddr_storage     _ttRemoteaddr   ;
-        int                         _ttClientFD     ;
         socklen_t                   _ttAddrlen      ;
 } ; /* _TTcp */
 
@@ -103,6 +104,7 @@ class _superStreamBase
 
     protected :
         void                        _superStreamInit( _enSsType ___ssType , _enSsDir ___ssDir , const char * ___path , const char * ___comment ) ;
+        int                     *   _getDataFD( ) ;
     public :
         bool                        _canWrite(  bool ___reopen ) ;
         bool                        _canRead(   bool ___reopen ) ;
