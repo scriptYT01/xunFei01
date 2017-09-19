@@ -65,7 +65,7 @@ int main( int ___argc , char ** ___argv ) {
             _time3 = _time2 - _time1 ;
             _prSFn( " --- %10d %10d , %10d " , _time2 , _time3 , __i01 ) ;
             _ffstdout ;
-            break ;
+            if( 0 ) break ;
         }
 
         if(0)   
@@ -85,7 +85,7 @@ int main( int ___argc , char ** ___argv ) {
             _fill_data() ; 
 
         __i01 ++ ;
-        if ( 0 )    { _sleep_30ms   ; } 
+        if ( 1 )    { _sleep_30ms   ; } 
         else        { _sleep_500ms  ; }
     }
 
