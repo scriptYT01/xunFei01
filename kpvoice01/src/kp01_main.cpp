@@ -88,10 +88,13 @@ int main( int ___argc , char ** ___argv ) {
         if ( 0 )    { _sleep_30ms   ; } 
         else        { _sleep_500ms  ; }
     }
-    if(1) 
+
+    if(0) 
         _fGenRawPcm -> dumpSelfX();
     if(1) 
         _tcpRaw -> dumpSelfX();
+    if(1) 
+        _fGenRawPcm   -> dumpSelfX();
 
     return 0 ;
 } /* main */
