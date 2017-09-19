@@ -105,7 +105,7 @@ void _testTL3(void) {
             __len = _tcpRaw -> _ssWriteNonblock(  _pcmLenRaw , __buf1024 ) ;
         }
     }
-    if(1) {
+    if( __len > 0 ) {
         _tcpRaw     -> dumpSelfX();
         _fGenRawPcm   -> dumpSelfX();
         _prExit( " testing " );
