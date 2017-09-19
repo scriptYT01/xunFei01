@@ -7,6 +7,8 @@ void _testSS(void) ;
 void _testTL1(void) ;
 void _testTL2(void) ;
 void _testTL3(void) ;
+void _testTL4(void) ;
+
 void _fill_data(void) ;
 
 #endif
