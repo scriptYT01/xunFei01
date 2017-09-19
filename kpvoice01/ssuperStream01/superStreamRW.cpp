@@ -38,7 +38,8 @@ int _superStreamBase::_ssReadNonblock( int ___len , char * ___buf ) {
         if ( 0 ) _prEFn( " can Read at once " );
         __rLen = _ssReadBlock( ___len , ___buf ) ;
     } else {
-        if ( 1 ) _prEFn( " can NOT Read at once : %d : %s , %s " , *__dataFD , _ssPath , _ssComment );
+        if ( 0 ) _prEFn( " can NOT Read at once : %d : %s , %s " , *__dataFD , _ssPath , _ssComment );
+        if ( 0 && _enSstTcpListen1 == _ssType ) { _tTcp . dumpSelfX(); }
         _ssInfoW . _tryCnt ++ ;
         _ssInfoW . _tryLen += ___len ;
         _ssInfoW . _skipCnt ++ ;

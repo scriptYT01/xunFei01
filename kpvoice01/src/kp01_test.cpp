@@ -122,7 +122,7 @@ void _testTL4(void) {
             write( 2 , __buf1024 , __len ) ;
             write( 2 , "\n" , 1 ) ;
         } else {
-            _prEF( " len : %d " , __len ) ;
+            _prEFn( " len : %d " , __len ) ;
         }
         sleep(1) ;
     }
