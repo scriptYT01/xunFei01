@@ -87,8 +87,10 @@ void _testTL2(void) {
             __len = _fSpeaker -> _ssWriteNonblock(  _pcmLenRaw , __buf1024 ) ;
         }
     }
-    if(1) _fSpeaker     -> dumpSelfX();
-    if(1) _fGenRawPcm   -> dumpSelfX();
-    if(1) _prExit( " testing " );
+    if(0) {
+        _fSpeaker     -> dumpSelfX();
+        _fGenRawPcm   -> dumpSelfX();
+        _prExit( " testing " );
+    }
 } /* _testTL2 */
 
