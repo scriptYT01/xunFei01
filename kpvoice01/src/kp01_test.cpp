@@ -76,8 +76,6 @@ void _testTL2(void) {
     char    __buf1024[_pcmLenRaw] ;
     int     __len ;
 
-    if (0) _prExit( " under constructing... " );
-
     if ( _fSpeaker -> _canWrite( true ) ) {
         __len = _fGenRawPcm -> _ssReadNonblock(  _pcmLenRaw , __buf1024 ) ;
         if ( __len != _pcmLenRaw ) {
@@ -93,4 +91,24 @@ void _testTL2(void) {
         _prExit( " testing " );
     }
 } /* _testTL2 */
+
+void _testTL3(void) {
+    char    __buf1024[_pcmLenRaw] ;
+    int     __len ;
+
+    if ( _tcpRaw -> _canWrite( true ) ) {
+        __len = _fGenRawPcm -> _ssReadNonblock(  _pcmLenRaw , __buf1024 ) ;
+        if ( __len != _pcmLenRaw ) {
+            __len = _fGenRawPcm -> _ssReadNonblock(  _pcmLenRaw , __buf1024 ) ;
+        }
+        if ( __len == _pcmLenRaw ) {
+            __len = _tcpRaw -> _ssWriteNonblock(  _pcmLenRaw , __buf1024 ) ;
+        }
+    }
+    if(1) {
+        _tcpRaw     -> dumpSelfX();
+        _fGenRawPcm   -> dumpSelfX();
+        _prExit( " testing " );
+    }
+} /* _testTL3 */
 

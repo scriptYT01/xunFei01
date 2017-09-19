@@ -76,8 +76,10 @@ int main( int ___argc , char ** ___argv ) {
         // _ssOpenOrReopen
         if(0)   
             _testTL1() ; 
-        if(1)   
+        if(0)   
             _testTL2() ; 
+        if(1)   
+            _testTL3() ; 
 
         if(0)   
             _fill_data() ; 
