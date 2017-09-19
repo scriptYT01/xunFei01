@@ -41,13 +41,24 @@ void _pipe02_ReducedPCM(void) {
 } /* _pipe02_ReducedPCM */
 
 void _pipe03_speaker(void) {
-    _testTL4() ;
+    char    __buf1024[_pcmLenRaw] ;
+    int     __len ;
+
+    if ( _fSpeaker -> _canWrite( true ) ) {
+        __len = _tcpSpeaker -> _ssReadNonblock(  _pcmLenRaw , __buf1024 ) ;
+        if ( __len != _pcmLenRaw ) {
+            __len = _tcpSpeaker -> _ssReadNonblock(  _pcmLenRaw , __buf1024 ) ;
+        }
+        if ( __len == _pcmLenRaw ) {
+            __len = _fSpeaker -> _ssWriteNonblock(  _pcmLenRaw , __buf1024 ) ;
+        }
+    } 
 } /* _pipe03_speaker */
 
 void _fill_data(void) {
     if ( 1 ) _pipe01_RawPCM();
     if ( 1 ) _pipe02_ReducedPCM();
-    if ( 0 ) _pipe03_speaker();
+    if ( 1 ) _pipe03_speaker();
 
 } /* _fill_data */
 
