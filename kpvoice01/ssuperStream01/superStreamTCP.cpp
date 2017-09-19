@@ -136,8 +136,8 @@ bool _TTcp::_ttTryAcceptClient( ) {
     }
 
 
-    if(1)   _dumpSelf();
-    if(1)   _prEFn( " before : %d " , _timeNow );
+    if(0)   dumpSelfX();
+    if(0)   _prEFn( " before : %d " , _timeNow );
 
     _ttAddrlen = sizeof( _ttRemoteaddr ) ;
     _ttClientFD = accept( _ttFd , ( struct sockaddr *) &_ttRemoteaddr , & _ttAddrlen ) ;

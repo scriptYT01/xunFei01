@@ -11,7 +11,7 @@ int32_t _time3  ;
 
 const char * _FrawPcm     = "/tmp/t.in.pcmRaw.txt" ;
 const char * _FreducePcm  = "/tmp/t.in.pcmReduce.txt" ;
-const char * _FspekerPcm  = "/tmp/t.in.speker.txt" ;
+const char * _FspekerPcm  = "/tmp/t.out.speker.txt" ;
 
 _ssFileIn  * _fGenRawPcm        = NULL ;
 _ssFileIn  * _fGenReducePcm     = NULL ;
@@ -65,7 +65,6 @@ int main( int ___argc , char ** ___argv ) {
             _time3 = _time2 - _time1 ;
             _prSFn( " --- %10d %10d , %10d " , _time2 , _time3 , __i01 ) ;
             _ffstdout ;
-            if(1) _fGenRawPcm -> _dumpSelf();
             if(1) _prExit( " testing " );
         }
 
@@ -74,14 +73,19 @@ int main( int ___argc , char ** ___argv ) {
         // _superStreamBase 
         // _canWrite
         // _ssOpenOrReopen
-        if(1)   _testTL1() ; 
+        if(0)   _testTL1() ; 
 
-        if(0)   _fill_data() ; 
+        if(1)   
+            _fill_data() ; 
 
         __i01 ++ ;
         if ( 0 )    { _sleep_30ms   ; } 
         else        { _sleep_500ms  ; }
     }
+    if(1) 
+        _fGenRawPcm -> dumpSelfX();
+    if(1) 
+        _tcpRaw -> dumpSelfX();
 
     return 0 ;
 } /* main */

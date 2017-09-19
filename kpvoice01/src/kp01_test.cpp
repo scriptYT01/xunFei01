@@ -65,9 +65,9 @@ void _testTL1(void) {
         }
     } else {
         if(1) _prEFn( " can NOT Write " ) ;
-        if(0) _tcpRaw -> _dumpSelf() ;
+        if(0) _tcpRaw -> dumpSelfX() ;
     }
 
-    if(0) _tcpRaw -> _dumpSelf();
+    if(0) _tcpRaw -> dumpSelfX();
     if(0) _prExit( " testing " );
 } /* _testTL1 */

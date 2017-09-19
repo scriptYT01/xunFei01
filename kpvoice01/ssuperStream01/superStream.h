@@ -62,7 +62,7 @@ class _TTcp {
         bool                        _ttAnalyzeL1(       const char * ___tcpPath ) ;
         bool                        _ttAnalyzeL2();
         bool                        _ttAnalyzeL3();
-        void                        _dumpSelf() ;
+        void                        _dumpSelf( const char * ___file , int ___lineno , const char * ___func ) ;
         bool                        _ttTryAcceptClient( );
     public :
         bool                        _canWrite(  ) ;
@@ -109,7 +109,7 @@ class _superStreamBase
     public :
         bool                        _isOK() { return _ssOK?true:false ; } ;
         void                        _ssTryReopneIfNeeded( ) ;
-        void                        _dumpSelf( ) ;
+        void                        _dumpSelf( const char * ___file , int ___lineno , const char * ___func ) ;
     public :
         void                        _ssSetErrAction( _enErrAction ___eAction ) ;
     public :
@@ -129,6 +129,7 @@ class _superStreamBase
 }; /* class _superStreamBase */
 
 #define ssOK( aa )  (( aa && aa -> _isOK() )?true:false)
+#define dumpSelfX() _dumpSelf( __FILE__, __LINE__ , __func__ )
 
 class _ssCin : public _superStreamBase
 {
@@ -200,7 +201,7 @@ class _ssFileIn : public _superStreamBase
 
 #define _dbSS1   _prEFn( " %d , %d , %s, %s" , _exitIfErr , ___ssDir , ___path , ___comment )
 #define _dbSS2   _prEFn( " %d , %d , %s, %s" , _ssDir , _ssType , _ssPath , _ssComment )
-#define dumpExit(ena)    if(ena) {_dumpSelf(); _prExit( "debuging." );}
+#define dumpExit(ena)    if(ena) {dumpSelfX(); _prExit( "debuging." );}
 
 #endif //     __SENDRESULTTOSDOUTORTCP_H
 

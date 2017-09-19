@@ -10,7 +10,7 @@ void _streamController::_scDumpSS()
     for ( __i01 = 0 ; __i01 < __size ; __i01 ++ )
     {
         __sVec = _sVec[__i01] ;
-        __sVec -> _dumpSelf( ) ;
+        __sVec -> dumpSelfX( ) ;
     }
 } /* _streamController::_scDumpSS */
 

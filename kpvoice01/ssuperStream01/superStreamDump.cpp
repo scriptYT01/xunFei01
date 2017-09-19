@@ -32,8 +32,9 @@ static const char * _strTT( int ___aa ) {
     }
 } /* _strTT */
 
-void _superStreamBase::_dumpSelf( ) {
+void _superStreamBase::_dumpSelf( const char * ___file , int ___lineno , const char * ___func ) {
     _prEFn( "" );
+    _prEFn( " %s - %d - %s " , basename((char*)___file) , ___lineno , ___func );
     _prEFn( "_ssErrAction   '%d' : %s"  , _ssErrAction , _strEA( _ssErrAction     ) ) ;
     _prEFn( "_ssDir         '%d' : %s"  , _ssDir       , _strDI( _ssDir           ) ) ;
     _prEFn( "_ssType        '%d' : %s"  , _ssType      , _strTT( _ssType          ) ) ;
@@ -65,12 +66,14 @@ void _superStreamBase::_dumpSelf( ) {
             , _ssInfoR . _succCnt    
             , _ssInfoR . _succLen    
             ) ;
-    _tTcp . _dumpSelf();
+    _tTcp . dumpSelfX();
     _prEFn( "" );
 
 } /* _superStreamBase::_dumpSelf */
 
-void _TTcp::_dumpSelf( ) {
+void _TTcp::_dumpSelf( const char * ___file , int ___lineno , const char * ___func ) {
+    _prEFn( "" );
+    _prEFn( " %s - %d - %s " , basename((char*)___file) , ___lineno , ___func );
     _prEFn( "_ttFd,Bd,Ld       '%d,%d,%d'" "_ttClientFD %d" , _ttFd , _ttBd, _ttLd , _ttClientFD) ;
 
     _prEFn( "path , host , port , _ttplen       '%s , %s , %s , %d'" , _ttpath , _tthost , _ttport , _ttplen ) ;

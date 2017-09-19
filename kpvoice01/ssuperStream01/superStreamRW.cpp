@@ -16,7 +16,7 @@ int _superStreamBase::_ssReadNonblock( int ___len , char * ___buf ) {
         _ssInfoW . _skipLen += ___len ;
     }
 
-    if ( 0 ) _dumpSelf() ;
+    if ( 0 ) dumpSelfX() ;
     return __rLen ;
 } /* _superStreamBase::_ssReadNonblock */
 
