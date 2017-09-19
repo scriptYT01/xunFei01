@@ -29,19 +29,19 @@ void _paraAnalyze( int ___argc , char ** ___argv ) {
     if ( ___argc > 3 ) { _FreducePcm        =  ___argv[2] ; }
     if ( ___argc > 4 ) { _FspekerPcm        =  ___argv[3] ; }
 
-    _fGenRawPcm    = new _ssFileIn(  _enSsdIn    , _FrawPcm     , " rawPCM    generater " );
-    _fGenReducePcm = new _ssFileIn(  _enSsdIn    , _FreducePcm  , " reducePCM generater " );
-    _fSpeaker      = new _ssFileOut( _enSsdOut   , _FspekerPcm  , " pcm for   speaker   " );
+    _fGenRawPcm    = new _ssFileIn(  _enSsdIn    , _FrawPcm     , " _fGenRawPcm    : rawPCM    generater " );
+    _fGenReducePcm = new _ssFileIn(  _enSsdIn    , _FreducePcm  , " _fGenReducePcm : reducePCM generater " );
+    _fSpeaker      = new _ssFileOut( _enSsdOut   , _FspekerPcm  , " _fSpeaker      : pcm for   speaker   " );
 
 } /* _paraAnalyze */
 
 void _initListen(void) {
     _tcpRaw     = new _ssListen1( _enSsdOut 
-            , "tcpL1:" _kpListenIP ":" _kpTcp_rawpcm   , " when connected , try to output RAW-pcm " ) ;
+            , "tcpL1:" _kpListenIP ":" _kpTcp_rawpcm   , " _tcpRaw     : when connected , try to output RAW-pcm " ) ;
     _tcpReduce  = new _ssListen1( _enSsdOut 
-            , "tcpL1:" _kpListenIP ":" _kpTcp_filtered , " when connected , try to output noise-reduce-pcm " ) ;
+            , "tcpL1:" _kpListenIP ":" _kpTcp_filtered , " _tcpReduce  : when connected , try to output noise-reduce-pcm " ) ;
     _tcpSpeaker = new _ssListen1( _enSsdIn  
-            , "tcpL1:" _kpListenIP ":" _kpTcp_speaker  , " when connected , try to input pcm for speaker" ) ;
+            , "tcpL1:" _kpListenIP ":" _kpTcp_speaker  , " _tcpSpeaker : when connected , try to input pcm for speaker" ) ;
 
     _tcpRaw     -> _ssBufSet( 960 , 1 ) ; 
     _tcpReduce  -> _ssBufSet( 960 , 1 ) ; 
@@ -68,14 +68,18 @@ int main( int ___argc , char ** ___argv ) {
             if(1) _prExit( " testing " );
         }
 
-        if(0)   _testSS() ; 
+        if(0)   
+            _testSS() ; 
 
         // _superStreamBase 
         // _canWrite
         // _ssOpenOrReopen
-        if(0)   _testTL1() ; 
-
+        if(0)   
+            _testTL1() ; 
         if(1)   
+            _testTL2() ; 
+
+        if(0)   
             _fill_data() ; 
 
         __i01 ++ ;
