@@ -56,6 +56,15 @@ void _initListen(void) {
 
 } /* _initListen */
 
+void _dumpStatus_when_exiting(){
+    if(1) 
+        _fGenRawPcm -> dumpSelfX();
+    if(1) 
+        _tcpRaw -> dumpSelfX();
+    if(1) 
+        _fGenRawPcm   -> dumpSelfX();
+}
+
 int main( int ___argc , char ** ___argv ) {
 
     int __i01 = 1 ;
@@ -90,12 +99,6 @@ int main( int ___argc , char ** ___argv ) {
         else        { _sleep_500ms  ; }
     }
 
-    if(0) 
-        _fGenRawPcm -> dumpSelfX();
-    if(1) 
-        _tcpRaw -> dumpSelfX();
-    if(1) 
-        _fGenRawPcm   -> dumpSelfX();
 
     return 0 ;
 } /* main */
