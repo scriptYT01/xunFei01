@@ -82,6 +82,7 @@ extern void _paraAtoS( int _para_must1_ignore0 , int ___argc , char ** ___argv ,
 #define _sleep_10ms     usleep( 10000 ) 
 #define _sleep_20ms     usleep( 20000 ) 
 #define _sleep_30ms     usleep( 30000 ) 
+#define _sleep_33ms     usleep( 33333 ) 
 #define _sleep_50ms     usleep( 50000 ) 
 #define _sleep_100ms    usleep( 100000 ) 
 #define _sleep_200ms    usleep( 200000 ) 

@@ -95,7 +95,7 @@ int main( int ___argc , char ** ___argv ) {
             _fill_data() ; 
 
         __i01 ++ ;
-        if ( 1 )    { _sleep_30ms   ; } 
+        if ( 1 )    { _sleep_33ms   ; } 
         else        { _sleep_500ms  ; }
     }
 
