@@ -79,6 +79,8 @@ class _TTcp {
         int                         _ttplen         ;
         struct sockaddr_storage     _ttRemoteaddr   ;
         socklen_t                   _ttAddrlen      ;
+        int                         _ttCntR ;
+        int                         _ttCntW ;
 } ; /* _TTcp */
 
 class _superStreamBase

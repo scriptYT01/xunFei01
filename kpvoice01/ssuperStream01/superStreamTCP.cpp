@@ -153,5 +153,7 @@ bool _TTcp::_ttTryAcceptClient( ) {
         return false ;
     }
 
+    _ttCntR = 0 ;
+    _ttCntW = 0 ;
     return true ;
 } /* _TTcp::_ttTryAcceptClient */

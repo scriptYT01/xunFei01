@@ -19,13 +19,13 @@ bool _superStreamBase::_canRead(   bool ___reopen ) {
 bool _TTcp::_canWrite(  ) {
     if ( _ttListenFD < 0 ) return false ;
     if(0)   dumpSelfX();
-    return S_fd_canWrite( &_ttClientFD , &_ssCntW ) ;
+    return S_fd_canWrite( &_ttClientFD , &_ttCntW ) ;
 } /* _TTcp::_canWrite */
 
 bool _TTcp::_canRead(   ) {
     if ( _ttListenFD < 0 ) return false ;
     if(0)   dumpSelfX();
-    return S_fd_canRead( &_ttClientFD , &_ssCntR ) ;
+    return S_fd_canRead( &_ttClientFD , &_ttCntR ) ;
 } /* _TTcp::_canRead */
 
 bool _ssListen1::_canWrite(  bool ___reopen ) {
@@ -72,8 +72,20 @@ bool S_fd_canWrite( int *___fd , int * ___retryCNT ) {
     }
 
     if ( __pfds[0].revents & POLLERR ) { // EWOULDBLOCK == EAGAIN == 11 
-        _prEFn( "POLLERR : rt %d , fd : %d , err : %d %s " , __rt , *___fd , errno , strerror(errno) ) ;
-        close( *___fd ) ; *___fd = -1 ;
+        if ( errno == EAGAIN ) {
+            (*___retryCNT) ++ ;
+            if ( (*___retryCNT) > 300 ) {
+                _prEFn( "POLLERR : rt %d , fd : %d , err : %d %s : CNT %d " , __rt , *___fd , errno , strerror(errno) , *___retryCNT ) ;
+                close( *___fd ) ; *___fd = -1 ;
+            } else {
+                if ( (*___retryCNT)%33 == 32 ) {
+                    _prEFn( "POLL : rt %d , fd : %d , err : %d %s : CNT %d " , __rt , *___fd , errno , strerror(errno) , *___retryCNT ) ;
+                }
+                // want the next try.
+            }
+        } else {
+            _prEFn( "POLLERR : rt %d , fd : %d , err : %d %s : CNT %d " , __rt , *___fd , errno , strerror(errno) , *___retryCNT ) ;
+        }
         return false ;
     }
 
@@ -97,7 +109,7 @@ bool S_fd_canWrite( int *___fd , int * ___retryCNT ) {
     return false ;
 } /* S_fd_canWrite */
 
-bool S_fd_canRead( int *___fd , *___retryCNT ) {
+bool S_fd_canRead( int *___fd , int * ___retryCNT ) {
     struct pollfd __pfds[1] ;
     int __rt ;
 

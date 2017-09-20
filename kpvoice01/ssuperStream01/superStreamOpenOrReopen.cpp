@@ -8,6 +8,7 @@ bool _ssCin::_ssOpenOrReopen( )
     _dbSS2   ;
     _ssFD   = 0 ;
     _ssOK   = this ;
+    _ssCntR = 0 ;
     return true ;
 } /* _ssCin::_ssOpenOrReopen */
 
@@ -16,6 +17,7 @@ bool _ssCout::_ssOpenOrReopen( )
     if ( _ssDir != _enSsdOut )  return false ;
     _ssFD   = 1 ;
     _ssOK   = this ;
+    _ssCntW = 0 ;
     return true ;
 } /* _ssCout::_ssOpenOrReopen */
 
@@ -24,12 +26,15 @@ bool _ssCerr::_ssOpenOrReopen( )
     if ( _ssDir != _enSsdOut )  return false ;
     _ssFD   = 2 ;
     _ssOK   = this ;
+    _ssCntW = 0 ;
     return true ;
 } /* _ssCerr::_ssOpenOrReopen */
 
 bool _ssTcpConnectTo::_ssOpenOrReopen( )
 {
     _ssOK   = NULL ;
+    _ssCntR = 0 ;
+    _ssCntW = 0 ;
     return true ;
 } /* _ssTcpConnectTo::_ssOpenOrReopen */
 
