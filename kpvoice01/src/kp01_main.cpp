@@ -107,6 +107,7 @@ int main( int ___argc , char ** ___argv ) {
     int64_t __u3 ;
     int64_t __u4 ;
     int64_t __u5 ;
+    int64_t __u6 = 0 ;
     int64_t __X1 ;
 
     _usage( ___argc , ___argv ) ;
@@ -116,14 +117,14 @@ int main( int ___argc , char ** ___argv ) {
     _initListen() ;
 
     __u641  =   _u64_now() ;
-    __X1   = 1000*(_pcmLenRaw)/32 ;
+    __X1    = 1000*(_pcmLenRaw)/32 ;
     __u642  =   __u641 - __X1   ;
     while ( 1 ) {
         __u643  =   __u642     ; 
         __u642  =   _u64_now() ;
         if ( false == _main_loop() ) break ;
-        _prEFn( " 1: %lld , 2: %lld , 3: %lld , 4: %lld , 5: %lld , X1: %lld " ,
-                __u1 , __u2 , __u3 , __u4 , __u5 , __X1 );
+        _prEFn( " 1: %lld , 2: %lld , 3: %lld , 4: %lld , 5: %lld , 6: %lld , X1: %lld " ,
+                __u1 , __u2 , __u3 , __u4 , __u5 , __u6 , __X1 );
         __u644  =   _u64_now() ;
 
 
@@ -141,7 +142,12 @@ int main( int ___argc , char ** ___argv ) {
         __u4 = __X1 - __u1 ; // jiffer
         __u5 = __u3 + __u4 ;
 
-        __i03 = __u5 ;
+        if ( 0 == __u6 ) __u6 = __u1 ;
+        __u6 *= 10000 ;
+        __u6 += __u1*100 ;
+        __u6 /= 10100 ;
+
+        __i03 = __u1 ;
         usleep( __i03 ) ;
     }
 
