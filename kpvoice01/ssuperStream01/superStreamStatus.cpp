@@ -2,30 +2,30 @@
 
 bool _superStreamBase::_canWrite(  bool ___reopen ) {
     if ( ! _ssOK ) return false ;
-    if ( S_fd_canWrite( &_ssFD ) ) return true ;
+    if ( S_fd_canWrite( &_ssFD , &_ssCntW ) ) return true ;
     if ( ! ___reopen ) return false ;
     _ssOpenOrReopen() ;
-    return S_fd_canWrite( &_ssFD ) ;
+    return S_fd_canWrite( &_ssFD , &_ssCntW ) ;
 } /* _superStreamBase::_canWrite */
 
 bool _superStreamBase::_canRead(   bool ___reopen ) {
     if ( ! _ssOK ) return false ;
-    if ( S_fd_canRead( &_ssFD ) ) return true ;
+    if ( S_fd_canRead( &_ssFD , &_ssCntR ) ) return true ;
     if ( ! ___reopen ) return false ;
     _ssOpenOrReopen() ;
-    return S_fd_canRead( &_ssFD ) ;
+    return S_fd_canRead( &_ssFD , &_ssCntR ) ;
 } /* _superStreamBase::_canRead */
 
 bool _TTcp::_canWrite(  ) {
     if ( _ttListenFD < 0 ) return false ;
     if(0)   dumpSelfX();
-    return S_fd_canWrite( &_ttClientFD ) ;
+    return S_fd_canWrite( &_ttClientFD , &_ssCntW ) ;
 } /* _TTcp::_canWrite */
 
 bool _TTcp::_canRead(   ) {
     if ( _ttListenFD < 0 ) return false ;
     if(0)   dumpSelfX();
-    return S_fd_canRead( &_ttClientFD ) ;
+    return S_fd_canRead( &_ttClientFD , &_ssCntR ) ;
 } /* _TTcp::_canRead */
 
 bool _ssListen1::_canWrite(  bool ___reopen ) {
@@ -50,7 +50,7 @@ int S_valid_fd_or_errFD( int *___fd ) {
     return __rt ;
 } /* S_valid_fd_or_errFD */
 
-bool S_fd_canWrite( int *___fd ) {
+bool S_fd_canWrite( int *___fd , int * ___retryCNT ) {
     struct pollfd __pfds[1] ;
     int __rt ;
 
@@ -62,6 +62,7 @@ bool S_fd_canWrite( int *___fd ) {
     __rt = poll(__pfds, 1, 0);
 
     if ( __rt < 0 ) {
+        _prEFn( "rt %d , fd : %d , err : %d %s " , __rt , *___fd , errno , strerror(errno) ) ;
         close( *___fd ) ; *___fd = -1 ;
         return false ; /* error 1*/
     }
@@ -70,18 +71,20 @@ bool S_fd_canWrite( int *___fd ) {
         return false ; /* can NOT Write , normal */
     }
 
-    if ( __pfds[0].revents & POLLERR ) {
-        _prEFn( "POLLERR state : %d : %s " , *___fd , strerror(errno) ) ;
+    if ( __pfds[0].revents & POLLERR ) { // EWOULDBLOCK == EAGAIN == 11 
+        _prEFn( "POLLERR : rt %d , fd : %d , err : %d %s " , __rt , *___fd , errno , strerror(errno) ) ;
         close( *___fd ) ; *___fd = -1 ;
         return false ;
     }
 
     if ( __pfds[0].revents & POLLHUP ) {
+        _prEFn( "POLLHUP : rt %d , fd : %d , err : %d %s " , __rt , *___fd , errno , strerror(errno) ) ;
         close( *___fd ) ; *___fd = -1 ;
         return false ;
     }
 
     if ( __pfds[0].revents & POLLNVAL ) {
+        _prEFn( "POLLNVAL : rt %d , fd : %d , err : %d %s " , __rt , *___fd , errno , strerror(errno) ) ;
         close( *___fd ) ; *___fd = -1 ;
         return false ;
     }
@@ -90,11 +93,11 @@ bool S_fd_canWrite( int *___fd ) {
         return true ;
     }
 
-    _prEFn( "unknown state" ) ;
+    _prEFn( "unknow state : rt %d , fd : %d , err : %d %s " , __rt , *___fd , errno , strerror(errno) ) ;
     return false ;
 } /* S_fd_canWrite */
 
-bool S_fd_canRead( int *___fd ) {
+bool S_fd_canRead( int *___fd , *___retryCNT ) {
     struct pollfd __pfds[1] ;
     int __rt ;
 
@@ -106,6 +109,7 @@ bool S_fd_canRead( int *___fd ) {
     __rt = poll(__pfds, 1, 0);
 
     if ( __rt < 0 ) {
+        _prEFn( " error : rt %d , fd : %d , err : %d %s " , __rt , *___fd , errno , strerror(errno) ) ;
         close( *___fd ) ; *___fd = -1 ;
         return false ; /* error 1*/
     }
@@ -115,17 +119,19 @@ bool S_fd_canRead( int *___fd ) {
     }
 
     if ( __pfds[0].revents & POLLERR ) {
-        _prEFn( "POLLERR state : %d : %s " , *___fd , strerror(errno) ) ;
+        _prEFn( " POLLERR : rt %d , fd : %d , err : %d %s " , __rt , *___fd , errno , strerror(errno) ) ;
         close( *___fd ) ; *___fd = -1 ;
         return false ;
     }
 
     if ( __pfds[0].revents & POLLHUP ) {
+        _prEFn( " POLLHUP : rt %d , fd : %d , err : %d %s " , __rt , *___fd , errno , strerror(errno) ) ;
         close( *___fd ) ; *___fd = -1 ;
         return false ;
     }
 
     if ( __pfds[0].revents & POLLNVAL ) {
+        _prEFn( " POLLNVAL : rt %d , fd : %d , err : %d %s " , __rt , *___fd , errno , strerror(errno) ) ;
         close( *___fd ) ; *___fd = -1 ;
         return false ;
     }
@@ -134,7 +140,7 @@ bool S_fd_canRead( int *___fd ) {
         return true ;
     }
 
-    _prEFn( "unknown state" ) ;
+    _prEFn( " unkown state : rt %d , fd : %d , err : %d %s " , __rt , *___fd , errno , strerror(errno) ) ;
     return false ;
 } /* S_fd_canRead */
 

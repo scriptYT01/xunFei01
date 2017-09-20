@@ -47,11 +47,11 @@ struct _superStreamInfoX {
 } ;
 typedef struct _superStreamInfoX _superStreamInfo ; 
 
-int                  S_valid_fd_or_errFD( int * ___fd ) ;
-bool                 S_fd_canWrite( int *___fd ) ;
-bool                 S_fd_canRead(  int *___fd ) ;
-int                  S_setNonblocking(int ___fd) ;
-bool                 S_fd_valid1_invalid0_close( int * ___fd ) ;
+int                 S_valid_fd_or_errFD( int * ___fd ) ;
+bool                S_fd_canWrite( int *___fd , int * ___retryCNT ) ;
+bool                S_fd_canRead(  int *___fd , int * ___retryCNT ) ;
+int                 S_setNonblocking(int ___fd) ;
+bool                S_fd_valid1_invalid0_close( int * ___fd ) ;
 
 class _TTcp {
     public :
@@ -106,6 +106,8 @@ class _superStreamBase
         void                        _superStreamInit( _enSsType ___ssType , _enSsDir ___ssDir , const char * ___path , const char * ___comment ) ;
         int                     *   _getDataFD( ) ;
         int                     *   _getTcpListenFD( ) ;
+        int                         _ssCntR ;
+        int                         _ssCntW ;
     public :
         bool                        _canWrite(  bool ___reopen ) ;
         bool                        _canRead(   bool ___reopen ) ;
