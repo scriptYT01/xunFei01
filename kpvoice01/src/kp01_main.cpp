@@ -65,18 +65,7 @@ void _dumpStatus_when_exiting(){
         _fGenRawPcm   -> dumpSelfX();
 }
 
-int main( int ___argc , char ** ___argv ) {
-
-    int __i01 = 1 ;
-
-    _usage( ___argc , ___argv ) ;
-
-    _paraAnalyze( ___argc , ___argv ) ;
-
-    _initListen() ;
-
-    while ( 1 ) {
-
+void _main_loop() {
         if ( __i01 % 165 == 164 ) {
             if ( 1 ) { // gen debug info
                 _time2 = _timeNow ;
@@ -101,6 +90,21 @@ int main( int ___argc , char ** ___argv ) {
         //if ( 1 )    { usleep(28000)   ; } 
         //if ( 1 )    { usleep( 1000*1000*(_pcmLenRaw)/32000 )  ; } 
         //if ( 1 )    { usleep( 29000 )  ; } 
+} /* _main_loop */
+
+int main( int ___argc , char ** ___argv ) {
+
+    int __i01 = 1 ;
+
+    _usage( ___argc , ___argv ) ;
+
+    _paraAnalyze( ___argc , ___argv ) ;
+
+    _initListen() ;
+
+    while ( 1 ) {
+        _main_loop();
+
         if ( 1 )    { usleep( 1000*(_pcmLenRaw)/32 )  ; } 
         else        { _sleep_500ms  ; }
         // _pcmLenRaw 
