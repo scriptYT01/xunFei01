@@ -123,8 +123,7 @@ int main( int ___argc , char ** ___argv ) {
         __u643  =   __u642     ; 
         __u642  =   _u64_now() ;
         if ( false == _main_loop() ) break ;
-        _prEFn( " 1: %lld , 2: %lld , 3: %lld , 4: %lld , 5: %lld , 6: %lld , X1: %lld " ,
-                __u1 , __u2 , __u3 , __u4 , __u5 , __u6 , __X1 );
+        if (0) _prEFn( " 1: %lld , 2: %lld , 3: %lld , 4: %lld , 5: %lld , 6: %lld , X1: %lld " , __u1 , __u2 , __u3 , __u4 , __u5 , __u6 , __X1 );
         __u644  =   _u64_now() ;
 
 
@@ -134,7 +133,7 @@ int main( int ___argc , char ** ___argv ) {
         if ( __u2 > __X1 ) {
             _prExit( " delay over-run " ) ;
         }
-        if ( __u1 > (__X1 << 1)) {
+        if ( __u1 > (__X1 * 2)) {
             _prExit( " why gap over-run " ) ;
         }
 
@@ -143,11 +142,11 @@ int main( int ___argc , char ** ___argv ) {
         __u5 = __u3 + __u4 ;
 
         if ( 0 == __u6 ) __u6 = __u1 ;
-        __u6 *= 10000 ;
-        __u6 += __u1*100 ;
-        __u6 /= 10100 ;
+        __u6 *=   10000000 ;
+        __u6 += __u1*10000 ;
+        __u6 /=   10010000 ;
 
-        __i03 = __u1 ;
+        __i03 = __u5 ;
         usleep( __i03 ) ;
     }
 
