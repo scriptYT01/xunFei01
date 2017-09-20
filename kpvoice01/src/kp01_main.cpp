@@ -95,8 +95,15 @@ int main( int ___argc , char ** ___argv ) {
             _fill_data() ; 
 
         __i01 ++ ;
-        if ( 1 )    { _sleep_33ms   ; } 
+        //if ( 1 )    { _sleep_33ms   ; } 
+        //if ( 1 )    { usleep( 1000*1000*960/32000 )  ; } 
+        //if ( 1 )    { _sleep_30ms   ; } 
+        //if ( 1 )    { usleep(28000)   ; } 
+        //if ( 1 )    { usleep( 1000*1000*(_pcmLenRaw)/32000 )  ; } 
+        //if ( 1 )    { usleep( 29000 )  ; } 
+        if ( 1 )    { usleep( 1000*(_pcmLenRaw)/32 )  ; } 
         else        { _sleep_500ms  ; }
+        // _pcmLenRaw 
     }
 
 
