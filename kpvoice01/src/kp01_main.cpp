@@ -77,7 +77,7 @@ int main( int ___argc , char ** ___argv ) {
 
     while ( 1 ) {
 
-        if ( __i01 % 33 == 32 ) {
+        if ( __i01 % 165 == 164 ) {
             if ( 1 ) { // gen debug info
                 _time2 = _timeNow ;
                 _time3 = _time2 - _time1 ;
