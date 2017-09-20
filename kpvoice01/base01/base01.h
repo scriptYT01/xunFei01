@@ -17,6 +17,7 @@
 #include <sys/types.h> 
 #include <sys/socket.h>
 #include <arpa/inet.h>
+#include <sys/time.h>
 
 //#include <include/asm/delay.h>
 //#include <include/linux/delay.h>
@@ -57,10 +58,11 @@
 #ifdef __cplusplus
     extern "C" {
 #endif
-extern int _strcmpX1( const char * ___preStr , const char * ___bufStr ) ;
-extern int _strcmpXX( const char * ___preStr , const char * ___bufStr ) ;
-extern void _paraAtoi( int _para_must1_ignore0 , int ___argc , char ** ___argv , int ___index , char * ___varName , int  *  ___varLP ) ;
-extern void _paraAtoS( int _para_must1_ignore0 , int ___argc , char ** ___argv , int ___index , char * ___varName , char ** ___varLP ) ;
+extern uint64_t     _u64_now() ;
+extern int          _strcmpX1( const char * ___preStr , const char * ___bufStr ) ;
+extern int          _strcmpXX( const char * ___preStr , const char * ___bufStr ) ;
+extern void         _paraAtoi( int _para_must1_ignore0 , int ___argc , char ** ___argv , int ___index , char * ___varName , int  *  ___varLP ) ;
+extern void         _paraAtoS( int _para_must1_ignore0 , int ___argc , char ** ___argv , int ___index , char * ___varName , char ** ___varLP ) ;
 #ifdef __cplusplus
     }
 #endif

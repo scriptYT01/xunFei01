@@ -58,3 +58,17 @@ int _strcmpXX( const char * ___preStr , const char * ___bufStr )
     if ( NULL == ___preStr || NULL == ___bufStr ) return -1 ;
     return strncmp( ___preStr , ___bufStr , 4096 ) ; 
 }
+
+uint64_t _u64_now() {
+    uint64_t __u64 = 0 ;
+    struct timeval __t ;
+    if ( 0 == gettimeofday( & __t , NULL ) ){
+        __u64   =   __t . tv_sec ;
+        __u64   *=  1000000 ;
+        __u64   +=  __t . tv_usec ;
+    } else {
+        // zero 
+    }
+
+    return  __u64 ;
+} /* _u64_now */
