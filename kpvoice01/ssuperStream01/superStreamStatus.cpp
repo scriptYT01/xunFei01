@@ -74,15 +74,8 @@ bool S_fd_canWrite( int *___fd , int * ___retryCNT ) {
     if ( __pfds[0].revents & POLLERR ) { // EWOULDBLOCK == EAGAIN == 11 
         if ( errno == EAGAIN ) {
             (*___retryCNT) ++ ;
-            if ( (*___retryCNT) > 300 ) {
-                _prEFn( "POLLERR : rt %d , fd : %d , err : %d %s : CNT %d " , __rt , *___fd , errno , strerror(errno) , *___retryCNT ) ;
-                close( *___fd ) ; *___fd = -1 ;
-            } else {
-                if ( (*___retryCNT)%33 == 32 ) {
-                    _prEFn( "POLL : rt %d , fd : %d , err : %d %s : CNT %d " , __rt , *___fd , errno , strerror(errno) , *___retryCNT ) ;
-                }
-                // want the next try.
-            }
+            if(0)   _prEFn( "POLLERR : rt %d , fd : %d , err : %d %s : CNT %d " , __rt , *___fd , errno , strerror(errno) , *___retryCNT ) ;
+            close( *___fd ) ; *___fd = -1 ; (*___retryCNT) = 0 ;
         } else {
             _prEFn( "POLLERR : rt %d , fd : %d , err : %d %s : CNT %d " , __rt , *___fd , errno , strerror(errno) , *___retryCNT ) ;
         }
