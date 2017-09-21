@@ -67,8 +67,8 @@ class _TTcp {
         void                        _dumpSelf( const char * ___file , int ___lineno , const char * ___func ) ;
         bool                        _ttTryAcceptClient( );
     public :
-        bool                        _canWrite(  ) ;
-        bool                        _canRead(   ) ;
+        bool                        _ttCanWrite(  ) ;
+        bool                        _ttCanRead(   ) ;
     private :
         int                         _ttBd           ;
         int                         _ttLd           ;

@@ -16,30 +16,30 @@ bool _superStreamBase::_canRead(   bool ___reopen ) {
     return S_fd_canRead( &_ssFD , &_ssCntR ) ;
 } /* _superStreamBase::_canRead */
 
-bool _TTcp::_canWrite(  ) {
+bool _TTcp::_ttCanWrite(  ) {
     if ( _ttListenFD < 0 ) return false ;
     if(0)   dumpSelfX();
     return S_fd_canWrite( &_ttClientFD , &_ttCntW ) ;
-} /* _TTcp::_canWrite */
+} /* _TTcp::_ttCanWrite */
 
-bool _TTcp::_canRead(   ) {
+bool _TTcp::_ttCanRead(   ) {
     if ( _ttListenFD < 0 ) return false ;
-    if(0)   dumpSelfX();
+    if(1)   dumpSelfX();
     return S_fd_canRead( &_ttClientFD , &_ttCntR ) ;
-} /* _TTcp::_canRead */
+} /* _TTcp::_ttCanRead */
 
 bool _ssListen1::_canWrite(  bool ___reopen ) {
-    if( _tTcp . _canWrite( ) ) return true ;
+    if( _tTcp . _ttCanWrite( ) ) return true ;
     if ( ! ___reopen ) return false ;
     _ssOpenOrReopen();
-    return _tTcp . _canWrite() ;
+    return _tTcp . _ttCanWrite() ;
 } /* _ssListen1::_canWrite */
 
 bool _ssListen1::_canRead(   bool ___reopen ) {
-    if( _tTcp . _canRead( ) ) return true ;
+    if( _tTcp . _ttCanRead( ) ) return true ;
     if ( ! ___reopen ) return false ;
     _ssOpenOrReopen();
-    return _tTcp . _canRead() ;
+    return _tTcp . _ttCanRead() ;
 } /* _ssListen1::_canRead */
 
 
