@@ -63,6 +63,7 @@ extern int          _strcmpX1( const char * ___preStr , const char * ___bufStr )
 extern int          _strcmpXX( const char * ___preStr , const char * ___bufStr ) ;
 extern void         _paraAtoi( int _para_must1_ignore0 , int ___argc , char ** ___argv , int ___index , char * ___varName , int  *  ___varLP ) ;
 extern void         _paraAtoS( int _para_must1_ignore0 , int ___argc , char ** ___argv , int ___index , char * ___varName , char ** ___varLP ) ;
+extern void         _timeLoop( uint32_t ___delayUS , int (*___loopBackFunc)() ) ;
 #ifdef __cplusplus
     }
 #endif
