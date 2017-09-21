@@ -79,7 +79,7 @@ int _main_loop() {
     //if ( _tcpExit -> _canWrite( true ) ) {
     if ( _tcpExit -> _canRead( true ) ) {
         _prEFn( " exit debug port conncted. exit. --- %10d %10d , %10d " , _time2 , _time3 , __i01 ) ;
-        return 0 ;
+        return -1 ;
     }
 
     if ( __i01 % 165 == 164 ) {
@@ -88,7 +88,12 @@ int _main_loop() {
             _time3 = _time2 - _time1 ;
             _prSFn( " --- %10d %10d , %10d " , _time2 , _time3 , __i01 ) ;
             _ffstdout ;
-            if( 0 ) return 0 ; // exit....
+            if( 0 ) return -2 ; // exit....
+        }
+        if ( 1 ) {
+            if ( _tcpExit -> _canWrite( true ) ) {
+                return -3 ;
+            }
         }
     }
 

@@ -73,8 +73,9 @@ uint64_t _u64_now() {
     return  __u64 ;
 } /* _u64_now */
 
-void _timeLoop( uint32_t ___delayUS , int (*___loopBackFunc)() ) {
+int _timeLoop( uint32_t ___delayUS , int (*___loopBackFunc)() ) {
     int __i03 ;
+    int __rt = 0 ;
     uint64_t __u641 ;
     uint64_t __u642 ;
     uint64_t __u643 ;
@@ -93,7 +94,11 @@ void _timeLoop( uint32_t ___delayUS , int (*___loopBackFunc)() ) {
     while ( 1 ) {
         __u643  =   __u642     ; 
         __u642  =   _u64_now() ;
-        if ( (*___loopBackFunc)() <= 0 ) break ;
+        __rt = (*___loopBackFunc)() ;
+        if ( __rt <= 0 ) {
+            _prEFn( " callbackFunc return %d , exit. " , __rt ) ;
+            break ;
+        }
         if (0) _prEFn( " 1: %lld , 2: %lld , 3: %lld , 4: %lld , 5: %lld , 6: %lld , X1: %lld " 
                 , __u1 , __u2 , __u3 , __u4 , __u5 , __u6 , __X1 );
         __u644  =   _u64_now() ;
@@ -104,10 +109,12 @@ void _timeLoop( uint32_t ___delayUS , int (*___loopBackFunc)() ) {
         __u2  =   __u644 - __u642 ; // run-time
         if ( __u2 > __X1 ) {
             _prEFn( " delay over-run " ) ;
+            __rt = -1111221 ;
             break;
         }
         if ( __u1 > (__X1 * 2)) {
             _prEFn( " why gap over-run " ) ;
+            __rt = -1111222 ;
             break;
         }
 
@@ -123,5 +130,6 @@ void _timeLoop( uint32_t ___delayUS , int (*___loopBackFunc)() ) {
         __i03 = __u5 ;
         usleep( __i03 ) ;
     }
+    return __rt ;
 } /* _timeLoop */
 
