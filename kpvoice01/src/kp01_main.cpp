@@ -62,13 +62,16 @@ void _initListen(void) {
 } /* _initListen */
 
 void _dumpStatus_when_exiting(){
-    if(1) 
-        _fGenRawPcm -> dumpSelfX();
-    if(1) 
-        _tcpRaw -> dumpSelfX();
-    if(1) 
-        _fGenRawPcm   -> dumpSelfX();
-}
+    if(1 && _fGenRawPcm     )   _fGenRawPcm         -> dumpSelfX();
+    if(1 && _fGenReducePcm  )   _fGenReducePcm      -> dumpSelfX();
+    if(1 && _fSpeaker       )   _fSpeaker           -> dumpSelfX();
+
+    if(1 && _tcpRaw            )      _tcpRaw            -> dumpSelfX();
+    if(1 && _tcpReduce         )      _tcpReduce         -> dumpSelfX();
+    if(1 && _tcpSpeaker        )      _tcpSpeaker        -> dumpSelfX();
+
+    if(1 && _tcpExit           )      _tcpExit           -> dumpSelfX();
+} /* _dumpStatus_when_exiting */
 
 int _main_loop() {
     int __i01 = 1 ;
@@ -120,6 +123,7 @@ int main( int ___argc , char ** ___argv ) {
             , &
             _main_loop ) ;
 
+    _dumpStatus_when_exiting() ;
 
     return 0 ;
 } /* main */

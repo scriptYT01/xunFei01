@@ -33,7 +33,7 @@ static const char * _strTT( int ___aa ) {
 } /* _strTT */
 
 void _superStreamBase::_dumpSelf( const char * ___file , int ___lineno , const char * ___func ) {
-    _prEFn( "" );
+    _prEFn( "-------- 11 " );
     _prEFn( " %s - %d - %s " , basename((char*)___file) , ___lineno , ___func );
     _prEFn( "_ssErrAction   '%d' : %s"  , _ssErrAction , _strEA( _ssErrAction     ) ) ;
     _prEFn( "_ssDir         '%d' : %s"  , _ssDir       , _strDI( _ssDir           ) ) ;
@@ -70,7 +70,7 @@ void _superStreamBase::_dumpSelf( const char * ___file , int ___lineno , const c
             , _ssInfoR . _succCnt    
             , _ssInfoR . _succLen    
             ) ;
-    _prEFn( "" );
+    _prEFn( "-------- 99 " );
 
 } /* _superStreamBase::_dumpSelf */
 
