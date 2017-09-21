@@ -29,8 +29,15 @@ bool _TTcp::_ttCanRead(   ) {
 } /* _TTcp::_ttCanRead */
 
 bool _ssListen1::_canWrite(  bool ___reopen ) {
+    if(1) {
+        //if ( _tTcp . _ttListenFD != 6 && _tTcp . _ttListenFD != 7 ) {
+        //if ( _tTcp . _ttListenFD != 7 ) {
+        if ( _tTcp . _ttListenFD == 9 ) {
+            dumpSelfX();
+            _prEFn( " ___reopen %d " , ___reopen ) ;
+        }
+    }
     if( _tTcp . _ttCanWrite( ) ) return true ;
-    if(1)   dumpSelfX();
     if ( ! ___reopen ) return false ;
     _ssOpenOrReopen();
     return _tTcp . _ttCanWrite() ;
