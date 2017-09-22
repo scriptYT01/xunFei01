@@ -146,35 +146,35 @@ bool _TTcp::_ttTryConnect01( const char * ___ttPath ) {
 
     _zExit( _ttAnalyzeT1( ___ttPath ) , " path error ? %s" , ___ttPath ) ;
 
-    _ttListenFD   = -400002 ;
+    _ttClientFD   = -400002 ;
 
-    _ttListenFD = socket(AF_INET, SOCK_STREAM, 0);
-    if ( _ttListenFD < 0 ) {
+    _ttClientFD = socket(AF_INET, SOCK_STREAM, 0);
+    if ( _ttClientFD < 0 ) {
         _prErrno() ;
         dumpExit(1) ;
         return false ;
     }
 
-    _nExit( setsockopt(_ttListenFD , SOL_SOCKET, SO_REUSEADDR, &__yes, sizeof(int)) , " set reuse error " );
+    _nExit( setsockopt(_ttClientFD , SOL_SOCKET, SO_REUSEADDR, &__yes, sizeof(int)) , " set reuse error " );
 
     _zExit( _ttAnalyzeT3() , " addr or port error " ) ;
 
 
-    _ttBd = bind(_ttListenFD, (struct sockaddr*)&_ttSaddr, sizeof(_ttSaddr));
+    _ttBd = bind(_ttClientFD, (struct sockaddr*)&_ttSaddr, sizeof(_ttSaddr));
     if ( _ttBd != 0 ) {
-        close(_ttListenFD) ;
+        close(_ttClientFD) ;
         _prErrno() ;
         dumpExit(1) ;
         return false ;
     }
 
-    _ttLd = S_setNonblocking( _ttListenFD ) ;
+    _ttLd = S_setNonblocking( _ttClientFD ) ;
     _nExit( _ttLd , " nonblock rt value , should be zero , but now %d " , _ttLd ) ; 
 
-    _ttLd = listen(_ttListenFD, 10);
+    _ttLd = listen(_ttClientFD, 10);
     if ( _ttLd != 0 ) {
         close(_ttBd) ;
-        close(_ttListenFD) ;
+        close(_ttClientFD) ;
         _prErrno() ;
         dumpExit(1) ;
         return false ;
