@@ -21,7 +21,9 @@ _ssFileOut * _fSpeaker          = NULL ;
 _ssListen1 * _tcpRaw            = NULL ;
 _ssListen1 * _tcpReduce         = NULL ;
 _ssListen1 * _tcpSpeaker        = NULL ;
-_ssListen1 * _tcpExit           = NULL ;
+
+_ssListen1      * _tcpExit      = NULL ;
+_ssTcpConnectTo * _tcpSend1     = NULL ;
 
 void _usage( int ___argc , char ** ___argv ) {
 } /* _usage */
@@ -92,6 +94,8 @@ int _main_loop() {
         }
         if ( 1 ) {
             if ( _tcpExit -> _canWrite( true ) ) {
+                if(1)   
+                    _testWW() ; 
                 return -3 ;
             }
         }

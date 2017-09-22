@@ -25,6 +25,9 @@ extern _ssListen1 * _tcpRaw            ;
 extern _ssListen1 * _tcpReduce         ;
 extern _ssListen1 * _tcpSpeaker        ;
 
+extern _ssListen1      * _tcpExit      ;
+extern _ssTcpConnectTo * _tcpSend1     ;
+
 /* 1  ch , 16000 Hz , s16le 
  * 1  sample -> 2 byte 
  * 1  ms -> 16  sample -> 2 * 16  byte == 32  byte 

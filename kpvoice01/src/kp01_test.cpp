@@ -168,18 +168,15 @@ void _testSS(void) {
         _testTL5() ; 
 } /* _testSS */
 
+char _bufW1[1024] = "1234567890\n" ;
+void _testW1(void) {
+    // _ssWriteNonblock(  int ___len , const char * ___buf ) ;
+    // _tcpExit -> _canWrite( true ) ;
+    //_tcpSend1  = new _ssListen1( _enSsdOut 
+    //        , "tcpL1:" _kpListenIP ":" _kpTcp_Exit      , " _tcpExit  : when connected , out debug info , exit. " ) ;
+} /* _testW1 */
+
 void _testWW(void) {
-    // _superStreamBase 
-    // _canWrite
-    // _ssOpenOrReopen
-    if(0)   
-        _testTL1() ; 
-    if(0)   
-        _testTL2() ; 
-    if(0)   
-        _testTL3() ; 
-    if(0)   
-        _testTL4() ; 
-    if(0)   
-        _testTL5() ; 
+    if(1)   
+        _testW1() ; 
 } /* _testWW */
