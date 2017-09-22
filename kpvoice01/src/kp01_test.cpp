@@ -174,6 +174,18 @@ void _testW1(void) {
     // _tcpExit -> _canWrite( true ) ;
     //_tcpSend1  = new _ssListen1( _enSsdOut 
     //        , "tcpL1:" _kpListenIP ":" _kpTcp_Exit      , " _tcpExit  : when connected , out debug info , exit. " ) ;
+    while ( 1 ) {
+        if ( _tcpSend1 == NULL ) {
+            _tcpSend1  = new _ssTcpConnectTo( _enSsdOut 
+                , "tcpT1:127.0.0.1:44444" , " _tcpExit  : when connected , out debug info , exit. " ) ;
+        }
+        if ( _tcpSend1 == NULL ) {
+            _prExit( " _tcpSend1 is NULL . " );
+        } else {
+            _prExit( " _tcpSend1 is %p . " , _tcpSend1 );
+        }
+        _prExit( " debuging . " );
+    }
 } /* _testW1 */
 
 void _testWW(void) {
