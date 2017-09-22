@@ -43,6 +43,8 @@ bool _ssTcpConnectTo::_ssOpenOrReopen( )
     if ( S_fd_valid1_invalid0_close( __dataFD ) ) {
         return true ;
     }
+    _ssOpenTCPconnectToSock() ;
+    // _ttTryConnect01
     dumpExit(1);
     // _dumpSelf
     return true ;

@@ -61,11 +61,14 @@ class _TTcp {
                                     _TTcp() { _ttClientFD = -1000002 ; _ttListenFD = -1000001 ; _ttpath = NULL ; }
     public :
         bool                        _ttTryListen01(     const char * ___ttPath ) ;
-        bool                        _ttAnalyzeL1(       const char * ___tcpPath ) ;
-        bool                        _ttAnalyzeL2();
-        bool                        _ttAnalyzeL3();
-        void                        _dumpSelf( const char * ___file , int ___lineno , const char * ___func ) ;
+        bool                        _ttTryConnect01( const char * ___ttPath ) ;
         bool                        _ttTryAcceptClient( );
+    public :
+        bool                        _ttAnalyzeL1(       const char * ___tcpPath ) ;
+        bool                        _ttAnalyzeL3();
+        bool                        _ttAnalyzeT1(       const char * ___tcpPath ) ;
+        bool                        _ttAnalyzeT3();
+        void                        _dumpSelf( const char * ___file , int ___lineno , const char * ___func ) ;
     public :
         bool                        _ttCanWrite(  ) ;
         bool                        _ttCanRead(   ) ;
@@ -173,6 +176,7 @@ class _ssTcpConnectTo : public _superStreamBase
         ~_ssTcpConnectTo( ){} ;
     private :
         bool _ssOpenOrReopen() ;
+        bool _ssOpenTCPconnectToSock();
 } ; /* class _ssTcpConnectTo */
 
 class _ssListen1 : public _superStreamBase
