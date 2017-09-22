@@ -81,6 +81,9 @@ int _main_loop() {
     //if ( _tcpExit -> _canWrite( true ) ) {
     if ( _tcpExit -> _canRead( true ) ) {
         _prEFn( " exit debug port conncted. exit. --- %10d %10d , %10d " , _time2 , _time3 , _loopCNT ) ;
+        if(1)   
+            _testWW() ; 
+            // _testW1
         return -1 ;
     }
 
@@ -94,9 +97,6 @@ int _main_loop() {
         }
         if ( 1 ) {
             if ( _tcpExit -> _canWrite( true ) ) {
-                if(1)   
-                    _testWW() ; 
-                    // _testW1
                 return -3 ;
             }
         }

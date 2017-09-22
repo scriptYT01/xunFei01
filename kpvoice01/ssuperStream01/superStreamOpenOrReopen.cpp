@@ -43,7 +43,7 @@ bool _ssTcpConnectTo::_ssOpenOrReopen( )
     if ( S_fd_valid1_invalid0_close( __dataFD ) ) {
         return true ;
     }
-    _prExit( "1111" ) ;
+    dumpExit(1);
     return true ;
 #endif
 } /* _ssTcpConnectTo::_ssOpenOrReopen */
