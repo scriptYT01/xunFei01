@@ -18,6 +18,7 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <sys/time.h>
+#include <netdb.h>
 
 //#include <include/asm/delay.h>
 //#include <include/linux/delay.h>

@@ -84,12 +84,23 @@ bool _TTcp::_ttAnalyzeL3( ) {
 } /* _TTcp::_ttAnalyzeL3 */
 
 bool _TTcp::_ttAnalyzeT3( ) {
+    struct addrinfo _ttTinfo ;
+    struct addrinfo *_ttTdnsResultInfo ;
 
-    memset(&_ttSaddr, '0', sizeof(_ttSaddr));
+    memset(&_ttTinfo, '0', sizeof(_ttTinfo));
 
-    _ttSaddr . sin_family = AF_INET;
-    inet_pton(AF_INET, _tthost, &( _ttSaddr . sin_addr ));
-    _ttSaddr . sin_port = htons( atoi( _ttport) );
+    _ttTinfo . ai_family  = AF_INET; // AF_UNSPEC:ipv4 & 6
+    _ttTinfo.ai_socktype=SOCK_STREAM;
+    _ttTinfo.ai_protocol=0;
+    _ttTinfo.ai_flags=AI_ADDRCONFIG; // refuse ipv6 if local-host has ipv4 only
+
+    if ( getaddrinfo( _tthost , _ttport,  &_ttTinfo, &_ttTdnsResultInfo) ) {
+        dumpExit(1) ;
+    }
+
+    if ( NULL == _ttTdnsResultInfo ) {
+        dumpExit(1) ;
+    }
 
     return true ;
 } /* _TTcp::_ttAnalyzeT3 */
@@ -142,11 +153,15 @@ bool _TTcp::_ttTryListen01( const char * ___ttPath ) {
 
 bool _TTcp::_ttTryConnect01( const char * ___ttPath ) {
 
-    int __yes = 1 ;
+    //int __yes = 1 ;
 
     _zExit( _ttAnalyzeT1( ___ttPath ) , " path error ? %s" , ___ttPath ) ;
 
     _ttClientFD   = -400002 ;
+
+    _zExit( _ttAnalyzeT3() , " analyze connect to addr error " ) ;
+
+    dumpExit(1) ;
 
     _ttClientFD = socket(AF_INET, SOCK_STREAM, 0);
     if ( _ttClientFD < 0 ) {
@@ -155,9 +170,6 @@ bool _TTcp::_ttTryConnect01( const char * ___ttPath ) {
         return false ;
     }
 
-    _nExit( setsockopt(_ttClientFD , SOL_SOCKET, SO_REUSEADDR, &__yes, sizeof(int)) , " set reuse error " );
-
-    _zExit( _ttAnalyzeT3() , " addr or port error " ) ;
 
 
     _ttBd = bind(_ttClientFD, (struct sockaddr*)&_ttSaddr, sizeof(_ttSaddr));
