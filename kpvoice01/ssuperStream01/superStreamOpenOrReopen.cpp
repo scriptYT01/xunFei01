@@ -44,6 +44,7 @@ bool _ssTcpConnectTo::_ssOpenOrReopen( )
         return true ;
     }
     dumpExit(1);
+    // _dumpSelf
     return true ;
 #endif
 } /* _ssTcpConnectTo::_ssOpenOrReopen */
