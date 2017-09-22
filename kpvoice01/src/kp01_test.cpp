@@ -167,3 +167,19 @@ void _testSS(void) {
     if(0)   
         _testTL5() ; 
 } /* _testSS */
+
+void _testWW(void) {
+    // _superStreamBase 
+    // _canWrite
+    // _ssOpenOrReopen
+    if(0)   
+        _testTL1() ; 
+    if(0)   
+        _testTL2() ; 
+    if(0)   
+        _testTL3() ; 
+    if(0)   
+        _testTL4() ; 
+    if(0)   
+        _testTL5() ; 
+} /* _testWW */

@@ -94,8 +94,6 @@ int _main_loop() {
             if ( _tcpExit -> _canWrite( true ) ) {
                 return -3 ;
             }
-            _prSFn( " --- %10d %10d , %10d " , _time2 , _time3 , _loopCNT ) ;
-            return -4 ;
         }
     }
 
