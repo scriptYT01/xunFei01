@@ -32,10 +32,20 @@ bool _ssCerr::_ssOpenOrReopen( )
 
 bool _ssTcpConnectTo::_ssOpenOrReopen( )
 {
+#if 0 
     _ssOK   = NULL ;
     _ssCntR = 0 ;
     _ssCntW = 0 ;
     return true ;
+#else
+    int *__dataFD = _getDataFD() ;
+
+    if ( S_fd_valid1_invalid0_close( __dataFD ) ) {
+        return true ;
+    }
+    _prExit( "1111" ) ;
+    return true ;
+#endif
 } /* _ssTcpConnectTo::_ssOpenOrReopen */
 
 bool _ssListen1::_ssOpenOrReopen( )
