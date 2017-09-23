@@ -84,17 +84,15 @@ bool _TTcp::_ttAnalyzeL3( ) {
 } /* _TTcp::_ttAnalyzeL3 */
 
 bool _TTcp::_ttAnalyzeT3( ) {
-    struct addrinfo _ttTinfo ;
-    struct addrinfo *_ttTdnsResultInfo ;
 
-    memset(&_ttTinfo, '0', sizeof(_ttTinfo));
+    memset(&_ttTwantedInfo, '0', sizeof(_ttTwantedInfo));
 
-    _ttTinfo . ai_family  = AF_INET; // AF_UNSPEC:ipv4 & 6
-    _ttTinfo.ai_socktype=SOCK_STREAM;
-    _ttTinfo.ai_protocol=0;
-    _ttTinfo.ai_flags=AI_ADDRCONFIG; // refuse ipv6 if local-host has ipv4 only
+    _ttTwantedInfo . ai_family  = AF_INET; // AF_UNSPEC:ipv4 & 6
+    _ttTwantedInfo.ai_socktype=SOCK_STREAM;
+    _ttTwantedInfo.ai_protocol=0;
+    _ttTwantedInfo.ai_flags=AI_ADDRCONFIG; // refuse ipv6 if local-host has ipv4 only
 
-    if ( getaddrinfo( _tthost , _ttport,  &_ttTinfo, &_ttTdnsResultInfo) ) {
+    if ( getaddrinfo( _tthost , _ttport,  &_ttTwantedInfo, &_ttTdnsResultInfo) ) {
         dumpExit(1) ;
     }
 
@@ -161,14 +159,15 @@ bool _TTcp::_ttTryConnect01( const char * ___ttPath ) {
 
     _zExit( _ttAnalyzeT3() , " analyze connect to addr error " ) ;
 
-    dumpExit(1) ;
-
-    _ttClientFD = socket(AF_INET, SOCK_STREAM, 0);
+    //_ttClientFD = socket(AF_INET, SOCK_STREAM, 0);
+    _ttClientFD = socket( _ttTdnsResultInfo->ai_family, _ttTdnsResultInfo->ai_socktype, _ttTdnsResultInfo->ai_protocol );
     if ( _ttClientFD < 0 ) {
         _prErrno() ;
         dumpExit(1) ;
         return false ;
     }
+
+    dumpExit(1) ;
 
 
 

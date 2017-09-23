@@ -84,6 +84,8 @@ class _TTcp {
         socklen_t                   _ttAddrlen      ;
         int                         _ttCntR ;
         int                         _ttCntW ;
+        struct addrinfo             _ttTwantedInfo ;
+        struct addrinfo           * _ttTdnsResultInfo ;
 } ; /* _TTcp */
 
 class _superStreamBase
