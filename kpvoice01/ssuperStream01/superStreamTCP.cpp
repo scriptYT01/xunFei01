@@ -40,7 +40,7 @@ bool _TTcp::_ttAnalyzeT1( const char * ___tcpPath ) {
         if ( 0 == _strcmpXX( _ttpath , ___tcpPath ) ) {
             return true ;
         }
-        _nExit( 1 , " path can not be reset " ) ; // this line can be comment
+        _nExit( 1 , " path can not be reset : <%s> , <%s>" , _ttpath , ___tcpPath ) ; // this line can be comment
         free( _ttpath ) ;
         free( _tthost ) ;
     }
@@ -50,8 +50,8 @@ bool _TTcp::_ttAnalyzeT1( const char * ___tcpPath ) {
         return false ;
     }
 
-    _ttpath = strdup( ___tcpPath + 6 ) ;
-    _ttport = strchr( _ttpath , ':' ) ;
+    _ttpath = strdup( ___tcpPath ) ;
+    _ttport = strchr( _ttpath + 6 , ':' ) ;
     _ttplen = _ttport - _ttpath ;
     if ( NULL == _ttport || _ttplen < 2 ) {
         free( _ttpath ) ;
@@ -60,7 +60,7 @@ bool _TTcp::_ttAnalyzeT1( const char * ___tcpPath ) {
     }
     _ttport ++ ;
 
-    _tthost = strdup( _ttpath ) ;
+    _tthost = strdup( _ttpath + 6 ) ;
     _tthost[ _ttplen ] = 0 ;
     _nExit( 0 , " <%s> <%d> <%s> <%s> " , _ttpath , _ttplen , _tthost , _ttport ) ;
 
