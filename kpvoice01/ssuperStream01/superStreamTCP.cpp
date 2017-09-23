@@ -152,6 +152,7 @@ bool _TTcp::_ttTryListen01( const char * ___ttPath ) {
 bool _TTcp::_ttTryConnect01( const char * ___ttPath ) {
 
     //int __yes = 1 ;
+    int __i01 ;
 
     _zExit( _ttAnalyzeT1( ___ttPath ) , " path error ? %s" , ___ttPath ) ;
 
@@ -167,32 +168,23 @@ bool _TTcp::_ttTryConnect01( const char * ___ttPath ) {
         return false ;
     }
 
-    dumpExit(1) ;
-
-
-
-    _ttBd = bind(_ttClientFD, (struct sockaddr*)&_ttSaddr, sizeof(_ttSaddr));
-    if ( _ttBd != 0 ) {
-        close(_ttClientFD) ;
-        _prErrno() ;
-        dumpExit(1) ;
-        return false ;
+    __i01 = 
+        connect( _ttClientFD , _ttTdnsResultInfo->ai_addr, _ttTdnsResultInfo->ai_addrlen) ;
+        
+    if ( __i01 != 0 ) {
+        if ( errno == 111 ) { // 111 Connection refuse
+            return true ; // un connected, but , can try the next time.
+        } else {
+            close( _ttClientFD ) ;
+            _ttClientFD = -428111 ;
+            if ( 1 ) dumpExit(1) ;
+            return false ;
+        }
     }
 
     _ttLd = S_setNonblocking( _ttClientFD ) ;
     _nExit( _ttLd , " nonblock rt value , should be zero , but now %d " , _ttLd ) ; 
 
-    _ttLd = listen(_ttClientFD, 10);
-    if ( _ttLd != 0 ) {
-        close(_ttBd) ;
-        close(_ttClientFD) ;
-        _prErrno() ;
-        dumpExit(1) ;
-        return false ;
-    }
-
-
-    //sleep(100);
     dumpExit(0) ;
     return true ;
 } /* _TTcp::_ttTryConnect01 */
