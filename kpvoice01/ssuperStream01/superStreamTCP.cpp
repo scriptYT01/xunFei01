@@ -53,7 +53,7 @@ bool _TTcp::_ttAnalyzeT1( const char * ___tcpPath ) {
     _ttpath = strdup( ___tcpPath ) ;
     _ttport = strchr( _ttpath + 6 , ':' ) ;
     _ttplen = _ttport - _ttpath ;
-    if ( NULL == _ttport || _ttplen < 2 ) {
+    if ( NULL == _ttport || _ttplen < 8 ) {
         free( _ttpath ) ;
         _ttpath = NULL ;
         return false ;
@@ -61,7 +61,7 @@ bool _TTcp::_ttAnalyzeT1( const char * ___tcpPath ) {
     _ttport ++ ;
 
     _tthost = strdup( _ttpath + 6 ) ;
-    _tthost[ _ttplen ] = 0 ;
+    _tthost[ _ttplen - 6 ] = 0 ;
     _nExit( 0 , " <%s> <%d> <%s> <%s> " , _ttpath , _ttplen , _tthost , _ttport ) ;
 
     return true ;
