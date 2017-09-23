@@ -42,6 +42,20 @@ bool _ssListen1::_canRead(   bool ___reopen ) {
     return _tTcp . _ttCanRead() ;
 } /* _ssListen1::_canRead */
 
+bool _ssTcpConnectTo::_canWrite(  bool ___reopen ) {
+    if( _tTcp . _ttCanWrite( ) ) return true ;
+    if ( ! ___reopen ) return false ;
+    _ssOpenOrReopen();
+    return _tTcp . _ttCanWrite() ;
+} /* _ssTcpConnectTo::_canWrite */
+
+bool _ssTcpConnectTo::_canRead(   bool ___reopen ) {
+    if( _tTcp . _ttCanRead( ) ) return true ;
+    if ( ! ___reopen ) return false ;
+    _ssOpenOrReopen();
+    return _tTcp . _ttCanRead() ;
+} /* _ssTcpConnectTo::_canRead */
+
 
 int S_valid_fd_or_errFD( int *___fd ) {
     int __rt ;

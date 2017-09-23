@@ -176,6 +176,9 @@ class _ssTcpConnectTo : public _superStreamBase
     public :
         _ssTcpConnectTo( _enSsDir ___ssDir , const char * ___path , const char * ___comment ) ;
         ~_ssTcpConnectTo( ){} ;
+    public :
+        bool                        _canWrite(  bool ___reopen ) ;
+        bool                        _canRead(   bool ___reopen ) ;
     private :
         bool _ssOpenOrReopen() ;
         bool _ssOpenTCPconnectToSock();
