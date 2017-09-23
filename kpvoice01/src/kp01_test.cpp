@@ -170,6 +170,7 @@ void _testSS(void) {
 
 char _bufW1[1024] = "1234567890\n" ;
 void _testW1(void) {
+    int __len ;
     // _ssWriteNonblock(  int ___len , const char * ___buf ) ;
     // _tcpExit -> _canWrite( true ) ;
     //_tcpSend1  = new _ssListen1( _enSsdOut 
@@ -179,12 +180,18 @@ void _testW1(void) {
             _tcpSend1  = new _ssTcpConnectTo( _enSsdOut 
                 , "tcpT1:127.0.0.1:44444" , " _tcpExit  : when connected , out debug info , exit. " ) ;
         }
-        if ( _tcpSend1 == NULL ) {
-            _prExit( " _tcpSend1 is NULL . " );
+        if ( _tcpSend1 -> _canWrite( true ) ) { 
+            __len = strlen( _bufW1 )  ;
+            _prEFn( " can write , try send length : %d " , __len  ) ;
+            __len = _tcpSend1 -> 
+                _ssWriteNonblock(  __len   , _bufW1 ) ;
+            _prEFn( " sent length : %d " , __len  ) ;
         } else {
-            _prExit( " _tcpSend1 is %p . " , _tcpSend1 );
+            _prEFn( " _tcpSend1 is %p . can NOT Write " , _tcpSend1 );
+            if ( 0 ) _tcpSend1 -> dumpSelfX() ;
         }
-        _prExit( " debuging . " );
+        //_prExit( " debuging . " );
+        sleep( 1 ) ;
     }
 } /* _testW1 */
 
