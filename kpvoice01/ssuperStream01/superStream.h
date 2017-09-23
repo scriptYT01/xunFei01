@@ -70,8 +70,10 @@ class _TTcp {
         bool                        _ttAnalyzeT3();
         void                        _dumpSelf( const char * ___file , int ___lineno , const char * ___func ) ;
     public :
-        bool                        _ttCanWrite(  ) ;
-        bool                        _ttCanRead(   ) ;
+        bool                        _ttCanWrite1(  ) ;
+        bool                        _ttCanRead1(   ) ;
+        bool                        _ttCanWrite2(  ) ;
+        bool                        _ttCanRead2(   ) ;
     private :
         int                         _ttBd           ;
         int                         _ttLd           ;

@@ -16,44 +16,52 @@ bool _superStreamBase::_canRead(   bool ___reopen ) {
     return S_fd_canRead( &_ssFD , &_ssCntR ) ;
 } /* _superStreamBase::_canRead */
 
-bool _TTcp::_ttCanWrite(  ) {
+bool _TTcp::_ttCanWrite1(  ) {
+    return S_fd_canWrite( &_ttClientFD , &_ttCntW ) ;
+} /* _TTcp::_ttCanWrite1 */
+
+bool _TTcp::_ttCanRead1(   ) {
+    return S_fd_canRead( &_ttClientFD , &_ttCntR ) ;
+} /* _TTcp::_ttCanRead1 */
+
+bool _TTcp::_ttCanWrite2(  ) {
     if ( _ttListenFD < 0 ) return false ;
     if(0)   dumpSelfX();
     return S_fd_canWrite( &_ttClientFD , &_ttCntW ) ;
-} /* _TTcp::_ttCanWrite */
+} /* _TTcp::_ttCanWrite2 */
 
-bool _TTcp::_ttCanRead(   ) {
+bool _TTcp::_ttCanRead2(   ) {
     if ( _ttListenFD < 0 ) return false ;
     if(0)   dumpSelfX();
     return S_fd_canRead( &_ttClientFD , &_ttCntR ) ;
-} /* _TTcp::_ttCanRead */
+} /* _TTcp::_ttCanRead2 */
 
 bool _ssListen1::_canWrite(  bool ___reopen ) {
-    if( _tTcp . _ttCanWrite( ) ) return true ;
+    if( _tTcp . _ttCanWrite2( ) ) return true ;
     if ( ! ___reopen ) return false ;
     _ssOpenOrReopen();
-    return _tTcp . _ttCanWrite() ;
+    return _tTcp . _ttCanWrite2() ;
 } /* _ssListen1::_canWrite */
 
 bool _ssListen1::_canRead(   bool ___reopen ) {
-    if( _tTcp . _ttCanRead( ) ) return true ;
+    if( _tTcp . _ttCanRead2( ) ) return true ;
     if ( ! ___reopen ) return false ;
     _ssOpenOrReopen();
-    return _tTcp . _ttCanRead() ;
+    return _tTcp . _ttCanRead2() ;
 } /* _ssListen1::_canRead */
 
 bool _ssTcpConnectTo::_canWrite(  bool ___reopen ) {
-    if( _tTcp . _ttCanWrite( ) ) return true ;
+    if( _tTcp . _ttCanWrite1( ) ) return true ;
     if ( ! ___reopen ) return false ;
     _ssOpenOrReopen();
-    return _tTcp . _ttCanWrite() ;
+    return _tTcp . _ttCanWrite1() ;
 } /* _ssTcpConnectTo::_canWrite */
 
 bool _ssTcpConnectTo::_canRead(   bool ___reopen ) {
-    if( _tTcp . _ttCanRead( ) ) return true ;
+    if( _tTcp . _ttCanRead1( ) ) return true ;
     if ( ! ___reopen ) return false ;
     _ssOpenOrReopen();
-    return _tTcp . _ttCanRead() ;
+    return _tTcp . _ttCanRead1() ;
 } /* _ssTcpConnectTo::_canRead */
 
 
