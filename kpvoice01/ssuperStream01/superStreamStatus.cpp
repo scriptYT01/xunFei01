@@ -51,7 +51,7 @@ bool _ssListen1::_canRead(   bool ___reopen ) {
 } /* _ssListen1::_canRead */
 
 bool _ssTcpConnectTo::_canWrite(  bool ___reopen ) {
-    if( _tTcp . _ttCanWrite1( ) ) return true ;
+    if( _tTcp . _ttCanWrite1() ) return true ;
     if ( ! ___reopen ) return false ;
     _ssOpenOrReopen();
     return _tTcp . _ttCanWrite1() ;
@@ -99,20 +99,27 @@ bool S_fd_canWrite( int *___fd , int * ___retryCNT ) {
             if(0)   _prEFn( "POLLERR : rt %d , fd : %d , err : %d %s : CNT %d " , __rt , *___fd , errno , strerror(errno) , *___retryCNT ) ;
             close( *___fd ) ; *___fd = -1 ; (*___retryCNT) = 0 ;
         } else {
-            _prEFn( "POLLERR : rt %d , fd : %d , err : %d %s : CNT %d " , __rt , *___fd , errno , strerror(errno) , *___retryCNT ) ;
+            if ( errno == 111 ) { // 111 Connection refused 
+            } else { // any other error : print , then , close.
+                _prEFn( "POLLERR : rt %d , fd : %d , err : %d %s : CNT %d " , __rt , *___fd , errno , strerror(errno) , *___retryCNT ) ;
+                close( *___fd ) ; *___fd = -1 ;(*___retryCNT) = 0 ;
+            }
         }
         return false ;
     }
 
     if ( __pfds[0].revents & POLLHUP ) {
-        _prEFn( "POLLHUP : rt %d , fd : %d , err : %d %s " , __rt , *___fd , errno , strerror(errno) ) ;
-        close( *___fd ) ; *___fd = -1 ;
+        if ( errno == 111 ) { // 111 Connection refused 
+        } else { // any other error : print , then , close.
+            _prEFn( "POLLHUP : rt %d , fd : %d , err : %d %s " , __rt , *___fd , errno , strerror(errno) ) ;
+        }
+        close( *___fd ) ; *___fd = -1 ;(*___retryCNT) = 0 ;
         return false ;
     }
 
     if ( __pfds[0].revents & POLLNVAL ) {
         _prEFn( "POLLNVAL : rt %d , fd : %d , err : %d %s " , __rt , *___fd , errno , strerror(errno) ) ;
-        close( *___fd ) ; *___fd = -1 ;
+        close( *___fd ) ; *___fd = -1 ;(*___retryCNT) = 0 ;
         return false ;
     }
 
