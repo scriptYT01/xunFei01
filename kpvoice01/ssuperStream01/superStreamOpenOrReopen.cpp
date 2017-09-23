@@ -32,23 +32,27 @@ bool _ssCerr::_ssOpenOrReopen( )
 
 bool _ssTcpConnectTo::_ssOpenOrReopen( )
 {
-#if 0 
-    _ssOK   = NULL ;
-    _ssCntR = 0 ;
-    _ssCntW = 0 ;
-    return true ;
-#else
     int *__dataFD = _getDataFD() ;
 
     if ( S_fd_valid1_invalid0_close( __dataFD ) ) {
         return true ;
     }
+
     _ssOpenTCPconnectToSock() ;
     // _ttTryConnect01
-    dumpExit(1);
-    // _dumpSelf
+
+    dumpExit(0);
+
+    if ( 0 == S_fd_valid1_invalid0_close( __dataFD ) ) {
+        _ssOK   = this ;
+        return false ;
+    }
+
+    _ssCntR     = 0 ;
+    _ssCntW     = 0 ;
+    _ssOK       = this ;
+
     return true ;
-#endif
 } /* _ssTcpConnectTo::_ssOpenOrReopen */
 
 bool _ssListen1::_ssOpenOrReopen( )
