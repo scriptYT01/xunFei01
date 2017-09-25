@@ -101,9 +101,11 @@ bool S_fd_canWrite( int *___fd , int * ___retryCNT ) {
         return false ; /* can NOT Write , normal */
     }
 
+    // 111 Connection refused
+    //  11 Resource temporarily unavailable
     // the following : > 0 . means : poll succeed.
-    if ( 0 ) _prEFn( "force debug : rt %d , fd : %d , err : %d %s " , __rt , *___fd , errno , strerror(errno) ) ;
-    if ( 1 ) _prEFn( "force debug : rt %d , fd : %d , err : %d "    , __rt , *___fd , errno ) ;
+    if ( 1 ) _prEFn( "force debug : rt %d , fd : %d , err : %d %s : %d " , __rt , *___fd , errno , strerror(errno) , _timeNow ) ;
+    if ( 0 ) _prEFn( "force debug : rt %d , fd : %d , err : %d "    , __rt , *___fd , errno ) ;
     
 
     if ( __pfds[0].revents & POLLERR ) { // EWOULDBLOCK == EAGAIN == 11 
