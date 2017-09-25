@@ -195,23 +195,26 @@ void _testW1(void) {
 #define testW2_loopCNT 30
 void _testW2(void) {
     int __cnt01 = 0 ;
+    int __i01 ;
+
+    int __len ;
+    __len = strlen( _bufW1 )  ;
 
     while ( 1 ) {
-        _prEFn( " _tcpSend1 can write : %d " , _tcpSend1 -> _canWrite( true ) ) ;
-        //_prEFn( " _tcpSend1 can read : %d "  , _tcpSend1 -> _canRead ( true ) ) ;
+        __i01 =  _tcpSend1 -> _canWrite( true ) ;
+        if ( 1 ) _prEFn( " _tcpSend1 can write : %d " , __i01 ) ;
+
+        if ( __i01 ) {
+            _tcpSend1 -> 
+                _ssWriteNonblock(  __len   , _bufW1 ) ;
+        } else {
+        }
 
         sleep ( 1 );
         __cnt01 ++ ;
 
         if ( __cnt01 % testW2_loopCNT == (testW2_loopCNT - 1 ) ) {
             if ( 1 ) _tcpSend1 -> dumpSelfX() ;
-            //if ( 1 ) _tcpExit -> dumpSelfX() ;
-            //_prEFn( " _tcpExit can write : %d " , _tcpExit -> _canWrite( true ) ) ;
-            //_prEFn( " _tcpExit can read : %d "  , _tcpExit -> _canRead ( true ) ) ;
-            //if ( _tcpExit -> _canWrite( true ) ) {
-            //} else {
-                //_prExit( " exit " ) ;
-            //}
         }
     }
 } /* _testW2 */
@@ -219,11 +222,21 @@ void _testW2(void) {
 #define testW3_loopCNT 20
 void _testW3(void) {
     int __cnt01 = 0 ;
+    int __i01 = 0 ;
+
+    int __len ;
+    __len = strlen( _bufW1 )  ;
 
     while ( 1 ) {
-        _prEFn( " _tcpExit can write : %d " , _tcpExit -> _canWrite( true ) ) ;
         // _prEFn( " _tcpExit can read : %d "  , _tcpExit -> _canRead ( true ) ) ;
         // S_fd_canWrite( &_ttClientFD , &_ttCntW ) ;
+        //_prEFn( " _tcpExit can write : %d " , _tcpExit -> _canWrite( true ) ) ;
+        __i01 =  _tcpExit -> _canWrite( true ) ;
+        if ( 1 ) _prEFn( " _tcpExit can write : %d " , __i01 ) ;
+
+        if ( __i01 ) {
+        } else {
+        }
 
         sleep ( 1 );
         __cnt01 ++ ;
