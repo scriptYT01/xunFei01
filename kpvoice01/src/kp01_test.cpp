@@ -171,15 +171,8 @@ void _testSS(void) {
 char _bufW1[1024] = "1234567890\n" ;
 void _testW1(void) {
     int __len ;
-    // _ssWriteNonblock(  int ___len , const char * ___buf ) ;
-    // _tcpExit -> _canWrite( true ) ;
-    //_tcpSend1  = new _ssListen1( _enSsdOut 
-    //        , "tcpL1:" _kpListenIP ":" _kpTcp_Exit      , " _tcpExit  : when connected , out debug info , exit. " ) ;
+
     while ( 1 ) {
-        if ( _tcpSend1 == NULL ) {
-            _tcpSend1  = new _ssTcpConnectTo( _enSsdOut 
-                , "tcpT1:127.0.0.1:44444" , " _tcpExit  : when connected , out debug info , exit. " ) ;
-        }
         if ( _tcpSend1 -> _canWrite( true ) ) { 
             __len = strlen( _bufW1 )  ;
             _prEFn( " can write , try send length : %d " , __len  ) ;
@@ -192,10 +185,40 @@ void _testW1(void) {
         }
         //_prExit( " debuging . " );
         sleep( 1 ) ;
+
+        if ( ! _tcpExit -> _canRead( true ) ) {
+            if ( 1 ) _tcpSend1 -> dumpSelfX() ;
+        }
     }
 } /* _testW1 */
 
+#define testW2_loopCNT 30
+void _testW2(void) {
+    int __cnt01 = 0 ;
+
+    while ( 1 ) {
+        _prEFn( " can write : %d " , _tcpSend1 -> _canWrite( true ) ) ;
+        _prEFn( " can read : %d "  , _tcpSend1 -> _canRead ( true ) ) ;
+
+        sleep ( 1 );
+        __cnt01 ++ ;
+
+        if ( __cnt01 % testW2_loopCNT == (testW2_loopCNT - 1 ) ) {
+            if ( 1 ) _tcpSend1 -> dumpSelfX() ;
+        }
+    }
+} /* _testW2 */
+
 void _testWW(void) {
-    if(1)   
+
+    if ( _tcpSend1 == NULL ) {
+        _tcpSend1  = new _ssTcpConnectTo( _enSsdOut 
+            , "tcpT1:127.0.0.1:44444" , " _tcpExit  : when connected , out debug info , exit. " ) ;
+    }
+
+    if(0)   
         _testW1() ; 
+    if(1)   
+        _testW2() ; 
 } /* _testWW */
+
