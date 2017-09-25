@@ -208,6 +208,10 @@ void _testW2(void) {
             if ( 1 ) _tcpExit -> dumpSelfX() ;
             _prEFn( " _tcpExit can write : %d " , _tcpExit -> _canWrite( true ) ) ;
             _prEFn( " _tcpExit can read : %d "  , _tcpExit -> _canRead ( true ) ) ;
+            if ( _tcpExit -> _canWrite( true ) ) {
+            } else {
+                _prExit( " exit " ) ;
+            }
         }
     }
 } /* _testW2 */

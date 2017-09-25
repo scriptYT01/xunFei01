@@ -78,8 +78,7 @@ void _dumpStatus_when_exiting(){
 int _loopCNT = 1 ;
 int _main_loop() {
 
-    //if ( _tcpExit -> _canWrite( true ) ) {
-    if ( _tcpExit -> _canRead( true ) ) {
+    if ( _tcpExit -> _canWrite( true ) ) {
         _prEFn( " debug port conncted. . --- %10d %10d , %10d " , _time2 , _time3 , _loopCNT ) ;
         if(1)   
             _testWW() ; 
@@ -98,6 +97,7 @@ int _main_loop() {
         }
         if ( 1 ) {
             if ( _tcpExit -> _canWrite( true ) ) {
+            } else {
                 return -3 ;
             }
         }
