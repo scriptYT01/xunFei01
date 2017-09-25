@@ -40,7 +40,7 @@ void _pipe02_ReducedPCM(void) {
     }
 } /* _pipe02_ReducedPCM */
 
-void _pipe03_speaker(void) {
+void _pipe03_speaker_to_fake_file(void) {
     char    __buf1024[_pcmLenRaw] ;
     int     __len ;
 
@@ -53,12 +53,42 @@ void _pipe03_speaker(void) {
             __len = _fSpeaker -> _ssWriteNonblock(  _pcmLenRaw , __buf1024 ) ;
         }
     } 
-} /* _pipe03_speaker */
+} /* _pipe03_speaker_to_fake_file */
 
-void _fill_dataX(void) {
+void _pipe04_speaker_to_tcp(void) {
+    char    __buf1024[_pcmLenRaw] ;
+    int     __len ;
+
+    if ( _fSpeaker -> _canWrite( true ) ) {
+        __len = _tcpSpeaker -> _ssReadNonblock(  _pcmLenRaw , __buf1024 ) ;
+        if ( __len != _pcmLenRaw ) {
+            __len = _tcpSpeaker -> _ssReadNonblock(  _pcmLenRaw , __buf1024 ) ;
+        }
+        if ( __len == _pcmLenRaw ) {
+            __len = _fSpeaker -> _ssWriteNonblock(  _pcmLenRaw , __buf1024 ) ;
+        }
+    } 
+} /* _pipe04_speaker_to_tcp */
+
+void _fill_data01(void) {
     if ( 1 ) _pipe01_RawPCM();
     if ( 1 ) _pipe02_ReducedPCM();
-    if ( 1 ) _pipe03_speaker();
+    if ( 1 ) _pipe03_speaker_to_fake_file();
+
+} /* _fill_data01 */
+
+void _fill_data02(void) {
+    if ( 1 ) _pipe01_RawPCM();
+    if ( 1 ) _pipe02_ReducedPCM();
+    if ( 1 ) _pipe04_speaker_to_tcp();
+
+} /* _fill_data02 */
+
+void _fill_dataX(void) {
+    if ( 0 ) 
+        _fill_data01();
+    if ( 1 ) 
+        _fill_data02();
 
 } /* _fill_dataX */
 
