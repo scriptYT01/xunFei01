@@ -171,13 +171,20 @@ bool _TTcp::_ttTryConnect01( const char * ___ttPath ) {
     __i01 = 
         connect( _ttClientFD , _ttTdnsResultInfo->ai_addr, _ttTdnsResultInfo->ai_addrlen) ;
         
+    // 146 , Connection refused
+    // 111 Connection refuse
     if ( __i01 != 0 ) {
-        if ( errno == 111 ) { // 111 Connection refuse
+        if ( errno == 111 || errno == 146 ) { 
             return true ; // un connected, but , can try the next time.
         } else {
+            if( 1 ) _prErrno( " why reached here ?" ) ;
+            if( 1 ) dumpSelfX() ;
+
             close( _ttClientFD ) ;
             _ttClientFD = -428111 ;
+
             if ( 1 ) dumpExit(1) ;
+
             return false ;
         }
     }
