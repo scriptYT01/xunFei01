@@ -255,8 +255,8 @@ void _testWW(void) {
         _tcpSend1  = new _ssTcpConnectTo( _enSsdOut 
             , "tcpT1:127.0.0.1:44444" , " _tcpExit  : when connected , out debug info , exit. " ) ;
 
+        if ( 1 ) _tcpSend1 -> dumpSelfX() ;
     }
-    if ( 1 ) _fSpeaker -> dumpSelfX() ;
 
     if(0)   
         _testW1() ; 
