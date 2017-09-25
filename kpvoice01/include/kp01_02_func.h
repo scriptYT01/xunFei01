@@ -6,6 +6,6 @@
 void _testSS(void) ;
 void _testWW(void) ;
 
-void _fill_data(void) ;
+void _fill_dataX(void) ;
 
 #endif

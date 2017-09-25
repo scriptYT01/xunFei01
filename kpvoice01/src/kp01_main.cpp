@@ -51,6 +51,14 @@ void _initListen(void) {
     _tcpExit  = new _ssListen1( _enSsdOut 
             , "tcpL1:" _kpListenIP ":" _kpTcp_Exit      , " _tcpExit  : when connected , out debug info , exit. " ) ;
 
+    _tcpSend1  = new _ssTcpConnectTo( _enSsdOut 
+            , "tcpT1:127.0.0.1:44444" , " _tcpSend1  : when connected , out debug info . " ) ;
+
+    _tcpRecv1  = new _ssTcpConnectTo( _enSsdIn 
+            , "tcpT1:127.0.0.1:55555" , " _tcpRecv1  : when connected , try read data . " ) ;
+
+
+
     _tcpRaw     -> _ssBufSet( 960 , 1 ) ; 
     _tcpReduce  -> _ssBufSet( 960 , 1 ) ; 
     _tcpSpeaker -> _ssBufSet( 960 , 1 ) ; 
@@ -59,6 +67,8 @@ void _initListen(void) {
         _tcpRaw     -> dumpSelfX();
         _tcpReduce  -> dumpSelfX();
         _tcpSpeaker -> dumpSelfX();
+        if ( 1 ) _tcpSend1 -> dumpSelfX() ;
+        if ( 1 ) _tcpRecv1 -> dumpSelfX() ;
         _prExit( " debuging " );
     }
 
@@ -81,7 +91,7 @@ int _main_loop() {
 
     //int __running = 0 ;
 
-    if(1)    { // run debuging
+    if(0)    { // run debuging
         //if ( _tcpExit -> _canWrite( true ) ) {
         if ( 1 ) {
             _prEFn( " debug port conncted. . --- %10d %10d , %10d " , _time2 , _time3 , _loopCNT ) ;
@@ -112,7 +122,7 @@ int _main_loop() {
 
 
     if(1)   
-        _fill_data() ; 
+        _fill_dataX() ; 
 
     _loopCNT ++ ;
     //if ( 1 )    { _sleep_33ms   ; } 

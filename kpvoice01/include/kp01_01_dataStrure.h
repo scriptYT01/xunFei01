@@ -35,8 +35,8 @@ extern _ssTcpConnectTo * _tcpRecv1     ;
  * 10 ms -> 160 sample -> 2 * 160 byte == 320 byte 
  * 30 ms -> 480 sample -> 2 * 480 byte == 960 byte 
  */
-//#define _pcmLenRaw 960
-#define _pcmLenRaw 96000
 //#define _pcmLenRaw 9
+#define _pcmLenRaw 960
+//#define _pcmLenRaw 96000
 
 #endif

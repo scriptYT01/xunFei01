@@ -288,19 +288,6 @@ void _testW4(void) {
 
 void _testWW(void) {
 
-    if ( _tcpSend1 == NULL ) {
-        _tcpSend1  = new _ssTcpConnectTo( _enSsdOut 
-            , "tcpT1:127.0.0.1:44444" , " _tcpSend1  : when connected , out debug info . " ) ;
-
-        if ( 1 ) _tcpSend1 -> dumpSelfX() ;
-    }
-    if ( _tcpRecv1 == NULL ) {
-        _tcpRecv1  = new _ssTcpConnectTo( _enSsdIn 
-            , "tcpT1:127.0.0.1:55555" , " _tcpRecv1  : when connected , try read data . " ) ;
-
-        if ( 1 ) _tcpRecv1 -> dumpSelfX() ;
-    }
-
     if(0)   
         _testW1() ; 
     if(0)   
