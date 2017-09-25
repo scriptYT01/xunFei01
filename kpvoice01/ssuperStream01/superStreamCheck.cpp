@@ -36,6 +36,12 @@ int S_valid_fd_or_errFD( int *___fd ) {
         ": revents 0x%x , POLLNVAL 0x%x , POLLHUP 0x%x , POLLERR 0x%x , POLLOUT 0x%x " \
         , __rt , *___fd , *___retryCNT \
         , __pfds[0].revents , POLLNVAL , POLLHUP, POLLERR, POLLOUT ) 
+
+#define debugRead01( aa ) _prEFn( " " aa ": rt %d , fd : %d , : retryCNT %d " \
+        ": revents 0x%x , POLLNVAL 0x%x , POLLHUP 0x%x , POLLERR 0x%x , POLLIN 0x%x " \
+        , __rt , *___fd , *___retryCNT \
+        , __pfds[0].revents , POLLNVAL , POLLHUP, POLLERR, POLLIN ) 
+
 bool S_fd_canWrite( int *___fd , int * ___retryCNT ) {
     struct pollfd __pfds[1] ;
     int __rt ;
@@ -110,7 +116,7 @@ bool S_fd_canWrite( int *___fd , int * ___retryCNT ) {
         return true ;
     }
 
-    _prEFn( "unknow state : rt %d , fd : %d : %d , err : %d %s " , __rt , *___fd , __pfds[0].revents , errno , strerror(errno) ) ;
+    debugRead01( " unknown write state " ) ;
     return false ;
 } /* S_fd_canWrite */
 
@@ -126,7 +132,7 @@ bool S_fd_canRead( int *___fd , int * ___retryCNT ) {
     __rt = poll(__pfds, 1, 0);
 
     if ( __rt < 0 ) {
-        _prEFn( " error : rt %d , fd : %d , err : %d %s " , __rt , *___fd , errno , strerror(errno) ) ;
+        debugRead01( " rt lessThan 0 " ) ;
         close( *___fd ) ; *___fd = -1 ;
         return false ; /* error 1*/
     }
@@ -135,29 +141,49 @@ bool S_fd_canRead( int *___fd , int * ___retryCNT ) {
         return false ; /* can NOT read , normal */
     }
 
+    if ( 0 ) 
+        debugRead01( " rt Large than 0 " ) ;
+
     if ( __pfds[0].revents & POLLERR ) {
-        _prEFn( " POLLERR : rt %d , fd : %d , err : %d %s " , __rt , *___fd , errno , strerror(errno) ) ;
+        if ( __pfds[0].revents == POLLERR ) {
+        } else {
+            debugRead01( " POLLERR " ) ;
+        }
+
         close( *___fd ) ; *___fd = -1 ;
         return false ;
     }
 
     if ( __pfds[0].revents & POLLHUP ) {
-        _prEFn( " POLLHUP : rt %d , fd : %d , err : %d %s " , __rt , *___fd , errno , strerror(errno) ) ;
+        if ( __pfds[0].revents == POLLHUP ) {
+        } else {
+            debugRead01( " POLLHUP " ) ;
+        }
+
         close( *___fd ) ; *___fd = -1 ;
         return false ;
     }
 
     if ( __pfds[0].revents & POLLNVAL ) {
-        _prEFn( " POLLNVAL : rt %d , fd : %d , err : %d %s " , __rt , *___fd , errno , strerror(errno) ) ;
+        if ( __pfds[0].revents == POLLNVAL ) {
+        } else {
+            debugRead01( " POLLNVAL " ) ;
+        }
+
         close( *___fd ) ; *___fd = -1 ;
         return false ;
     }
 
-    if(__pfds[0].revents & POLLIN) {
+    if( __pfds[0].revents & POLLIN ) {
+        if ( __pfds[0].revents == POLLIN ) {
+        } else {
+            debugRead01( " POLLIN " ) ;
+        }
+
         return true ;
     }
 
-    _prEFn( " unkown state : rt %d , fd : %d , err : %d %s " , __rt , *___fd , errno , strerror(errno) ) ;
+    debugRead01( " unknown Read state " ) ;
     return false ;
 } /* S_fd_canRead */
 
