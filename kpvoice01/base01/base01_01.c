@@ -97,6 +97,7 @@ int _timeLoop( uint32_t ___delayUS , int (*___loopBackFunc)() ) {
         __rt = (*___loopBackFunc)() ;
         if ( __rt <= 0 ) {
             _prEFn( " callbackFunc return %d , exit. " , __rt ) ;
+            __rt -= 11130000 ;
             break ;
         }
         if (0) _prEFn( " 1: %lld , 2: %lld , 3: %lld , 4: %lld , 5: %lld , 6: %lld , X1: %lld " 
@@ -109,12 +110,12 @@ int _timeLoop( uint32_t ___delayUS , int (*___loopBackFunc)() ) {
         __u2  =   __u644 - __u642 ; // run-time
         if ( __u2 > __X1 ) {
             _prEFn( " delay over-run " ) ;
-            __rt = -1111221 ;
+            __rt -= 11150000 ;
             break;
         }
         if ( __u1 > (__X1 * 2)) {
             _prEFn( " why gap over-run " ) ;
-            __rt = -1111222 ;
+            __rt -= 11170000 ;
             break;
         }
 

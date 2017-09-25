@@ -122,6 +122,7 @@ int _main_loop() {
 
 int main( int ___argc , char ** ___argv ) {
 
+    int __i01 ;
 
     _usage( ___argc , ___argv ) ;
 
@@ -129,10 +130,12 @@ int main( int ___argc , char ** ___argv ) {
 
     _initListen() ;
 
-    _timeLoop( 
+    __i01 = _timeLoop( 
             1000*(_pcmLenRaw)/32 
             , &
             _main_loop ) ;
+
+    _prEFn( " loop return %d " , __i01 ) ;
 
     _dumpStatus_when_exiting() ;
 
