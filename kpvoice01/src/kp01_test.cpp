@@ -198,20 +198,20 @@ void _testW2(void) {
 
     while ( 1 ) {
         _prEFn( " _tcpSend1 can write : %d " , _tcpSend1 -> _canWrite( true ) ) ;
-        _prEFn( " _tcpSend1 can read : %d "  , _tcpSend1 -> _canRead ( true ) ) ;
+        //_prEFn( " _tcpSend1 can read : %d "  , _tcpSend1 -> _canRead ( true ) ) ;
 
         sleep ( 1 );
         __cnt01 ++ ;
 
         if ( __cnt01 % testW2_loopCNT == (testW2_loopCNT - 1 ) ) {
             if ( 1 ) _tcpSend1 -> dumpSelfX() ;
-            if ( 1 ) _tcpExit -> dumpSelfX() ;
-            _prEFn( " _tcpExit can write : %d " , _tcpExit -> _canWrite( true ) ) ;
-            _prEFn( " _tcpExit can read : %d "  , _tcpExit -> _canRead ( true ) ) ;
-            if ( _tcpExit -> _canWrite( true ) ) {
-            } else {
-                _prExit( " exit " ) ;
-            }
+            //if ( 1 ) _tcpExit -> dumpSelfX() ;
+            //_prEFn( " _tcpExit can write : %d " , _tcpExit -> _canWrite( true ) ) ;
+            //_prEFn( " _tcpExit can read : %d "  , _tcpExit -> _canRead ( true ) ) ;
+            //if ( _tcpExit -> _canWrite( true ) ) {
+            //} else {
+                //_prExit( " exit " ) ;
+            //}
         }
     }
 } /* _testW2 */
@@ -239,13 +239,15 @@ void _testWW(void) {
     if ( _tcpSend1 == NULL ) {
         _tcpSend1  = new _ssTcpConnectTo( _enSsdOut 
             , "tcpT1:127.0.0.1:44444" , " _tcpExit  : when connected , out debug info , exit. " ) ;
+
     }
+    if ( 1 ) _fSpeaker -> dumpSelfX() ;
 
     if(0)   
         _testW1() ; 
-    if(0)   
-        _testW2() ; 
     if(1)   
+        _testW2() ; 
+    if(0)   
         _testW3() ; 
 } /* _testWW */
 

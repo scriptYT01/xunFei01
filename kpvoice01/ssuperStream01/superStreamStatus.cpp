@@ -109,6 +109,7 @@ bool S_fd_canWrite( int *___fd , int * ___retryCNT ) {
     
 
     if ( __pfds[0].revents & POLLERR ) { // EWOULDBLOCK == EAGAIN == 11 
+        if ( 1 ) _prEFn( " POLLERR : revents %x %x " , __pfds[0].revents , POLLERR );
         if ( errno == EAGAIN ) {
             (*___retryCNT) ++ ;
             if(0)   _prEFn( "POLLERR : rt %d , fd : %d , err : %d %s : CNT %d " , __rt , *___fd , errno , strerror(errno) , *___retryCNT ) ;
@@ -124,27 +125,33 @@ bool S_fd_canWrite( int *___fd , int * ___retryCNT ) {
         return false ;
     }
 
+    // 111 Connection refused 
     if ( __pfds[0].revents & POLLHUP ) {
-        if ( errno == 111 ) { // 111 Connection refused 
-                _prEFn( "POLL111 2: rt %d , fd : %d , err : %d %s : CNT %d " , __rt , *___fd , errno , strerror(errno) , *___retryCNT ) ;
+        if ( 0 ) _prEFn( " POLLHUP : revents %x %x " , __pfds[0].revents , POLLHUP );
+        if ( __pfds[0].revents == POLLHUP ) {
+            _prEFn( "POLLHUP 1: rt %d , fd : %d , : CNT %d : revents 0x%x 0x%x 0x%x " 
+                    , __rt , *___fd , *___retryCNT , __pfds[0].revents , POLLHUP, POLLOUT ) ;
         } else { // any other error : print , then , close.
-            _prEFn( "POLLHUP : rt %d , fd : %d , err : %d %s " , __rt , *___fd , errno , strerror(errno) ) ;
+            _prEFn( "POLLHUP 2: rt %d , fd : %d , : CNT %d : revents 0x%x 0x%x 0x%x " 
+                    , __rt , *___fd , *___retryCNT , __pfds[0].revents , POLLHUP, POLLOUT ) ;
         }
         close( *___fd ) ; *___fd = -1 ;(*___retryCNT) = 0 ;
         return false ;
     }
 
     if ( __pfds[0].revents & POLLNVAL ) {
+        if ( 1 ) _prEFn( " POLLNVAL : revents 0x%x 0x%x 0x%x " , __pfds[0].revents , POLLNVAL , POLLOUT );
         _prEFn( "POLLNVAL : rt %d , fd : %d , err : %d %s " , __rt , *___fd , errno , strerror(errno) ) ;
         close( *___fd ) ; *___fd = -1 ;(*___retryCNT) = 0 ;
         return false ;
     }
 
     if(__pfds[0].revents & POLLOUT) {
+        if ( 1 ) _prEFn( " POLLOUT : revents 0x%x 0x%x " , __pfds[0].revents , POLLOUT );
         return true ;
     }
 
-    _prEFn( "unknow state : rt %d , fd : %d , err : %d %s " , __rt , *___fd , errno , strerror(errno) ) ;
+    _prEFn( "unknow state : rt %d , fd : %d : %d , err : %d %s " , __rt , *___fd , __pfds[0].revents , errno , strerror(errno) ) ;
     return false ;
 } /* S_fd_canWrite */
 
