@@ -81,9 +81,9 @@ int S_valid_fd_or_errFD( int *___fd ) {
 } /* S_valid_fd_or_errFD */
 
 #define debugWrite01( aa ) _prEFn( " " aa ": rt %d , fd : %d , : retryCNT %d " \
-        ": revents 0x%x , POLLERR 0x%x , POLLHUP 0x%x , POLLOUT 0x%x " \
+        ": revents 0x%x , POLLNVAL 0x%x , POLLHUP 0x%x , POLLERR 0x%x , POLLOUT 0x%x " \
         , __rt , *___fd , *___retryCNT \
-        , __pfds[0].revents , POLLERR , POLLHUP, POLLOUT ) 
+        , __pfds[0].revents , POLLNVAL , POLLHUP, POLLERR, POLLOUT ) 
 bool S_fd_canWrite( int *___fd , int * ___retryCNT ) {
     struct pollfd __pfds[1] ;
     int __rt ;
@@ -108,17 +108,18 @@ bool S_fd_canWrite( int *___fd , int * ___retryCNT ) {
     // 111 Connection refused
     //  11 Resource temporarily unavailable // EWOULDBLOCK == EAGAIN == 11 
     // the following : > 0 . means : poll succeed.
-    if ( 0 ) _prEFn( "force debug : rt %d , fd : %d , revents 0x%x , " 
-            "POLLERR 0x%x , POLLHUP 0x%x , POLLNVAL 0x%x " 
-            , __rt , *___fd , __pfds[0].revents 
-            , POLLERR , POLLHUP , POLLNVAL );
+    if ( 0 ) 
+        debugWrite01( " rt lessThan 0 " ) ;
     
 
     if ( __pfds[0].revents & POLLERR ) { 
-        if ( __pfds[0].revents == POLLERR ) { 
+        //if ( __pfds[0].revents == POLLERR ) { 
+        //if ( __pfds[0].revents == (POLLERR | POLLOUT) ) { 
+        if ( __pfds[0].revents == (POLLERR | POLLOUT) ) { 
+        } else if ( __pfds[0].revents == (POLLHUP | POLLERR | POLLOUT) ) { 
         } else {
-            if ( 1 ) _prEFn( "POLLERR : rt %d , fd : %d , revents 0x%x , " "POLLERR 0x%x , POLLHUP 0x%x , POLLNVAL 0x%x " 
-                    , __rt , *___fd , __pfds[0].revents , POLLERR , POLLHUP , POLLNVAL );
+            if ( 1 ) 
+                debugWrite01( " POLLERR " ) ;
         }
         close( *___fd ) ; *___fd = -1 ;(*___retryCNT) = 0 ;
         return false ;
@@ -126,10 +127,12 @@ bool S_fd_canWrite( int *___fd , int * ___retryCNT ) {
 
     // 111 Connection refused 
     if ( __pfds[0].revents & POLLHUP ) {
-        if ( __pfds[0].revents == POLLHUP ) {
+        //if ( __pfds[0].revents == POLLHUP ) {
+        if ( __pfds[0].revents == ( POLLNVAL | POLLHUP | POLLOUT ) ) {
+        } else if ( __pfds[0].revents == ( POLLHUP | POLLOUT ) ) {
         } else { // any other error : print , then , close.
-            if ( 1 ) _prEFn( "POLLHUP 2: rt %d , fd : %d , : CNT %d : revents 0x%x , POLLHUP 0x%x , POLLOUT 0x%x " 
-                    , __rt , *___fd , *___retryCNT , __pfds[0].revents , POLLHUP, POLLOUT ) ;
+            if ( 1 ) 
+                debugWrite01( " POLLHUP " ) ;
         }
         close( *___fd ) ; *___fd = -1 ;(*___retryCNT) = 0 ;
         return false ;
@@ -138,8 +141,8 @@ bool S_fd_canWrite( int *___fd , int * ___retryCNT ) {
     if ( __pfds[0].revents & POLLNVAL ) {
         if ( __pfds[0].revents ==  POLLNVAL ) {
         } else { // any other error : print , then , close.
-            if ( 1 ) _prEFn( " POLLNVAL 2: rt %d , fd : %d , : CNT %d : revents 0x%x , POLLHUP 0x%x , POLLOUT 0x%x " 
-                    , __rt , *___fd , *___retryCNT , __pfds[0].revents , POLLHUP, POLLOUT ) ;
+            if ( 1 ) 
+                debugWrite01( " POLLNVAL " ) ;
         }
 
         close( *___fd ) ; *___fd = -1 ;(*___retryCNT) = 0 ;
@@ -149,8 +152,8 @@ bool S_fd_canWrite( int *___fd , int * ___retryCNT ) {
     if(__pfds[0].revents & POLLOUT) {
         if ( __pfds[0].revents ==  POLLOUT ) {
         } else { // any other error : print , then , close.
-            if ( 1 ) _prEFn( " POLLOUT 2: rt %d , fd : %d , : CNT %d : revents 0x%x , POLLHUP 0x%x , POLLOUT 0x%x " 
-                    , __rt , *___fd , *___retryCNT , __pfds[0].revents , POLLHUP, POLLOUT ) ;
+            if ( 1 ) 
+                debugWrite01( " POLLOUT " ) ;
         }
         return true ;
     }
