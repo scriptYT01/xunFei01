@@ -257,6 +257,8 @@ void _testW4(void) {
     while ( 1 ) {
         __i01 =  _tcpRecv1 -> 
             _canRead( true ) ;
+        // _ttCanRead1
+        // S_fd_canRead
         if ( 1 ) _prEFn( " _tcpRecv1 can read : %d " , __i01 ) ;
 
         if ( __i01 ) {
