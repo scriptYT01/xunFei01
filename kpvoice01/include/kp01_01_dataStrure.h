@@ -27,6 +27,7 @@ extern _ssListen1 * _tcpSpeaker        ;
 
 extern _ssListen1      * _tcpExit      ;
 extern _ssTcpConnectTo * _tcpSend1     ;
+extern _ssTcpConnectTo * _tcpRecv1     ;
 
 /* 1  ch , 16000 Hz , s16le 
  * 1  sample -> 2 byte 

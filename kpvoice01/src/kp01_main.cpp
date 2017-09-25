@@ -24,6 +24,7 @@ _ssListen1 * _tcpSpeaker        = NULL ;
 
 _ssListen1      * _tcpExit      = NULL ;
 _ssTcpConnectTo * _tcpSend1     = NULL ;
+_ssTcpConnectTo * _tcpRecv1     = NULL ;
 
 void _usage( int ___argc , char ** ___argv ) {
 } /* _usage */

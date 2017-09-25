@@ -249,20 +249,63 @@ void _testW3(void) {
     }
 } /* _testW3 */
 
+void _testW4(void) {
+    int __cnt01 = 0 ;
+    int __i01 ;
+    int __len ;
+
+    while ( 1 ) {
+        __i01 =  _tcpRecv1 -> 
+            _canRead( true ) ;
+        if ( 1 ) _prEFn( " _tcpRecv1 can read : %d " , __i01 ) ;
+
+        if ( __i01 ) {
+            __len = _tcpRecv1 -> 
+                _ssReadNonblock(  1024   , _bufW1 ) ;
+            if ( __len > 0 ) {
+                if ( 1 ) { 
+                    _prEF( " read: %d ,<" , __len ) ;
+                    write( 2 , _bufW1 , __len ) ;
+                    write( 2 , ">\n" , 2 ) ;
+                }
+            } else {
+                if ( 1 ) { _prEFn( " read: %d " , __len ) ; }
+            }
+        } else {
+        }
+
+        sleep ( 1 );
+        __cnt01 ++ ;
+
+        if ( __cnt01 % testW2_loopCNT == (testW2_loopCNT - 1 ) ) {
+            if ( 1 ) _tcpRecv1 -> dumpSelfX() ;
+        }
+    }
+} /* _testW4 */
+
+
 void _testWW(void) {
 
     if ( _tcpSend1 == NULL ) {
         _tcpSend1  = new _ssTcpConnectTo( _enSsdOut 
-            , "tcpT1:127.0.0.1:44444" , " _tcpExit  : when connected , out debug info , exit. " ) ;
+            , "tcpT1:127.0.0.1:44444" , " _tcpSend1  : when connected , out debug info . " ) ;
 
         if ( 1 ) _tcpSend1 -> dumpSelfX() ;
+    }
+    if ( _tcpRecv1 == NULL ) {
+        _tcpRecv1  = new _ssTcpConnectTo( _enSsdIn 
+            , "tcpT1:127.0.0.1:55555" , " _tcpRecv1  : when connected , try read data . " ) ;
+
+        if ( 1 ) _tcpRecv1 -> dumpSelfX() ;
     }
 
     if(0)   
         _testW1() ; 
-    if(1)   
+    if(0)   
         _testW2() ; 
     if(0)   
         _testW3() ; 
+    if(1)   
+        _testW4() ; 
 } /* _testWW */
 
