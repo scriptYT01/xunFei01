@@ -197,14 +197,17 @@ void _testW2(void) {
     int __cnt01 = 0 ;
 
     while ( 1 ) {
-        _prEFn( " can write : %d " , _tcpSend1 -> _canWrite( true ) ) ;
-        _prEFn( " can read : %d "  , _tcpSend1 -> _canRead ( true ) ) ;
+        _prEFn( " _tcpSend1 can write : %d " , _tcpSend1 -> _canWrite( true ) ) ;
+        _prEFn( " _tcpSend1 can read : %d "  , _tcpSend1 -> _canRead ( true ) ) ;
 
         sleep ( 1 );
         __cnt01 ++ ;
 
         if ( __cnt01 % testW2_loopCNT == (testW2_loopCNT - 1 ) ) {
             if ( 1 ) _tcpSend1 -> dumpSelfX() ;
+            if ( 1 ) _tcpExit -> dumpSelfX() ;
+            _prEFn( " _tcpExit can write : %d " , _tcpExit -> _canWrite( true ) ) ;
+            _prEFn( " _tcpExit can read : %d "  , _tcpExit -> _canRead ( true ) ) ;
         }
     }
 } /* _testW2 */

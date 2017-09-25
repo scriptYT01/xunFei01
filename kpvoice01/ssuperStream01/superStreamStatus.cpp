@@ -37,6 +37,8 @@ bool _TTcp::_ttCanRead2(   ) {
 } /* _TTcp::_ttCanRead2 */
 
 bool _ssListen1::_canWrite(  bool ___reopen ) {
+    if ( _ssDir != _enSsdOut && _ssDir != _enSsdOutIn ) { return false ; }
+
     if( _tTcp . _ttCanWrite2( ) ) return true ;
     if ( ! ___reopen ) return false ;
     _ssOpenOrReopen();
@@ -44,6 +46,8 @@ bool _ssListen1::_canWrite(  bool ___reopen ) {
 } /* _ssListen1::_canWrite */
 
 bool _ssListen1::_canRead(   bool ___reopen ) {
+    if ( _ssDir != _enSsdIn && _ssDir != _enSsdOutIn ) { return false ; }
+
     if( _tTcp . _ttCanRead2( ) ) return true ;
     if ( ! ___reopen ) return false ;
     _ssOpenOrReopen();
@@ -51,6 +55,8 @@ bool _ssListen1::_canRead(   bool ___reopen ) {
 } /* _ssListen1::_canRead */
 
 bool _ssTcpConnectTo::_canWrite(  bool ___reopen ) {
+    if ( _ssDir != _enSsdOut && _ssDir != _enSsdOutIn ) { return false ; }
+
     if( _tTcp . _ttCanWrite1() ) return true ;
     if ( ! ___reopen ) return false ;
     _ssOpenOrReopen();
@@ -58,6 +64,8 @@ bool _ssTcpConnectTo::_canWrite(  bool ___reopen ) {
 } /* _ssTcpConnectTo::_canWrite */
 
 bool _ssTcpConnectTo::_canRead(   bool ___reopen ) {
+    if ( _ssDir != _enSsdIn && _ssDir != _enSsdOutIn ) { return false ; }
+
     if( _tTcp . _ttCanRead1( ) ) return true ;
     if ( ! ___reopen ) return false ;
     _ssOpenOrReopen();
