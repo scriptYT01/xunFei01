@@ -201,7 +201,8 @@ void _testW2(void) {
     __len = strlen( _bufW1 )  ;
 
     while ( 1 ) {
-        __i01 =  _tcpSend1 -> _canWrite( true ) ;
+        __i01 =  _tcpSend1 -> 
+            _canWrite( true ) ;
         if ( 1 ) _prEFn( " _tcpSend1 can write : %d " , __i01 ) ;
 
         if ( __i01 ) {
@@ -229,9 +230,10 @@ void _testW3(void) {
 
     while ( 1 ) {
         // _prEFn( " _tcpExit can read : %d "  , _tcpExit -> _canRead ( true ) ) ;
-        // S_fd_canWrite( &_ttClientFD , &_ttCntW ) ;
         //_prEFn( " _tcpExit can write : %d " , _tcpExit -> _canWrite( true ) ) ;
-        __i01 =  _tcpExit -> _canWrite( true ) ;
+        // S_fd_canWrite( &_ttClientFD , &_ttCntW ) ;
+        __i01 =  _tcpExit -> 
+            _canWrite( true ) ;
         if ( 1 ) _prEFn( " _tcpExit can write : %d " , __i01 ) ;
 
         if ( __i01 ) {
