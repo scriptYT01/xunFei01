@@ -78,13 +78,16 @@ void _dumpStatus_when_exiting(){
 int _loopCNT = 1 ;
 int _main_loop() {
 
-    if ( _tcpExit -> _canWrite( true ) ) {
-        _prEFn( " debug port conncted. . --- %10d %10d , %10d " , _time2 , _time3 , _loopCNT ) ;
-        if(1)   
+    //int __running = 0 ;
+
+    if(1)    { // run debuging
+        if ( _tcpExit -> _canWrite( true ) ) {
+            _prEFn( " debug port conncted. . --- %10d %10d , %10d " , _time2 , _time3 , _loopCNT ) ;
             _testWW() ; 
             // _testW1
             // _testW2
-        return -1 ;
+            return -1 ;
+        }
     }
 
     if ( _loopCNT % 165 == 164 ) {
@@ -97,7 +100,6 @@ int _main_loop() {
         }
         if ( 1 ) {
             if ( _tcpExit -> _canWrite( true ) ) {
-            } else {
                 return -3 ;
             }
         }

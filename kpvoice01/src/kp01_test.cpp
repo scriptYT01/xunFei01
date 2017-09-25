@@ -216,6 +216,23 @@ void _testW2(void) {
     }
 } /* _testW2 */
 
+#define testW3_loopCNT 20
+void _testW3(void) {
+    int __cnt01 = 0 ;
+
+    while ( 1 ) {
+        _prEFn( " _tcpExit can write : %d " , _tcpExit -> _canWrite( true ) ) ;
+        _prEFn( " _tcpExit can read : %d "  , _tcpExit -> _canRead ( true ) ) ;
+
+        sleep ( 1 );
+        __cnt01 ++ ;
+
+        if ( __cnt01 % testW3_loopCNT == (testW3_loopCNT - 1 ) ) {
+            if ( 1 ) _tcpExit -> dumpSelfX() ;
+        }
+    }
+} /* _testW3 */
+
 void _testWW(void) {
 
     if ( _tcpSend1 == NULL ) {
@@ -225,7 +242,9 @@ void _testWW(void) {
 
     if(0)   
         _testW1() ; 
-    if(1)   
+    if(0)   
         _testW2() ; 
+    if(1)   
+        _testW3() ; 
 } /* _testWW */
 
