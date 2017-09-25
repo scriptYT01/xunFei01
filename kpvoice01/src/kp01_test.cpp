@@ -222,7 +222,8 @@ void _testW3(void) {
 
     while ( 1 ) {
         _prEFn( " _tcpExit can write : %d " , _tcpExit -> _canWrite( true ) ) ;
-        _prEFn( " _tcpExit can read : %d "  , _tcpExit -> _canRead ( true ) ) ;
+        // _prEFn( " _tcpExit can read : %d "  , _tcpExit -> _canRead ( true ) ) ;
+        // S_fd_canWrite( &_ttClientFD , &_ttCntW ) ;
 
         sleep ( 1 );
         __cnt01 ++ ;

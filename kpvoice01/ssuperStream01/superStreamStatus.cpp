@@ -96,10 +96,15 @@ bool S_fd_canWrite( int *___fd , int * ___retryCNT ) {
         close( *___fd ) ; *___fd = -1 ;
         return false ; /* error 1*/
     }
-    
+
     if ( __rt == 0 ) {
         return false ; /* can NOT Write , normal */
     }
+
+    // the following : > 0 . means : poll succeed.
+    if ( 0 ) _prEFn( "force debug : rt %d , fd : %d , err : %d %s " , __rt , *___fd , errno , strerror(errno) ) ;
+    if ( 1 ) _prEFn( "force debug : rt %d , fd : %d , err : %d "    , __rt , *___fd , errno ) ;
+    
 
     if ( __pfds[0].revents & POLLERR ) { // EWOULDBLOCK == EAGAIN == 11 
         if ( errno == EAGAIN ) {
@@ -108,6 +113,7 @@ bool S_fd_canWrite( int *___fd , int * ___retryCNT ) {
             close( *___fd ) ; *___fd = -1 ; (*___retryCNT) = 0 ;
         } else {
             if ( errno == 111 ) { // 111 Connection refused 
+                _prEFn( "POLL111 1: rt %d , fd : %d , err : %d %s : CNT %d " , __rt , *___fd , errno , strerror(errno) , *___retryCNT ) ;
             } else { // any other error : print , then , close.
                 _prEFn( "POLLERR : rt %d , fd : %d , err : %d %s : CNT %d " , __rt , *___fd , errno , strerror(errno) , *___retryCNT ) ;
                 close( *___fd ) ; *___fd = -1 ;(*___retryCNT) = 0 ;
@@ -118,6 +124,7 @@ bool S_fd_canWrite( int *___fd , int * ___retryCNT ) {
 
     if ( __pfds[0].revents & POLLHUP ) {
         if ( errno == 111 ) { // 111 Connection refused 
+                _prEFn( "POLL111 2: rt %d , fd : %d , err : %d %s : CNT %d " , __rt , *___fd , errno , strerror(errno) , *___retryCNT ) ;
         } else { // any other error : print , then , close.
             _prEFn( "POLLHUP : rt %d , fd : %d , err : %d %s " , __rt , *___fd , errno , strerror(errno) ) ;
         }
