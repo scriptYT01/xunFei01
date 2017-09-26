@@ -32,7 +32,7 @@ int _superStreamBase::_ssReadNonblock( int ___len , char * ___buf ) {
     int __rLen = -3333 ;
     int *__dataFD = _getDataFD() ;
 
-    debugFD01( this ) ;
+    //debugFD01( this ) ;
     _ssTryReopneIfNeeded( ) ;
     debugFD01( this ) ;
 
@@ -59,13 +59,21 @@ int _superStreamBase::_ssReadReal( int ___len , char * ___buf ) {
     int __rLen ;
     int *__dataFD = _getDataFD() ;
 
+    debugFD01( this ) ;
     __rLen = read( *__dataFD , ___buf , ___len ) ;  // _ssReadBlock
+    debugFD01( this ) ;
 
     if ( __rLen == 0 ) {
-        *__dataFD = -1 ;
+
+        close ( *__dataFD ) ; *__dataFD = -1 ;
+
+        //debugFD01( this ) ;
         _ssTryReopneIfNeeded( ) ;// try reopen it
+        debugFD01( this ) ;
         if ( S_fd_canRead( __dataFD , &_ssCntR ) ) {  // if reopen ok.
+            debugFD01( this ) ;
             __rLen = read( *__dataFD , ___buf , ___len ) ;  // _ssReadBlock re-read.
+            debugFD01( this ) ;
         } else {
             if(1) _prEFn( " 0 --> file end , re-read failed." ) ;
         }
