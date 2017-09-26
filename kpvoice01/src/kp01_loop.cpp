@@ -89,9 +89,7 @@ void _fill_data02(void) {
 int _debugCNT01 = 0 ;
 #define _debugCNT01_MAX  (_debugCNT_MAX * 15)
 void _debugDump01(void) {
-    if ( 1 ) _pipe01_RawPCM();
     _debugCNT01 ++ ;
-
     if ( _debugCNT01 % _debugCNT01_MAX == ( _debugCNT01_MAX - 1 ) ) {
         _tcpRaw         -> dumpSelfX();
         _fGenRawPcm     -> dumpSelfX();
@@ -101,14 +99,13 @@ void _debugDump01(void) {
 int _debugCNT02 = 1 ;
 #define _debugCNT02_MAX  (_debugCNT_MAX * 3)
 void _debugDump02(void) {
-
+    _debugCNT02 ++ ;
     if ( _debugCNT02 % _debugCNT02_MAX == (_debugCNT02_MAX - 1) ) {
         _time2 = _timeNow ;
         _time3 = _time2 - _time1 ;
         _prSFn( " --- %10d %10d , %10d " , _time2 , _time3 , _debugCNT02 ) ;
         _ffstdout ;
     }
-    _debugCNT02 ++ ;
 } /* _debugDump02 */
 
 void _debugDumpX(void) {
