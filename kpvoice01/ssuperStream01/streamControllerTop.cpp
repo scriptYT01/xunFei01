@@ -2,28 +2,28 @@
 
 void _streamController::_scDumpSS() 
 {
-    _superStreamBase *  __sVec ;
+    _superStreamBase *  __scVec ;
     int                 __i01 ;
     int                 __size ;
 
-    __size = _sVec . size() ; 
+    __size = _scVec . size() ; 
     for ( __i01 = 0 ; __i01 < __size ; __i01 ++ )
     {
-        __sVec = _sVec[__i01] ;
-        __sVec -> dumpSelfX( ) ;
+        __scVec = _scVec[__i01] ;
+        __scVec -> dumpSelfX( ) ;
     }
 } /* _streamController::_scDumpSS */
 
 void _streamController::_scSetErrAction( _enErrAction ___eAction ) {
-    _superStreamBase *  __sVec ;
+    _superStreamBase *  __scVec ;
     int                 __i01 ;
     int                 __size ;
 
-    __size = _sVec . size() ; 
+    __size = _scVec . size() ; 
     for ( __i01 = 0 ; __i01 < __size ; __i01 ++ )
     {
-        __sVec = _sVec[__i01] ;
-        __sVec -> _ssSetErrAction( ___eAction ) ;
+        __scVec = _scVec[__i01] ;
+        __scVec -> _ssSetErrAction( ___eAction ) ;
     }
 } /* _streamController::_scSetErrAction */
 
@@ -31,7 +31,7 @@ void _streamController::_scPrintf( const char *___fmt , ... ) {
     char                __buf1024[1024] ;
     va_list             __args ;
     int                 __len ;
-    _superStreamBase *  __sVec ;
+    _superStreamBase *  __scVec ;
     int                 __i01 ;
     int                 __size ;
 
@@ -41,11 +41,11 @@ void _streamController::_scPrintf( const char *___fmt , ... ) {
         va_end(__args);
 
         if ( __len ) {
-            __size = _sVec . size() ; 
+            __size = _scVec . size() ; 
             for ( __i01 = 0 ; __i01 < __size ; __i01 ++ )
             {
-                __sVec = _sVec[__i01] ;
-                __sVec -> _ssWriteNonblock( __len , __buf1024 ) ;
+                __scVec = _scVec[__i01] ;
+                __scVec -> _ssWriteNonblock( __len , __buf1024 ) ;
             }
         }
     }
@@ -53,7 +53,7 @@ void _streamController::_scPrintf( const char *___fmt , ... ) {
 
 
 bool _streamController::_addPath2( const char * ___path , const char * ___comment ) {
-    _sVec . push_back( _superStreamBase::
+    _scVec . push_back( _superStreamBase::
             _genSS( 1 , _scDir , ___path , ___comment ) ) ;
     return true ;
 } /* _streamController::_addPath2 */

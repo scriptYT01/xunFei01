@@ -10,12 +10,13 @@ class _streamController
     protected :
         _enSsDir _scDir ;
     protected :
-        vector <_superStreamBase*> _sVec ;
+        vector <_superStreamBase*> _scVec ;
     public:
         _streamController():_scDir(_enSsdUnknown) {};
         virtual ~_streamController(){};
     public:
         bool _addPath2( const char * ___path , const char * ___comment ) ;
+        int _vecSize() { return _scVec . size() ; }
     public :
         void _scSelfTest01( ) ;
         void _scPrintf(         const char *___fmt , ... ) ;
