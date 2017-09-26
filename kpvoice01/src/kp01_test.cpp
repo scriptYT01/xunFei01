@@ -285,6 +285,9 @@ void _testW4(void) {
     }
 } /* _testW4 */
 
+void _testW5(void) {
+} /* _testW5 */
+
 
 void _testWW(void) {
 
@@ -294,7 +297,9 @@ void _testWW(void) {
         _testW2() ; 
     if(0)   
         _testW3() ; 
-    if(1)   
+    if(0)   
         _testW4() ; 
+    if(1)   
+        _testW5() ; 
 } /* _testWW */
 

@@ -86,45 +86,31 @@ void _dumpStatus_when_exiting(){
     if(1 && _tcpExit           )      _tcpExit           -> dumpSelfX();
 } /* _dumpStatus_when_exiting */
 
-int _loopCNT = 1 ;
 int _main_loop() {
 
     //int __running = 0 ;
 
-    if(0)    { // run debuging
-        //if ( _tcpExit -> _canWrite( true ) ) {
-        if ( 1 ) {
-            _prEFn( " debug port conncted. . --- %10d %10d , %10d " , _time2 , _time3 , _loopCNT ) ;
-            _testWW() ; 
-            // _testW1
-            // _testW2
-            return -1 ;
+    if ( 1 ) { // when EXIT port is connected, exit.
+        if ( _tcpExit -> _canWrite( true ) ) {
+            return -3 ;
         }
     }
 
-    if ( _loopCNT % 165 == 164 ) {
-        if ( 1 ) { // gen debug info
-            _time2 = _timeNow ;
-            _time3 = _time2 - _time1 ;
-            _prSFn( " --- %10d %10d , %10d " , _time2 , _time3 , _loopCNT ) ;
-            _ffstdout ;
-            if( 0 ) return -2 ; // exit....
-        }
-        if ( 1 ) {
-            if ( _tcpExit -> _canWrite( true ) ) {
-                return -3 ;
-            }
-        }
+    if(0)    { // run debuging
+        if(0) _prEFn( " debug port conncted. . --- %10d %10d " , _time2 , _time3 ) ;
+        _testWW() ; 
+        // _testW1
+        // _testW2
+    } else {
+        _fill_dataX() ; 
     }
+
+    if ( 1 ) 
+        _debugDumpX();
 
     if(0)   
         _testSS() ; 
 
-
-    if(1)   
-        _fill_dataX() ; 
-
-    _loopCNT ++ ;
     //if ( 1 )    { _sleep_33ms   ; } 
     //if ( 1 )    { usleep( 1000*1000*960/32000 )  ; } 
     //if ( 1 )    { _sleep_30ms   ; } 

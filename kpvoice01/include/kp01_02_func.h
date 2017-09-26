@@ -7,5 +7,6 @@ void _testSS(void) ;
 void _testWW(void) ;
 
 void _fill_dataX(void) ;
+void _debugDumpX(void) ;
 
 #endif
