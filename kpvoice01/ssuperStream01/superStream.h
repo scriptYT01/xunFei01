@@ -99,7 +99,6 @@ class _superStreamBase
         const char              *   _ssPath         ;
         const char              *   _ssComment      ;
         _superStreamBase        *   _ssOK           ;
-        int                         _ssFD           ;
         _TTcp                       _tTcp           ;
         _superStreamInfo            _ssInfoW        ; 
         _superStreamInfo            _ssInfoR        ; 
@@ -107,6 +106,7 @@ class _superStreamBase
         int                         _ssBufDeep      ;
         const char              *   _ssBufLP        ;
     public :
+        int                         _ssFD           ;
                                     _superStreamBase(){ _memZS( _ssInfoW ) ; _memZS( _ssInfoR ) ; _ssBufLP = NULL ; } ;
                                     ~_superStreamBase( ){} ;
         static _superStreamBase *   _genSS( bool _exitIfErr ,  _enSsDir ___ssDir , const char * ___path , const char * ___comment ) ;
@@ -221,6 +221,9 @@ class _ssFileIn : public _superStreamBase
 #define _dbSS1   _prEFn( " %d , %d , %s, %s" , _exitIfErr , ___ssDir , ___path , ___comment )
 #define _dbSS2   _prEFn( " %d , %d , %s, %s" , _ssDir , _ssType , _ssPath , _ssComment )
 #define dumpExit(ena)    if(ena) {dumpSelfX(); _prExit( "debuging." );}
+
+extern int _recFD01 ;
+#define debugFD01( aa )    if( (aa -> _ssFD) != _recFD01 ) { _prEFn( " before %d , after %d " , _recFD01 , (aa -> _ssFD) ) ; _recFD01 = (aa -> _ssFD) ; }
 
 #endif //     __SENDRESULTTOSDOUTORTCP_H
 

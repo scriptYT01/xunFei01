@@ -1,21 +1,27 @@
 #include "kp01_99_top.h"
 
+int _recFD01 = -21 ;
 void _pipe01_RawPCM(void) {
     char    __buf1024[_pcmLenRaw] ;
     int     __len ;
 
     if ( _tcpRaw -> _canWrite( true ) ) {
+        debugFD01( _fGenRawPcm ) ;
         __len = _fGenRawPcm -> _ssReadNonblock(  _pcmLenRaw , __buf1024 ) ;
+        debugFD01( _fGenRawPcm ) ;
         if ( __len != _pcmLenRaw ) {
-            __len = _fGenRawPcm -> _ssReadNonblock(  _pcmLenRaw , __buf1024 ) ;
+            debugFD01( _fGenRawPcm ) ;
+            __len = _fGenRawPcm -> 
+                _ssReadNonblock(  _pcmLenRaw , __buf1024 ) ;
+            debugFD01( _fGenRawPcm ) ;
         }
         if ( __len == _pcmLenRaw ) {
             __len = _tcpRaw -> _ssWriteNonblock(  _pcmLenRaw , __buf1024 ) ;
         }
     }
     if( 0 && __len > 0 ) {
-        _tcpRaw     -> dumpSelfX();
-        _fGenRawPcm   -> dumpSelfX();
+        _tcpRaw         -> dumpSelfX();
+        _fGenRawPcm     -> dumpSelfX();
         _prExit( " testing " );
     }
 } /* _pipe01_RawPCM */

@@ -252,8 +252,14 @@ bool _TTcp::_ttTryAcceptClient( ) {
 
     if(0)   _prEFn( " after  : %d , _ttListenFD %d , _ttClientFD %d " , _timeNow , _ttListenFD , _ttClientFD );
 
+    // EWOULDBLOCK == EAGAIN == 11
+    // 24 , Too many open files
     if ( _ttClientFD < 0 ) { 
-        if ( errno != EAGAIN ) { // EWOULDBLOCK == EAGAIN == 11
+        if ( errno == 24 ) { 
+            _prErrno() ; 
+            _prExit( " 24 , Too many open files " ) ;
+        }
+        if ( errno != EAGAIN ) { 
             _prErrno() ; 
         }
         return false ;

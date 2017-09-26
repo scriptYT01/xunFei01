@@ -32,11 +32,16 @@ int _superStreamBase::_ssReadNonblock( int ___len , char * ___buf ) {
     int __rLen = -3333 ;
     int *__dataFD = _getDataFD() ;
 
+    debugFD01( this ) ;
     _ssTryReopneIfNeeded( ) ;
+    debugFD01( this ) ;
 
+    debugFD01( this ) ;
     if ( S_fd_canRead( __dataFD , &_ssCntR ) ) {
+        debugFD01( this ) ;
         if ( 0 ) _prEFn( " can Read at once " );
         __rLen = _ssReadBlock( ___len , ___buf ) ;
+        debugFD01( this ) ;
     } else {
         if ( 0 ) _prEFn( " can NOT Read at once : %d : %s , %s " , *__dataFD , _ssPath , _ssComment );
         if ( 0 && _enSstTcpListen1 == _ssType ) { _tTcp . dumpSelfX(); }
@@ -75,11 +80,15 @@ int _superStreamBase::_ssReadBlock( int ___len , char * ___buf ) {
     _ssInfoW . _tryCnt ++ ;
     _ssInfoW . _tryLen += ___len ;
 
+    debugFD01( this ) ;
     _ssTryReopneIfNeeded( ) ;
+    debugFD01( this ) ;
 
     if ( S_fd_valid1_invalid0_close( __dataFD ) ) {
         int __Len ;
+        debugFD01( this ) ;
         __Len = _ssReadReal( ___len , ___buf ) ;  // _ssReadBlock
+        debugFD01( this ) ;
         if ( __Len <= 0 ) { // less than 0
             _ssInfoW . _skipCnt ++ ;
             _ssInfoW . _skipLen += ___len ;
