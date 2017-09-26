@@ -28,11 +28,16 @@ then
     echo ;   killall tts_sample11.x1000.bin 
 
     echo ;   
-    cat /tmp/t.in.pcmRaw.txt | ./aiui_sample32.x1000.bin - - 
-    nc110.x1000.bin 127.0.0.1 47811 | ./aiui_sample32.x1000.bin - - 
-    cat /tmp/t.in.pcmRaw.txt | ./aiui_sample32.x1000.bin - - |(cd /ch/xf10 ./tts_sample11.x1000.bin -) |aplay -f S16_LE  -r 16000 
-    nc110.x1000.bin 127.0.0.1 47811 | ./aiui_sample32.x1000.bin - - |(cd /ch/xf10 ./tts_sample11.x1000.bin -) |aplay -f S16_LE  -r 16000 
-    |./tts_sample11.x1000.bin - |aplay -f S16_LE  -r 16000 
+    #cat /tmp/t.in.pcmRaw.txt | ./aiui_sample32.x1000.bin - - 
+    #nc110.x1000.bin 127.0.0.1 47811 | ./aiui_sample32.x1000.bin - - 
+    #cat /tmp/t.in.pcmRaw.txt | ./aiui_sample32.x1000.bin - - |(cd /ch/xf10 ./tts_sample11.x1000.bin -) |aplay -f S16_LE  -r 16000 
+    #nc110.x1000.bin 127.0.0.1 47811 | ./aiui_sample32.x1000.bin - - |(cd /ch/xf10 ./tts_sample11.x1000.bin -) |aplay -f S16_LE  -r 16000 
+    #|./tts_sample11.x1000.bin - |aplay -f S16_LE  -r 16000 
+
+    # nc110.x1000.bin 127.0.0.1 47811 | ./aiui_sample32.x1000.bin - - |nc110.x1000.bin 127.0.0.1 33331
+    # nc110.x1000.bin  -l -p 33331  -s 127.0.0.1 |/ch/xf10/tts_sample11.x1000.bin - |aaa91_aplay__S16_LE_16000_pcm_or_wav
+
+    nc110.x1000.bin 127.0.0.1 47811 | ./aiui_sample32.x1000.bin - - |/ch/xf10/tts_sample11.x1000.bin - | aplay -f S16_LE  -r 16000
 
     #echo    "killall arecord "
     #echo ;   killall arecord 
