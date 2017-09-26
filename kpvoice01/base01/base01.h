@@ -51,6 +51,8 @@
 #define _prExit( fmt , ... ) { _prSFn( fmt "\n exit..." , ## __VA_ARGS__ ) ; exit( 32 ) ; }
 #define _zExit( mm , fmt , ... ) if ( 0 == mm ) _prExit( fmt , ## __VA_ARGS__ ) ;
 #define _nExit( mm , fmt , ... ) if ( 0 != mm ) _prExit( fmt , ## __VA_ARGS__ ) ;
+#define _zExitD( mm )  _zExit( mm , " " _strX( mm ) " -> %d , exit " , mm )
+#define _nExitD( mm )  _nExit( mm , " " _strX( mm ) " -> %d , exit " , mm )
 
 #define X_paraAtoi( must , idx , iii ) _paraAtoi( must , ___argc , ___argv , idx , _strX( iii ) , & iii )
 #define X_paraAtoS( must , idx , sss ) _paraAtoS( must , ___argc , ___argv , idx , _strX( sss ) , &(sss) )

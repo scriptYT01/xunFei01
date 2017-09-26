@@ -259,9 +259,11 @@ void AIUITester::_waveCMDauto01()
         _prExit( " debuging SS " );
     } 
 
-    _dpS1( " supply with argv[1] , then use it as the input as wav file name and deal with it. " ) ;
-    _prEFn( " supply with argv[1] , then use it as the input as wav file name and deal with it. " ) ;
+    _dpS1(  " supply with argv[1] , %s , then use it as the input as wav file name and deal with it. " , _argv[1] ) ;
+    _prEFn( " supply with argv[1] , %s , then use it as the input as wav file name and deal with it. " , _argv[1] ) ;
 
+    _zExitD( _outSC     . _vecSize() ) ;
+    _zExitD( _inSC      . _vecSize() ) ;
 
     if ( _argc != 2 && _argc != 3 ) {
 	    _dpS1( "\n useage : " " %d : %s <wave_input.wav>\n\n\n"  , _argc , _argv[0] ) ;
@@ -832,7 +834,7 @@ void AIUITester::testAiui()
 
     usage() ;
 
-	cerr << " input argc: " << _argc << endl ;
+	_prEFn( " input argc: %d " , _argc );
 
     __ss = ">:/tmp/log.01." + _progNameS + ".txt"    ;
     _zExit( _dbgS1 . _addPath2( __ss . c_str()      , " debug-text-01 " ) 
@@ -857,6 +859,7 @@ void AIUITester::testAiui()
             _zExit( _outSC . _addPath2( _argv[2] , " output-text-to-tts_1 " ) 
                     , "output stream error : <%s> <%s> " , _argv[1] , _argv[2] ) ;
 
+            _nExit( 0 , " _outSC size : %d " , _outSC . _vecSize() ) ;
             _nExit( 0 , " debuging output-text-to-tts_2 " ) 
 
             _waveCMDauto01();
