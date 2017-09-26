@@ -1,5 +1,6 @@
 #include "superStream.h"
 
+int _recFD01 = -21 ;
 int * _superStreamBase::_getDataFD( ) {
     switch ( _ssType ) {
         case _enSstFileOut      :   

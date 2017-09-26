@@ -1,6 +1,5 @@
 #include "kp01_99_top.h"
 
-int _recFD01 = -21 ;
 void _pipe01_RawPCM(void) {
     char    __buf1024[_pcmLenRaw] ;
     int     __len ;

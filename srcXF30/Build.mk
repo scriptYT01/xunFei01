@@ -18,23 +18,24 @@ LOCAL_MODULE_TAGS := aiui_sample
 LOCAL_MODULE_PATH:=$(TARGET_FS_BUILD)/$(TARGET_TESTSUIT_DIR)/network
 LOCAL_MODULE_PATH:=$(TARGET_FS_BUILD)/ch/xf30
 LOCAL_SRC_FILES := \
-	patchXF/dbmemDebugShow.c \
-	patchXF/ssuperStream01/superStreamOpenOrReopen.cpp \
-	patchXF/ssuperStream01/superStreamTop.cpp \
-	patchXF/ssuperStream01/streamControllerTop.cpp \
-    patchXF/ssuperStream01/streamControllerTop.cpp            \
-    patchXF/ssuperStream01/superStreamBuf.cpp                 \
-    patchXF/ssuperStream01/superStreamCheck.cpp               \
-    patchXF/ssuperStream01/superStreamChilds.cpp              \
-    patchXF/ssuperStream01/superStreamConf.cpp                \
-    patchXF/ssuperStream01/superStreamDump.cpp                \
-    patchXF/ssuperStream01/superStreamInit.cpp                \
-    patchXF/ssuperStream01/superStreamOpenOrReopen.cpp        \
-    patchXF/ssuperStream01/superStreamRW.cpp                  \
-    patchXF/ssuperStream01/superStreamStatus.cpp              \
-    patchXF/ssuperStream01/superStreamTop.cpp                 \
-	patchXF/base01/base01_01.c \
-	samples/aiui_sample/src/cJSON.c \
+	patchXF/dbmemDebugShow.c 								\
+	patchXF/ssuperStream01/superStreamTCP.cpp 				\
+	patchXF/ssuperStream01/superStreamOpenOrReopen.cpp 		\
+	patchXF/ssuperStream01/superStreamTop.cpp 				\
+	patchXF/ssuperStream01/streamControllerTop.cpp 			\
+    patchXF/ssuperStream01/streamControllerTop.cpp          \
+    patchXF/ssuperStream01/superStreamBuf.cpp               \
+    patchXF/ssuperStream01/superStreamCheck.cpp             \
+    patchXF/ssuperStream01/superStreamChilds.cpp            \
+    patchXF/ssuperStream01/superStreamConf.cpp              \
+    patchXF/ssuperStream01/superStreamDump.cpp              \
+    patchXF/ssuperStream01/superStreamInit.cpp              \
+    patchXF/ssuperStream01/superStreamOpenOrReopen.cpp      \
+    patchXF/ssuperStream01/superStreamRW.cpp                \
+    patchXF/ssuperStream01/superStreamStatus.cpp            \
+    patchXF/ssuperStream01/superStreamTop.cpp               \
+	patchXF/base01/base01_01.c 								\
+	samples/aiui_sample/src/cJSON.c 						\
 	\
 	samples/aiui_sample/src/jsoncpp/json_reader.cpp \
 	samples/aiui_sample/src/jsoncpp/json_value.cpp \
