@@ -259,7 +259,7 @@ void AIUITester::_waveCMDauto01()
 
 
     if ( _argc != 2 && _argc != 3 ) {
-	    _dpS1( "\n useage : " " %s %d " " <wave_input.wav>\n\n\n"  , _argv[0] , _argc ) ;
+	    _dpS1( "\n useage : " " %d : %s <wave_input.wav>\n\n\n"  , _argc , _argv[0] ) ;
         exit(33);
     }
 

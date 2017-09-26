@@ -98,6 +98,7 @@ private:
 public:
     _streamControllerIN     _inSC     ;
     _streamControllerOUT    _outSC    ;
+
     _streamControllerOUT    _dbgS1    ;
     _streamControllerOUT    _dbgS2    ;
 public:

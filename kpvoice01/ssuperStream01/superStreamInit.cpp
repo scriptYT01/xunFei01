@@ -23,14 +23,18 @@ _superStreamBase::_genSS( bool _exitIfErr , _enSsDir ___ssDir , const char * ___
         }
     } else if ( 0 == _strcmpXX( ___path , "stdin" )) {
     _dbSS1 ;
-        __ssTop = new _ssCerr( ___ssDir , ___path , ___comment ) ;
-    } else if ( 0 == _strcmpXX( ___path , "stdout" ) || 0 == _strcmpXX( ___path , "stderr" )) {
+        __ssTop = new _ssCin( ___ssDir , ___path , ___comment ) ;
+    } else if ( 0 == _strcmpXX( ___path , "stdout" ) ) {
+    _dbSS1 ;
+        __ssTop = new _ssCout( ___ssDir , ___path , ___comment ) ;
+    } else if ( 0 == _strcmpXX( ___path , "stderr" ) ) {
     _dbSS1 ;
         __ssTop = new _ssCerr( ___ssDir , ___path , ___comment ) ;
-    } else if ( 0 == _strcmpX1( "tcpto:" , ___path ) ) {
+    /* _TTcp::_ttAnalyzeT1 */
+    } else if ( 0 == _strcmpX1( "tcpT1:" , ___path ) ) {
     _dbSS1 ;
         __ssTop = new _ssTcpConnectTo( ___ssDir , ___path , ___comment ) ;
-    } else if ( 0 == _strcmpX1( "tcpl1:" , ___path ) ) {
+    } else if ( 0 == _strcmpX1( "tcpL1:" , ___path ) ) {
     _dbSS1 ;
         __ssTop = new _ssListen1( ___ssDir , ___path , ___comment ) ;
     } else if ( 0 == _strcmpX1( ">:" , ___path ) || 0 == _strcmpX1( ">>:" , ___path ) ) {
