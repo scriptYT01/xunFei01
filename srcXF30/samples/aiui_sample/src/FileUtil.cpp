@@ -5,6 +5,8 @@
  *      Author: hj
  */
 
+#include "base01.h"
+
 #include "FileUtil.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -22,6 +24,7 @@
 #include <time.h>
 #include <sys/time.h>
 #endif
+
 
 using namespace std;
 
@@ -323,7 +326,8 @@ bool FileUtil::DataFileHelper::openReadFile(const string& filePath, bool inCurre
 
         if (!exist(fullPath))
         {
-            cerr << endl << " filename <" << fullPath << "> don't exist. " << endl ;
+            //cerr << endl << " filename <" << fullPath << "> don't exist. " << endl ;
+	        _prExit( "\n fileName don't exist %s \n\n\n" , fullPath.c_str() ) ;
             exit(33);
             return false;
         }

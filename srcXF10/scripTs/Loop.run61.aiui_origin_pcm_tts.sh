@@ -37,7 +37,11 @@ do
     [ "${pp1}" = "11" ] || continue
 
 
-    nc110.x1000.bin 127.0.0.1 47811 | ./aiui_sample32.x1000.bin - - |/ch/xf10/tts_sample11.x1000.bin - | aplay -f S16_LE  -r 16000
+    #nc110.x1000.bin 127.0.0.1 47811 | ./aiui_sample32.x1000.bin - - |/ch/xf10/tts_sample11.x1000.bin - | aplay -f S16_LE  -r 16000
+
+    ./aiui_sample32.x1000.bin tcpT1:127.0.0.1:47811 - 
+    #./aiui_sample32.x1000.bin tcpT1:127.0.0.1:47811 - |/ch/xf10/tts_sample11.x1000.bin - | aplay -f S16_LE  -r 16000
+    
 
     
 

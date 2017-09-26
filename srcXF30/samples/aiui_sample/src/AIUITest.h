@@ -96,8 +96,6 @@ private:
     //string _fname01 = TEST_AUDIO_PATH ;
     string _fname01 ;
 public:
-    _streamControllerIN     _inSC     ;
-    _streamControllerOUT    _outSC    ;
 
     _streamControllerOUT    _dbgS1    ;
     _streamControllerOUT    _dbgS2    ;
@@ -134,6 +132,7 @@ public:
 	void testAiui();
 }; // class AIUITester
 
-
+extern    _streamControllerIN     _inSC     ;
+extern    _streamControllerOUT    _outSC    ;
 
 #endif /* AIUIAGENTTEST_H_ */

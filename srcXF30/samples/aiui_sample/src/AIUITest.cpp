@@ -45,6 +45,11 @@ char _numstr[21]; // enough to hold all numbers up to 64-bits
     saved += msg ; \
     saved += ":" ; \
     saved += SSTR( id ) ;
+
+_streamControllerIN     _inSC     ;
+_streamControllerOUT    _outSC    ;
+
+
 string AIUITester::_cmdToStr( int ___eventID ) 
 {
     string __str = "" ;
@@ -385,6 +390,11 @@ WriteAudioThread::WriteAudioThread(IAIUIAgent* agent, const string& audioPath, b
 mAgent(agent), mAudioPath(audioPath), mRepeat(repeat), mRun(true), mFileHelper(NULL)
 ,thread_created(false)
 {
+    if ( _inSC . _vecSize() ) {
+    } else {
+    }
+    _prExit( " size %d " , _inSC . _vecSize() ) ;
+
 	mFileHelper = new FileUtil::DataFileHelper("");
 	mFileHelper->openReadFile(mAudioPath, false);
 }
@@ -554,7 +564,7 @@ void TestListener::onEvent(IAIUIEvent& event)
                                         , __answerCNT_ask ,  __answerCNT_ask + __answerCNT_unEnv 
                                         , __answerCNT_all , __answer2.c_str() ) ;
 
-                                _aiui -> _dpOUT( "%s\n" , __answer1.c_str() ) ;
+                                _dpOUT( "%s\n" , __answer1.c_str() ) ;
                                 _initT02 = time(0) ; _initT03 = _initT02 - _initT01 ; _initT09 ++ ;
                                 cerr << __answer1 << " : " << TSTR << " : " << _initT03 << " : " << SSTR( _initT09 ) << endl ; 
 
