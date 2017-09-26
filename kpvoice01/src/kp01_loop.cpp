@@ -93,7 +93,7 @@ void _fill_data02(void) {
 #define _debugCNT_MAX  33
 
 int _debugCNT01 = 0 ;
-#define _debugCNT01_MAX  (_debugCNT_MAX * 15)
+#define _debugCNT01_MAX  (_debugCNT_MAX * 50)
 void _debugDump01(void) {
     _debugCNT01 ++ ;
     if ( _debugCNT01 % _debugCNT01_MAX == ( _debugCNT01_MAX - 1 ) ) {
@@ -103,7 +103,7 @@ void _debugDump01(void) {
 } /* _debugDump01 */
 
 int _debugCNT02 = 1 ;
-#define _debugCNT02_MAX  (_debugCNT_MAX * 3)
+#define _debugCNT02_MAX  (_debugCNT_MAX * 5)
 void _debugDump02(void) {
     _debugCNT02 ++ ;
     if ( _debugCNT02 % _debugCNT02_MAX == (_debugCNT02_MAX - 1) ) {
