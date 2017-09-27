@@ -59,6 +59,9 @@
 #define _memZS( om )    memset( & om    , 0 , sizeof( om    ) )
 #define _memZP( om )    memset( om      , 0 , sizeof( (*om) ) )
 
+#define dumpSelfX() _dumpSelf( __FILE__, __LINE__ , __func__ )
+#define dumpSelfY() _dumpSelf( NULL , 0 , NULL )
+
 #ifdef __cplusplus
     extern "C" {
 #endif

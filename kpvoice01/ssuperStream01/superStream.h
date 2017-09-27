@@ -143,8 +143,6 @@ class _superStreamBase
 }; /* class _superStreamBase */
 
 #define ssOK( aa )  (( aa && aa -> _isOK() )?true:false)
-#define dumpSelfX() _dumpSelf( __FILE__, __LINE__ , __func__ )
-#define dumpSelfY() _dumpSelf( NULL , 0 , NULL )
 
 class _ssCin : public _superStreamBase
 {

@@ -48,4 +48,7 @@ class _streamControllerOUT : public _streamController
 #define _dpOUT( fmt , ... )  _outSC . _scPrintf( fmt , ## __VA_ARGS__ )
 #define _dpOUTn( fmt , ... ) _dpOUT( fmt "\n" , ## __VA_ARGS__ )
 
+#define dumpCcExit1(ena,cc)    if(ena) {cc .  dumpSelfX(); _prExit( "debuging." );}
+#define dumpCcExit2(ena,cc)    if(ena) {cc -> dumpSelfX(); _prExit( "debuging." );}
+
 #endif

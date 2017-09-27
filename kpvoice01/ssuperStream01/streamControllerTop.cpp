@@ -1,5 +1,6 @@
 #include "streamController.h"
 
+//void _superStreamBase::_dumpSelf( const char * ___file , int ___lineno , const char * ___func ) {
 void _streamController::_scDumpSS() 
 {
     _superStreamBase *  __scVec ;

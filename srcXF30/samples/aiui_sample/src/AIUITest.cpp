@@ -263,7 +263,17 @@ void AIUITester::_waveCMDauto01()
     _prEFn( " supply with argv[1] , %s , then use it as the input as wav file name and deal with it. " , _argv[1] ) ;
 
     _zExitD( _outSC     . _vecSize() ) ;
+    _nExitD( _outSC     . _vecSize() - 1 ) ;
+
+    if ( _argc > 1 ) {
+        _zExit( _inSC . _addPath2( _argv[1] , " output-text-to-tts_1 " ) 
+                , "input stream error : <%s> <%s> " , _argv[1] , _argv[2] ) ;
+    } else {
+        _zExit( _inSC . _addPath2( "-" , " output-text-to-tts_1 " ) 
+                , "input stream error : <%s> <%s> " , _argv[1] , _argv[2] ) ;
+    }
     _zExitD( _inSC      . _vecSize() ) ;
+    _nExitD( _inSC      . _vecSize() - 1 ) ;
 
     if ( _argc != 2 && _argc != 3 ) {
 	    _dpS1( "\n useage : " " %d : %s <wave_input.wav>\n\n\n"  , _argc , _argv[0] ) ;
@@ -392,13 +402,16 @@ WriteAudioThread::WriteAudioThread(IAIUIAgent* agent, const string& audioPath, b
 mAgent(agent), mAudioPath(audioPath), mRepeat(repeat), mRun(true), mFileHelper(NULL)
 ,thread_created(false)
 {
-    if ( _inSC . _vecSize() ) {
-    } else {
-    }
-    _prExit( " size %d " , _inSC . _vecSize() ) ;
+    if ( 1 ) {
+        _zExitD( _inSC      . _vecSize() ) ;
+        _nExitD( _inSC      . _vecSize() - 1 ) ;
 
-	mFileHelper = new FileUtil::DataFileHelper("");
-	mFileHelper->openReadFile(mAudioPath, false);
+        //dumpCcExit1(1, _inSC );
+        //void _scDumpSS() ;
+    } else {
+    	mFileHelper = new FileUtil::DataFileHelper("");
+	    mFileHelper->openReadFile(mAudioPath, false);
+    }
 }
 
 WriteAudioThread::~WriteAudioThread()
@@ -859,8 +872,8 @@ void AIUITester::testAiui()
             _zExit( _outSC . _addPath2( _argv[2] , " output-text-to-tts_1 " ) 
                     , "output stream error : <%s> <%s> " , _argv[1] , _argv[2] ) ;
 
-            _nExit( 0 , " _outSC size : %d " , _outSC . _vecSize() ) ;
-            _nExit( 0 , " debuging output-text-to-tts_2 " ) 
+            _zExitD( _outSC . _vecSize() ) ;
+            _nExitD( _outSC . _vecSize() - 1 ) ;
 
             _waveCMDauto01();
             break ;
