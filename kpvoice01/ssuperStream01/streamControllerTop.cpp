@@ -1,7 +1,7 @@
 #include "streamController.h"
 
 //void _superStreamBase::_dumpSelf( const char * ___file , int ___lineno , const char * ___func ) {
-void _streamController::_scDumpSS() 
+void _streamController::_dumpSelf( const char * ___file , int ___lineno , const char * ___func )
 {
     _superStreamBase *  __scVec ;
     int                 __i01 ;
@@ -13,7 +13,7 @@ void _streamController::_scDumpSS()
         __scVec = _scVec[__i01] ;
         __scVec -> dumpSelfX( ) ;
     }
-} /* _streamController::_scDumpSS */
+} /* _streamController::_dumpSelf */
 
 void _streamController::_scSetErrAction( _enErrAction ___eAction ) {
     _superStreamBase *  __scVec ;
@@ -62,16 +62,15 @@ bool _streamController::_addPath2( const char * ___path , const char * ___commen
 void _streamController::_scSelfTest01( ) {
 
     /* _scSelfTest01 */
-    _scDumpSS() ; /* _dumpSelf */
+    dumpSelfX() ; /* _dumpSelf */
     if ( 1 ) write( 6 , "yyyy\n" , 5 ) ; /* force use the fd 6 */
     _scPrintf( " aaaa" ) ;
 
-    _scDumpSS() ; /* _dumpSelf */
+    dumpSelfX() ; /* _dumpSelf */
     if ( 1 ) write( 6 , "zzzz\n" , 5 ) ; /* force use the fd 6 */
     _scPrintf( " bbbb" ) ; /* _scPrintf _ssWriteNonblock */
 
-    _scDumpSS() ; /* _dumpSelf */
-    _scDumpSS() ; /* _dumpSelf */
+    dumpSelfX() ; /* _dumpSelf */
 
 } /* _streamController::_scSelfTest01 */
 

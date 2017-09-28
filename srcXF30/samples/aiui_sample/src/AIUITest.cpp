@@ -406,8 +406,7 @@ mAgent(agent), mAudioPath(audioPath), mRepeat(repeat), mRun(true), mFileHelper(N
         _zExitD( _inSC      . _vecSize() ) ;
         _nExitD( _inSC      . _vecSize() - 1 ) ;
 
-        //dumpCcExit1(1, _inSC );
-        //void _scDumpSS() ;
+        dumpCcExit1(1, _inSC );
     } else {
     	mFileHelper = new FileUtil::DataFileHelper("");
 	    mFileHelper->openReadFile(mAudioPath, false);

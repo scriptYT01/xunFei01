@@ -20,7 +20,7 @@ class _streamController
     public :
         void _scSelfTest01( ) ;
         void _scPrintf(         const char *___fmt , ... ) ;
-        void _scDumpSS() ;
+        void _dumpSelf( const char * ___file , int ___lineno , const char * ___func ) ;
         void _scSetErrAction( _enErrAction ___eAction ) ;
 }; /* class _streamController */
 
