@@ -67,7 +67,7 @@ int _streamController::_scReadNonblock(         int ___len , char * ___buf ) {
         for ( __i01 = 0 ; __i01 < __vecSize ; __i01 ++ )
         {
             __scVec = _scVec[__i01] ;
-            __rt = __scVec -> _ssReadNonblock( ___len , __buf1024 ) ;
+            __rt = __scVec -> _ssReadNonblock( ___len , ___buf ) ;
             if ( __rt > 0 ) break ;
         }
     }
