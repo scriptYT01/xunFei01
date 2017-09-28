@@ -352,31 +352,44 @@ bool WriteAudioThread::threadLoop()
 
     __aLen = -1 ;
     if( _inSC      . _vecSize() ) {
+        __aLen = _inSC . 
+            _scReadNonblock( 1279 , __audioBUF ) ;
     } else {
         __aLen = mFileHelper->read(__audioBUF, 1279);
-        if (__aLen > 0)
-        {
-            Buffer* buffer = Buffer::alloc(__aLen);
-            memcpy(buffer->data(), __audioBUF, __aLen);
-
-            IAIUIMessage * writeMsg = IAIUIMessage::create(AIUIConstant::CMD_WRITE,
-                    0, 0,  "data_type=__audioBUF,sample_rate=16000", buffer);	
-
-            if (NULL != mAgent)
-            {
-                mAgent->sendMessage(writeMsg);
-            }		
-            writeMsg->destroy();
-            usleep(10 * 1000);
-        } 
     }
+    if ( 0 ) _prEFn( " + %d " , __aLen ) ;
+
+    if (__aLen > 0)
+    {
+        Buffer* buffer = Buffer::alloc(__aLen);
+        memcpy(buffer->data(), __audioBUF, __aLen);
+
+        IAIUIMessage * writeMsg = IAIUIMessage::create(AIUIConstant::CMD_WRITE,
+                0, 0,  "data_type=__audioBUF,sample_rate=16000", buffer);	
+
+        if (NULL != mAgent)
+        {
+            mAgent->sendMessage(writeMsg);
+        }		
+        writeMsg->destroy();
+        usleep(10 * 1000);
+    } 
     if ( __aLen <= 0 ) {
         if (mRepeat)
         {
             if( _inSC      . _vecSize() <= 0 ) {
                 mFileHelper->rewindReadFile();
+                if(0) _prEFn( " - %d " , __aLen) ;
+            } else {
+#ifndef _pcmLenRaw 
+#define _pcmLenRaw 960
+#endif
+                usleep( 1000*(_pcmLenRaw)/32 ) ;
+                if(0) _prEFn( " . %d " , __aLen) ;
+
             }
         } else {
+            if(0) _prEFn( " = %d " , __aLen ) ;
             IAIUIMessage * stopWrite = IAIUIMessage::create(AIUIConstant::CMD_STOP_WRITE,
                     0, 0, "data_type=__audioBUF,sample_rate=16000");
 
@@ -389,7 +402,9 @@ bool WriteAudioThread::threadLoop()
             if( _inSC      . _vecSize() <= 0 ) {
                 mFileHelper->closeReadFile();
             }
-            mRun = false;
+            if( _inSC      . _vecSize() <= 0 ) {
+                mRun = false;
+            }
         }
     }
 

@@ -18,10 +18,11 @@ class _streamController
         bool _addPath2( const char * ___path , const char * ___comment ) ;
         int _vecSize() { return _scVec . size() ; }
     public :
-        void _scSelfTest01( ) ;
-        void _scPrintf(         const char *___fmt , ... ) ;
-        void _dumpSelf( const char * ___file , int ___lineno , const char * ___func ) ;
-        void _scSetErrAction( _enErrAction ___eAction ) ;
+        void    _scSelfTest01( ) ;
+        void    _scPrintf(         const char *___fmt , ... ) ;
+        int     _scReadNonblock(         int ___len , char * ___buf ) ;
+        void    _dumpSelf( const char * ___file , int ___lineno , const char * ___func ) ;
+        void    _scSetErrAction( _enErrAction ___eAction ) ;
 }; /* class _streamController */
 
 class _streamControllerIN : public _streamController 
