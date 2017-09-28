@@ -1,0 +1,36 @@
+
+ifneq ($(VV13838311),$(strip $(VV)))
+$(info 193981 : loading Makefile.module.TEster $(makePATHte1) . begin)
+endif
+
+
+
+
+te11:=tester01/src/te01_main.cpp
+
+
+tete XFt XFteUpdate : XFgenDate
+	@echo
+	$(rsync1)    $(XFsrc5)/  	$(XFdst5)/
+	@#
+	$(XFu_only_cmd1)
+	@echo ' dst -->     $(XFdst5)'
+	@echo
+
+
+TElist:= 
+TElist+= te11 
+
+$(call VIMobj,$(TElist))
+
+help_OBJs+= help_obj__sTE
+help_obj__sTE:
+	@echo
+	@echo '         [$(makePATHte1)]'
+	@echo ' XFt      XFteUpdate -> '
+	$(call VIMhelp,$(TElist))
+
+ifneq ($(VV13838311),$(strip $(VV)))
+$(info 193981 : loading Makefile.module.TEster $(makePATHte1) . end)
+endif
+
