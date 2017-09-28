@@ -6,7 +6,7 @@ endif
 
 
 
-te11:=tester01/src/te01_main.cpp
+te11:=Tester01/src/te01_main.cpp
 
 
 tete XFt XFteUpdate : XFgenDate
