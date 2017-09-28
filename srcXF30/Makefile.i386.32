@@ -1,7 +1,12 @@
 #common makefile header
 
-DIR_INC = ./
-DIR_INC = ./include
+DIR_INC := ./ 
+DIR_INC += ./include 
+DIR_INC += patchXF/
+DIR_INC += patchXF/base01
+DIR_INC += patchXF/ssuperStream01
+DIR_INCx := $(foreach aa1,$(DIR_INC),-I$(aa1))
+
 
 DIR_BIN = ./
 DIR_BIN = bin/
@@ -53,7 +58,7 @@ endef
 export  RUN01
 
 CROSS_COMPILE = 
-CFLAGS = -g -Wall -I$(DIR_INC) -I.
+CFLAGS = -g -Wall $(DIR_INCx) 
 
 ifdef LINUX64
 LDFLAGS := -L$(DIR_LIB)/x64
@@ -62,15 +67,17 @@ LDFLAGS := -L$(DIR_LIB)/x86
 endif
 LDFLAGS := -L./
 
-LDFLAGS01:=		   \
-	/usr/lib/i386-linux-gnu/libpthread.a \
+StaticSTDC:=$(firstword $(wildcard \
 	/usr/lib/gcc/i686-linux-gnu/5/libstdc++.a \
+	/usr/lib/gcc/i686-redhat-linux/4.4.4/libstdc++.a \
+	))
+LDFLAGS01:=		   $(StaticSTDC)   \
+	/usr/lib/i386-linux-gnu/libpthread.a \
 	/usr/lib/i386-linux-gnu/libdl.a \
 	/usr/lib/i386-linux-gnu/libc.a 
 LDFLAGS02:=		   \
 	-lstdc++ -lpthread -ldl -lc
-LDFLAGS03:=		   \
-	/usr/lib/gcc/i686-linux-gnu/5/libstdc++.a \
+LDFLAGS03:=		   $(StaticSTDC)   \
 	-lpthread -ldl -lc
 
 #LDFLAGS += -lmsc -lrt -ldl -lpthread
@@ -79,12 +86,16 @@ LDFLAGS03:=		   \
 #LDFLAGS += -lmsc -Werror -lstdc++ -laiui 
 LDFLAGS += -lmsc -laiui -Werror    $(LDFLAGS03)
 
+OBJECTSdir := 							\
+	./ 									\
+    patchXF/                 			\
+    patchXF/base01                 		\
+    patchXF/ssuperStream01              \
+	aiui_sample/src/ 					\
+	aiui_sample/src/jsoncpp/ 
 
 OBJECTSsrc := \
-	$(wildcard *.c) \
-	$(wildcard aiui_sample/src/*.c) \
-	$(wildcard aiui_sample/src/*.cpp) \
-	$(wildcard aiui_sample/src/jsoncpp/*.cpp) 
+	$(foreach aa1,$(OBJECTSdir), $(wildcard $(aa1)/*.c) $(wildcard $(aa1)/*.cpp) )
 OBJECTS := $(patsubst %.c,%.o,$(patsubst %.cpp,%.o,$(OBJECTSsrc)))
 
 GBpath:=$(realpath ../../GccBin)
