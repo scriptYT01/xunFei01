@@ -347,41 +347,51 @@ void AIUITester::_waveCMDauto01()
 
 bool WriteAudioThread::threadLoop()
 {
-	char audio[1279];
-	int len = mFileHelper->read(audio, 1279);
+	char __audioBUF[1279];
+	int __aLen ;
 
-	if (len > 0)
-	{
-		Buffer* buffer = Buffer::alloc(len);
-		memcpy(buffer->data(), audio, len);
+    __aLen = -1 ;
+    if( _inSC      . _vecSize() ) {
+    } else {
+        __aLen = mFileHelper->read(__audioBUF, 1279);
+        if (__aLen > 0)
+        {
+            Buffer* buffer = Buffer::alloc(__aLen);
+            memcpy(buffer->data(), __audioBUF, __aLen);
 
-		IAIUIMessage * writeMsg = IAIUIMessage::create(AIUIConstant::CMD_WRITE,
-			0, 0,  "data_type=audio,sample_rate=16000", buffer);	
+            IAIUIMessage * writeMsg = IAIUIMessage::create(AIUIConstant::CMD_WRITE,
+                    0, 0,  "data_type=__audioBUF,sample_rate=16000", buffer);	
 
-		if (NULL != mAgent)
-		{
-			mAgent->sendMessage(writeMsg);
-		}		
-		writeMsg->destroy();
-		usleep(10 * 1000);
-	} else {
-		if (mRepeat)
-		{
-			mFileHelper->rewindReadFile();
-		} else {
-			IAIUIMessage * stopWrite = IAIUIMessage::create(AIUIConstant::CMD_STOP_WRITE,
-				0, 0, "data_type=audio,sample_rate=16000");
+            if (NULL != mAgent)
+            {
+                mAgent->sendMessage(writeMsg);
+            }		
+            writeMsg->destroy();
+            usleep(10 * 1000);
+        } 
+    }
+    if ( __aLen <= 0 ) {
+        if (mRepeat)
+        {
+            if( _inSC      . _vecSize() <= 0 ) {
+                mFileHelper->rewindReadFile();
+            }
+        } else {
+            IAIUIMessage * stopWrite = IAIUIMessage::create(AIUIConstant::CMD_STOP_WRITE,
+                    0, 0, "data_type=__audioBUF,sample_rate=16000");
 
-			if (NULL != mAgent)
-			{
-				mAgent->sendMessage(stopWrite);
-			}
-			stopWrite->destroy();
+            if (NULL != mAgent)
+            {
+                mAgent->sendMessage(stopWrite);
+            }
+            stopWrite->destroy();
 
-			mFileHelper->closeReadFile();
-			mRun = false;
-		}
-	}
+            if( _inSC      . _vecSize() <= 0 ) {
+                mFileHelper->closeReadFile();
+            }
+            mRun = false;
+        }
+    }
 
 	return mRun;
 }
@@ -402,12 +412,7 @@ WriteAudioThread::WriteAudioThread(IAIUIAgent* agent, const string& audioPath, b
 mAgent(agent), mAudioPath(audioPath), mRepeat(repeat), mRun(true), mFileHelper(NULL)
 ,thread_created(false)
 {
-    if ( 1 ) {
-        _zExitD( _inSC      . _vecSize() ) ;
-        _nExitD( _inSC      . _vecSize() - 1 ) ;
-
-        dumpCcExit1(1, _inSC );
-        _prExit( " zzzz " ) ;
+    if( _inSC      . _vecSize() ) {
     } else {
     	mFileHelper = new FileUtil::DataFileHelper("");
 	    mFileHelper->openReadFile(mAudioPath, false);
