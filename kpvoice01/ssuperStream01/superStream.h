@@ -226,8 +226,9 @@ extern int _recFD01 ;
 extern _ssFileIn   *   _SSin   ;
 extern _ssFileOut  *   _SSout  ;
 extern _ssFileOut  *   _SSerr  ;
+extern _ssListen1  *   _SSexit ;
 
-void         _paraAnalyzeSS( int ___argc , char ** ___argv ) ;
+void         _paraAnalyzeSS( int ___argc , char ** ___argv , uint16_t ___exitPort ) ;
 
 
 #endif //     __SENDRESULTTOSDOUTORTCP_H

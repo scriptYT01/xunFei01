@@ -4,7 +4,7 @@ void _usage( int ___argc , char ** ___argv ) {
 } /* _usage */
 
 void _paraAnalyze( int ___argc , char ** ___argv ) {
-    _paraAnalyzeSS( ___argc , ___argv ) ;
+    _paraAnalyzeSS( ___argc , ___argv , 60001) ;
     //if ( ___argc > 2 ) { _FrawPcm           =  ___argv[1] ; }
     //_fGenRawPcm    = new _ssFileIn(  _enSsdIn    , _FrawPcm     , " _fGenRawPcm    : rawPCM    generater " );
 } /* _paraAnalyze */
