@@ -74,8 +74,9 @@ extern int          _timeLoop( uint32_t ___delayUS , int (*___loopBackFunc)() ) 
 
 extern int          _argc ;
 extern char **      _argv ;
-void _dumpStatus_when_exiting();
-int _main_loop() ;
+
+void        _dumpStatus_when_exiting();
+int         _main_loop() ;
 
 #ifdef __cplusplus
     }

@@ -5,8 +5,8 @@ DIR_INC1:=include ssuperStream01 base01
 DIR_INC9:=$(foreach aa1,$(DIR_INC1),-I$(aa1))
 DIR_BIN = bin/
 
-TARGET	= kpServer01.i386.bin
-BIN_TARGET = $(DIR_BIN)/$(TARGET)
+TARGET:=TEster01.i386.bin
+BIN_TARGET:=$(DIR_BIN)/$(TARGET)
 
 KDIR1:=/usr/src/kernels/$(shell uname -r) /usr/src/kernels/*
 KDIR2:=$(firstword $(wildcard $(KDIR1)))
@@ -47,7 +47,7 @@ c clean:
 
 t test :
 	@echo;echo;echo;echo;echo;echo;echo;echo;echo
-	bin/kpServer01.i386.bin
+	$(BIN_TARGET)
 
 .PHONY:clean
 

@@ -223,5 +223,12 @@ class _ssFileIn : public _superStreamBase
 extern int _recFD01 ;
 #define debugFD01( aa )    if( (aa -> _ssFD) != _recFD01 ) { _prEFn( " before %d , after %d " , _recFD01 , (aa -> _ssFD) ) ; _recFD01 = (aa -> _ssFD) ; }
 
+extern _ssFileIn   *   _SSin   ;
+extern _ssFileOut  *   _SSout  ;
+extern _ssFileOut  *   _SSerr  ;
+
+void         _paraAnalyzeSS( int ___argc , char ** ___argv ) ;
+
+
 #endif //     __SENDRESULTTOSDOUTORTCP_H
 
