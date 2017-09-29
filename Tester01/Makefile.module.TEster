@@ -4,23 +4,28 @@ $(info 193981 : loading Makefile.module.TEster $(makePATHte1) . begin)
 endif
 
 
+TEsrc5:=$(makePATH1)/Tester01/
+TEdst5:=$(shell readlink -m patchDIR__x1000/tEster01)
 
 
 te11:=$(makePATHte1)
 te12:=Tester01/src/te01_main.cpp
+te13:=/home/dyn/dyn/viomi/v005.ymClient01/srcYMC03/src/ymClient1300106_tty_eventSTM32_yanji__base.c
+te14:=/home/dyn/dyn/viomi/v005.ymClient01/srcYMC03/mid/dyn305__sockTTY.c
+te15:=Tester01/src/te01_loop.cpp
 
 
 tete XFt XFteUpdate : XFgenDate
 	@echo
-	$(rsync1)    $(XFsrc5)/  	$(XFdst5)/
+	$(rsync1)    $(TEsrc5)/  	$(TEdst5)/
 	@#
 	$(XFu_only_cmd1)
-	@echo ' dst -->     $(XFdst5)'
+	@echo ' dst -->     $(TEdst5)'
 	@echo
 
 
 TElist:= 
-TElist+= te11 te12
+TElist+= te11 te12 te13 te14 te15 
 
 $(call VIMobj,$(TElist))
 
