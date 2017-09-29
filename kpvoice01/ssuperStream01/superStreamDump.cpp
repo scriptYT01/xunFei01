@@ -83,3 +83,38 @@ void _TTcp::_dumpSelf( const char * ___file , int ___lineno , const char * ___fu
     _prEFn( "path , host , port , _ttplen       '%s , %s , %s , %d'" , _ttpath , _tthost , _ttport , _ttplen ) ;
 } /* _TTcp::_dumpSelf */
 
+void SS_testRead( _superStreamBase * ___ss , int ___len , int ___hexLen ) {
+    char    __buf4096[1001] ;
+    int     __Len ;
+    int     __i01 ;
+
+    if ( ___ss == NULL || ___len <= 0 ) {
+        _prExit( " why parameter error ?" ) ;
+    }
+
+    if ( ___len > 1000 ) {
+        ___len = 1000 ;
+    }
+
+    if ( ___ss -> _canRead( true ) ) {
+        /* write something... */
+        
+        __Len = ___ss -> _ssReadNonblock( ___len, __buf4096 ) ;
+        if ( __Len > 0 ) {
+            _prEFn( " len %d : <%s>" , __Len , __buf4096 ) ;
+        } else {
+            _prEFn( " len %d " , __Len ) ;
+        }
+
+        if ( ___hexLen > 0 ) {
+            _prEE( " hexDump %d :<" , ___hexLen ) ;
+            __i01 = 0 ;
+            while ( __i01 < ___hexLen && __i01 < __Len ) {
+                _prEX10( __buf4096[__i01] ) ; 
+                __i01 ++ ;
+            }
+            _prEEn( " >" );
+        }
+    }
+} /* SS_testRead */
+

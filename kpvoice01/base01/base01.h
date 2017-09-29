@@ -39,8 +39,14 @@
 #define _prErrno(fmt , ... ) _prEFn( "errorno %d , %s " fmt , errno , strerror( errno ) ,  ## __VA_ARGS__ ) 
 
 //#define _prEF(  fmt , ... ) fprintf( stderr , "=-=:%s %d %s: " fmt , basename((char*)__FILE__), __LINE__, __func__ , ## __VA_ARGS__ )
+#define _prEE(  fmt , ... ) fprintf( stderr , fmt , ## __VA_ARGS__ )
+#define _prEEn(  fmt , ... ) _prEE( fmt "\n" , ## __VA_ARGS__ )
 #define _prEF(  fmt , ... ) fprintf( stderr , "=%s %d: " fmt , basename((char*)__FILE__), __LINE__, ## __VA_ARGS__ )
 #define _prEFn( fmt , ... ) _prEF( fmt "\n" , ## __VA_ARGS__ )
+#define _prEX00( aa ) _prEE( "%02x"     , aa )
+#define _prEX01( aa ) _prEE( "%02x "    , aa )
+#define _prEX10( aa ) _prEE( " %02x"    , aa )
+#define _prEX11( aa ) _prEE( " %02x "   , aa )
 
 #define _prFF(  fmt , pp , aa ) _prOO( "%s -> " fmt , _strX( aa ) , pp -> aa )
 #define _prFFn( fmt , ... ) _prFF( fmt "\n" , ## __VA_ARGS__ )

@@ -229,6 +229,7 @@ extern _ssFileOut  *   _SSerr  ;
 extern _ssListen1  *   _SSexit ;
 
 void         _paraAnalyzeSS( int ___argc , char ** ___argv , uint16_t ___exitPort ) ;
+void        SS_testRead( _superStreamBase * ___ss , int ___len , int ___hexLen ) ;
 
 
 #endif //     __SENDRESULTTOSDOUTORTCP_H

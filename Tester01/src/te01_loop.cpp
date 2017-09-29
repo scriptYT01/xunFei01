@@ -7,12 +7,27 @@ void _dumpStatus_when_exiting(){
 int _main_loop() {
 
 
+    if ( _SSexit -> _canWrite( true ) ) {
+        /* write something... */
+        return -33213 ;
+    }
+
+
 #if 0
-    if ( 1 ) { // when EXIT port is connected, exit.
-        if ( _tcpExit -> _canWrite( true ) ) {
-            return -3 ;
+    char _buf1020[1024] ;
+    int  _len ;
+    if ( _SSin -> _canRead( true ) ) {
+        /* write something... */
+        
+        _len = _SSin -> _ssReadNonblock( 1000, _buf1020 ) ;
+        if ( _len > 0 ) {
+            _prEFn( " len %d : <%s>" , _len , _buf1020 ) ;
+        } else {
+            _prEFn( " len %d " , _len ) ;
         }
     }
+#else 
+    SS_testRead( _SSin , 1000, 5 ) ;
 #endif
 
     return 1 ;
