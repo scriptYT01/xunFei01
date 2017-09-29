@@ -9,3 +9,6 @@ _vim/libevent_example01.c
 _vim/libevent_example02.c
 srcXF10/scripTs/yunMi01.json
 srcXF10/scripTs/yunMi02.json
+
+/home/dyn/dyn/viomi/v005.ymClient01/srcYMC03/src/ymClient1300106_tty_eventSTM32_yanji__base.c
+/home/dyn/dyn/viomi/v005.ymClient01/srcYMC03/mid/dyn305__sockTTY.c

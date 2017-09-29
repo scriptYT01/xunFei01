@@ -23,8 +23,8 @@ kpvoice01/kp01/
 kpvoice01/base01/
 kpvoice01/ssuperStream01/
 
-tester01/src
-tester01/include
-tester01/te01
+Tester01/src
+Tester01/include
+Tester01/te01
 
 
