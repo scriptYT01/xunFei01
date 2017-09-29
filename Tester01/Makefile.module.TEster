@@ -17,8 +17,9 @@ te15:=Tester01/src/te01_loop.cpp
 
 tete XFt XFteUpdate : XFgenDate
 	@echo
-	$(rsync1)    $(XFsrc5)/  	$(XFdst5)/
-	$(rsync1)    $(TEsrc5)/  	$(TEdst5)/
+	$(rsync1)    $(TEsrc5)/  					$(TEdst5)/
+	$(rsync1)    $(XFsrc5)/base01/  			$(TEdst5)/base01/
+	$(rsync1)    $(XFsrc5)/ssuperStream01/  	$(TEdst5)/ssuperStream01/
 	@#
 	$(XFu_only_cmd1)
 	@echo ' dst -->     $(TEdst5)'

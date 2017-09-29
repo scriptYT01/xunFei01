@@ -19,8 +19,8 @@ LOCAL_SRC_FILES :=                                				\
     ssuperStream01/superStreamStatus.cpp              \
 	ssuperStream01/superStreamTCP.cpp				  \
     ssuperStream01/superStreamTop.cpp                 \
-	src/tp01_loop.cpp 							      \
-	src/tp01_main.cpp 							      \
+	src/te01_loop.cpp 							      \
+	src/te01_main.cpp 							      \
 
 
 LOCAL_LDLIBS := -lc -lpthread -lstdc++ -ldl
