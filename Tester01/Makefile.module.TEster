@@ -6,7 +6,8 @@ endif
 
 
 
-te11:=Tester01/src/te01_main.cpp
+te11:=$(makePATHte1)
+te12:=Tester01/src/te01_main.cpp
 
 
 tete XFt XFteUpdate : XFgenDate
@@ -19,7 +20,7 @@ tete XFt XFteUpdate : XFgenDate
 
 
 TElist:= 
-TElist+= te11 
+TElist+= te11 te12
 
 $(call VIMobj,$(TElist))
 
