@@ -14,11 +14,11 @@ gg11:=$(makePATHgg1)
 XFgg XFggUpdate : XFgenDate
 	@echo
 	make XFu XFy XFt
-	$(Show_NC_cmd1)
+	-$(Show_NC_cmd1)
 	@echo
 
 XFy :
-	make YMu -C $(firstword $(wildcard ../ymClient/ ../../ymClient/ ../../../ymClient/))
+	make YMu makePATH1= -C $(firstword $(wildcard ../ymClient/ ../../ymClient/ ../../../ymClient/))
 
 Show_NC_cmd1:= echo kk | nc 127.0.0.1 58111
 Show_NC_cmd1:= nc 127.0.0.1 58111 < /dev/null 
@@ -77,7 +77,7 @@ XFu XFupdate : XFgenDate
 	@echo ' try to start the build prog . '
 	@echo 'if NOT start , chroot to $(shell realpath  nowDIR_x1000__) and "make l" '
 	@echo
-	$(Show_NC_cmd1)
+	-$(Show_NC_cmd1)
 	@echo ' dst -->     $(XFdst1)'
 	@echo
 
