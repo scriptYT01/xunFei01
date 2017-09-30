@@ -86,6 +86,7 @@ all : helpGG
 	@echo
 
 export ggDSTobjs
+
 helpGG:
 	@echo
 	@echo "Usage : make <target>"
@@ -95,6 +96,17 @@ helpGG:
 		echo "target    --->>>     $$$${aa1}" ;         \
 	done
 	@echo
+
+aaa : 
+	@for aa1 in $$(ggDSTobjs) ;			\
+	do                                      \
+		echo "target    --->>>     $$$${aa1}" ;         \
+		make $$$${aa1} ;         \
+	done
+
+$$(ggDSTobjs) :
+	make -C $$(T1)   $$@
+
 
 endef
 export GGhelp1
