@@ -86,23 +86,26 @@ all : helpGG
 	@echo
 
 export ggDSTobjs
+export ggDSTlist
 
 helpGG:
 	@echo
 	@echo "Usage : make <target>"
 	@echo
-	@for aa1 in $$(ggDSTobjs) ;			\
-	do                                      \
-		echo "target    --->>>     $$$${aa1}" ;         \
-	done
+#	@for aa1 in $$(ggDSTobjs) ;			\
+#	do                                      \
+#		echo "target    --->>>     $$$${aa1}" ;         \
+#	done
+	@echo "$$$${ggDSTlist}"
 	@echo
 
 aaa : 
 	@for aa1 in $$(ggDSTobjs) ;			\
 	do                                      \
-		echo "target    --->>>     $$$${aa1}" ;         \
+		echo "target    --->>>     $$$${aa1} ( $$$${!aa1} )" ;         \
 		make $$$${aa1} ;         \
 	done
+	@echo
 
 $$(ggDSTobjs) :
 	make -C $$(T1)   $$@
@@ -115,7 +118,15 @@ GG:
 	ls patchDIR__x1000/*/Build.mk > 1.txt
 	grep ^" *LOCAL_MODULE *:*=" `cat 1.txt` > 2.txt
 	cat 2.txt |sed -e 's;^.*= *;;g' > 3.txt
+	cat 2.txt |sed -e 's;^\(.*\): *LOCAL_MODULE *:* *= *\(.*\)$$;target ==-->>> \2 ( \1 ) ;g' > 4.txt
 	cat localScript/Makefile.x1000.set  > patchDIR__x1000/Makefile
+	echo 						>> patchDIR__x1000/Makefile
+	echo "define  ggDSTlist" 	>> patchDIR__x1000/Makefile
+	echo 						>> patchDIR__x1000/Makefile
+	cat 4.txt 					>> patchDIR__x1000/Makefile
+	echo 						>> patchDIR__x1000/Makefile
+	echo "endef"  				>> patchDIR__x1000/Makefile
+	echo 						>> patchDIR__x1000/Makefile
 	echo "ggDSTobjs := " `cat 3.txt |xargs -n 100 `  >> patchDIR__x1000/Makefile
 	echo "$${GGhelp1}"   >> patchDIR__x1000/Makefile
 
