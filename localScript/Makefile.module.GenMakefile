@@ -81,6 +81,11 @@ XFu XFupdate : XFgenDate
 	@echo ' dst -->     $(XFdst1)'
 	@echo
 
+GG:
+	ls patchDIR__x1000/*/Build.mk > 1.txt
+	grep ^" *LOCAL_MODULE *:*=" `cat 1.txt` > 2.txt
+	cat 2.txt |sed -e 's;^.*= *;;g' > 3.txt
+
 GGlist:= 
 GGlist+= ggg1 
 
