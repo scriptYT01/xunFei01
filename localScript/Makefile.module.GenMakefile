@@ -81,10 +81,31 @@ XFu XFupdate : XFgenDate
 	@echo ' dst -->     $(XFdst1)'
 	@echo
 
+define GGhelp1
+all : helpGG
+	@echo
+
+export ggDSTobjs
+helpGG:
+	@echo
+	@echo "Usage : make <target>"
+	@echo
+	@for aa1 in $$(ggDSTobjs) ;			\
+	do                                      \
+		echo "target    --->>>     $$$${aa1}" ;         \
+	done
+	@echo
+
+endef
+export GGhelp1
+export GGhelp2
 GG:
 	ls patchDIR__x1000/*/Build.mk > 1.txt
 	grep ^" *LOCAL_MODULE *:*=" `cat 1.txt` > 2.txt
 	cat 2.txt |sed -e 's;^.*= *;;g' > 3.txt
+	cat localScript/Makefile.x1000.set  > patchDIR__x1000/Makefile
+	echo "ggDSTobjs := " `cat 3.txt |xargs -n 100 `  >> patchDIR__x1000/Makefile
+	echo "$${GGhelp1}"   >> patchDIR__x1000/Makefile
 
 GGlist:= 
 GGlist+= ggg1 
