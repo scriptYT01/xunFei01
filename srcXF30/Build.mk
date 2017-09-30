@@ -51,8 +51,8 @@ LOCAL_SRC_FILES := \
 #LOCAL_LDLIBS := -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc -lc -lpthread -lstdc++
 #LOCAL_LDLIBS := -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc -laiui -lc -lpthread -lstdc++
 LOCAL_LDLIBS := -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc -laiui -lc -lpthread -lstdc++ -ldl
-LOCAL_CFLAGS := -Iexternal/xfClient10
-LOCAL_CFLAGS += -Iexternal/xfClient10/patchXF -Iexternal/xfClient10/patchXF/base01 -Iexternal/xfClient10/patchXF/ssuperStream01 
+LOCAL_CFLAGS := -Iexternal/patchDIR__x1000/XFclient10
+LOCAL_CFLAGS += -Iexternal/patchDIR__x1000/XFclient10/patchXF -Iexternal/patchDIR__x1000/XFclient10/patchXF/base01 -Iexternal/patchDIR__x1000/XFclient10/patchXF/ssuperStream01 
 include $(BUILD_EXECUTABLE)
 
 #==== dbmem.so ==========================================
