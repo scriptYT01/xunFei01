@@ -1,0 +1,99 @@
+
+ifneq ($(VV13838311),$(strip $(VV)))
+$(info 193981 : loading Makefile.module.GenMakefile $(makePATHgg1) . begin)
+endif
+
+
+GGsrc5:=$(makePATH1)/Tester01/
+GGdst5:=$(shell readlink -m patchDIR__x1000/tEster01)
+
+
+gg11:=$(makePATHgg1)
+
+
+XFgg XFggUpdate : XFgenDate
+	@echo
+	make XFu XFy XFt
+	$(Show_NC_cmd1)
+	@echo
+
+XFy :
+	make YMu -C $(firstword $(wildcard ../ymClient/ ../../ymClient/ ../../../ymClient/))
+
+Show_NC_cmd1:= echo kk | nc 127.0.0.1 58111
+Show_NC_cmd1:= nc 127.0.0.1 58111 < /dev/null 
+Show_NC_cmd2:= $(adbViomi) shell killall ymClient13001_tty.bin 
+
+XFu XFupdate : XFgenDate
+	@echo
+	$(rsync1)    $(XFsrc1)/  							$(XFdst1)/
+	$(rsync1)    $(XFsrc5)/base01/  					$(XFdst1)/patchXF/base01/
+	$(rsync1)    $(XFsrc5)/ssuperStream01/  			$(XFdst1)/patchXF/ssuperStream01/
+	@#
+	$(rsync1)    $(XFsrc2)/  	$(XFdst2)/
+	$(rsync1)    $(XFsrc3)/  	$(XFdst3)/
+	$(rsync1)    $(XFsrc4)/  	$(XFdst4)/
+	$(rsync1)    $(XFsrc5)/  	$(XFdst5)/
+	@#
+	$(rsync1)    $(XFdst1)/patchXF/  	$(XFdst3)/patchXF/
+	@#
+	@# rm -fr $(XFi386DST11)/
+	mkdir -p $(XFi386DST11)
+	$(foreach aa1,$(XFi386SrcList11)\
+		, rsync -a $(aa1) $(XFi386DST11)/`basename $(aa1)`$(EOL))
+	cd $(XFi386DST11)/ && rm -f Makefile && ln -s `basename $(firstword $(XFi386SrcList11))`  	Makefile
+	@#
+	@# rm -fr $(XFi386DST13)/
+	mkdir -p $(XFi386DST13)
+	$(foreach aa1,$(XFi386SrcList13)\
+		, rsync -a $(aa1) $(XFi386DST13)/`basename $(aa1)`$(EOL))
+	cd $(XFi386DST13)/ && rm -f Makefile && ln -s `basename $(firstword $(XFi386SrcList13))`  	Makefile
+	@#
+	@# rm -fr $(XFi386DST18)/
+	mkdir -p $(XFi386DST18)
+	$(foreach aa1,$(XFi386SrcList18)\
+		, rsync -a $(aa1) $(XFi386DST18)/`basename $(aa1)`$(EOL))
+	cd $(XFi386DST18)/ && rm -f Makefile && ln -s `basename $(firstword $(XFi386SrcList18))`  	Makefile
+	@#
+	@# rm -fr $(XFi386DST21)/
+	mkdir -p $(XFi386DST21)
+	$(foreach aa1,$(XFi386SrcList21)\
+		, rsync -a $(aa1) $(XFi386DST21)/`basename $(aa1)`$(EOL))
+	cd $(XFi386DST21)/ && rm -f Makefile && ln -s `basename $(firstword $(XFi386SrcList21))`  	Makefile
+	@#
+	@# rm -fr $(XFi386DST31)/
+	mkdir -p $(XFi386DST31)
+	$(foreach aa1,$(XFi386SrcList31)\
+		, rsync -a $(aa1) $(XFi386DST31)/`basename $(aa1)`$(EOL))
+	cd $(XFi386DST31)/ && rm -f Makefile && ln -s `basename $(firstword $(XFi386SrcList31))`  	Makefile
+	@#
+	@# rm -fr $(XFi386DST32)/
+	mkdir -p $(XFi386DST32)
+	$(foreach aa1,$(XFi386SrcList32)\
+		, rsync -a $(aa1) $(XFi386DST32)/`basename $(aa1)`$(EOL))
+	cd $(XFi386DST32)/ && rm -f Makefile && ln -s `basename $(firstword $(XFi386SrcList32))`  	Makefile
+	@#
+	@# rm -fr $(foreach aa1,$(XFdelete1), $(XFdst1)/$(aa1))
+	@echo ' try to start the build prog . '
+	@echo 'if NOT start , chroot to $(shell realpath  nowDIR_x1000__) and "make l" '
+	@echo
+	$(Show_NC_cmd1)
+	@echo ' dst -->     $(XFdst1)'
+	@echo
+
+GGlist:= 
+GGlist+= ggg1 
+
+$(call VIMobj,$(GGlist))
+
+help_OBJs+= help_obj__sGG
+help_obj__sGG:
+	@echo
+	@echo '         [$(makePATHgg1)]'
+	@echo ' XFgg      XFggUpdate -> '
+	$(call VIMhelp,$(GGlist))
+
+ifneq ($(VV13838311),$(strip $(VV)))
+$(info 193981 : loading Makefile.module.GenMakefile $(makePATHgg1) . end)
+endif
+
