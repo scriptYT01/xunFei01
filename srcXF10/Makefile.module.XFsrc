@@ -56,7 +56,7 @@ include/						\
 bin/							\
 samples/tts_sample/tts_sample.c				
 XFi386SrcList11:=$(foreach aa1,$(XFi386SrcList11x),$(XFi386S10)/$(aa1))
-XFi386DST11:=$(shell readlink -m patchDIR__x1000/XFi386DST11)
+XFi386DST11:=$(shell readlink -m patchDIR__x1000/i386/XFi386DST11)
 
 XFi386SrcList13x:= 				\
 Makefile.i386.13				\
@@ -65,7 +65,7 @@ include/						\
 bin/							\
 samples/asr_sample/asr_sample.c				
 XFi386SrcList13:=$(foreach aa1,$(XFi386SrcList13x),$(XFi386S10)/$(aa1))
-XFi386DST13:=$(shell readlink -m patchDIR__x1000/XFi386DST13)
+XFi386DST13:=$(shell readlink -m patchDIR__x1000/i386/XFi386DST13)
 
 XFi386SrcList18x:= 				\
 Makefile.i386.18				\
@@ -80,7 +80,7 @@ samples/iat_record_sample/iat_record_sample.c    			\
 samples/iat_record_sample/linuxrec.c    					\
 samples/iat_record_sample/speech_recognizer.c    	
 XFi386SrcList18:=$(foreach aa1,$(XFi386SrcList18x),$(XFi386S10)/$(aa1))
-XFi386DST18:=$(shell readlink -m patchDIR__x1000/XFi386DST18)
+XFi386DST18:=$(shell readlink -m patchDIR__x1000/i386/XFi386DST18)
 
 XFi386S20:=$(makePATH1)/srcXF20/
 XFi386SrcList21x:= 				\
@@ -90,7 +90,7 @@ include/						\
 bin/							\
 samples/tts_sample/tts_sample.c				
 XFi386SrcList21:=$(foreach aa1,$(XFi386SrcList21x),$(XFi386S20)/$(aa1))
-XFi386DST21:=$(shell readlink -m patchDIR__x1000/XFi386DST21)
+XFi386DST21:=$(shell readlink -m patchDIR__x1000/i386/XFi386DST21)
 
 XFi386S30:=$(makePATH1)/srcXF30/
 XFi386SrcList31x:= 				\
@@ -100,7 +100,7 @@ include/						\
 bin/							\
 samples/tts_sample/tts_sample.c				
 XFi386SrcList31:=$(foreach aa1,$(XFi386SrcList31x),$(XFi386S30)/$(aa1))
-XFi386DST31:=$(shell readlink -m patchDIR__x1000/XFi386DST31)
+XFi386DST31:=$(shell readlink -m patchDIR__x1000/i386/XFi386DST31)
 XFi386SrcList32x:= 				\
 Makefile.i386.32				\
 libs/x86/libmsc.so				\
@@ -109,7 +109,7 @@ include/						\
 bin/							\
 samples/aiui_sample/
 XFi386SrcList32:=$(foreach aa1,$(XFi386SrcList32x),$(XFi386S30)/$(aa1))
-XFi386DST32:=$(shell readlink -m patchDIR__x1000/XFi386DST32)
+XFi386DST32:=$(shell readlink -m patchDIR__x1000/i386/XFi386DST32)
 
 export XFdelete1:= \
 	libmsc.call.txt libmsc.sym.txt README.md \
