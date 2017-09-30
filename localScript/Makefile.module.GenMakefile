@@ -100,11 +100,16 @@ helpGG:
 	@echo
 
 aaa : 
+	@echo > log.error.patchDIR__x1000.txt
 	@for aa1 in $$(ggDSTobjs) ;			\
 	do                                      \
 		echo "target    --->>>     $$$${aa1} ( $$$${!aa1} )" ;         \
-		make $$$${aa1} ;         \
+		make $$$${aa1} \
+		&& echo "succeed build            ... $$$${aa1} " >> log.error.patchDIR__x1000.txt \
+		|| echo "error found when makeing ... $$$${aa1} " >> log.error.patchDIR__x1000.txt \
+		;         \
 	done
+	@cat log.error.patchDIR__x1000.txt
 	@echo
 
 $$(ggDSTobjs) :
