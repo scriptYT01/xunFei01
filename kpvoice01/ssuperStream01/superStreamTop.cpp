@@ -5,8 +5,8 @@ _ssFileOut  *   _SSout  = NULL ;
 _ssFileOut  *   _SSerr  = NULL ;
 _ssListen1  *   _SSexit = NULL ;
 
-int          _argc = -1 ;
-char **      _argv = NULL ;
+int          __attribute__((weak))  _argc = -1 ;
+char **      __attribute__((weak))  _argv = NULL ;
 
 void _paraAnalyzeSS( int ___argc , char ** ___argv , uint16_t ___exitPort ) {
     char __buf40[41] ;
