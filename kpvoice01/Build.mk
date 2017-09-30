@@ -26,6 +26,6 @@ LOCAL_SRC_FILES :=                                				\
 
 LOCAL_LDLIBS := -lc -lpthread -lstdc++ -ldl
 LOCAL_CFLAGS := -I$(LOCAL_PATH)/base01
-LOCAL_CFLAGS += -I$(LOCAL_PATH)/base01 -I$(LOCAL_PATH)/ssuperStream01 
+LOCAL_CFLAGS += -I$(LOCAL_PATH)/base01 -I$(LOCAL_PATH)/ssuperStream01 -I$(LOCAL_PATH)/src -I$(LOCAL_PATH)/include 
 include $(BUILD_EXECUTABLE)
 

@@ -9,6 +9,7 @@ LOCAL_MODULE_PATH:=$(TARGET_FS_BUILD)/ch/xf30
 LOCAL_SRC_FILES := samples/tts_sample/tts_sample.c
 #LOCAL_LDLIBS := -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc -lrt -ldl -lpthread -lm -lc
 LOCAL_LDLIBS := -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc -lc
+LOCAL_CFLAGS := -I$(LOCAL_PATH)/src -I$(LOCAL_PATH)/include 
 include $(BUILD_EXECUTABLE)
 
 #==== aiui_sample ==========================================
@@ -52,7 +53,9 @@ LOCAL_SRC_FILES := \
 #LOCAL_LDLIBS := -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc -laiui -lc -lpthread -lstdc++
 LOCAL_LDLIBS := -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc -laiui -lc -lpthread -lstdc++ -ldl
 LOCAL_CFLAGS := -Iexternal/patchDIR__x1000/XFclient10
-LOCAL_CFLAGS += -Iexternal/patchDIR__x1000/XFclient10/patchXF -Iexternal/patchDIR__x1000/XFclient10/patchXF/base01 -Iexternal/patchDIR__x1000/XFclient10/patchXF/ssuperStream01 
+LOCAL_CFLAGS += -Iexternal/patchDIR__x1000/XFclient10/patchXF -Iexternal/patchDIR__x1000/XFclient10/patchXF/base01 \
+				-Iexternal/patchDIR__x1000/XFclient10/patchXF/ssuperStream01 \
+				-I$(LOCAL_PATH)/src -I$(LOCAL_PATH)/include 
 include $(BUILD_EXECUTABLE)
 
 #==== dbmem.so ==========================================
@@ -63,5 +66,6 @@ LOCAL_MODULE_PATH:=$(TARGET_FS_BUILD)/ch/xf30
 LOCAL_SRC_FILES := patchXF/dbmem.c
 LOCAL_MODULE_GEN_SHARED_FILES :=$(LOCAL_MODULE)
 LOCAL_EXPORT_C_INCLUDE_FILES := patchXF/dbmem.h
-LOCAL_CFLAGS := -Wa,-mips32r2 -O2 -G 0 -Wall -fPIC -shared
+LOCAL_CFLAGS := -Wa,-mips32r2 -O2 -G 0 -Wall -fPIC -shared \
+	-I$(LOCAL_PATH)/src -I$(LOCAL_PATH)/include 
 include $(BUILD_SHARED_LIBRARY)

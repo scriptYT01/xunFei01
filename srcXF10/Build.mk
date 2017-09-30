@@ -12,7 +12,9 @@ LOCAL_SRC_FILES := \
 #LOCAL_LDLIBS := -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc -lrt -ldl -lpthread -lm -lc
 LOCAL_LDLIBS := -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc -lc 
 LOCAL_CFLAGS := -I$(LOCAL_PATH) -Wall -Werror
-LOCAL_CFLAGS += -Iexternal/xfClient10/patchXF -Iexternal/xfClient10/patchXF/base01 -Iexternal/xfClient10/patchXF/ssuperStream01 
+LOCAL_CFLAGS += -Iexternal/patchDIR__x1000/XFclient10/patchXF -Iexternal/patchDIR__x1000/XFclient10/patchXF/base01 \
+				-Iexternal/patchDIR__x1000/XFclient10/patchXF/ssuperStream01 \
+				-I$(LOCAL_PATH)/src -I$(LOCAL_PATH)/include 
 include $(BUILD_EXECUTABLE)
 
 #==== tts_tcp12 ==========================================
@@ -25,6 +27,7 @@ LOCAL_SRC_FILES := samples/tts_sample/tts_tcp.c
 #LOCAL_LDLIBS := -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc -lrt -ldl -lpthread -lm -lc
 LOCAL_LDLIBS := -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc -lc 
 #LOCAL_LDLIBS := -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc 
+LOCAL_CFLAGS := -I$(LOCAL_PATH)/src -I$(LOCAL_PATH)/include 
 include $(BUILD_EXECUTABLE)
 
 #==== asr_sample13 ==========================================
@@ -37,6 +40,7 @@ LOCAL_SRC_FILES := samples/asr_sample/asr_sample.c
 #LOCAL_LDLIBS := -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc -lrt -ldl -lpthread -lm -lc
 LOCAL_LDLIBS := -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc -lc 
 #LOCAL_LDLIBS := -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc 
+LOCAL_CFLAGS := -I$(LOCAL_PATH)/src -I$(LOCAL_PATH)/include 
 include $(BUILD_EXECUTABLE)
 
 #==== asr_tcp14 ==========================================
@@ -49,6 +53,7 @@ LOCAL_SRC_FILES := samples/asr_sample/asr_tcp.c
 #LOCAL_LDLIBS := -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc -lrt -ldl -lpthread -lm -lc
 LOCAL_LDLIBS := -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc -lc 
 #LOCAL_LDLIBS := -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc 
+LOCAL_CFLAGS := -I$(LOCAL_PATH)/src -I$(LOCAL_PATH)/include 
 include $(BUILD_EXECUTABLE)
 
 #srcXF10/samples/iat_sample/iat_sample.c
@@ -60,6 +65,7 @@ LOCAL_MODULE_PATH:=$(TARGET_FS_BUILD)/ch/xf10
 LOCAL_SRC_FILES := samples/iat_sample/iat_sample.c
 LOCAL_LDLIBS := -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc -lc 
 #LOCAL_CFLAGS := -DUSE_dict_0dis_1ena=0
+LOCAL_CFLAGS := -I$(LOCAL_PATH)/src -I$(LOCAL_PATH)/include 
 include $(BUILD_EXECUTABLE)
 
 # ise_sample/ise_sample.c
@@ -71,6 +77,7 @@ LOCAL_MODULE_PATH:=$(TARGET_FS_BUILD)/ch/xf10
 LOCAL_SRC_FILES := samples/ise_sample/ise_sample.c
 LOCAL_LDLIBS := -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc -lc 
 #LOCAL_CFLAGS := -DUSE_dict_0dis_1ena=0
+LOCAL_CFLAGS := -I$(LOCAL_PATH)/src -I$(LOCAL_PATH)/include 
 include $(BUILD_EXECUTABLE)
 
 # iat_record_sample/iat_record_sample.c
@@ -91,6 +98,8 @@ LOCAL_LDLIBS := -Ldevice/common/system/usr/lib -L$(LOCAL_PATH)/libs/mipsX1000 -l
 #LOCAL_CFLAGS := -I../tinyalsa/include
 #LOCAL_CFLAGS := -I../alsa-lib/include
 LOCAL_CFLAGS := -Iexternal/alsa-lib/include -I$(LOCAL_PATH) -Wall -Werror
-LOCAL_CFLAGS += -Iexternal/xfClient10/patchXF -Iexternal/xfClient10/patchXF/base01 -Iexternal/xfClient10/patchXF/ssuperStream01 
+LOCAL_CFLAGS += -Iexternal/patchDIR__x1000/XFclient10/patchXF -Iexternal/patchDIR__x1000/XFclient10/patchXF/base01 \
+				-Iexternal/patchDIR__x1000/XFclient10/patchXF/ssuperStream01 \
+				-I$(LOCAL_PATH)/src -I$(LOCAL_PATH)/include 
 include $(BUILD_EXECUTABLE)
 

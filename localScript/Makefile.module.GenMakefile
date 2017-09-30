@@ -98,12 +98,15 @@ helpGG:
 #	done
 	@echo "$$$${ggDSTlist}"
 	@echo
+	@echo ' aaa --->> build all target , the log file : log.error.patchDIR__x1000.txt '
+	@echo
 
 aaa : 
 	@echo > log.error.patchDIR__x1000.txt
+	@chmod 666 log.error.patchDIR__x1000.txt
 	@for aa1 in $$(ggDSTobjs) ;			\
 	do                                      \
-		echo "target    --->>>     $$$${aa1} ( $$$${!aa1} )" ;         \
+		echo "target    --->>>     $$$${aa1} ( )" ;         \
 		make $$$${aa1} \
 		&& echo "succeed build            ... $$$${aa1} " >> log.error.patchDIR__x1000.txt \
 		|| echo "error found when makeing ... $$$${aa1} " >> log.error.patchDIR__x1000.txt \
@@ -115,13 +118,18 @@ aaa :
 $$(ggDSTobjs) :
 	make -C $$(T1)   $$@
 
+c clean :
+	rm -fr $$(T1)/out/product/halley2/obj/external/patchDIR__x1000/* log.error.patchDIR__x1000.txt
 
 endef
 export GGhelp1
 export GGhelp2
 GG:
 	ls patchDIR__x1000/*/Build.mk > 1.txt
-	grep ^" *LOCAL_MODULE *:*=" `cat 1.txt` > 2.txt
+	grep ^" *LOCAL_MODULE *:*=" `cat 1.txt` \
+		| grep -v iat_record_sample18.x1000.bin \
+		| grep -v alsa-record-example \
+		> 2.txt
 	cat 2.txt |sed -e 's;^.*= *;;g' > 3.txt
 	cat 2.txt |sed -e 's;^\(.*\): *LOCAL_MODULE *:* *= *\(.*\)$$;target ==-->>> \2 ( \1 ) ;g' > 4.txt
 	cat localScript/Makefile.x1000.set  > patchDIR__x1000/Makefile

@@ -9,6 +9,7 @@ LOCAL_MODULE_PATH:=$(TARGET_FS_BUILD)/ch/xf20
 LOCAL_SRC_FILES := samples/tts_sample/tts_sample.c
 #LOCAL_LDLIBS := -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc -lrt -ldl -lpthread -lm -lc
 LOCAL_LDLIBS := -L$(LOCAL_PATH)/libs/mipsX1000 -lmsc -lc
+LOCAL_CFLAGS := -I$(LOCAL_PATH)/src -I$(LOCAL_PATH)/include 
 include $(BUILD_EXECUTABLE)
 
 #==== miio_wifi ==========================================
