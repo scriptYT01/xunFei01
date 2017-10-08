@@ -3,11 +3,11 @@
 void _usage( int ___argc , char ** ___argv ) {
 } /* _usage */
 
-void _paraAnalyze( int ___argc , char ** ___argv ) {
+void _paraAnalyzeMM( int ___argc , char ** ___argv , uint16_t ___exitPort  ) {
     _paraAnalyzeSS( ___argc , ___argv , 60001) ;
     //if ( ___argc > 2 ) { _FrawPcm           =  ___argv[1] ; }
     //_fGenRawPcm    = new _ssFileIn(  _enSsdIn    , _FrawPcm     , " _fGenRawPcm    : rawPCM    generater " );
-} /* _paraAnalyze */
+} /* _paraAnalyzeMM */
 
 void _initListen(void) {
     //_tcpRaw     = new _ssListen1( _enSsdOut 
@@ -20,7 +20,7 @@ int main( int ___argc , char ** ___argv ) {
 
     _usage( ___argc , ___argv ) ;
 
-    _paraAnalyze( ___argc , ___argv ) ;
+    _paraAnalyzeMM( ___argc , ___argv , 60001 ) ;
 
     _initListen() ;
 

@@ -220,6 +220,8 @@ class _ssFileIn : public _superStreamBase
 #define _dbSS2   _prEFn( " %d , %d , %s, %s" , _ssDir , _ssType , _ssPath , _ssComment )
 #define dumpExit(ena)    if(ena) {dumpSelfX(); _prExit( "debuging." );}
 
+#define _ssWriteNonblockStr( s1 ) _ssWriteNonblockCC( strlen(s1) , s1 ) 
+
 extern int _recFD01 ;
 #define debugFD01( aa )    if( (aa -> _ssFD) != _recFD01 ) { _prEFn( " before %d , after %d " , _recFD01 , (aa -> _ssFD) ) ; _recFD01 = (aa -> _ssFD) ; }
 
