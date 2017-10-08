@@ -121,10 +121,6 @@ export XFdelete1:= \
 ssh login:
 	ssh $(login)
 
-Show_NC_cmd1:
-	$(Show_NC_cmd1)
-Show_NC_cmd2:
-	$(Show_NC_cmd2)
 
 XFso:=srcXF10/libs/mipsX1000/libmsc.so
 

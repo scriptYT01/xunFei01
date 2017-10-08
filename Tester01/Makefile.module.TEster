@@ -9,9 +9,9 @@ TEdst5:=$(shell readlink -m patchDIR__x1000/tEster01)
 
 
 te11:=$(makePATHte1)
-te12:=Tester01/src/te01_main.cpp
-te13:=/home/dyn/dyn/viomi/v005.ymClient01/srcYMC03/src/ymClient1300106_tty_eventSTM32_yanji__base.c
-te14:=/home/dyn/dyn/viomi/v005.ymClient01/srcYMC03/mid/dyn305__sockTTY.c
+te12:=/home/dyn/dyn/viomi/v005.ymClient01/srcYMC03/src/ymClient1300106_tty_eventSTM32_yanji__base.c
+te13:=/home/dyn/dyn/viomi/v005.ymClient01/srcYMC03/mid/dyn305__sockTTY.c
+te14:=Tester01/src/te01_main.cpp
 te15:=Tester01/src/te01_loop.cpp
 
 
@@ -21,7 +21,7 @@ tete XFt XFteUpdate : XFgenDate
 	$(rsync1)    $(XFsrc5)/base01/  			$(TEdst5)/base01/
 	$(rsync1)    $(XFsrc5)/ssuperStream01/  	$(TEdst5)/ssuperStream01/
 	@#
-	$(XFu_only_cmd1)
+	$(Show_NC_cmd1)
 	@echo ' dst -->     $(TEdst5)'
 	@echo
 
