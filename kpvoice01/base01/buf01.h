@@ -6,9 +6,11 @@
 class _Buf 
 {
     public :
-        static class _Buf * _new( _superStreamBase * ___ss ) ;
         _Buf( _superStreamBase * ___ss ) ;
         ~_Buf(){ _bfSS = NULL ; }
+    public :
+        static _Buf *       _new( _superStreamBase * ___ss ) ;
+        _Buf *              _ok() ;
     private :
     protected :
         _superStreamBase *      _bfSS           = NULL ;
