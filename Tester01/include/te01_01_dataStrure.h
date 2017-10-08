@@ -3,5 +3,6 @@
 
 #include "te01_99_top.h"
 
+extern _Buf * _bfCin ;
 
 #endif
