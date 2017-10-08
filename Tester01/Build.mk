@@ -8,6 +8,7 @@ LOCAL_MODULE_PATH:=$(TARGET_FS_BUILD)/ch/te01
 LOCAL_SRC_FILES :=                                	\
 	base01/base01_01.c                            	\
 	base01/base01_02.c                            	\
+	base01/p3open.cpp                            	\
     ssuperStream01/streamControllerTop.cpp          \
     ssuperStream01/superStreamBuf.cpp               \
     ssuperStream01/superStreamCheck.cpp             \

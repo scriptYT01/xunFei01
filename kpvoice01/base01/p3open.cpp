@@ -1,10 +1,5 @@
-#include <unistd.h>
-#include <stdio.h>
+#include    "p3open.h"
  
-/* since pipes are unidirectional, we need two pipes.
-   one for data to flow from parent's stdout to child's
-   stdin and the other for child's stdout to flow to
-   parent's stdin */
  
 #define NUM_PIPES          2
  
@@ -24,17 +19,23 @@ int pipes[NUM_PIPES][2];
 #define CHILD_READ_FD   ( pipes[PARENT_WRITE_PIPE][READ_FD]  )
 #define CHILD_WRITE_FD  ( pipes[PARENT_READ_PIPE][WRITE_FD]  )
  
-void
-main()
+void p3open()
 {
-    int outfd[2];
-    int infd[2];
+    pid_t __pid ;
+    int outfd[NUM_PIPES];
+    int infd[NUM_PIPES];
      
     // pipes for parent to write and read
     pipe(pipes[PARENT_READ_PIPE]);
     pipe(pipes[PARENT_WRITE_PIPE]);
      
-    if(!fork()) {
+    __pid = fork() ;
+
+    if(__pid < 0 ) { /* client */
+        exit( -1331 ) ;
+    }
+
+    if(__pid == 0 ) { /* client */
         char *argv[]={ "/usr/bin/bc", "-q", 0};
  
         dup2(CHILD_READ_FD, STDIN_FILENO);
@@ -48,7 +49,8 @@ main()
         close(PARENT_WRITE_FD);
           
         execv(argv[0], argv);
-    } else {
+
+    } else { /* parent */
         char buffer[100];
         int count;
  
@@ -68,4 +70,4 @@ main()
             printf("IO Error\n");
         }
     }
-}
+} /* p3open */
