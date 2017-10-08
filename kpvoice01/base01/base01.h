@@ -69,7 +69,8 @@
 #define dumpSelfX() _dumpSelf( __FILE__, __LINE__ , __func__ )
 #define dumpSelfY() _dumpSelf( NULL , 0 , NULL )
 
-#define _setCtrlC() signal(SIGINT, _intHandler)
+#define _setCtrlC1() signal(SIGINT, _intHandler1) /* exit at once when ctrl+c */
+#define _setCtrlC2() signal(SIGINT, _intHandler2) /* ask y/n      when ctrl+c */
 
 #ifdef __cplusplus
     extern "C" {
@@ -81,7 +82,9 @@ extern void         _paraAtoi( int _para_must1_ignore0 , int ___argc , char ** _
 extern void         _paraAtoS( int _para_must1_ignore0 , int ___argc , char ** ___argv , int ___index , char * ___varName , char ** ___varLP ) ;
 extern int          _timeLoop( uint32_t ___delayUS , int (*___loopBackFunc)() ) ;
 extern int          _system(const char *___cmd);
-extern void         _intHandler(int ___dummy) ;
+
+extern void         _intHandler1(int ___dummy) ;
+extern volatile int _mainRunning ;
 
 extern int          _argc ;
 extern char **      _argv ;

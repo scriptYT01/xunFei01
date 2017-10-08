@@ -13,9 +13,26 @@ int _system(const char *___cmd) {
 } /* _system */
 
 
-static volatile int _keepRunning = 1;
+volatile int _mainRunning = 1;
 
-void _intHandler(int ___dummy) {
-    _keepRunning = 0;
+void _intHandler1(int ___dummy) {
+    _mainRunning = 0;
     exit(___dummy);
-} /* _intHandler */
+} /* _intHandler1 */
+
+void _intHandler2(int ___dummy) {
+    char *  __buf[256] ;
+    int     __len ;
+
+    fprintf( 2 , "\n\n" " Ctrl + C pressed. Do you want to exit really ? (y/n)\n" ) ;
+    read( 0, __buf, 1 );
+    if ( __len <= 0 ) {
+        fprintf( 2 , "\n" " unknown met 181811\n" );
+        _intHandler1( ___dummy );
+    }
+    if ( __buf[0] == 'y' || __buf[0] == 'Y' ){
+        fprintf( 2 , "\n" " Yes met. exit...\n" );
+        _intHandler1( ___dummy );
+    }
+    fprintf( 2 , "\n" " 'No' met. skip...\n" );
+} /* _intHandler2 */

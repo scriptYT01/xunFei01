@@ -29,7 +29,7 @@ int main( int ___argc , char ** ___argv ) {
 
     int __i01 ;
 
-    _setCtrlC() ;
+    _setCtrlC1() ;
 
     _usage( ___argc , ___argv ) ;
 
