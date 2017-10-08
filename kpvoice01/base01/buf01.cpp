@@ -5,5 +5,5 @@ static class _Buf * _new( _superStreamBase * ___ss ) {
 } /* _Buf::_new */
 
 _Buf::_Buf( _superStreamBase * ___ss ) {
-    return NULL ;
+    //return NULL ;
 } /* _Buf::_Buf */
