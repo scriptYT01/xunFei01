@@ -8,7 +8,8 @@ void _usage( int ___argc , char ** ___argv ) {
 void _paraAnalyzeMM( int ___argc , char ** ___argv , uint16_t ___exitPort  ) {
     _paraAnalyzeSS( ___argc , ___argv , 60001) ;
 
-    _bfCin = new _Buf( _SSin ) ;
+    _bfCin = _Buf::_new( _SSin ) ;
+    _zExit( _bfCin , " Buffer error " ) ;
     
     //if ( ___argc > 2 ) { _FrawPcm           =  ___argv[1] ; }
     //_fGenRawPcm    = new _ssFileIn(  _enSsdIn    , _FrawPcm     , " _fGenRawPcm    : rawPCM    generater " );

@@ -1,5 +1,5 @@
-#ifndef     __KP___BASE_H
-#define     __KP___BASE_H
+#ifndef     __BASE01_H
+#define     __BASE01_H
 
 #include <stdio.h>
 #include <stdlib.h>

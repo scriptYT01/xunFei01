@@ -1,8 +1,8 @@
 #ifndef     __TE01_99_TOP_H
 #define     __TE01_99_TOP_H
 
-//#include "base01.h"
-//#include "superStream.h"
+#include "base01.h"
+#include "superStream.h"
 #include "streamController.h"
 #include "buf01.h"
 
