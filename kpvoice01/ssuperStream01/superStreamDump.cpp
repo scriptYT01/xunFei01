@@ -83,7 +83,7 @@ void _TTcp::_dumpSelf( const char * ___file , int ___lineno , const char * ___fu
     _prEFn( "path , host , port , _ttplen       '%s , %s , %s , %d'" , _ttpath , _tthost , _ttport , _ttplen ) ;
 } /* _TTcp::_dumpSelf */
 
-void SS_testRead( _superStreamBase * ___ss , int ___len , int ___hexLen ) {
+void _readStdinAndTryHexDump( _superStreamBase * ___ss , int ___len , int ___hexLen ) {
     char    __buf4096[1001] ;
     int     __Len ;
     int     __i01 ;
@@ -118,5 +118,5 @@ void SS_testRead( _superStreamBase * ___ss , int ___len , int ___hexLen ) {
             if(0) _prEX10( __buf4096[__i01] ) ; 
         }
     }
-} /* SS_testRead */
+} /* _readStdinAndTryHexDump */
 

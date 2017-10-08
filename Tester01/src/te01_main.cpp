@@ -6,7 +6,6 @@ void _usage( int ___argc , char ** ___argv ) {
 void _paraAnalyzeMM( int ___argc , char ** ___argv , uint16_t ___exitPort  ) {
     _paraAnalyzeSS( ___argc , ___argv , 60001) ;
     
-
     //if ( ___argc > 2 ) { _FrawPcm           =  ___argv[1] ; }
     //_fGenRawPcm    = new _ssFileIn(  _enSsdIn    , _FrawPcm     , " _fGenRawPcm    : rawPCM    generater " );
 } /* _paraAnalyzeMM */
@@ -41,7 +40,8 @@ int main( int ___argc , char ** ___argv ) {
             100000
             , &
             _main_loop ) ;
-    // SS_testRead
+    // _te_stdin_analyze
+    // _readStdinAndTryHexDump
 
     _prEFn( " loop return %d " , __i01 ) ;
 

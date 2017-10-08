@@ -9,14 +9,19 @@ int          __attribute__((weak))  _argc = -1 ;
 char **      __attribute__((weak))  _argv = NULL ;
 
 void _paraAnalyzeSS( int ___argc , char ** ___argv , uint16_t ___exitPort ) {
-    char __buf40[41] ;
+    char __buf40[40] ;
     int  __len ;
 
     _argc   = ___argc ;
     _argv   = ___argv ;
 
 
-    __len = snprintf( __buf40 , 40 , "tcpL1:127.0.0.1:%d" , ___exitPort ) ;
+    __len = snprintf( __buf40 , 39 , "tcpL1:127.0.0.1:%d" , ___exitPort ) ;
+    if ( __len <= 0 ) {
+        __buf40[0] = 0 ;
+    } else {
+        __buf40[39] = 0 ;
+    }
 
     _SSin   = new _ssFileIn(    _enSsdIn    , "stdin"   , " standard stream " );
     _SSout  = new _ssFileOut(   _enSsdIn    , "stdout"  , " standard stream " );
