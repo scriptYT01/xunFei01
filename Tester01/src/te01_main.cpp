@@ -29,6 +29,8 @@ int main( int ___argc , char ** ___argv ) {
 
     int __i01 ;
 
+    _setCtrlC() ;
+
     _usage( ___argc , ___argv ) ;
 
     _paraAnalyzeMM( ___argc , ___argv , 60001 ) ;

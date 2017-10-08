@@ -101,6 +101,7 @@ void SS_testRead( _superStreamBase * ___ss , int ___len , int ___hexLen ) {
         
         __Len = ___ss -> _ssReadNonblock( ___len, __buf4096 ) ;
         if ( __Len > 0 ) {
+            __buf4096[__Len] = 0 ;
             _prEFn( " len %d : <%s>" , __Len , __buf4096 ) ;
         } else {
             _prEFn( " len %d " , __Len ) ;
@@ -114,6 +115,7 @@ void SS_testRead( _superStreamBase * ___ss , int ___len , int ___hexLen ) {
                 __i01 ++ ;
             }
             _prEEn( " >" );
+            if(0) _prEX10( __buf4096[__i01] ) ; 
         }
     }
 } /* SS_testRead */

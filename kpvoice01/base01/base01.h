@@ -19,6 +19,7 @@
 #include <arpa/inet.h>
 #include <sys/time.h>
 #include <netdb.h>
+#include <signal.h>
 
 //#include <include/asm/delay.h>
 //#include <include/linux/delay.h>
@@ -68,6 +69,8 @@
 #define dumpSelfX() _dumpSelf( __FILE__, __LINE__ , __func__ )
 #define dumpSelfY() _dumpSelf( NULL , 0 , NULL )
 
+#define _setCtrlC() signal(SIGINT, _intHandler)
+
 #ifdef __cplusplus
     extern "C" {
 #endif
@@ -78,6 +81,7 @@ extern void         _paraAtoi( int _para_must1_ignore0 , int ___argc , char ** _
 extern void         _paraAtoS( int _para_must1_ignore0 , int ___argc , char ** ___argv , int ___index , char * ___varName , char ** ___varLP ) ;
 extern int          _timeLoop( uint32_t ___delayUS , int (*___loopBackFunc)() ) ;
 extern int          _system(const char *___cmd);
+extern void         _intHandler(int ___dummy) ;
 
 extern int          _argc ;
 extern char **      _argv ;
