@@ -6,11 +6,12 @@
 class _Buf 
 {
     public :
-        _Buf( _superStreamBase * ___ss ) ;
-        ~_Buf(){ _bfSS = NULL ; }
+        _Buf( _superStreamBase * ___ss , uint16_t ___bfSize , uint16_t ___bfDepth ) ;
+        ~_Buf(){                _bfSS = NULL ; }
     public :
-        static _Buf *       _new( _superStreamBase * ___ss ) ;
-        _Buf *              _ok() ;
+        static _Buf *           _new( _superStreamBase * ___ss , uint16_t ___bfSize , uint16_t ___bfDepth ) ;
+        _Buf *                  _ok() ;
+        char *                  _buf            = NULL ;
     private :
     protected :
         _superStreamBase *      _bfSS           = NULL ;

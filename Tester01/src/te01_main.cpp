@@ -8,7 +8,7 @@ void _usage( int ___argc , char ** ___argv ) {
 void _paraAnalyzeMM( int ___argc , char ** ___argv , uint16_t ___exitPort  ) {
     _paraAnalyzeSS( ___argc , ___argv , 60001) ;
 
-    _bfCin = _Buf::_new( _SSin ) ;
+    _bfCin = _Buf::_new( _SSin , 1000 , 1 ) ;
     _zExit( _bfCin , " Buffer error " ) ;
     
     //if ( ___argc > 2 ) { _FrawPcm           =  ___argv[1] ; }
