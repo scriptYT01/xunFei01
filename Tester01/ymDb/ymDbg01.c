@@ -467,6 +467,39 @@ void print_port_speed_info(char *portname, int speed)
     }
 }
 
+#define _write01( aa )     write( __fd_ttyS1 , aa , strlen(aa) ) 
+#define _P1( fmt , ... )    fprintf( stdout , fmt , ## __VA_ARGS__ )
+#define _P1n( fmt , ... )   _P1( fmt "\n" , ## __VA_ARGS__ )
+#define _P2( fmt , ... )    fprintf( stderr , fmt , ## __VA_ARGS__ )
+#define _P2n( fmt , ... )   _P1( fmt "\n" , ## __VA_ARGS__ )
+
+void _debug01() {
+    int __fd_ttyS1 ;
+    int __rt ;
+    char __buf1020[1024] ; 
+
+    __fd_ttyS1 = open(COMM_MCU_DEV_NAME, O_RDWR | O_NOCTTY | O_SYNC);
+    if (__fd_ttyS1 < 0) {
+        _P2n( "Error opening %s: %s", COMM_MCU_DEV_NAME, strerror(errno));
+        return -1;
+    }
+
+    set_interface_attribs(__fd_ttyS1, COMM_BAUD_RATE_MCU);
+    print_port_speed_info(COMM_MCU_DEV_NAME, COMM_BAUD_RATE_MCU);
+
+    tcdrain(__fd_ttyS1);    /* delay for output */
+
+    _write01( "voice voice_enable\r" ) ;
+    
+    while ( 1 ) {
+        __rt = read( __fd_ttyS1 , __buf1020 , 1 ) ;
+        if ( __rt = 1 ) {
+            _P1 ( "get <%c>, <%d> 0x%02x" , __buf1020[0] , __buf1020[0] , __buf1020[0] );
+        }
+    }
+
+} // _debug01() ;
+
 
 int main(int argc,char** argv)
 {
@@ -490,6 +523,8 @@ int main(int argc,char** argv)
     struct shared_vrmiio_st *shm_vrmiio_st;
     int shmid_vrmiio;
 #endif //MIIO_WIFI_COWORK
+
+    if ( 1 ) _debug01();
 
 #if defined(EMULATE_HOOD_MCU)
 	DBGB_PRINTF(DEBUG_BIT_INFO, "ym_hood_wifi: EMULATE_HOOD_MCU\n");
