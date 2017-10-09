@@ -18,8 +18,11 @@ te06:=kpvoice01/base01/buf01.cpp
 te11:=Tester01/src/te01_main.cpp
 te12:=Tester01/src/te01_loop.cpp
 
+te22:=Tester01/te21_target_board.sh
+te22:=Tester01/te22_tester_baord.sh
 
-tete XFt XFteUpdate : XFgenDate
+
+XFt1 XFteUpdate1 : XFgenDate
 	@echo
 	$(rsync1)    $(TEsrc5)/  					$(TEdst5)/
 	$(rsync1)    $(XFsrc5)/base01/  			$(TEdst5)/base01/
@@ -28,20 +31,26 @@ tete XFt XFteUpdate : XFgenDate
 	$(Show_NC_cmd1)
 	@echo ' dst -->     $(TEdst5)'
 	@echo
+XFt2 XFteUpdate2 : XFgenDate
+	@echo
 
 
-TElist:= 
-TElist+= te01 te02 te03 te04 te05 te06 
-TElist+= te11 te12 
+TElist1:= 
+TElist1+= te01 te02 te03 te04 te05 te06 
+TElist1+= te11 te12 
+TElist2:= 
+TElist2+= te21 te22 
 
-$(call VIMobj,$(TElist))
+$(call VIMobj,$(TElist1))
+$(call VIMobj,$(TElist2))
 
 help_OBJs+= help_obj__sTE
 help_obj__sTE:
 	@echo
 	@echo '         [$(makePATHte1)]'
-	@echo ' XFt      XFteUpdate -> '
-	$(call VIMhelp,$(TElist))
+	@echo ' XFt1      XFteUpdate1 -> '
+	$(call VIMhelp,$(TElist1))
+	$(call VIMhelp,$(TElist2))
 
 ifneq ($(VV13838311),$(strip $(VV)))
 $(info 193981 : loading Makefile.module.TEster $(makePATHte1) . end)
