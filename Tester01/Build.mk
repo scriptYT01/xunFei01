@@ -10,6 +10,7 @@ LOCAL_SRC_FILES :=                                	\
 	base01/base01_02.c                            	\
 	base01/p3open.cpp                            	\
 	base01/buf01.cpp                            	\
+	base01/match01.cpp                            	\
     ssuperStream01/streamControllerTop.cpp          \
     ssuperStream01/superStreamBuf.cpp               \
     ssuperStream01/superStreamCheck.cpp             \

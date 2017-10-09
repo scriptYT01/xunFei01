@@ -12,6 +12,8 @@ te01:=$(makePATHte1)
 te02:=/home/dyn/dyn/viomi/v005.ymClient01/srcYMC03/src/ymClient1300106_tty_eventSTM32_yanji__base.c
 te03:=/home/dyn/dyn/viomi/v005.ymClient01/srcYMC03/mid/dyn305__sockTTY.c
 te04:=kpvoice01/base01/p3open.cpp
+te05:=kpvoice01/base01/match01.cpp
+te06:=kpvoice01/base01/buf01.cpp
 
 te11:=Tester01/src/te01_main.cpp
 te12:=Tester01/src/te01_loop.cpp
@@ -29,7 +31,7 @@ tete XFt XFteUpdate : XFgenDate
 
 
 TElist:= 
-TElist+= te01 te02 te03 te04 
+TElist+= te01 te02 te03 te04 te05 te06 
 TElist+= te11 te12 
 
 $(call VIMobj,$(TElist))
