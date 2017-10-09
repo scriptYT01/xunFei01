@@ -469,9 +469,9 @@ void print_port_speed_info(char *portname, int speed)
 
 #define _write01( aa )     write( __fd_ttyS1 , aa , strlen(aa) ) 
 #define _P1( fmt , ... )    fprintf( stdout , fmt , ## __VA_ARGS__ )
-#define _P1n( fmt , ... )   _P1( fmt "\n" , ## __VA_ARGS__ )
+#define _P1n( fmt , ... )   _P1( fmt "\r\n" , ## __VA_ARGS__ )
 #define _P2( fmt , ... )    fprintf( stderr , fmt , ## __VA_ARGS__ )
-#define _P2n( fmt , ... )   _P1( fmt "\n" , ## __VA_ARGS__ )
+#define _P2n( fmt , ... )   _P1( fmt "\r\n" , ## __VA_ARGS__ )
 
 void _debug01() {
     int __fd_ttyS1 ;
@@ -494,7 +494,7 @@ void _debug01() {
     while ( 1 ) {
         __rt = read( __fd_ttyS1 , __buf1020 , 1 ) ;
         if ( __rt = 1 ) {
-            _P1 ( "get <%c>, <%d> 0x%02x" , __buf1020[0] , __buf1020[0] , __buf1020[0] );
+            _P1n ( "get <%c>, <%d> 0x%02x" , __buf1020[0] , __buf1020[0] , __buf1020[0] );
         }
     }
 
