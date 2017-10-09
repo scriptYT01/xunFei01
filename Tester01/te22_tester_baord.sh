@@ -9,6 +9,12 @@ initTTY() {
     stty -F /dev/ttyS1 -hupcl ignbrk -onlcr -echoe -echok -echoctl -echoke min 1 time 5
 }
 
+if [ "$1" = "stop" ]
+then
+    killall -9 pvalg_ymhood                         &> /dev/null
+    killall $(basename $0)
+    exit
+fi
 
 
 initTTY
@@ -16,6 +22,15 @@ initTTY
 
 hh1=/vt/VIOMI_test_wav/M2CHN02VM_AAQ0
 hh2=.wav
+
+if [ 1 = 1 ]
+then
+    while [ 1 ] ; do
+        read -r line1 
+        echo "Text read from file: <${line1}>"
+    done < /dev/ttyS1
+    exit
+fi
 
 while read -r line1 ; do
     #echo "Text read from file: <${line1}>"
