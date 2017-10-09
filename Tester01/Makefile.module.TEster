@@ -18,7 +18,7 @@ te06:=kpvoice01/base01/buf01.cpp
 te11:=Tester01/src/te01_main.cpp
 te12:=Tester01/src/te01_loop.cpp
 
-te22:=Tester01/te21_target_board.sh
+te21:=Tester01/te21_target_board.sh
 te22:=Tester01/te22_tester_baord.sh
 
 
@@ -32,6 +32,10 @@ XFt1 XFteUpdate1 : XFgenDate
 	@echo ' dst -->     $(TEdst5)'
 	@echo
 XFt2 XFteUpdate2 : XFgenDate
+	-$(adbViomi) push $(te21) /bin/
+	-$(adbViomi) shell chmod 755 /bin/`basename $(te21)`
+	-$(adbViom2) push $(te22) /bin/
+	-$(adbViom2) shell chmod 755 /bin/`basename $(te22)`
 	@echo
 
 
