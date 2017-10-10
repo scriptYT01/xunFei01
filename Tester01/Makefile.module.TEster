@@ -21,6 +21,8 @@ te12:=Tester01/src/te01_loop.cpp
 
 te21:=Tester01/te21_target_board.sh
 te22:=Tester01/te22_tester_baord.sh
+te23:=Tester01/te23_tester_set_volumn.sh
+te24:=Tester01/te24_tester_playByNumber.sh
 
 
 XFt1 XFteUpdate1 : XFgenDate
@@ -33,10 +35,11 @@ XFt1 XFteUpdate1 : XFgenDate
 	@echo ' dst -->     $(TEdst5)'
 	@echo
 XFt2 XFteUpdate2 : XFgenDate
-	-$(adbViomi) push $(te21) /bin/
-	-$(adbViomi) shell chmod 755 /bin/`basename $(te21)`
-	-$(adbViom2) push $(te22) /bin/
-	-$(adbViom2) shell chmod 755 /bin/`basename $(te22)`
+	for aa1 in $(foreach aa2,$(TElist2),$($(aa2))) ; do \
+		echo "uploading... $${aa1}" ; \
+		$(adbViom2) push $${aa1} /bin/ ; \
+		$(adbViom2) shell chmod 755 /bin/`basename $${aa1}` ; \
+		done ; echo
 	@echo
 
 
@@ -44,7 +47,7 @@ TElist1:=
 TElist1+= te01 te02 te03 te04 te05 te06 te07 
 TElist1+= te11 te12 
 TElist2:= 
-TElist2+= te21 te22 
+TElist2+= te21 te22 te23 te24
 
 $(call VIMobj,$(TElist1))
 $(call VIMobj,$(TElist2))

@@ -467,16 +467,47 @@ void print_port_speed_info(char *portname, int speed)
     }
 }
 
-#define _write01( aa )     write( __fd_ttyS1 , aa , strlen(aa) ) 
+#define _write01( aa )      write( __fd_ttyS1 , aa , strlen(aa) ) 
 #define _P1( fmt , ... )    fprintf( stdout , fmt , ## __VA_ARGS__ )
 #define _P1n( fmt , ... )   _P1( fmt "\r\n" , ## __VA_ARGS__ )
 #define _P2( fmt , ... )    fprintf( stderr , fmt , ## __VA_ARGS__ )
-#define _P2n( fmt , ... )   _P1( fmt "\r\n" , ## __VA_ARGS__ )
+#define _P2n( fmt , ... )   _P1( fmt "\r\n\n" , ## __VA_ARGS__ )
+#define _Pmsg() _P1n ( "    get %d : <%d> 0x%02x , <%c><%s>" , (int) time(0) , __buf1020[0] , __buf1020[0] , __buf1020[0] , __buf1020 );
+#include <signal.h>
+volatile int _mainRunning = 1;
+void _intHandler1(int ___dummy) { _mainRunning = 0; exit(___dummy); } 
+int _read_a_line01( int ___fd , char * ___buf ) {
+    int __rt ;
+    if ( ___fd < 0 ) return -1 ;
+    if ( ___buf == NULL ) return -1 ;
+    __rt = read( ___fd , ___buf , 100 ) ;
+    if ( __rt > 0 ) {
+        ___buf[ __rt ] = 0 ;
+        while ( __rt > 0 ) {
+            if ( ___buf[ __rt - 1 ] == '\r' || ___buf[ __rt - 1 ] == '\n'  ) {
+                ___buf[ __rt - 1 ] = 0 ;
+                __rt -- ;
+            } else {
+                break ;
+            }
+        }
+    }
+    return __rt ;
+} /* _read_a_line01 */
 
 void _debug01() {
     int __fd_ttyS1 ;
     int __rt ;
     char __buf1020[1024] ; 
+
+    signal(SIGINT, _intHandler1) ; /* exit at once when ctrl+c */
+
+    //system( " amixer sset TITANIUM  70%                     &> /dev/null " ) ;
+    //system( " amixer sset MERCURY   70%                     &> /dev/null " ) ;
+    system( " lsof  |grep snd |xargs -n 1 kill -9           &> /dev/null " );
+    system( " lsof  |grep ttyS1 |xargs -n 1 kill -9         &> /dev/null " );
+    system( " killall -9 miio_wifi                          &> /dev/null " );
+    system( " killall -9 pvalg_ymhood                       &> /dev/null " );
 
     __fd_ttyS1 = open(COMM_MCU_DEV_NAME, O_RDWR | O_NOCTTY | O_SYNC);
     if (__fd_ttyS1 < 0) {
@@ -490,12 +521,24 @@ void _debug01() {
     tcdrain(__fd_ttyS1);    /* delay for output */
 
     _write01( "voice voice_enable\r" ) ;
+    __rt = _read_a_line01( __fd_ttyS1 , __buf1020 ) ;
+    if ( 1 && __rt > 0 ) {
+        _Pmsg();
+    }
     
     while ( 1 ) {
-        __rt = read( __fd_ttyS1 , __buf1020 , 1 ) ;
-        if ( __rt = 1 ) {
-            _P1n ( "get <%c>, <%d> 0x%02x" , __buf1020[0] , __buf1020[0] , __buf1020[0] );
+        __rt = _read_a_line01( __fd_ttyS1 , __buf1020 ) ;
+        if ( 1 && __rt > 0 ) {
+            if ( 
+                    0 == strcmp( __buf1020 , "v down none0" ) 
+               ) {
+                if(1) _Pmsg();
+            } else {
+                _Pmsg();
+            }
         }
+        usleep( 500000 ) ;
+        _write01( "voice get_down\r" ) ;
     }
 
 } // _debug01() ;
