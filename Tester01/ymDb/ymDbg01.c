@@ -127,7 +127,7 @@ char        _wavFname1[100]   ; // the testing wav file name
 char        _playScmd1[200]   ; // the cmd to play testing wave file
 
 void _genCMD01( char * ___fnameBUF , char * ___systemBUF , int ___itemNO ) {
-    snprintf( ___fnameBUF   , 99 , "/vt/VIOMI_test_wav/M2CHN02VM_AAQ0" "%s" ".wav" , _listA1[_itemNO] . _fname ) ;
+    snprintf( ___fnameBUF   , 99 , "/vt/VIOMI_test_wav/M2CHN02VM_AAQ0" "%s" ".wav" , _listA1[___itemNO] . _fname ) ;
     snprintf( ___systemBUF  , 199 , "aplay -f S16_LE -r 16000 " "%s" ,  ___fnameBUF ) ;
 } /* _genCMD01 */
 
@@ -143,6 +143,7 @@ void _init01()
     _P1Dn( _testSize );
 
     _genCMD01( _wavFname0 , _playScmd0 , _testSize ) ;
+    if(1) _P1n( " trying <%s>" , _playScmd0 ) ;
 
 } /* _init01 */
 
