@@ -95,7 +95,7 @@ void print_port_speed_info(char *portname, int speed)
 
 #define _write01( aa )      write( _fd_ttyS1 , aa , strlen(aa) ) 
 #define _P1( fmt , ... )    fprintf( stdout , fmt , ## __VA_ARGS__ )
-#define _P1n( fmt , ... )   _P1( fmt "\r\n" , ## __VA_ARGS__ )
+#define _P1n( fmt , ... )   _P1( fmt "\n\r\n" , ## __VA_ARGS__ )
 #define _P2( fmt , ... )    fprintf( stderr , fmt , ## __VA_ARGS__ )
 #define _P2n( fmt , ... )   _P1( fmt "\r\n\n" , ## __VA_ARGS__ )
 #define _Pmsg() _P1n ( "    get %d : <%d> 0x%02x , <%c><%s>" , _time1 , _buf1020[0] , _buf1020[0] , _buf1020[0] , _buf1020 );
@@ -140,7 +140,7 @@ void _step2_get_voice_state(){
     int __rt ;
      _write01( "voice get_down\r" ) ;
 
-     __rt = _read_a_line01( _fd_ttyS1 , _buf1020 ) ;
+     __rt = _read_a_line01( _fd_ttyS1 , _buf1020 ) ; _time1 = _time2 ; 
      if ( 1 && __rt > 0 ) {
          if ( 
                  0 == strcmp( _buf1020 , "v down none0" ) 
