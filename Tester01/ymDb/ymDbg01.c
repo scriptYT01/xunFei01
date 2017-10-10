@@ -76,9 +76,13 @@ void print_port_speed_info(char *portname, int speed)
 #define _write01( aa )      write( _fd_ttyS1 , aa , strlen(aa) ) 
 #define _P1( fmt , ... )    fprintf( stdout , fmt , ## __VA_ARGS__ )
 #define _P1n( fmt , ... )   _P1( fmt "\n\r\n" , ## __VA_ARGS__ )
+#define _P1d( ddd )         _P1( "%d" , ddd )
 #define _P2( fmt , ... )    fprintf( stderr , fmt , ## __VA_ARGS__ )
-#define _P2n( fmt , ... )   _P1( fmt "\r\n\n" , ## __VA_ARGS__ )
-#define _Pmsg() _P1n ( "    get %d : <%d> 0x%02x , <%c><%s>" , _time1 , _buf1020[0] , _buf1020[0] , _buf1020[0] , _buf1020 );
+#define _P2n( fmt , ... )   _P1( fmt "\r\n" , ## __VA_ARGS__ )
+#define _Pmsg() _P1n ( "\n    get %d : <%d> 0x%02x , <%c><%s>" , _time1 , _buf1020[0] , _buf1020[0] , _buf1020[0] , _buf1020 );
+#define _Pa0()   {_P1("\n") ; fflush( stdout ) ;}
+#define _Pa1()   {_P1(".") ; fflush( stdout ) ;}
+#define _Pa2()   {_P1("=") ; fflush( stdout ) ;}
 #include <signal.h>
 volatile int _mainRunning = 1;
 void _intHandler1(int ___dummy) { _mainRunning = 0; exit(___dummy); } 
@@ -101,10 +105,11 @@ int _read_a_line01( int ___fd , char * ___buf ) {
     return __rt ;
 } /* _read_a_line01 */
 
-int _time1 = -1 ;
-int _time2 = -1 ;
-int _fd_ttyS1 ;
-char _buf1020[1024] ; 
+int     _time1 = -1 ;
+int     _time2 = -1 ;
+int     _fd_ttyS1 ;
+char    _buf1020[1024] ; 
+int     _active1_inactive0 = 0 ;
 
 void _step1_enable_voice(){
     int __rt ;
@@ -122,10 +127,19 @@ void _step2_get_voice_state(){
 
      __rt = _read_a_line01( _fd_ttyS1 , _buf1020 ) ; _time1 = _time2 ; 
      if ( 1 && __rt > 0 ) {
-         if ( 
-                 0 == strcmp( _buf1020 , "v down none0" ) 
-                 ) {
-             if(1) _Pmsg();
+         if ( 0 == strcmp( _buf1020 , "v down none0" ) ) { /* inactive  */
+             if(0) _Pmsg();
+             if(1) _Pa1();
+             _active1_inactive0 = 0 ;
+         } else if ( 0 == strcmp( _buf1020 , "v down none1" ) ) { /* active */
+             if ( _active1_inactive0 == 0 ) {
+                _active1_inactive0 = 1 ;
+                if(1) _Pa0();
+             } else {
+                _active1_inactive0 ++ ;
+             }
+            if(1) _Pa2();
+            _P1d( _active1_inactive0 ) ;
          } else {
              _Pmsg();
          }
