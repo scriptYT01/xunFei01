@@ -5,14 +5,7 @@
 #include <string.h>
 #include <termios.h>
 #include <unistd.h>
-//#include <sys/shm.h>
-//#include "ym_hood_wifi.h"
-////#include "printku_print.h"
-//
-//#if defined(THREAD_UART_W2M)
-//#include <pthread.h>
-//#endif
-
+#include "ymList01.h"
 
 
 
@@ -59,19 +52,6 @@ int set_interface_attribs(int fd, int speed)
     return 0;
 } /* set_interface_attribs */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 void print_port_speed_info(char *portname, int speed)
 {
     switch (speed) {
@@ -91,7 +71,7 @@ void print_port_speed_info(char *portname, int speed)
         printf("port: %s, speed_t: %d(0x%x)\n", portname, speed, speed);
         break;
     }
-}
+} /* print_port_speed_info */
 
 #define _write01( aa )      write( _fd_ttyS1 , aa , strlen(aa) ) 
 #define _P1( fmt , ... )    fprintf( stdout , fmt , ## __VA_ARGS__ )
