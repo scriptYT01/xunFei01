@@ -121,7 +121,15 @@ _STitemX  * _activeItem     ;
 int         _itemNO = 0     ;
 int         _seq1  = 0      ;
 int         _seq2  = 0      ;
-char        _wavName[100]   ;
+char        _wavFname0[100]   ; // the awaking wav file name 
+char        _playScmd0[200]   ; // the cmd to play awaking wave file
+char        _wavFname1[100]   ; // the testing wav file name 
+char        _playScmd1[200]   ; // the cmd to play testing wave file
+
+void _genCMD01( char * ___fnameBUF , char * ___systemBUF , int ___itemNO ) {
+    snprintf( ___fnameBUF   , 99 , "/vt/VIOMI_test_wav/M2CHN02VM_AAQ0" "%s" ".wav" , _listA1[_itemNO] . _fname ) ;
+    snprintf( ___systemBUF  , 199 , "aplay -f S16_LE -r 16000 " "%s" ,  ___fnameBUF ) ;
+} /* _genCMD01 */
 
 void _init01() 
 {
@@ -133,6 +141,8 @@ void _init01()
     _P1Dn( _itemSize );
     _P1Dn( _listA1size );
     _P1Dn( _testSize );
+
+    _genCMD01( _wavFname0 , _playScmd0 , _testSize ) ;
 
 } /* _init01 */
 
@@ -146,6 +156,31 @@ void _step1_enable_voice(){
     usleep( 500000 ) ;
 } /* _step1_enable_voice */
 
+void _result_analyze1_inactive()
+{
+    if(0) _Pmsg();
+    if(1) _Pa1();
+    if ( _active1_inactive0 != 0 ) {
+        _seq1 = 0 ;
+        _seq2 = 0 ;
+    }
+    _active1_inactive0 = 0 ;
+    if ( _seq1 == 0 ) {
+        _genCMD01( _wavFname1 , _playScmd1 , _itemNO ) ;
+        _P1n( " trying %d : %s , wanted <%s> , _seq1 %d _seq2 %d " , _itemNO , _wavFname1 , _listA1[_itemNO] . _wanted , _seq1 , _seq2 ) ;
+        _seq1 = 1 ;
+        _seq2 = 0 ;
+    } else if ( _seq1 == 1 ) {
+        if ( _seq2 == 0 ) {
+            if(1) _P1n( " trying <%s>" , _playScmd0 ) ;
+            if(1) _P1n( " trying <%s>" , _playScmd1 ) ;
+            _time1 = _time2 ;
+        }
+        _seq2 ++ ;
+    } else {
+    }
+} /* _result_analyze1_inactive */
+
 void _step2_get_voice_state(){
     int __rt ;
      _write01( "voice get_down\r" ) ;
@@ -153,15 +188,7 @@ void _step2_get_voice_state(){
      __rt = _read_a_line01( _fd_ttyS1 , _buf1020 ) ; _time1 = _time2 ; 
      if ( 1 && __rt > 0 ) {
          if ( 0 == strcmp( _buf1020 , "v down none0" ) ) { /* inactive  */
-             if(0) _Pmsg();
-             if(1) _Pa1();
-             _active1_inactive0 = 0 ;
-             if ( _seq1 == 0 ) {
-                 snprintf( _wavName , 99 , "/vt/VIOMI_test_wav/M2CHN02VM_AAQ0" "%s" ".wav" , _listA1[_itemNO] . _fname ) ;
-                 _P1n( " trying %d : %s , wanted %s , _seq1 %d _seq2 %d " , _itemNO , _wavName , _listA1[_itemNO] . _wanted , _seq1 , _seq2 ) ;
-             } else {
-             }
-            _seq1 ++ ;
+             _result_analyze1_inactive();
          } else if ( 0 == strcmp( _buf1020 , "v down none1" ) ) { /* active */
              if ( _active1_inactive0 == 0 ) {
                 _active1_inactive0 = 1 ;
