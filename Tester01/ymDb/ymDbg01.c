@@ -73,10 +73,13 @@ void print_port_speed_info(char *portname, int speed)
     }
 } /* print_port_speed_info */
 
+#define _strX( aa ) # aa
 #define _write01( aa )      write( _fd_ttyS1 , aa , strlen(aa) ) 
 #define _P1( fmt , ... )    fprintf( stdout , fmt , ## __VA_ARGS__ )
 #define _P1n( fmt , ... )   _P1( fmt "\n\r\n" , ## __VA_ARGS__ )
 #define _P1d( ddd )         _P1( "%d" , ddd )
+#define _P1D(  ddd )         _P1( _strX(ddd) " %d" , ddd )
+#define _P1Dn( ddd )         _P1( _strX(ddd) " %d\n" , ddd )
 #define _P2( fmt , ... )    fprintf( stderr , fmt , ## __VA_ARGS__ )
 #define _P2n( fmt , ... )   _P1( fmt "\r\n" , ## __VA_ARGS__ )
 #define _Pmsg() _P1n ( "\n    get %d : <%d> 0x%02x , <%c><%s>" , _time1 , _buf1020[0] , _buf1020[0] , _buf1020[0] , _buf1020 );
@@ -84,6 +87,7 @@ void print_port_speed_info(char *portname, int speed)
 #define _Pa1()   {_P1(".") ; fflush( stdout ) ;}
 #define _Pa2()   {_P1("=") ; fflush( stdout ) ;}
 #include <signal.h>
+
 volatile int _mainRunning = 1;
 void _intHandler1(int ___dummy) { _mainRunning = 0; exit(___dummy); } 
 int _read_a_line01( int ___fd , char * ___buf ) {
@@ -105,11 +109,32 @@ int _read_a_line01( int ___fd , char * ___buf ) {
     return __rt ;
 } /* _read_a_line01 */
 
-int     _time1 = -1 ;
-int     _time2 = -1 ;
-int     _fd_ttyS1 ;
-char    _buf1020[1024] ; 
-int     _active1_inactive0 = 0 ;
+int         _time1 = -1 ;
+int         _time2 = -1 ;
+int         _fd_ttyS1 ;
+char        _buf1020[1024] ; 
+int         _active1_inactive0 = 0 ;
+int         _itemSize       ;
+int         _listA1size     ;
+int         _testSize       ;
+_STitemX  * _activeItem     ;
+int         _itemNO = 0     ;
+int         _seq1  = 0      ;
+int         _seq2  = 0      ;
+char        _wavName[100]   ;
+
+void _init01() 
+{
+    _itemSize = sizeof( _STitemX ) ;
+    _listA1size = sizeof( _listA1 ) / sizeof( _STitemX ) ;
+    _testSize = _listA1size - 2 ;
+    _activeItem = _listA1 + _testSize  ;
+
+    _P1Dn( _itemSize );
+    _P1Dn( _listA1size );
+    _P1Dn( _testSize );
+
+} /* _init01 */
 
 void _step1_enable_voice(){
     int __rt ;
@@ -131,6 +156,12 @@ void _step2_get_voice_state(){
              if(0) _Pmsg();
              if(1) _Pa1();
              _active1_inactive0 = 0 ;
+             if ( _seq1 == 0 ) {
+                 snprintf( _wavName , 99 , "/vt/VIOMI_test_wav/M2CHN02VM_AAQ0" "%s" ".wav" , _listA1[_itemNO] . _fname ) ;
+                 _P1n( " trying %d : %s , wanted %s , _seq1 %d _seq2 %d " , _itemNO , _wavName , _listA1[_itemNO] . _wanted , _seq1 , _seq2 ) ;
+             } else {
+             }
+            _seq1 ++ ;
          } else if ( 0 == strcmp( _buf1020 , "v down none1" ) ) { /* active */
              if ( _active1_inactive0 == 0 ) {
                 _active1_inactive0 = 1 ;
@@ -188,7 +219,8 @@ void _debug01() {
 int main(int argc,char** argv)
 {
 
-    if ( 1 ) _debug01();
+    _init01();
+    _debug01();
 
     return 0;
 }
