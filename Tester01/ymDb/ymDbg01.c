@@ -76,12 +76,12 @@ void print_port_speed_info(char *portname, int speed)
 #define _strX( aa ) # aa
 #define _write01( aa )      write( _fd_ttyS1 , aa , strlen(aa) ) 
 #define _P1( fmt , ... )    fprintf( stdout , fmt , ## __VA_ARGS__ )
-#define _P1n( fmt , ... )   _P1( fmt "\n\r\n" , ## __VA_ARGS__ )
+#define _P1n( fmt , ... )   _P1( fmt "\n\n" , ## __VA_ARGS__ )
 #define _P1d( ddd )         _P1( "%d" , ddd )
 #define _P1D(  ddd )         _P1( _strX(ddd) " %d" , ddd )
 #define _P1Dn( ddd )         _P1( _strX(ddd) " %d\n" , ddd )
 #define _P2( fmt , ... )    fprintf( stderr , fmt , ## __VA_ARGS__ )
-#define _P2n( fmt , ... )   _P1( fmt "\r\n" , ## __VA_ARGS__ )
+#define _P2n( fmt , ... )   _P1( fmt "\n" , ## __VA_ARGS__ )
 #define _Pmsg() _P1n ( "\n    get %d : <%d> 0x%02x , <%c><%s>" , _time1 , _buf1020[0] , _buf1020[0] , _buf1020[0] , _buf1020 );
 #define _Pa0()   {_P1("\n") ; fflush( stdout ) ;}
 #define _Pa1()   {_P1(".") ; fflush( stdout ) ;}
@@ -115,12 +115,14 @@ int         _fd_ttyS1 ;
 char        _buf1020[1024] ; 
 int         _active1_inactive0 = 0 ;
 int         _itemSize       ;
-int         _listA1size     ;
-int         _testSize       ;
+int         _listA1size     ; // the total list item amount .
+int         _testSize       ; // the testing word amount.
 _STitemX  * _activeItem     ;
 int         _itemNO = 0     ;
-int         _seq1  = 0      ;
-int         _seq2  = 0      ;
+int         _seq1  = 0      ; // counter in in-active state
+int         _seq2  = 0      ; // counter in in-active state
+int         _rec1  = 0      ; // counter in    active state
+int         _rec2  = 0      ; // counter in    active state
 char        _wavFname0[100]   ; // the awaking wav file name 
 char        _playScmd0[200]   ; // the cmd to play awaking wave file
 char        _wavFname1[100]   ; // the testing wav file name 
@@ -128,7 +130,7 @@ char        _playScmd1[200]   ; // the cmd to play testing wave file
 
 void _genCMD01( char * ___fnameBUF , char * ___systemBUF , int ___itemNO ) {
     snprintf( ___fnameBUF   , 99 , "/vt/VIOMI_test_wav/M2CHN02VM_AAQ0" "%s" ".wav" , _listA1[___itemNO] . _fname ) ;
-    snprintf( ___systemBUF  , 199 , "aplay -f S16_LE -r 16000 " "%s" ,  ___fnameBUF ) ;
+    snprintf( ___systemBUF  , 199 , "aplay -f S16_LE -r 16000 " "%s" " &> /dev/null",  ___fnameBUF ) ;
 } /* _genCMD01 */
 
 void _init01() 
@@ -143,7 +145,7 @@ void _init01()
     _P1Dn( _testSize );
 
     _genCMD01( _wavFname0 , _playScmd0 , _testSize ) ;
-    if(1) _P1n( " trying <%s>" , _playScmd0 ) ;
+    if(0) _P1n( " trying <%s>" , _playScmd0 ) ;
 
 } /* _init01 */
 
@@ -156,31 +158,85 @@ void _step1_enable_voice(){
     }
     usleep( 500000 ) ;
 } /* _step1_enable_voice */
+void _exit_and_dump_info01()
+{
+    exit( 33 ) ;
+} /* _exit_and_dump_info01 */
 
 void _result_analyze1_inactive()
 {
     if(0) _Pmsg();
     if(1) _Pa1();
     if ( _active1_inactive0 != 0 ) {
-        _seq1 = 0 ;
+        //_seq1 = 0 ;
+        //_seq2 = 0 ;
+        if ( _seq1 != 0 ) {
+            _seq1 ++ ;
+        }
         _seq2 = 0 ;
     }
     _active1_inactive0 = 0 ;
-    if ( _seq1 == 0 ) {
+    if ( _seq1 == 0 ) { // first , inactive , pring header.
         _genCMD01( _wavFname1 , _playScmd1 , _itemNO ) ;
         _P1n( " trying %d : %s , wanted <%s> , _seq1 %d _seq2 %d " , _itemNO , _wavFname1 , _listA1[_itemNO] . _wanted , _seq1 , _seq2 ) ;
         _seq1 = 1 ;
         _seq2 = 0 ;
-    } else if ( _seq1 == 1 ) {
+    } else if ( _seq1 >= 1 && _seq1 <= 3 ) { // play awake wav.  
         if ( _seq2 == 0 ) {
-            if(1) _P1n( " trying <%s>" , _playScmd0 ) ;
-            if(1) _P1n( " trying <%s>" , _playScmd1 ) ;
+            if(0) _P1n( " trying <%s>" , _playScmd0 ) ;
+            if(0) _P1n( " trying <%s>" , _playScmd1 ) ;
+            if(1) _P1n( "->-AWAKE-<-" );
+            if(1) system( _playScmd0 );
             _time1 = _time2 ;
         }
         _seq2 ++ ;
+        if ( _seq2 > 6 ) {
+            _seq1 ++ ;
+            _seq2 = 0 ;
+        }
     } else {
+        _itemNO ++ ;
+        if ( _itemNO >= _testSize ) {
+            _exit_and_dump_info01();
+        } else {
+            if(1) _P1n( "\n NG %d : %s , wanted <%s> " , _itemNO , _wavFname1 , _listA1[_itemNO] . _wanted ) ;
+        }
+        _seq1 = 0 ;
+        _seq2 = 0 ;
     }
 } /* _result_analyze1_inactive */
+
+void _result_analyze2_active()
+{
+    if ( _active1_inactive0 == 0 ) {
+        _rec1 = 0 ;
+        _rec2 = 0 ;
+    }
+
+    if ( _rec2 == 0 ) {
+        if(1) _P1n( "\n#>#%s#<#" , _wavFname1 );
+        if(1) system( _playScmd1 );
+        _time1 = _time2 ;
+        _rec2 ++ ;
+    } else if ( _rec2 >= 6 ) {
+        _rec2 = 0 ;
+        if ( _rec1 > 3 ) {
+            _rec1 = 0 ;
+            _itemNO ++ ;
+        } else {
+            _rec1 ++ ;
+        }
+    } else {
+        _rec2 ++ ;
+    }
+
+    _active1_inactive0 = 1 ;
+} /* _result_analyze2_active */
+
+void _result_analyze3_other()
+{
+    _Pmsg();
+} /* _result_analyze3_other */
 
 void _step2_get_voice_state(){
     int __rt ;
@@ -191,16 +247,9 @@ void _step2_get_voice_state(){
          if ( 0 == strcmp( _buf1020 , "v down none0" ) ) { /* inactive  */
              _result_analyze1_inactive();
          } else if ( 0 == strcmp( _buf1020 , "v down none1" ) ) { /* active */
-             if ( _active1_inactive0 == 0 ) {
-                _active1_inactive0 = 1 ;
-                if(1) _Pa0();
-             } else {
-                _active1_inactive0 ++ ;
-             }
-            if(1) _Pa2();
-            _P1d( _active1_inactive0 ) ;
+             _result_analyze2_active();
          } else {
-             _Pmsg();
+             _result_analyze3_other();
          }
      }
      usleep( 500000 ) ;
