@@ -82,12 +82,41 @@ void print_port_speed_info(char *portname, int speed)
 #define _P1Dn( ddd )         _P1( _strX(ddd) " %d\n" , ddd )
 #define _P2( fmt , ... )    fprintf( stderr , fmt , ## __VA_ARGS__ )
 #define _P2n( fmt , ... )   _P1( fmt "\n" , ## __VA_ARGS__ )
-#define _Pmsg() _P1n ( "\n line %d : " \
-        "get %d : <%d> 0x%02x , <%c><%s>" \
-        " itemNO %d , seq1 %d,%d, rec1 %d,%d , ok/fail %d,%d " \
-        , __LINE__ , _time1 , _buf1020[0] , _buf1020[0] , _buf1020[0] , _buf1020 \
-        , _itemNO , _seq1 , _seq2 , _rec1 , _rec2 , _okCNT , _ngCNT  \
+
+#define _Pmsg1() _P1n ( "\n" \
+        "line %d , time %d " \
+        " get <%d> 0x%02x , <%c><%s>" \
+        "     [%s]" \
+        "     <%s>" \
+        , __LINE__ , _time1 \
+        , _buf1020[0] , _buf1020[0] , _buf1020[0] , _buf1020 \
+        , _listA1[_itemNO] . _fname  \
+        , _listA1[_itemNO] . _wanted  \
         );
+#define _Pmsg2() _P1n ( "\n" \
+        "############## now ##############" \
+        " seq1 %d,%d, rec1 %d,%d " \
+        " <%s> " \
+        "\n" \
+        "############## now ##############" \
+        " itemNO %d , ok/fail %d,%d " \
+        , _seq1 , _seq2 , _rec1 , _rec2 \
+        , _buf1020 \
+        , (_itemNO + 1) , _okCNT , _ngCNT  \
+        );
+#define _Pmsg3() \
+    if( 0 != strncmp( _buf1020 , _listA1[_itemNO] . _wanted , 99 ) ) { \
+        _P1n ( "\n" \
+                "diff3 : %d :" \
+                "     [%s]" \
+                "     <%s>" \
+                "     <%s>" \
+                , _itemNO \
+                , _listA1[_itemNO] . _fname  \
+                , _buf1020 \
+                , _listA1[_itemNO] . _wanted  \
+                ); } 
+
 #define _Pa0()   {_P1("\n") ; fflush( stdout ) ;}
 #define _Pa1()   {_P1(".") ; fflush( stdout ) ;}
 #define _Pa2()   {_P1("=") ; fflush( stdout ) ;}
@@ -144,12 +173,21 @@ void _genCMD01( char * ___fnameBUF , char * ___systemBUF , int ___itemNO ) {
 
 void _ItemFailed()
 {
+    _ngList[ _ngCNT ] = _itemNO ;
+    _ngCNT ++ ;
+    _Pmsg2();
+
     _itemNO ++ ;
     _genCMD01( _wavFname1 , _playScmd1 , _itemNO ) ;
 } /* _ItemFailed */
 
 void _ItemOk()
 {
+    _okList[ _okCNT ] = _itemNO ;
+    _okCNT ++ ;
+    _Pmsg2();
+    _Pmsg3();
+
     _itemNO ++ ;
     _genCMD01( _wavFname1 , _playScmd1 , _itemNO ) ;
 } /* _ItemOk */
@@ -178,7 +216,7 @@ void _step1_enable_voice(){
     _write01( "voice voice_enable\r" ) ;
     __rt = _read_a_line01( _fd_ttyS1 , _buf1020 ) ; _time1 = _time2 ; 
     if ( 1 && __rt > 0 ) {
-        _Pmsg();
+        _Pmsg1();
     }
     usleep( 500000 ) ;
 } /* _step1_enable_voice */
@@ -189,7 +227,7 @@ void _exit_and_dump_info01()
 
 void _result_analyze1_inactive()
 {
-    if(0) _Pmsg();
+    if(0) _Pmsg1();
     if(1) _Pa1();
     if ( _active1_inactive0 != 0 ) {
         //_seq1 = 0 ;
@@ -260,7 +298,7 @@ void _result_analyze2_active()
 void _result_analyze3_other()
 {
     _active1_inactive0 = 1 ;
-    if(1) _Pmsg();
+    if(1) _Pmsg1();
     _ItemOk();
     _rec1 = 0 ;
     _rec2 = 0 ;
