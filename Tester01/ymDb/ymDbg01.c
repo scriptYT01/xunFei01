@@ -144,10 +144,14 @@ void _genCMD01( char * ___fnameBUF , char * ___systemBUF , int ___itemNO ) {
 
 void _ItemFailed()
 {
+    _itemNO ++ ;
+    _genCMD01( _wavFname1 , _playScmd1 , _itemNO ) ;
 } /* _ItemFailed */
 
 void _ItemOk()
 {
+    _itemNO ++ ;
+    _genCMD01( _wavFname1 , _playScmd1 , _itemNO ) ;
 } /* _ItemOk */
 
 void _init01() 
@@ -216,7 +220,6 @@ void _result_analyze1_inactive()
         }
     } else {
         _ItemFailed();
-        _itemNO ++ ;
         if ( _itemNO >= _testSize ) {
             _exit_and_dump_info01();
         } else {
@@ -244,7 +247,6 @@ void _result_analyze2_active()
         if ( _rec1 > 3 ) {
             _rec1 = 0 ;
            _ItemFailed();
-            _itemNO ++ ;
         } else {
             _rec1 ++ ;
         }
@@ -259,7 +261,6 @@ void _result_analyze3_other()
 {
     _active1_inactive0 = 1 ;
     if(1) _Pmsg();
-    _itemNO ++ ;
     _ItemOk();
     _rec1 = 0 ;
     _rec2 = 0 ;
