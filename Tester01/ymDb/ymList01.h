@@ -45,7 +45,7 @@ _STitemX _listA1[] = {
 { "39"  , "v down timer_setting 15" } ,
 
 { "40"  , "v down timer_setting 20" } ,
-{ "41"  , "v down timer_setting 30 " } ,
+{ "41"  , "v down timer_setting 30" } ,
 { "42"  , "v down timer_setting 40" } ,
 
 { "43"  , "v down timer_setting 60" } ,

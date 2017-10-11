@@ -192,7 +192,7 @@ void _ItemFailed()
     _itemNO ++ ;
     _ItemExit();
     _genCMD01( _wavFname1 , _playScmd1 , _itemNO ) ;
-    sleep( 2 ) ;
+    if(0) sleep( 2 ) ;
 } /* _ItemFailed */
 
 void _ItemOk()
@@ -210,7 +210,7 @@ void _ItemOk()
     _itemNO ++ ;
     _ItemExit();
     _genCMD01( _wavFname1 , _playScmd1 , _itemNO ) ;
-    sleep( 2 ) ;
+    if(0)  sleep( 2 ) ;
 } /* _ItemOk */
 
 void _init01() 
@@ -346,6 +346,7 @@ void _step2_get_voice_state(){
              _result_analyze1_inactive();
          } else if ( 0 == strcmp( _buf1020 , "v down none1" ) ) { /* active */
              _result_analyze2_active();
+         } else if ( 0 == strcmp( _buf1020 , "ok" ) ) { /* ok1 : do nothing . */
          } else {
              _result_analyze3_other();
          }
@@ -379,7 +380,8 @@ void _debug01() {
     
     while ( 1 ) {
         _time2 = time(0) ;
-        if ( _time1 == -1 || (_time2 - _time1) > 3 ) {
+        //if ( _time1 == -1 || (_time2 - _time1) > 3 ) {
+        if ( _time1 == -1 ) {
             _step1_enable_voice() ;
 
             continue ;
