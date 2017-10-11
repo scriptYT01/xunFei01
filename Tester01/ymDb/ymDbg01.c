@@ -82,7 +82,12 @@ void print_port_speed_info(char *portname, int speed)
 #define _P1Dn( ddd )         _P1( _strX(ddd) " %d\n" , ddd )
 #define _P2( fmt , ... )    fprintf( stderr , fmt , ## __VA_ARGS__ )
 #define _P2n( fmt , ... )   _P1( fmt "\n" , ## __VA_ARGS__ )
-#define _Pmsg() _P1n ( "\n    get %d : <%d> 0x%02x , <%c><%s>" , _time1 , _buf1020[0] , _buf1020[0] , _buf1020[0] , _buf1020 );
+#define _Pmsg() _P1n ( "\n line %d : " \
+        "get %d : <%d> 0x%02x , <%c><%s>" \
+        " itemNO %d , seq1 %d,%d, rec1 %d,%d , ok/fail %d,%d " \
+        , __LINE__ , _time1 , _buf1020[0] , _buf1020[0] , _buf1020[0] , _buf1020 \
+        , _itemNO , _seq1 , _seq2 , _rec1 , _rec2 , _okCNT , _ngCNT  \
+        );
 #define _Pa0()   {_P1("\n") ; fflush( stdout ) ;}
 #define _Pa1()   {_P1(".") ; fflush( stdout ) ;}
 #define _Pa2()   {_P1("=") ; fflush( stdout ) ;}
@@ -127,11 +132,23 @@ char        _wavFname0[100]   ; // the awaking wav file name
 char        _playScmd0[200]   ; // the cmd to play awaking wave file
 char        _wavFname1[100]   ; // the testing wav file name 
 char        _playScmd1[200]   ; // the cmd to play testing wave file
+int         _ngCNT      = 0         ;  // ng amount
+int       * _ngList     = NULL      ;  // ng List
+int         _okCNT      = 0         ;  // ok amount
+int       * _okList     = NULL      ;  // ok List
 
 void _genCMD01( char * ___fnameBUF , char * ___systemBUF , int ___itemNO ) {
     snprintf( ___fnameBUF   , 99 , "/vt/VIOMI_test_wav/M2CHN02VM_AAQ0" "%s" ".wav" , _listA1[___itemNO] . _fname ) ;
     snprintf( ___systemBUF  , 199 , "aplay -f S16_LE -r 16000 " "%s" " &> /dev/null",  ___fnameBUF ) ;
 } /* _genCMD01 */
+
+void _ItemFailed()
+{
+} /* _ItemFailed */
+
+void _ItemOk()
+{
+} /* _ItemOk */
 
 void _init01() 
 {
@@ -139,6 +156,9 @@ void _init01()
     _listA1size = sizeof( _listA1 ) / sizeof( _STitemX ) ;
     _testSize = _listA1size - 2 ;
     _activeItem = _listA1 + _testSize  ;
+
+    _okList = malloc( _listA1size * sizeof( int ) ) ;
+    _ngList = malloc( _listA1size * sizeof( int ) ) ;
 
     _P1Dn( _itemSize );
     _P1Dn( _listA1size );
@@ -195,6 +215,7 @@ void _result_analyze1_inactive()
             _seq2 = 0 ;
         }
     } else {
+        _ItemFailed();
         _itemNO ++ ;
         if ( _itemNO >= _testSize ) {
             _exit_and_dump_info01();
@@ -222,6 +243,7 @@ void _result_analyze2_active()
         _rec2 = 0 ;
         if ( _rec1 > 3 ) {
             _rec1 = 0 ;
+           _ItemFailed();
             _itemNO ++ ;
         } else {
             _rec1 ++ ;
@@ -235,8 +257,10 @@ void _result_analyze2_active()
 
 void _result_analyze3_other()
 {
+    _active1_inactive0 = 1 ;
     if(1) _Pmsg();
     _itemNO ++ ;
+    _ItemOk();
     _rec1 = 0 ;
     _rec2 = 0 ;
 } /* _result_analyze3_other */
