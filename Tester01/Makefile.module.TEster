@@ -15,6 +15,7 @@ te04:=kpvoice01/base01/p3open.cpp
 te05:=kpvoice01/base01/match01.cpp
 te06:=kpvoice01/base01/buf01.cpp
 te07:=Tester01/ymDb/ymDbg01.c
+te08:=Tester01/ymDb/ymList01.h
 
 te11:=Tester01/src/te01_main.cpp
 te12:=Tester01/src/te01_loop.cpp
@@ -44,7 +45,7 @@ XFt2 XFteUpdate2 : XFgenDate
 
 
 TElist1:= 
-TElist1+= te01 te02 te03 te04 te05 te06 te07 
+TElist1+= te01 te02 te03 te04 te05 te06 te07 te08 
 TElist1+= te11 te12 
 TElist2:= 
 TElist2+= te21 te22 te23 te24
