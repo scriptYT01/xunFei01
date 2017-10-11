@@ -235,7 +235,10 @@ void _result_analyze2_active()
 
 void _result_analyze3_other()
 {
-    _Pmsg();
+    if(1) _Pmsg();
+    _itemNO ++ ;
+    _rec1 = 0 ;
+    _rec2 = 0 ;
 } /* _result_analyze3_other */
 
 void _step2_get_voice_state(){
