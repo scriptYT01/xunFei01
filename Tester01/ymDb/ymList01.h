@@ -35,67 +35,72 @@ _STitemX _listA1[] = {
 { "27"  , "v down set_light 1" } ,
 { "28"  , "v down set_light 1" } ,
 { "29"  , "v down set_light 1" } ,
-{ "30"  , "v down set_light 1" } ,
+{ "30"  , "v down set_light 0" } ,
+
 { "31"  , "v down set_light 0" } ,
 { "32"  , "v down set_light 0" } ,
 { "33"  , "v down set_light 0" } ,
 { "34"  , "v down set_light 0" } ,
 { "38"  , "v down timer_setting 10" } ,
-{ "39"  , "v down timer_setting 10" } ,
+{ "39"  , "v down timer_setting 15" } ,
 
-{ "40"  , "v down timer_setting 15" } ,
-{ "41"  , "v down timer_setting 15 " } ,
-{ "42"  , "v down timer_setting 30" } ,
+{ "40"  , "v down timer_setting 20" } ,
+{ "41"  , "v down timer_setting 30 " } ,
+{ "42"  , "v down timer_setting 40" } ,
 
 { "43"  , "v down timer_setting 60" } ,
 { "44"  , "v down timer_setting 30" } ,
 { "45"  , "v down timer_setting 30" } ,
 
-{ "46"  , "v down timer_setting 30" } ,
-{ "47"  , "v down timer_setting 30" } ,
-{ "48"  , "v down timer_setting 30" } ,
+{ "46"  , "v down timer_setting 60" } ,
+{ "47"  , "v down timer_setting 60" } ,
+{ "48"  , "v down timer_setting 90" } ,
 
 { "49"  , "v down timer_setting 120" } ,
-{ "50"  , "v down timer_setting 30" } ,
-{ "51"  , "v down timer_setting 12" } ,
+{ "50"  , "v down timer_setting 120" } ,
+{ "51"  , "v down timer_setting 150" } ,
 
-{ "52"  , "v down timer_setting 120" } ,
-{ "53"  , "v down timer_setting 120" } ,
-{ "54"  , "v down timer_setting 30" } ,
+{ "52"  , "v down timer_setting 180" } ,
+{ "53"  , "v down timer_setting 180" } ,
+{ "54"  , "v down timer_setting 210" } ,
 
-{ "55"  , "v down timer_setting 210" } ,
+{ "55"  , "v down timer_setting 10" } ,
 { "56"  , "v down timer_setting 15" } ,
-{ "57"  , "v down timer_setting 30" } ,
+{ "57"  , "v down timer_setting 20" } ,
 
 { "58"  , "v down timer_setting 30" } ,
-{ "59"  , "v down timer_setting 30" } ,
-{ "60"  , "v down timer_setting 30" } ,
+{ "59"  , "v down timer_setting 40" } ,
+{ "60"  , "v down timer_setting 60" } ,
 
 { "61"  , "v down timer_setting 30" } ,
 { "62"  , "v down timer_setting 30" } ,
-{ "63"  , "v down timer_setting 30" } ,
+{ "63"  , "v down timer_setting 60" } ,
 
-{ "64"  , "v down timer_setting 30" } ,
-{ "65"  , "v down timer_setting 30" } ,
-{ "66"  , "v down timer_setting 90" } ,
+{ "64"  , "v down timer_setting 60" } ,
+{ "65"  , "v down timer_setting 90" } ,
+{ "66"  , "v down timer_setting 120" } ,
 
 { "67"  , "v down timer_setting 120" } ,
-{ "68"  , "v down timer_setting 30" } ,
-{ "69"  , "v down timer_setting 30" } ,
+{ "68"  , "v down timer_setting 150" } ,
+{ "69"  , "v down timer_setting 180" } ,
 
-{ "70"  , "v down timer_setting 30" } ,
+{ "70"  , "v down timer_setting 180" } ,
 { "71"  , "v down timer_setting 210" } ,
 
 { "72"  , "v down current_time" } ,
 { "73"  , "v down current_time" } ,
 { "74"  , "v down current_time" } ,
 { "75"  , "v down current_time" } ,
-{ "76"  , "v down current_time" } ,
+
+{ "76"  , "v down current_time" } , // ji_dian_le
 { "77"  , "v down current_time" } ,
+
 { "78"  , "v down air_pollution" } ,
 { "79"  , "v down air_pollution" } ,
+
 { "80"  , "v down air_pollution" } ,
 { "81"  , "v down air_pollution" } ,
+
 { "88"  , "v down active" } ,
 { "89"  , "v down active" } 
 };
