@@ -99,23 +99,23 @@ void print_port_speed_info(char *portname, int speed)
         " <%s> " \
         "\n" \
         "############## now ##############" \
-        " itemNO %d , ok/fail %d,%d " \
+        " itemNO %d , ok/fail %d,%d , diff %d " \
         , _seq1 , _seq2 , _rec1 , _rec2 \
         , _buf1020 \
-        , (_itemNO + 1) , _okCNT , _ngCNT  \
+        , (_itemNO + 1) , _okCNT , _ngCNT , _diCNT \
         );
+#define _diff1() ( 0 != strncmp( _buf1020 , _listA1[_itemNO] . _wanted , 99 ) ) 
 #define _Pmsg3() \
-    if( 0 != strncmp( _buf1020 , _listA1[_itemNO] . _wanted , 99 ) ) { \
-        _P1n ( "\n" \
-                "diff3 : %d :" \
-                "     [%s]" \
-                "     <%s>" \
-                "     <%s>" \
-                , _itemNO \
-                , _listA1[_itemNO] . _fname  \
-                , _buf1020 \
-                , _listA1[_itemNO] . _wanted  \
-                ); } 
+    _P1n ( "\n" \
+            "diff3 : %d :" \
+            "     [%s]" \
+            "     <%s>" \
+            "     <%s>" \
+            , _itemNO \
+            , _listA1[_itemNO] . _fname  \
+            , _buf1020 \
+            , _listA1[_itemNO] . _wanted  \
+            )
 
 #define _Pa0()   {_P1("\n") ; fflush( stdout ) ;}
 #define _Pa1()   {_P1(".") ; fflush( stdout ) ;}
@@ -165,6 +165,8 @@ int         _ngCNT      = 0         ;  // ng amount
 int       * _ngList     = NULL      ;  // ng List
 int         _okCNT      = 0         ;  // ok amount
 int       * _okList     = NULL      ;  // ok List
+int         _diCNT      = 0         ;  // diff amount
+int       * _diList     = NULL      ;  // diff List
 
 void _genCMD01( char * ___fnameBUF , char * ___systemBUF , int ___itemNO ) {
     snprintf( ___fnameBUF   , 99 , "/vt/VIOMI_test_wav/M2CHN02VM_AAQ0" "%s" ".wav" , _listA1[___itemNO] . _fname ) ;
@@ -186,7 +188,12 @@ void _ItemOk()
     _okList[ _okCNT ] = _itemNO ;
     _okCNT ++ ;
     _Pmsg2();
-    _Pmsg3();
+
+    if( _diff1() ) {
+        if(1) _Pmsg3();
+        _diList[ _diCNT ] = _itemNO ;
+        _diCNT ++ ;
+    }
 
     _itemNO ++ ;
     _genCMD01( _wavFname1 , _playScmd1 , _itemNO ) ;
@@ -201,6 +208,7 @@ void _init01()
 
     _okList = malloc( _listA1size * sizeof( int ) ) ;
     _ngList = malloc( _listA1size * sizeof( int ) ) ;
+    _diList = malloc( _listA1size * sizeof( int ) ) ;
 
     _P1Dn( _itemSize );
     _P1Dn( _listA1size );
