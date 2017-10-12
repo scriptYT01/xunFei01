@@ -18,7 +18,7 @@ typedef struct {
 } _STitemX ;
 
 typedef struct { 
-    const char   ** _listG_item      ;
+    const char   ** _listG_item     ;
     const char    * _listG_name     ;
     int             _listG_objSize  ;
 } _STlistGX ;

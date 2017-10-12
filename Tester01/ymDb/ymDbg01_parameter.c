@@ -46,10 +46,12 @@ void _listUse_4_play_list()
 {
     int         __i01 ;
     int         __i02 ;
+    int         __i03 ;
+    int         __i04 ;
     char        __buf100[100] ;
     int         __gSize = -1 ;
     _STlistGX * __listG ;
-    const char ** __str2 ;
+    char     ** __str2 ;
 
     if ( 0 == strncmp( "l" , _ymDbgModeStr , 2 ) ) {
         _showPlayListG();
@@ -70,7 +72,7 @@ void _listUse_4_play_list()
     if ( NULL == __listG ) {
             _P1n( "Group error 11 =%s %d: " , basename((char*)__FILE__), __LINE__ ) ; exit( 11 ) ;
     }
-    __str2 = __listG -> _listG_item  ;
+    __str2 = (char**) __listG -> _listG_item  ;
     if ( NULL == __str2 ) {
             _P1n( "Group error 22 =%s %d: " , basename((char*)__FILE__), __LINE__ ) ; exit( 11 ) ;
     }
@@ -95,10 +97,17 @@ void _listUse_4_play_list()
         if(0) _P1n( " 11111 81 : %p , %p , %p , size %d " , _listAA , _listAA , _listBB , _listA1_BSize ) ;
     }
 
-    for ( __i01 = 0 ; __i01 < __gSize ; __i01 ++ ) {
-        _listBB[__i01] = _listA1[ __i01 ] ;
-        if(0) _P1( "%s %p \n" , _listA1[ __i01 ] . _fname , &(_listA1[ __i01 ]) ) ;
-        if(0) _P1( "%s %p \n" , _listBB[ __i01 ] . _fname , &(_listBB[ __i01 ]) ) ;
+    for ( __i03 = 0 ; __i03 < __gSize ; __i03 ++ ) {
+        __i04 = _ymDbsearchListItem( _listA1 , _listA1_objSize - 2 , __str2[__i03] ) ;
+        if ( __i04 < 0 ) {
+            _P1n( "error str ? %d %d :" , __i03 , __i04 );
+            _P1n( "error str ? %s " , __str2[__i03] ) ;
+            exit( 82 ) ;
+        }
+
+        _listBB[__i03] = _listA1[ __i03 ] ;
+        if(0) _P1( "%s %p \n" , _listA1[ __i03 ] . _fname , &(_listA1[ __i03 ]) ) ;
+        if(0) _P1( "%s %p \n" , _listBB[ __i03 ] . _fname , &(_listBB[ __i03 ]) ) ;
     }
     _listBB[__gSize]      = _listA1[ _listA1_objSize - 2 ] ;
     _listBB[__gSize+1]    = _listA1[ _listA1_objSize - 1 ] ;
