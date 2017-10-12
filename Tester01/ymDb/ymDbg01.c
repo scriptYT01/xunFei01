@@ -5,9 +5,11 @@
 #include <string.h>
 #include <termios.h>
 #include <unistd.h>
+#include <time.h>
 #include "ymList01.h"
 
 
+void _exit_and_dump_info01();
 
 int set_interface_attribs(int fd, int speed)
 {
@@ -91,8 +93,8 @@ void print_port_speed_info(char *portname, int speed)
         " wanted <%s>" \
         , __LINE__ , _time1 \
         , _buf1020[0] , _buf1020[0] , _buf1020[0] , _buf1020 \
-        , _listA1[_itemNO] . _fname  \
-        , _listA1[_itemNO] . _wanted  \
+        , _listAA[_itemNO] . _fname  \
+        , _listAA[_itemNO] . _wanted  \
         );
 #define _Pmsg2() _P1n ( "\n" \
         "############## now1 ##############" \
@@ -108,7 +110,7 @@ void print_port_speed_info(char *portname, int speed)
         , _plCNT0   \
         , _plCNT1   \
         );
-#define _diff1() ( 0 != strncmp( _buf1020 , _listA1[_itemNO] . _wanted , 99 ) ) 
+#define _diff1() ( 0 != strncmp( _buf1020 , _listAA[_itemNO] . _wanted , 99 ) ) 
 #define _Pmsg3() \
     _P1n ( "\n" \
             "diff3 : %d :" \
@@ -116,9 +118,9 @@ void print_port_speed_info(char *portname, int speed)
             "    get  <%s>" \
             "    want <%s>" \
             , _itemNO \
-            , _listA1[_itemNO] . _fname  \
+            , _listAA[_itemNO] . _fname  \
             , _buf1020 \
-            , _listA1[_itemNO] . _wanted  \
+            , _listAA[_itemNO] . _wanted  \
             )
 
 #define _Pa0()   {_P1("\n") ; fflush( stdout ) ;}
@@ -174,13 +176,14 @@ int         _okCNT      = 0         ;  // ok amount
 int       * _okList     = NULL      ;  // ok List
 int         _diCNT      = 0         ;  // diff amount
 int       * _diList     = NULL      ;  // diff List
-int         _plCNT0      = 0         ;  // play Counter total , awake    wav
-int         _plCNT1      = 0         ;  // play Counter total , sentence wav
-int       * _plList0     = NULL      ;  // play Counter for each item , awake 
-int       * _plList1     = NULL      ;  // play Counter for each item , sentence 
+int         _plCNT0     = 0         ;  // play Counter total , awake    wav
+int         _plCNT1     = 0         ;  // play Counter total , sentence wav
+int       * _plList0    = NULL      ;  // play Counter for each item , awake 
+int       * _plList1    = NULL      ;  // play Counter for each item , sentence 
+_STitemX  * _listAA     = _listA1 ;
 
 void _genCMD01( char * ___fnameBUF , char * ___systemBUF , int ___itemNO ) {
-    snprintf( ___fnameBUF   , 99 , "/vt/VIOMI_test_wav/M2CHN02VM_AAQ0" "%s" ".wav" , _listA1[___itemNO] . _fname ) ;
+    snprintf( ___fnameBUF   , 99 , "/vt/VIOMI_test_wav/M2CHN02VM_AAQ0" "%s" ".wav" , _listAA[___itemNO] . _fname ) ;
     snprintf( ___systemBUF  , 199 , "aplay -f S16_LE -r 16000 " "%s" " &> /dev/null",  ___fnameBUF ) ;
 } /* _genCMD01 */
 
@@ -223,9 +226,9 @@ void _ItemOk()
 void _init01() 
 {
     _itemSize = sizeof( _STitemX ) ;
-    _listA1size = sizeof( _listA1 ) / sizeof( _STitemX ) ;
+    _listA1size = sizeof( _listAA ) / sizeof( _STitemX ) ;
     _testSize = _listA1size - 2 ;
-    _activeItem = _listA1 + _testSize  ;
+    _activeItem = _listAA + _testSize  ;
 
     _okList  = malloc( _listA1size * sizeof( int ) ) ;
     _ngList  = malloc( _listA1size * sizeof( int ) ) ;
@@ -251,6 +254,24 @@ void _step1_enable_voice(){
     }
     usleep( 500000 ) ;
 } /* _step1_enable_voice */
+
+void _dumpExtDebugInfo01()
+{
+    int __i01 ;
+    for ( __i01 = 0 ; __i01 < _testSize ; __i01 ++ ) {
+        if ( _plList0[__i01] > 1 || _plList1[__i01] > 1 ) {
+            _P1n( "debug11 : [%s] : awake %d , try %d " 
+                    , _listAA[__i01] . _fname 
+                    , _plList0[__i01]
+                    , _plList1[__i01]
+                    ) ;
+        }
+    }
+
+    //_plList0 = malloc( _listA1size * sizeof( int ) ) ;
+    //_plList1 = malloc( _listA1size * sizeof( int ) ) ;
+} /* _dumpExtDebugInfo01 */
+
 void _exit_and_dump_info01()
 {
     _Pmsg2();
@@ -272,10 +293,11 @@ void _exit_and_dump_info01()
          );
     _P1n ( "######  start %d , stop %d , used : %d" "\n\n" , _time0 , _time2 , _time2 - _time0 ) ;
 
+    if ( 1 ) { _dumpExtDebugInfo01() ; }
+
     exit( 33 ) ;
 } /* _exit_and_dump_info01 */
 
-#define _argDebug0()    { _P1n( "argc : %d" , _argC ); if ( _argC >= 2 ) { _P1n( "argV 1: <%d><%s>" , strlen(_argV[1]) , _argV[1] ); } }
 #define _argDebug11()    if ( _argC >= 2 && 0 == strncmp( "1" , _argV[1] , 99 ) ) { _Pmsg1() ; return ; }
 #define _argDebug12()    if ( _argC >= 2 && 0 == strncmp( "1" , _argV[1] , 99 ) ) { _Pa1()   ; return ; }
 #define _argDebug13()    if ( _argC >= 2 && 0 == strncmp( "1" , _argV[1] , 99 ) ) { _Pa2()   ; return ; }
@@ -296,7 +318,7 @@ void _result_analyze1_inactive()
     _active1_inactive0 = 0 ;
     if ( _seq1 == 0 ) { // first , inactive , pring header.
         _genCMD01( _wavFname1 , _playScmd1 , _itemNO ) ;
-        _P1n( " trying %d : %s , wanted <%s> , _seq1 %d _seq2 %d " , _itemNO , _wavFname1 , _listA1[_itemNO] . _wanted , _seq1 , _seq2 ) ;
+        _P1n( " trying %d : %s , wanted <%s> , _seq1 %d _seq2 %d " , _itemNO , _wavFname1 , _listAA[_itemNO] . _wanted , _seq1 , _seq2 ) ;
         _seq1 = 1 ;
         _seq2 = 0 ;
     } else if ( _seq1 >= 1 && _seq1 <= 3 ) { // play awake wav.  
@@ -304,7 +326,7 @@ void _result_analyze1_inactive()
             if(0) _P1n( " trying <%s>" , _playScmd0 ) ;
             if(0) _P1n( " trying <%s>" , _playScmd1 ) ;
             if(1) _P1n( "->-AWAKE-<-" );
-            if(1) { system( _playScmd0 ); _plList0[_itemNO] ; _plCNT0 ++ ; } ;
+            if(1) { system( _playScmd0 ); _plList0[_itemNO] ++ ; _plCNT0 ++ ; } 
             _time1 = _time2 ;
         }
         _seq2 ++ ;
@@ -313,7 +335,7 @@ void _result_analyze1_inactive()
             _seq2 = 0 ;
         }
     } else {
-        if(1) _P1n( "\n NG %d : %s , wanted <%s> " , _itemNO , _wavFname1 , _listA1[_itemNO] . _wanted ) ;
+        if(1) _P1n( "\n NG %d : %s , wanted <%s> " , _itemNO , _wavFname1 , _listAA[_itemNO] . _wanted ) ;
         _ItemFailed();
 
         _seq1 = 0 ;
@@ -331,7 +353,7 @@ void _result_analyze2_active()
 
     if ( _rec2 == 0 ) {
         if(1) _P1n( "\n#>#%s#<#" , _wavFname1 );
-        if(1) { system( _playScmd1 ); _plList1[_itemNO] ;  _plCNT1 ++ ; } ;
+        if(1) { system( _playScmd1 ); _plList1[_itemNO] ++ ;  _plCNT1 ++ ; } ;
         _time1 = _time2 ;
         _rec2 ++ ;
     } else if ( _rec2 >= 6 ) {
@@ -415,6 +437,17 @@ void _debug01() {
 
 } // _debug01() ;
 
+void _argDebug0()    { 
+    int __i01 ;
+
+    _P1n( "argc : %d" , _argC ); 
+
+    for ( __i01 = 0 ; __i01 < _argC ; __i01 ++ ) { 
+        _P1n( "argV %d: len <%d> , content <%s>" 
+                , __i01 , strlen(_argV[__i01]) , _argV[__i01] ); 
+    } 
+
+} /* _argDebug0 */
 
 int main(int ___argc,char** ___argv)
 {
