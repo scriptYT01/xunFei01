@@ -8,6 +8,7 @@
 #include <time.h>
 #include <signal.h>
 #include <getopt.h>
+#include <libgen.h>
 
 
 typedef struct { 
@@ -15,6 +16,12 @@ typedef struct {
     const char * _wanted ;
     const char * _pinYin ;
 } _STitemX ;
+
+typedef struct { 
+    const char   ** _listG_item      ;
+    const char    * _listG_name     ;
+    int             _listG_objSize  ;
+} _STlistGX ;
 
 #define _strX( aa ) # aa
 #define _write01( aa )      write( _fd_ttyS1 , aa , strlen(aa) ) 
@@ -76,12 +83,16 @@ void _paraAnalyzeYmDbg( int ___argc, char ** ___argv);
 
 void _showPlayNow()    ;
 void _showPlaySingle() ;
+void _showPlayListG()  ;
 void _showUsageExit()  ;
 
 extern _STitemX   * _listAA             ;
 extern int          _listAA_BSize       ; // the total size in byte
 extern _STitemX   * _listBB             ;
 extern int          _listBB_objSize     ;
+
+extern _STlistGX    _listGG[]           ;
+extern int          _listGG_objSize     ;
 
 extern _STitemX     _listA1[]           ;
 extern int          _listA1_BSize       ;

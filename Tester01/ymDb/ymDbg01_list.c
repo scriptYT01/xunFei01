@@ -107,3 +107,14 @@ int     _itemSize     = sizeof( _STitemX ) ;
 int     _listA1_objSize = (sizeof( _listA1 )) / (sizeof( _STitemX )) ;
 int     _listA1_awake1  = (sizeof( _listA1 )) / (sizeof( _STitemX )) - 2 ;
 
+
+const char* _listG0[] = {
+    "05" , "21" , "25" , "75" , "79" , "38" , "10 " , NULL 
+} ;/* _listG0[] */
+
+_STlistGX _listGG[]    = { 
+    { _listG0 , "0" , 7 } 
+} ;
+
+int _listGG_objSize = 1 ;
+

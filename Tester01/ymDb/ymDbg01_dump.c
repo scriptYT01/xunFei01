@@ -41,6 +41,27 @@ void _showPlaySingle()
     exit( 91 ) ;
 } /* _showPlaySingle */
 
+void _showPlayListG()
+{
+    int __i01 ;
+    _P1n( "\n\n\n" 
+            " avaiable list Group is "                                                                     "\n" 
+        );
+    for ( __i01 = 0 ; __i01 < _listGG_objSize ; __i01 ++ ) {
+        if ( __i01 == 0 ) {
+            _P1( "%2d" , __i01 ) ;
+        } else if ( __i01 % 20 == 0 ) {
+            _P1( "\n%2d" , __i01 ) ;
+        } else if ( __i01 % 10 == 0 ) {
+            _P1( "    %2d" , __i01 ) ;
+        } else {
+            _P1( " %2d" , __i01 ) ;
+        }
+    }
+    _P1n( "\n\n") ;
+    exit( 92 ) ;
+} /* _showPlayListG */
+
 void _showUsageExit()
 {
     _P1n( "\n\n\n" 

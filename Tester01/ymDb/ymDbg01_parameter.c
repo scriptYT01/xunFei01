@@ -1,4 +1,3 @@
-
 #include "ymList01.h"
 
 static int _verbose_flag;
@@ -42,6 +41,57 @@ void _listUse_3_play_single()
     _listAA             = _listP3single ;
     _listAA_BSize       = sizeof( _listP3single )  ;
 } /* _listUse_3_play_single */
+
+void _listUse_4_play_list()
+{
+    int         __i01 ;
+    int         __i02 ;
+    char        __buf100[100] ;
+    int         __gSize = -1 ;
+    _STlistGX * __listG ;
+    const char ** __str2 ;
+
+    if ( 0 == strncmp( "l" , _ymDbgModeStr , 2 ) ) {
+        _showPlayListG();
+    }
+
+    __i01 = atoi( _ymDbgModeStr ) ;
+    __buf100[0] = 0 ;
+    snprintf( __buf100, 99 , "%d" , __i01 ) ;
+    if ( 0 != strncmp( __buf100 , _ymDbgModeStr , 99 ) ) {
+        _showPlayListG();
+    }
+
+    if ( __i01 >= _listGG_objSize ) {
+        _showPlayListG();
+    }
+
+    __listG = _listGG + __i01 ;
+    if ( NULL == __listG ) {
+            _P1n( "Group error 11 =%s %d: " , basename((char*)__FILE__), __LINE__ ) ; exit( 11 ) ;
+    }
+    __str2 = __listG -> _listG_item  ;
+    if ( NULL == __str2 ) {
+            _P1n( "Group error 22 =%s %d: " , basename((char*)__FILE__), __LINE__ ) ; exit( 11 ) ;
+    }
+
+    __i02 = 0 ;
+    while ( 1 ) {
+        if ( __i02 > 100 ) {
+            _P1n( "Group error 44 =%s %d: " , basename((char*)__FILE__), __LINE__ ) ; exit( 11 ) ;
+        }
+        if ( __str2[__i02] == NULL ) {
+            __gSize = __i02 ;
+            break ;
+        }
+        __i02 ++ ;
+    }
+    _P1n( "Group str amount %d " , __gSize ) ;
+    
+_P1n( " 11111 91 " ) ;
+    // _listGG
+    exit(32) ;
+} /* _listUse_4_play_list */
 
 void _listUse_1_all()
 {
@@ -157,6 +207,8 @@ void _paraAnalyzeYmDbg( int ___argc, char ** ___argv)
             return ;
             break ;
         case _ymDbgMode_play_list :
+            _listUse_4_play_list();
+            return ;
             break ;
         default:
             _P1n( "\n\n unknow mode %d \n" , _ymDbgMode ) ;
