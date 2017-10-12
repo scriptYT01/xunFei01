@@ -74,10 +74,16 @@ void _printTTYinfo_ymDB01(char *portname, int speed);
 void _paraAnalyzeYmDbg( int ___argc, char ** ___argv);
 
 extern _STitemX   * _listAA             ;
+extern int          _listAA_BSize       ; // the total size in byte
+
 extern _STitemX     _listA1[]           ;
-extern int          _listAAbyteSize     ; // the total size in byte
 extern int          _listA1_BSize       ;
+extern int          _listA1_objSize     ;
+extern int          _listA1_awake1      ;
+
 extern int          _itemSize           ;
+extern int          _testSize           ; // the testing word amount.
+
 extern int          _ymDbgMode          ;
 enum _ymDbgModeXX {
     _ymMode_all
@@ -85,6 +91,7 @@ enum _ymDbgModeXX {
         , _ymDbgMode_play_single
         , _ymDbgMode_play_list
 } ;
+
 extern int         _argC ;
 extern char    **  _argV ;
 

@@ -2,6 +2,8 @@
 #include "ymList01.h"
 
 static int _verbose_flag;
+int     _ymDbgMode = _ymMode_all ; 
+static char *  _ymDbgModeStr = NULL ;
 
 void _showUsageExit()
 {
@@ -12,7 +14,9 @@ void _showUsageExit()
 
             "     -d , --debug  : listen only , waiting the use play the awake / words "                      "\n"
             "     -p , --play   : awake , then play the specified word item only."                            "\n"
+            "     -pp           : list all single test can be use "                                           "\n"
             "     -l , --list   : awake , then play the specified word list. "                                "\n"
+            "     -ll           : list all list can be use "                                                  "\n"
 
             "     no parameter  : play the default all word items , use about 10 - 15 minuts. "               "\n"
             "\n"
@@ -21,14 +25,45 @@ void _showUsageExit()
     exit(33) ;
 } /* _showUsageExit */
 
-void _listUse_3_play_signle()
+void _showPlaySingle()
 {
-} /* _listUse_3_play_signle */
+    int __i01 ;
+    _P1n( "\n\n\n" 
+            " avaiable single test is "                                                                     "\n" 
+        );
+    for ( __i01 = 0 ; __i01 < _listA1_awake1 ; __i01 ++ ) {
+        if ( __i01 == 0 ) {
+            _P1( "%s" , _listA1[ __i01 ] . _fname ) ;
+        } else if ( __i01 % 20 == 0 ) {
+            _P1( "\n%s" , _listA1[ __i01 ] . _fname ) ;
+        } else if ( __i01 % 10 == 0 ) {
+            _P1( "    %s" , _listA1[ __i01 ] . _fname ) ;
+        } else {
+            _P1( " %s" , _listA1[ __i01 ] . _fname ) ;
+        }
+    }
+    _P1n( "\n\n") ;
+    exit( 91 ) ;
+} /* _showPlaySingle */
+
+static _STitemX _listP3single[3] ;
+void _listUse_3_play_single()
+{
+    if ( 0 == strncmp( "p" , _ymDbgModeStr , 2 ) ) {
+        _showPlaySingle();
+    }
+
+    _listP3single[1] = _listA1[ _testSize ] ;
+    _listP3single[2] = _listA1[ _testSize + 1 ] ;
+
+    _listAA             = _listP3single ;
+    _listAA_BSize       = sizeof( _listP3single )  ;
+} /* _listUse_3_play_single */
 
 void _listUse_1_all()
 {
     _listAA             = _listA1 ;
-    _listAAbyteSize     = _listA1_BSize ;
+    _listAA_BSize       = _listA1_BSize ;
 } /* _listUse_1_all */
 
 void _listUse_2_debuging()
@@ -37,8 +72,6 @@ void _listUse_2_debuging()
     _listUse_1_all();
 } /* _listUse_2_debuging */
 
-int     _ymDbgMode = _ymMode_all ; 
-char *  _ymDbgModeStr = NULL ;
 void _paraAnalyzeYmDbg( int ___argc, char ** ___argv)
 {
 
@@ -137,7 +170,7 @@ void _paraAnalyzeYmDbg( int ___argc, char ** ___argv)
             return ;
             break ;
         case _ymDbgMode_play_single :
-            _listUse_3_play_signle();
+            _listUse_3_play_single();
             return ;
             break ;
         case _ymDbgMode_play_list :

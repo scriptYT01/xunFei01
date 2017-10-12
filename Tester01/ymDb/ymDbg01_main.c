@@ -35,9 +35,9 @@ char    **  _argV ;
 char        _buf1020[1024] ; 
 int         _active1_inactive0 = 0 ;
 
-_STitemX  * _listAA     = NULL ;
-int         _listAAbyteSize ; // the total size in byte
-int         _listAAobjSize  ; // the total list item amount .
+_STitemX  * _listAA         = NULL ;
+int         _listAA_BSize   ; // the total size in byte
+int         _listAA_objSize ; // the total list item amount .
 int         _testSize       ; // the testing word amount.
 
 _STitemX  * _activeItem     ;
@@ -104,19 +104,18 @@ void _ItemOk()
 
 void _initYMdbg() 
 {
-    _itemSize           = sizeof( _STitemX ) ;
-    _listAAobjSize = _listAAbyteSize / _itemSize ;
-    _testSize = _listAAobjSize - 2 ;
+    _listAA_objSize = _listAA_BSize / _itemSize ;
+    _testSize = _listAA_objSize - 2 ;
     _activeItem = _listAA + _testSize  ;
 
-    _okList  = malloc( _listAAobjSize * sizeof( int ) ) ;
-    _ngList  = malloc( _listAAobjSize * sizeof( int ) ) ;
-    _diList  = malloc( _listAAobjSize * sizeof( int ) ) ;
-    _plList0 = malloc( _listAAobjSize * sizeof( int ) ) ;
-    _plList1 = malloc( _listAAobjSize * sizeof( int ) ) ;
+    _okList  = malloc( _listAA_objSize * sizeof( int ) ) ;
+    _ngList  = malloc( _listAA_objSize * sizeof( int ) ) ;
+    _diList  = malloc( _listAA_objSize * sizeof( int ) ) ;
+    _plList0 = malloc( _listAA_objSize * sizeof( int ) ) ;
+    _plList1 = malloc( _listAA_objSize * sizeof( int ) ) ;
 
     _P1Dn( _itemSize );
-    _P1Dn( _listAAobjSize );
+    _P1Dn( _listAA_objSize );
     _P1Dn( _testSize );
 
     _genCMD01( _wavFname0 , _playScmd0 , _testSize ) ;
@@ -147,8 +146,8 @@ void _dumpExtDebugInfo01()
         }
     }
 
-    //_plList0 = malloc( _listAAobjSize * sizeof( int ) ) ;
-    //_plList1 = malloc( _listAAobjSize * sizeof( int ) ) ;
+    //_plList0 = malloc( _listAA_objSize * sizeof( int ) ) ;
+    //_plList1 = malloc( _listAA_objSize * sizeof( int ) ) ;
 } /* _dumpExtDebugInfo01 */
 
 void _exit_and_dump_info01()

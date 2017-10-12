@@ -102,6 +102,8 @@ _STitemX _listA1[] = {
 { "89"  , "v down active" } 
 }; /*  _listA1 */
 
-int         _listA1_BSize = sizeof( _listA1 ) ; // the total size in byte
-int         _itemSize     = sizeof( _STitemX ) ;
+int     _listA1_BSize = sizeof( _listA1 ) ; // the total size in byte
+int     _itemSize     = sizeof( _STitemX ) ;
+int     _listA1_objSize = (sizeof( _listA1 )) / (sizeof( _STitemX )) ;
+int     _listA1_awake1  = (sizeof( _listA1 )) / (sizeof( _STitemX )) - 2 ;
 
