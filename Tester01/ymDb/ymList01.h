@@ -14,8 +14,6 @@ typedef struct {
     const char * _wanted ;
 } _STitemX ;
 
-extern _STitemX _listA1[] ;
-
 #define _strX( aa ) # aa
 #define _write01( aa )      write( _fd_ttyS1 , aa , strlen(aa) ) 
 #define _P1( fmt , ... )    fprintf( stdout , fmt , ## __VA_ARGS__ )
@@ -71,3 +69,10 @@ extern _STitemX _listA1[] ;
 int _setTTY_ymDB01(int fd, int speed);
 void _printTTYinfo_ymDB01(char *portname, int speed);
 void _paraAnalyzeYmDbg();
+
+extern _STitemX   * _listAA             ;
+extern _STitemX     _listA1[]           ;
+extern int          _listAAbyteSize     ; // the total size in byte
+extern int          _listA1_BSize       ;
+extern int          _itemSize           ;
+

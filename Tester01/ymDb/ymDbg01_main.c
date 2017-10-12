@@ -34,10 +34,12 @@ int         _argC ;
 char    **  _argV ;
 char        _buf1020[1024] ; 
 int         _active1_inactive0 = 0 ;
-int         _itemSize       ;
+
+_STitemX  * _listAA     = NULL ;
 int         _listAAbyteSize ; // the total size in byte
 int         _listAAobjSize  ; // the total list item amount .
 int         _testSize       ; // the testing word amount.
+
 _STitemX  * _activeItem     ;
 int         _itemNO = 0     ;
 int         _seq1  = 0      ; // counter in in-active state
@@ -58,7 +60,6 @@ int         _plCNT0     = 0         ;  // play Counter total , awake    wav
 int         _plCNT1     = 0         ;  // play Counter total , sentence wav
 int       * _plList0    = NULL      ;  // play Counter for each item , awake 
 int       * _plList1    = NULL      ;  // play Counter for each item , sentence 
-_STitemX  * _listAA     = NULL ;
 
 void _genCMD01( char * ___fnameBUF , char * ___systemBUF , int ___itemNO ) {
     snprintf( ___fnameBUF   , 99 , "/vt/VIOMI_test_wav/M2CHN02VM_AAQ0" "%s" ".wav" , _listAA[___itemNO] . _fname ) ;
@@ -325,10 +326,6 @@ void _argDebugCMDline()    {
     } 
 
 } /* _argDebugCMDline */
-
-void _showUsageExit()
-{
-} /* _showUsageExit */
 
 
 int main(int ___argc,char** ___argv)
