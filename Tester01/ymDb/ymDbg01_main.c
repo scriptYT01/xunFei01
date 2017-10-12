@@ -453,7 +453,8 @@ void _showUsageExit()
 {
 } /* _showUsageExit */
 
-void _paraAnalyzeYmDbg()
+void _paraAnalyzeYmDbg(int ___argc,char** ___argv);
+void _paraAnalyzeYmDbg(int ___argc,char** ___argv)
 {
     _listAA             = _listA1 ;
     _listAAbyteSize     = sizeof( _listA1 ) ;

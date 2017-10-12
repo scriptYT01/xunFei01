@@ -39,7 +39,9 @@ include $(CLEAR_VARS)
 LOCAL_MODULE := ymDbg01.x1000.bin
 LOCAL_MODULE_TAGS := ymDbg01
 LOCAL_MODULE_PATH:=$(TARGET_FS_BUILD)/ch/te01
-LOCAL_SRC_FILES := ymDb/ymDbg01.c
+LOCAL_SRC_FILES := \
+	ymDb/ymDbg01_main.c  \
+	ymDb/ymDbg01_parameter.c
 LOCAL_CFLAGS:= -Wall -Werror
 LOCAL_LDLIBS := -lc -lpthread 
 include $(BUILD_EXECUTABLE)
