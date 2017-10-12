@@ -36,13 +36,13 @@ typedef struct {
         , _listAA[_itemNO] . _fname  \
         , _listAA[_itemNO] . _wanted  \
         );
-#define _Pmsg2() _P1n ( "\n" \
-        "############## now1 ##############" \
+#define _Pmsg2( bbb ) _P1n ( "\n" \
+        "############## " bbb "1 ##############" \
         " seq1 %d,%d, rec1 %d,%d " \
         " get <%s> : %d " \
         "\n" \
         \
-        "############## now2 ##############" \
+        "############## " bbb "2 ##############" \
         " itemNO %d , ok %d , not-recognized %d , mistake-recognized %d " \
         " , play awake wav %d , play sentence %d " \
         , _seq1 , _seq2 , _rec1 , _rec2 \

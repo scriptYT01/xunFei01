@@ -76,7 +76,7 @@ void _ItemFailed()
 {
     _ngList[ _ngCNT ] = _itemNO ;
     _ngCNT ++ ;
-    _Pmsg2();
+    _Pmsg2( "faild_item");
 
     _itemNO ++ ;
     _ItemExit();
@@ -88,7 +88,7 @@ void _ItemOk()
 {
     _okList[ _okCNT ] = _itemNO ;
     _okCNT ++ ;
-    _Pmsg2();
+    _Pmsg2( "ok_item");
 
     if( _diff1() ) {
         if(1) _Pmsg3();
@@ -139,6 +139,7 @@ void _dumpExtDebugInfo01()
 
     if(1) _P1n( "_testSize %d " , _testSize ) ;
 
+    _P1n( " failed list : " );
     for ( __i01 = 0 ; __i01 < _testSize ; __i01 ++ ) {
         if ( _plList0[__i01] > 1 || _plList1[__i01] > 1 ) {
             _P1n( "debug11 : [%s] : awake %d , try %d " 
@@ -155,7 +156,7 @@ void _dumpExtDebugInfo01()
 
 void _exit_and_dump_info01()
 {
-    _Pmsg2();
+    _Pmsg2( "end_report" );
     _time2 = time(0) ;
 
     _P1n ( "\n\n\n" 
