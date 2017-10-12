@@ -4,13 +4,13 @@ typedef struct {
 } _STitemX ;
 
 _STitemX _listA1[] = {
-{ "01"  , "v down set_power 1" } ,
+{ "01"  , "v down set_power 1" } , /* kai ji */
 { "02"  , "v down set_power 1" } ,
 { "03"  , "v down set_power 1" } ,
 { "04"  , "v down set_power 1" } ,
 { "05"  , "v down set_power 1" } ,
 
-{ "06"  , "v down set_power 0" } ,
+{ "06"  , "v down set_power 0" } , /* guan ji */
 { "07"  , "v down set_power 0" } ,
 { "08"  , "v down set_power 0" } ,
 { "09"  , "v down set_power 0" } ,
@@ -92,7 +92,7 @@ _STitemX _listA1[] = {
 { "74"  , "v down current_time" } ,
 { "75"  , "v down current_time" } ,
 
-{ "76"  , "v down current_time" } , // ji_dian_le
+{ "76"  , "v down current_time" } , /* ji_dian_le */
 { "77"  , "v down current_time" } ,
 
 { "78"  , "v down air_pollution" } ,

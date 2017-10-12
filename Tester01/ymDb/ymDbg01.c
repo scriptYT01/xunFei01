@@ -100,10 +100,13 @@ void print_port_speed_info(char *portname, int speed)
         " get <%s> " \
         "\n" \
         "############## now2 ##############" \
-        " itemNO %d , ok/fail %d,%d , diff %d " \
+        " itemNO %d , ok %d , not-recognized %d , mistake-recognized %d " \
+        " , play awake wav %d , play sentence %d " \
         , _seq1 , _seq2 , _rec1 , _rec2 \
         , _buf1020 \
         , (_itemNO + 1) , _okCNT , _ngCNT , _diCNT \
+        , _plCNT0   \
+        , _plCNT1   \
         );
 #define _diff1() ( 0 != strncmp( _buf1020 , _listA1[_itemNO] . _wanted , 99 ) ) 
 #define _Pmsg3() \
@@ -171,6 +174,10 @@ int         _okCNT      = 0         ;  // ok amount
 int       * _okList     = NULL      ;  // ok List
 int         _diCNT      = 0         ;  // diff amount
 int       * _diList     = NULL      ;  // diff List
+int         _plCNT0      = 0         ;  // play Counter total , awake    wav
+int         _plCNT1      = 0         ;  // play Counter total , sentence wav
+int       * _plList0     = NULL      ;  // play Counter for each item , awake 
+int       * _plList1     = NULL      ;  // play Counter for each item , sentence 
 
 void _genCMD01( char * ___fnameBUF , char * ___systemBUF , int ___itemNO ) {
     snprintf( ___fnameBUF   , 99 , "/vt/VIOMI_test_wav/M2CHN02VM_AAQ0" "%s" ".wav" , _listA1[___itemNO] . _fname ) ;
@@ -220,9 +227,11 @@ void _init01()
     _testSize = _listA1size - 2 ;
     _activeItem = _listA1 + _testSize  ;
 
-    _okList = malloc( _listA1size * sizeof( int ) ) ;
-    _ngList = malloc( _listA1size * sizeof( int ) ) ;
-    _diList = malloc( _listA1size * sizeof( int ) ) ;
+    _okList  = malloc( _listA1size * sizeof( int ) ) ;
+    _ngList  = malloc( _listA1size * sizeof( int ) ) ;
+    _diList  = malloc( _listA1size * sizeof( int ) ) ;
+    _plList0 = malloc( _listA1size * sizeof( int ) ) ;
+    _plList1 = malloc( _listA1size * sizeof( int ) ) ;
 
     _P1Dn( _itemSize );
     _P1Dn( _listA1size );
@@ -247,6 +256,20 @@ void _exit_and_dump_info01()
     _Pmsg2();
     _time2 = time(0) ;
 
+    _P1n ( "\n\n\n" 
+            "###### total tested %d :  ok %d , not-recgonized %d , mistake-recgonized %d." 
+            "  %2.1f%%"
+            "  %2.1f%%"
+            "  %2.1f%%"
+            , _testSize , _okCNT , _ngCNT , _diCNT 
+            , ( 100.0 * _okCNT / _testSize )
+            , ( 100.0 * _ngCNT / _testSize )
+            , ( 100.0 * _diCNT / _testSize )
+            ) ;
+    _P1n ( "######  play awake wav %d , play sentence %d "
+            , _plCNT0
+            , _plCNT1
+         );
     _P1n ( "######  start %d , stop %d , used : %d" "\n\n" , _time0 , _time2 , _time2 - _time0 ) ;
 
     exit( 33 ) ;
@@ -281,7 +304,7 @@ void _result_analyze1_inactive()
             if(0) _P1n( " trying <%s>" , _playScmd0 ) ;
             if(0) _P1n( " trying <%s>" , _playScmd1 ) ;
             if(1) _P1n( "->-AWAKE-<-" );
-            if(1) system( _playScmd0 );
+            if(1) { system( _playScmd0 ); _plList0[_itemNO] ; _plCNT0 ++ ; } ;
             _time1 = _time2 ;
         }
         _seq2 ++ ;
@@ -308,7 +331,7 @@ void _result_analyze2_active()
 
     if ( _rec2 == 0 ) {
         if(1) _P1n( "\n#>#%s#<#" , _wavFname1 );
-        if(1) system( _playScmd1 );
+        if(1) { system( _playScmd1 ); _plList1[_itemNO] ;  _plCNT1 ++ ; } ;
         _time1 = _time2 ;
         _rec2 ++ ;
     } else if ( _rec2 >= 6 ) {
