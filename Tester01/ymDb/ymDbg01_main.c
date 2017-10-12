@@ -104,6 +104,7 @@ void _ItemOk()
 
 void _initYMdbg() 
 {
+    _itemSize           = sizeof( _STitemX ) ;
     _listAAobjSize = _listAAbyteSize / _itemSize ;
     _testSize = _listAAobjSize - 2 ;
     _activeItem = _listAA + _testSize  ;

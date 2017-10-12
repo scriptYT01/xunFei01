@@ -21,12 +21,21 @@ void _showUsageExit()
     exit(33) ;
 } /* _showUsageExit */
 
+void _listUse_3_play_signle()
+{
+} /* _listUse_3_play_signle */
+
 void _listUse_1_all()
 {
     _listAA             = _listA1 ;
     _listAAbyteSize     = _listA1_BSize ;
-    _itemSize           = sizeof( _STitemX ) ;
 } /* _listUse_1_all */
+
+void _listUse_2_debuging()
+{
+    /* though listen only state , must give a fake list */
+    _listUse_1_all();
+} /* _listUse_2_debuging */
 
 int     _ymDbgMode = _ymMode_all ; 
 char *  _ymDbgModeStr = NULL ;
@@ -121,17 +130,23 @@ void _paraAnalyzeYmDbg( int ___argc, char ** ___argv)
     switch ( _ymDbgMode ) {
         case _ymMode_all:
             _listUse_1_all();
+            return ;
             break ;
         case _ymDbgMode_debuging :
+            _listUse_2_debuging();
+            return ;
             break ;
         case _ymDbgMode_play_single :
+            _listUse_3_play_signle();
+            return ;
             break ;
         case _ymDbgMode_play_list :
             break ;
         default:
             _P1n( "\n\n unknow mode %d \n" , _ymDbgMode ) ;
-            exit( 88 ) ;
+            exit( 99 ) ;
             break ;
     }
+    exit( 88 ) ;
 
 } /* _paraAnalyzeYmDbg */
