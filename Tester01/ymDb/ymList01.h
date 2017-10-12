@@ -85,4 +85,6 @@ enum _ymDbgModeXX {
         , _ymDbgMode_play_single
         , _ymDbgMode_play_list
 } ;
+extern int         _argC ;
+extern char    **  _argV ;
 

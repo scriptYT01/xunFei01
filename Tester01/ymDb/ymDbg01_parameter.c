@@ -5,6 +5,19 @@ static int _verbose_flag;
 
 void _showUsageExit()
 {
+    _P1n( "\n\n\n" 
+            "Usage : "                                                                                        "\n"
+            " %s [<-d> | <-h> | <-p XX> | <-l YY> ]"                                                          "\n"
+            "     -h , --help   : show debug info / usage only. "                                             "\n"
+
+            "     -d , --debug  : listen only , waiting the use play the awake / words "                      "\n"
+            "     -p , --play   : awake , then play the specified word item only."                            "\n"
+            "     -l , --list   : awake , then play the specified word list. "                                "\n"
+
+            "     no parameter  : play the default all word items , use about 10 - 15 minuts. "               "\n"
+            "\n"
+            , _argV[0] 
+        );
     exit(33) ;
 } /* _showUsageExit */
 
@@ -32,6 +45,7 @@ void _paraAnalyzeYmDbg( int ___argc, char ** ___argv)
         {"help",     no_argument,       0, 'h'},
         {"debug",    no_argument,       0, 'd'},
         {"play",  required_argument,    0, 'p'},
+        {"list",  required_argument,    0, 'l'},
         {0, 0, 0, 0}
     };
 
@@ -75,7 +89,7 @@ void _paraAnalyzeYmDbg( int ___argc, char ** ___argv)
                 printf ("option -l ( playList ) with value `%s'\n", optarg);
                 break;
             case 'd':
-                printf ("option -d ( debuging ) \n" ) ;
+                printf ("option -d ( debuging , listen only ) \n" ) ;
                 _ymDbgMode = _ymDbgMode_debuging ;
                 break;
 
@@ -101,9 +115,23 @@ void _paraAnalyzeYmDbg( int ___argc, char ** ___argv)
         while (optind < ___argc)
             printf ("%s ", ___argv[optind++]);
         putchar ('\n');
+        if(1) exit(44);
     }
 
-    //if(1) exit(22);
+    switch ( _ymDbgMode ) {
+        case _ymMode_all:
+            _listUse_1_all();
+            break ;
+        case _ymDbgMode_debuging :
+            break ;
+        case _ymDbgMode_play_single :
+            break ;
+        case _ymDbgMode_play_list :
+            break ;
+        default:
+            _P1n( "\n\n unknow mode %d \n" , _ymDbgMode ) ;
+            exit( 88 ) ;
+            break ;
+    }
 
-    _listUse_1_all();
 } /* _paraAnalyzeYmDbg */
