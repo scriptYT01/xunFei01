@@ -337,7 +337,7 @@ int main(int ___argc,char** ___argv)
 
     _argDebugCMDline();
 
-    _paraAnalyzeYmDbg();
+    _paraAnalyzeYmDbg( ___argc , ___argv );
 
     _initYMdbg();
 

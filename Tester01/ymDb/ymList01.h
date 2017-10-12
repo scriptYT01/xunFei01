@@ -7,6 +7,7 @@
 #include <unistd.h>
 #include <time.h>
 #include <signal.h>
+#include <getopt.h>
 
 
 typedef struct { 
@@ -68,7 +69,7 @@ typedef struct {
 
 int _setTTY_ymDB01(int fd, int speed);
 void _printTTYinfo_ymDB01(char *portname, int speed);
-void _paraAnalyzeYmDbg();
+void _paraAnalyzeYmDbg( int ___argc, char ** ___argv);
 
 extern _STitemX   * _listAA             ;
 extern _STitemX     _listA1[]           ;
