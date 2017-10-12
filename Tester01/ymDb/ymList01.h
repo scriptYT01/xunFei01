@@ -26,7 +26,8 @@ typedef struct {
 #define _strX( aa ) # aa
 #define _write01( aa )      write( _fd_ttyS1 , aa , strlen(aa) ) 
 #define _P1( fmt , ... )    fprintf( stdout , fmt , ## __VA_ARGS__ )
-#define _P1n( fmt , ... )   _P1( fmt "\n\n" , ## __VA_ARGS__ )
+#define _P1n( fmt , ... )   _P1( fmt "\n" , ## __VA_ARGS__ )
+#define _P1f( fmt , ... )   { _P1( fmt , ## __VA_ARGS__ ) ; fflush(stdout) ; }
 #define _P1d( ddd )         _P1( "%d" , ddd )
 #define _P1D(  ddd )         _P1( _strX(ddd) " %d" , ddd )
 #define _P1Dn( ddd )         _P1( _strX(ddd) " %d\n" , ddd )
