@@ -136,6 +136,9 @@ void _step1_enable_voice(){
 void _dumpExtDebugInfo01()
 {
     int __i01 ;
+
+    if(1) _P1n( "_testSize %d " , _testSize ) ;
+
     for ( __i01 = 0 ; __i01 < _testSize ; __i01 ++ ) {
         if ( _plList0[__i01] > 1 || _plList1[__i01] > 1 ) {
             _P1n( "debug11 : [%s] : awake %d , try %d " 
@@ -156,18 +159,21 @@ void _exit_and_dump_info01()
     _time2 = time(0) ;
 
     _P1n ( "\n\n\n" 
-            "###### total tested %d :  ok %d , not-recgonized %d , mistake-recgonized %d." 
+            "###### total tested %d :  "
+            " ok %d "
             "  %2.1f%%"
+            ", not-recgonized %d "
             "  %2.1f%%"
+            ", mistake-recgonized %d." 
             "  %2.1f%%"
-            , _testSize , _okCNT , _ngCNT , _diCNT 
-            , ( 100.0 * _okCNT / _testSize )
-            , ( 100.0 * _ngCNT / _testSize )
-            , ( 100.0 * _diCNT / _testSize )
+            , _testSize 
+            , _okCNT , ( 100.0 * _okCNT / _testSize )
+            , _ngCNT , ( 100.0 * _ngCNT / _testSize )
+            , _diCNT , ( 100.0 * _diCNT / _testSize )
             ) ;
-    _P1n ( "######  play awake wav %d , play sentence %d "
-            , _plCNT0
-            , _plCNT1
+    _P1n ( "######  play awake wav %d (%2.2f%%) , play sentence %d (%1.2f)"
+            , _plCNT0 , ( 100.0 * _plCNT0 / _testSize )
+            , _plCNT1 , ( 1.0 * _plCNT1 / _okCNT )
          );
     _P1n ( "######  start %d , stop %d , used : %d" "\n\n" , _time0 , _time2 , _time2 - _time0 ) ;
 
