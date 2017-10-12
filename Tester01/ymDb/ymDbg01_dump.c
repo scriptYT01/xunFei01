@@ -4,16 +4,22 @@ void _showPlayNow()
 {
     int __i01 ;
     _P1n( "\n\n\n" 
-            " Test content is "    "\n" 
+            " Test content is (%p , %d) :"    "\n" 
+            , _listAA
+            , _testSize
         );
     for ( __i01 = 0 ; __i01 < _testSize ; __i01 ++ ) {
         if ( __i01 == 0 ) {
+            if(0) _P1n( "%p" , &(_listAA[ __i01 ]) ) ;
             _P1( "%s" , _listAA[ __i01 ] . _fname ) ;
         } else if ( __i01 % 20 == 0 ) {
+            if(0) _P1n( "%p" , &(_listAA[ __i01 ]) ) ;
             _P1( "\n%s" , _listAA[ __i01 ] . _fname ) ;
         } else if ( __i01 % 10 == 0 ) {
+            if(0) _P1n( "%p" , &(_listAA[ __i01 ]) ) ;
             _P1( "    %s" , _listAA[ __i01 ] . _fname ) ;
         } else {
+            if(0) _P1n( "%p" , &(_listAA[ __i01 ]) ) ;
             _P1( " %s" , _listAA[ __i01 ] . _fname ) ;
         }
     }

@@ -86,11 +86,27 @@ void _listUse_4_play_list()
         }
         __i02 ++ ;
     }
-    _P1n( "Group str amount %d " , __gSize ) ;
+    if ( __gSize != __listG -> _listG_objSize ) {
+        _P1n( "Group str amount %d != %d " , __gSize , __listG -> _listG_objSize ) ; exit( 91 ) ;
+    }
+
+    if ( NULL == _listBB ) { 
+        _listBB  = malloc( _listA1_BSize ) ; 
+        if(0) _P1n( " 11111 81 : %p , %p , %p , size %d " , _listAA , _listAA , _listBB , _listA1_BSize ) ;
+    }
+
+    for ( __i01 = 0 ; __i01 < __gSize ; __i01 ++ ) {
+        _listBB[__i01] = _listA1[ __i01 ] ;
+        if(0) _P1( "%s %p \n" , _listA1[ __i01 ] . _fname , &(_listA1[ __i01 ]) ) ;
+        if(0) _P1( "%s %p \n" , _listBB[ __i01 ] . _fname , &(_listBB[ __i01 ]) ) ;
+    }
+    _listBB[__gSize]      = _listA1[ _listA1_objSize - 2 ] ;
+    _listBB[__gSize+1]    = _listA1[ _listA1_objSize - 1 ] ;
+
+    _listAA             = _listBB ;
+    _listAA_BSize       = (sizeof( _STitemX )) * ( __gSize + 2 )  ;
     
-_P1n( " 11111 91 " ) ;
-    // _listGG
-    exit(32) ;
+    if(0) _P1n( " 11111 91 : %p , %d , %d " , _listAA , _listAA_BSize , __gSize ) ;
 } /* _listUse_4_play_list */
 
 void _listUse_1_all()

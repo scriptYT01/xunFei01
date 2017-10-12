@@ -110,8 +110,6 @@ void _initYMdbg()
     _testSize = _listAA_objSize - 2 ;
     _activeItem = _listAA + _testSize  ;
 
-    _listBB  = malloc( _listAA_BSize ) ;
-
     _okList  = malloc( _listAA_objSize * sizeof( int ) ) ;
     _ngList  = malloc( _listAA_objSize * sizeof( int ) ) ;
     _diList  = malloc( _listAA_objSize * sizeof( int ) ) ;
