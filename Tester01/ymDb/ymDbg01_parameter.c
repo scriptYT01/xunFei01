@@ -105,7 +105,8 @@ void _listUse_4_play_list()
             exit( 82 ) ;
         }
 
-        _listBB[__i03] = _listA1[ __i03 ] ;
+        //_listBB[__i03] = _listA1[ __i03 ] ;
+        _listBB[__i03] = _listA1[ __i04 ] ;
         if(0) _P1( "%s %p \n" , _listA1[ __i03 ] . _fname , &(_listA1[ __i03 ]) ) ;
         if(0) _P1( "%s %p \n" , _listBB[ __i03 ] . _fname , &(_listBB[ __i03 ]) ) ;
     }
