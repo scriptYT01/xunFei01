@@ -1,106 +1,73 @@
+#include <errno.h>
+#include <fcntl.h> 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <termios.h>
+#include <unistd.h>
+#include <time.h>
+#include <signal.h>
+
+
 typedef struct { 
     const char * _fname ;
     const char * _wanted ;
 } _STitemX ;
 
-_STitemX _listA1[] = {
-{ "01"  , "v down set_power 1" } , /* kai ji */
-{ "02"  , "v down set_power 1" } ,
-{ "03"  , "v down set_power 1" } ,
-{ "04"  , "v down set_power 1" } ,
-{ "05"  , "v down set_power 1" } ,
+extern _STitemX _listA1[] ;
 
-{ "06"  , "v down set_power 0" } , /* guan ji */
-{ "07"  , "v down set_power 0" } ,
-{ "08"  , "v down set_power 0" } ,
-{ "09"  , "v down set_power 0" } ,
-{ "10"  , "v down set_power 0" } ,
+#define _strX( aa ) # aa
+#define _write01( aa )      write( _fd_ttyS1 , aa , strlen(aa) ) 
+#define _P1( fmt , ... )    fprintf( stdout , fmt , ## __VA_ARGS__ )
+#define _P1n( fmt , ... )   _P1( fmt "\n\n" , ## __VA_ARGS__ )
+#define _P1d( ddd )         _P1( "%d" , ddd )
+#define _P1D(  ddd )         _P1( _strX(ddd) " %d" , ddd )
+#define _P1Dn( ddd )         _P1( _strX(ddd) " %d\n" , ddd )
+#define _P2( fmt , ... )    fprintf( stderr , fmt , ## __VA_ARGS__ )
+#define _P2n( fmt , ... )   _P1( fmt "\n" , ## __VA_ARGS__ )
 
-{ "11"  , "v down set_wind 1" } ,
-{ "12"  , "v down set_wind 1" } ,
-{ "13"  , "v down set_wind 1" } ,
-{ "14"  , "v down set_wind 1" } ,
+#define _Pmsg1() _P1n ( "\n" \
+        "line %d , time %d " \
+        " : <%d> 0x%02x , <%c>" \
+        " get <%s>" \
+        "     [%s]" \
+        " wanted <%s>" \
+        , __LINE__ , _time1 \
+        , _buf1020[0] , _buf1020[0] , _buf1020[0] , _buf1020 \
+        , _listAA[_itemNO] . _fname  \
+        , _listAA[_itemNO] . _wanted  \
+        );
+#define _Pmsg2() _P1n ( "\n" \
+        "############## now1 ##############" \
+        " seq1 %d,%d, rec1 %d,%d " \
+        " get <%s> " \
+        "\n" \
+        "############## now2 ##############" \
+        " itemNO %d , ok %d , not-recognized %d , mistake-recognized %d " \
+        " , play awake wav %d , play sentence %d " \
+        , _seq1 , _seq2 , _rec1 , _rec2 \
+        , _buf1020 \
+        , (_itemNO + 1) , _okCNT , _ngCNT , _diCNT \
+        , _plCNT0   \
+        , _plCNT1   \
+        );
+#define _diff1() ( 0 != strncmp( _buf1020 , _listAA[_itemNO] . _wanted , 99 ) ) 
+#define _Pmsg3() \
+    _P1n ( "\n" \
+            "diff3 : %d :" \
+            "         [%s]" \
+            "    get  <%s>" \
+            "    want <%s>" \
+            , _itemNO \
+            , _listAA[_itemNO] . _fname  \
+            , _buf1020 \
+            , _listAA[_itemNO] . _wanted  \
+            )
 
-{ "15"  , "v down set_wind 16" } ,
-{ "17"  , "v down set_wind 16" } ,
-{ "19"  , "v down set_wind 16" } ,
-{ "20"  , "v down set_wind 4" } ,
-{ "21"  , "v down set_wind 4" } ,
-{ "22"  , "v down set_wind 4" } ,
-{ "23"  , "v down set_wind 4" } ,
-{ "24"  , "v down set_wind 4" } ,
-{ "25"  , "v down set_light 1" } ,
+#define _Pa0()   {_P1("\n") ; fflush( stdout ) ;}
+#define _Pa1()   {_P1(".") ; fflush( stdout ) ;}
+#define _Pa2()   {_P1("=") ; fflush( stdout ) ;}
 
-{ "26"  , "v down set_wind 16" } ,
-{ "27"  , "v down set_light 1" } ,
-{ "28"  , "v down set_light 1" } ,
-{ "29"  , "v down set_light 1" } ,
-{ "30"  , "v down set_light 0" } ,
-
-{ "31"  , "v down set_light 0" } ,
-{ "32"  , "v down set_light 0" } ,
-{ "33"  , "v down set_light 0" } ,
-{ "34"  , "v down set_light 0" } ,
-{ "38"  , "v down timer_setting 10" } ,
-{ "39"  , "v down timer_setting 15" } ,
-
-{ "40"  , "v down timer_setting 20" } ,
-{ "41"  , "v down timer_setting 30" } ,
-{ "42"  , "v down timer_setting 40" } ,
-
-{ "43"  , "v down timer_setting 60" } ,
-{ "44"  , "v down timer_setting 30" } ,
-{ "45"  , "v down timer_setting 30" } ,
-
-{ "46"  , "v down timer_setting 60" } ,
-{ "47"  , "v down timer_setting 60" } ,
-{ "48"  , "v down timer_setting 90" } ,
-
-{ "49"  , "v down timer_setting 120" } ,
-{ "50"  , "v down timer_setting 120" } ,
-{ "51"  , "v down timer_setting 150" } ,
-
-{ "52"  , "v down timer_setting 180" } ,
-{ "53"  , "v down timer_setting 180" } ,
-{ "54"  , "v down timer_setting 210" } ,
-
-{ "55"  , "v down timer_setting 10" } ,
-{ "56"  , "v down timer_setting 15" } ,
-{ "57"  , "v down timer_setting 20" } ,
-
-{ "58"  , "v down timer_setting 30" } ,
-{ "59"  , "v down timer_setting 40" } ,
-{ "60"  , "v down timer_setting 60" } ,
-
-{ "61"  , "v down timer_setting 30" } ,
-{ "62"  , "v down timer_setting 30" } ,
-{ "63"  , "v down timer_setting 60" } ,
-
-{ "64"  , "v down timer_setting 60" } ,
-{ "65"  , "v down timer_setting 90" } ,
-{ "66"  , "v down timer_setting 120" } ,
-
-{ "67"  , "v down timer_setting 120" } ,
-{ "68"  , "v down timer_setting 150" } ,
-{ "69"  , "v down timer_setting 180" } ,
-
-{ "70"  , "v down timer_setting 180" } ,
-{ "71"  , "v down timer_setting 210" } ,
-
-{ "72"  , "v down current_time" } ,
-{ "73"  , "v down current_time" } ,
-{ "74"  , "v down current_time" } ,
-{ "75"  , "v down current_time" } ,
-
-{ "76"  , "v down current_time" } , /* ji_dian_le */
-{ "77"  , "v down current_time" } ,
-
-{ "78"  , "v down air_pollution" } ,
-{ "79"  , "v down air_pollution" } ,
-
-{ "80"  , "v down air_pollution" } ,
-{ "81"  , "v down air_pollution" } ,
-
-{ "88"  , "v down active" } ,
-{ "89"  , "v down active" } 
-};
+int _setTTY_ymDB01(int fd, int speed);
+void _printTTYinfo_ymDB01(char *portname, int speed);
+void _paraAnalyzeYmDbg();

@@ -1,132 +1,9 @@
-#include <errno.h>
-#include <fcntl.h> 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <termios.h>
-#include <unistd.h>
-#include <time.h>
 #include "ymList01.h"
 
 
 void _exit_and_dump_info01();
 
-int set_interface_attribs(int fd, int speed)
-{
-    struct termios tty;
 
-    if (tcgetattr(fd, &tty) < 0) {
-        printf("Error from tcgetattr: %s\n", strerror(errno));
-        return -1;
-    }
-
-    cfsetospeed(&tty, (speed_t)speed);
-    cfsetispeed(&tty, (speed_t)speed);
-
-    tty.c_cflag |= (CLOCAL | CREAD);    /* ignore modem controls */
-    tty.c_cflag &= ~CSIZE;
-    tty.c_cflag |= CS8;         /* 8-bit characters */
-    tty.c_cflag &= ~PARENB;     /* no parity bit */
-    tty.c_cflag &= ~CSTOPB;     /* only need 1 stop bit */
-    tty.c_cflag &= ~CRTSCTS;    /* no hardware flowcontrol */
-
-    /* setup for non-canonical mode */
-    tty.c_iflag &= ~(IGNBRK | BRKINT | PARMRK | ISTRIP | INLCR | IGNCR | ICRNL | IXON);
-    tty.c_lflag &= ~(ECHO | ECHONL | ICANON | ISIG | IEXTEN);
-    tty.c_oflag &= ~OPOST;
-
-    /* fetch bytes */
-#if 0
-    // blocking read
-    tty.c_cc[VMIN] = 1;
-    tty.c_cc[VTIME] = 1;
-#else
-    // non-blocking read
-    tty.c_cc[VMIN] = 0;         // read doesn't block
-    tty.c_cc[VTIME] = 1;        // 0.1 seconds read timeout
-#endif
-
-    if (tcsetattr(fd, TCSANOW, &tty) != 0) {
-        printf("Error from tcsetattr: %s\n", strerror(errno));
-        return -1;
-    }
-
-    return 0;
-} /* set_interface_attribs */
-
-void print_port_speed_info(char *portname, int speed)
-{
-    switch (speed) {
-    case B9600:
-        printf("port: %s, speed: B9600\n", portname);
-        break;
-    case B19200:
-        printf("port: %s, speed: B19200\n", portname);
-        break;
-    case B38400:
-        printf("port: %s, speed: B38400\n", portname);
-        break;
-    case B115200:
-        printf("port: %s, speed: B115200\n", portname);
-        break;
-    default:
-        printf("port: %s, speed_t: %d(0x%x)\n", portname, speed, speed);
-        break;
-    }
-} /* print_port_speed_info */
-
-#define _strX( aa ) # aa
-#define _write01( aa )      write( _fd_ttyS1 , aa , strlen(aa) ) 
-#define _P1( fmt , ... )    fprintf( stdout , fmt , ## __VA_ARGS__ )
-#define _P1n( fmt , ... )   _P1( fmt "\n\n" , ## __VA_ARGS__ )
-#define _P1d( ddd )         _P1( "%d" , ddd )
-#define _P1D(  ddd )         _P1( _strX(ddd) " %d" , ddd )
-#define _P1Dn( ddd )         _P1( _strX(ddd) " %d\n" , ddd )
-#define _P2( fmt , ... )    fprintf( stderr , fmt , ## __VA_ARGS__ )
-#define _P2n( fmt , ... )   _P1( fmt "\n" , ## __VA_ARGS__ )
-
-#define _Pmsg1() _P1n ( "\n" \
-        "line %d , time %d " \
-        " : <%d> 0x%02x , <%c>" \
-        " get <%s>" \
-        "     [%s]" \
-        " wanted <%s>" \
-        , __LINE__ , _time1 \
-        , _buf1020[0] , _buf1020[0] , _buf1020[0] , _buf1020 \
-        , _listAA[_itemNO] . _fname  \
-        , _listAA[_itemNO] . _wanted  \
-        );
-#define _Pmsg2() _P1n ( "\n" \
-        "############## now1 ##############" \
-        " seq1 %d,%d, rec1 %d,%d " \
-        " get <%s> " \
-        "\n" \
-        "############## now2 ##############" \
-        " itemNO %d , ok %d , not-recognized %d , mistake-recognized %d " \
-        " , play awake wav %d , play sentence %d " \
-        , _seq1 , _seq2 , _rec1 , _rec2 \
-        , _buf1020 \
-        , (_itemNO + 1) , _okCNT , _ngCNT , _diCNT \
-        , _plCNT0   \
-        , _plCNT1   \
-        );
-#define _diff1() ( 0 != strncmp( _buf1020 , _listAA[_itemNO] . _wanted , 99 ) ) 
-#define _Pmsg3() \
-    _P1n ( "\n" \
-            "diff3 : %d :" \
-            "         [%s]" \
-            "    get  <%s>" \
-            "    want <%s>" \
-            , _itemNO \
-            , _listAA[_itemNO] . _fname  \
-            , _buf1020 \
-            , _listAA[_itemNO] . _wanted  \
-            )
-
-#define _Pa0()   {_P1("\n") ; fflush( stdout ) ;}
-#define _Pa1()   {_P1(".") ; fflush( stdout ) ;}
-#define _Pa2()   {_P1("=") ; fflush( stdout ) ;}
-#include <signal.h>
 
 volatile int _mainRunning = 1;
 void _intHandler1(int ___dummy) { _mainRunning = 0; exit(___dummy); } 
@@ -417,8 +294,8 @@ void _runYMdbg() {
         return ;
     }
 
-    set_interface_attribs(_fd_ttyS1, B115200 );
-    print_port_speed_info( _DevNameTTY1, B115200 );
+    _setTTY_ymDB01(_fd_ttyS1, B115200 );
+    _printTTYinfo_ymDB01( _DevNameTTY1, B115200 );
 
     tcdrain(_fd_ttyS1);    /* delay for output */
 
@@ -453,13 +330,6 @@ void _showUsageExit()
 {
 } /* _showUsageExit */
 
-void _paraAnalyzeYmDbg(int ___argc,char** ___argv);
-void _paraAnalyzeYmDbg(int ___argc,char** ___argv)
-{
-    _listAA             = _listA1 ;
-    _listAAbyteSize     = sizeof( _listA1 ) ;
-    _itemSize           = sizeof( _STitemX ) ;
-} /* _paraAnalyzeYmDbg */
 
 int main(int ___argc,char** ___argv)
 {
