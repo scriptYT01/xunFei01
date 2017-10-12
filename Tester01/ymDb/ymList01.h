@@ -78,4 +78,11 @@ extern _STitemX     _listA1[]           ;
 extern int          _listAAbyteSize     ; // the total size in byte
 extern int          _listA1_BSize       ;
 extern int          _itemSize           ;
+extern int          _ymDbgMode          ;
+enum _ymDbgModeXX {
+    _ymMode_all
+        , _ymDbgMode_debuging
+        , _ymDbgMode_play_single
+        , _ymDbgMode_play_list
+} ;
 

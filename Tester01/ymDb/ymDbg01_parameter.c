@@ -15,10 +15,13 @@ void _listUse_1_all()
     _itemSize           = sizeof( _STitemX ) ;
 } /* _listUse_1_all */
 
+int     _ymDbgMode = _ymMode_all ; 
+char *  _ymDbgModeStr = NULL ;
 void _paraAnalyzeYmDbg( int ___argc, char ** ___argv)
 {
 
     int __i01 ;
+
     static struct option __long_options[] =
     {
         /* These options set a flag. */
@@ -27,6 +30,7 @@ void _paraAnalyzeYmDbg( int ___argc, char ** ___argv)
         /* These options don’t set a flag.
          * We distinguish them by their indices. */
         {"help",     no_argument,       0, 'h'},
+        {"debug",    no_argument,       0, 'd'},
         {"play",  required_argument,    0, 'p'},
         {0, 0, 0, 0}
     };
@@ -36,7 +40,7 @@ void _paraAnalyzeYmDbg( int ___argc, char ** ___argv)
         /* getopt_long stores the option index here. */
         int __option_index = 0;
 
-        __i01  = getopt_long (___argc, ___argv, "hp:",
+        __i01  = getopt_long (___argc, ___argv, "dhp:l:",
                 __long_options, &__option_index);
 
         /* Detect the end of the options. */
@@ -51,7 +55,7 @@ void _paraAnalyzeYmDbg( int ___argc, char ** ___argv)
                     break;
                 printf ("option %s", __long_options[__option_index].name);
                 if (optarg)
-                    printf (" with arg %s", optarg);
+                    printf (" file %s , line %d : with arg %s", __FILE__ , __LINE__ , optarg);
                 printf ("\n");
                 break;
 
@@ -61,7 +65,18 @@ void _paraAnalyzeYmDbg( int ___argc, char ** ___argv)
                 break;
 
             case 'p':
+                _ymDbgMode = _ymDbgMode_play_single ;
+                _ymDbgModeStr = strdup( optarg ) ;
                 printf ("option -p ( play ) with value `%s'\n", optarg);
+                break;
+            case 'l':
+                _ymDbgMode = _ymDbgMode_play_list ;
+                _ymDbgModeStr = strdup( optarg ) ;
+                printf ("option -l ( playList ) with value `%s'\n", optarg);
+                break;
+            case 'd':
+                printf ("option -d ( debuging ) \n" ) ;
+                _ymDbgMode = _ymDbgMode_debuging ;
                 break;
 
             case '?':

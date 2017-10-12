@@ -176,9 +176,9 @@ void _exit_and_dump_info01()
     exit( 33 ) ;
 } /* _exit_and_dump_info01 */
 
-#define _argDebug11()    if ( _argC >= 2 && 0 == strncmp( "1" , _argV[1] , 99 ) ) { _Pmsg1() ; return ; }
-#define _argDebug12()    if ( _argC >= 2 && 0 == strncmp( "1" , _argV[1] , 99 ) ) { _Pa1()   ; return ; }
-#define _argDebug13()    if ( _argC >= 2 && 0 == strncmp( "1" , _argV[1] , 99 ) ) { _Pa2()   ; return ; }
+#define _argDebug11()    if ( _ymDbgMode_debuging == _ymDbgMode ) { _Pmsg1() ; return ; }
+#define _argDebug12()    if ( _ymDbgMode_debuging == _ymDbgMode ) { _Pa1()   ; return ; }
+#define _argDebug13()    if ( _ymDbgMode_debuging == _ymDbgMode ) { _Pa2()   ; return ; }
 void _result_analyze1_inactive()
 {
     _argDebug12();
