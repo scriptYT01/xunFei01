@@ -25,6 +25,7 @@ te21:=Tester01/te21_target_board.sh
 te22:=Tester01/te22_tester_baord.sh
 te23:=Tester01/te23_tester_set_volumn.sh
 te24:=Tester01/te24_tester_playByNumber.sh
+te25:=Tester01/te25_tester_playAll_playOnly.sh
 
 
 XFt1 XFteUpdate1 : XFgenDate
@@ -49,7 +50,7 @@ TElist1:=
 TElist1+= te01 te02 te03 te04 te05 te06 te07 te08 te09 
 TElist1+= te11 te12 
 TElist2:= 
-TElist2+= te21 te22 te23 te24
+TElist2+= te21 te22 te23 te24 te25 
 
 $(call VIMobj,$(TElist1))
 $(call VIMobj,$(TElist2))
