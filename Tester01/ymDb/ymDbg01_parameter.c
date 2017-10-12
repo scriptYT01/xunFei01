@@ -36,7 +36,7 @@ void _paraAnalyzeYmDbg( int ___argc, char ** ___argv)
         /* getopt_long stores the option index here. */
         int __option_index = 0;
 
-        __i01  = getopt_long (___argc, ___argv, "abc:d:f:",
+        __i01  = getopt_long (___argc, ___argv, "hp:",
                 __long_options, &__option_index);
 
         /* Detect the end of the options. */
@@ -88,6 +88,7 @@ void _paraAnalyzeYmDbg( int ___argc, char ** ___argv)
         putchar ('\n');
     }
 
+    //if(1) exit(22);
 
     _listUse_1_all();
 } /* _paraAnalyzeYmDbg */

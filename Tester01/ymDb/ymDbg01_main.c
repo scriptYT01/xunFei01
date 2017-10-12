@@ -203,8 +203,10 @@ void _result_analyze1_inactive()
         if ( _seq2 == 0 ) {
             if(0) _P1n( " trying <%s>" , _playScmd0 ) ;
             if(0) _P1n( " trying <%s>" , _playScmd1 ) ;
-            if(1) _P1n( "->-AWAKE-<-" );
+            if(1) _P1 ( "->-%d:AWAKE:start-<-" , _time2 );
             if(1) { system( _playScmd0 ); _plList0[_itemNO] ++ ; _plCNT0 ++ ; } 
+            _time2 = time(0) ;
+            if(1) _P1n( "   ->-%d:AWAKE:end-<-" , _time2 );
             _time1 = _time2 ;
         }
         _seq2 ++ ;
@@ -213,7 +215,7 @@ void _result_analyze1_inactive()
             _seq2 = 0 ;
         }
     } else {
-        if(1) _P1n( "\n NG %d : %s , wanted <%s> " , _itemNO , _wavFname1 , _listAA[_itemNO] . _wanted ) ;
+        if(1) _P1n( "\n time %d : NG %d : %s , wanted <%s> " , _time2 , _itemNO , _wavFname1 , _listAA[_itemNO] . _wanted ) ;
         _ItemFailed();
 
         _seq1 = 0 ;
@@ -230,8 +232,10 @@ void _result_analyze2_active()
     }
 
     if ( _rec2 == 0 ) {
-        if(1) _P1n( "\n#>#%s#<#" , _wavFname1 );
+        if(1) _P1 ( "\n#now time %d #>#%s#<#" , _time2 , _wavFname1 );
         if(1) { system( _playScmd1 ); _plList1[_itemNO] ++ ;  _plCNT1 ++ ; } ;
+        _time2 = time(0) ;
+        if(1) _P1n( "   #>#%d:play words:end#<#" , _time2 );
         _time1 = _time2 ;
         _rec2 ++ ;
     } else if ( _rec2 >= 6 ) {
