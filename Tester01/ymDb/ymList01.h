@@ -73,6 +73,10 @@ int _setTTY_ymDB01(int fd, int speed);
 void _printTTYinfo_ymDB01(char *portname, int speed);
 void _paraAnalyzeYmDbg( int ___argc, char ** ___argv);
 
+void _showPlayNow()    ;
+void _showPlaySingle() ;
+void _showUsageExit()  ;
+
 extern _STitemX   * _listAA             ;
 extern int          _listAA_BSize       ; // the total size in byte
 

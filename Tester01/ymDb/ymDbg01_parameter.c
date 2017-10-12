@@ -5,47 +5,6 @@ static int _verbose_flag;
 int     _ymDbgMode = _ymMode_all ; 
 static char *  _ymDbgModeStr = NULL ;
 
-void _showUsageExit()
-{
-    _P1n( "\n\n\n" 
-            "Usage : "                                                                                        "\n"
-            " %s [<-d> | <-h> | <-p XX> | <-l YY> ]"                                                          "\n"
-            "     -h , --help   : show debug info / usage only. "                                             "\n"
-
-            "     -d , --debug  : listen only , waiting the use play the awake / words "                      "\n"
-            "     -p , --play   : awake , then play the specified word item only."                            "\n"
-            "     -pp           : list all single test can be use "                                           "\n"
-            "     -l , --list   : awake , then play the specified word list. "                                "\n"
-            "     -ll           : list all list can be use "                                                  "\n"
-
-            "     no parameter  : play the default all word items , use about 10 - 15 minuts. "               "\n"
-            "\n"
-            , _argV[0] 
-        );
-    exit(33) ;
-} /* _showUsageExit */
-
-void _showPlaySingle()
-{
-    int __i01 ;
-    _P1n( "\n\n\n" 
-            " avaiable single test is "                                                                     "\n" 
-        );
-    for ( __i01 = 0 ; __i01 < _listA1_awake1 ; __i01 ++ ) {
-        if ( __i01 == 0 ) {
-            _P1( "%s" , _listA1[ __i01 ] . _fname ) ;
-        } else if ( __i01 % 20 == 0 ) {
-            _P1( "\n%s" , _listA1[ __i01 ] . _fname ) ;
-        } else if ( __i01 % 10 == 0 ) {
-            _P1( "    %s" , _listA1[ __i01 ] . _fname ) ;
-        } else {
-            _P1( " %s" , _listA1[ __i01 ] . _fname ) ;
-        }
-    }
-    _P1n( "\n\n") ;
-    exit( 91 ) ;
-} /* _showPlaySingle */
-
 static _STitemX _listP3single[3] ;
 void _listUse_3_play_single()
 {

@@ -43,6 +43,7 @@ LOCAL_SRC_FILES := \
 	ymDb/ymDbg01_list.c    \
 	ymDb/ymDbg01_tty.c    \
 	ymDb/ymDbg01_main.c  \
+	ymDb/ymDbg01_dump.c \
 	ymDb/ymDbg01_parameter.c
 LOCAL_CFLAGS:= -Wall -Werror
 LOCAL_LDLIBS := -lc -lpthread 

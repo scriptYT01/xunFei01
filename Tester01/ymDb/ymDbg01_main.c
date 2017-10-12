@@ -344,6 +344,7 @@ int main(int ___argc,char** ___argv)
     _paraAnalyzeYmDbg( ___argc , ___argv );
 
     _initYMdbg();
+    _showPlayNow();
 
     _runYMdbg();
 
