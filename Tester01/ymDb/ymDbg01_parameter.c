@@ -5,12 +5,20 @@ static int _verbose_flag;
 int     _ymDbgMode = _ymMode_all ; 
 static char *  _ymDbgModeStr = NULL ;
 
-int _ymDbsearchListItem( _STitemX * ___list , char * ___wantWAVfname ) {
+int _ymDbsearchListItem( _STitemX * ___list , int ___size , char * ___wantWAVfname ) 
+{
+    int __i01 ;
     if ( NULL == ___list || NULL == ___wantWAVfname ) {
         return -1;
     }
 
-    return 0 ;
+    for ( __i01 = 0 ; __i01 < ___size ; __i01 ++ ) {
+        if ( 0 == strncmp( ___wantWAVfname , ___list[__i01] . _fname , 99 )) {
+            return __i01 ; 
+        }
+    }
+
+    return -2 ;
 } /* _ymDbsearchListItem */
 
 static _STitemX _listP3single[3] ;
@@ -22,7 +30,7 @@ void _listUse_3_play_single()
         _showPlaySingle();
     }
 
-    __i01 = _ymDbsearchListItem( _listA1 , _ymDbgModeStr ) ;
+    __i01 = _ymDbsearchListItem( _listA1 , _listA1_objSize - 2 , _ymDbgModeStr ) ;
     if ( __i01 < 0 ) {
         _showPlaySingle();
     }

@@ -13,6 +13,7 @@
 typedef struct { 
     const char * _fname ;
     const char * _wanted ;
+    const char * _pinYin ;
 } _STitemX ;
 
 #define _strX( aa ) # aa
