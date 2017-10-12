@@ -158,7 +158,8 @@ char    **  _argV ;
 char        _buf1020[1024] ; 
 int         _active1_inactive0 = 0 ;
 int         _itemSize       ;
-int         _listA1size     ; // the total list item amount .
+int         _listAAbyteSize ; // the total size in byte
+int         _listAAobjSize  ; // the total list item amount .
 int         _testSize       ; // the testing word amount.
 _STitemX  * _activeItem     ;
 int         _itemNO = 0     ;
@@ -180,7 +181,7 @@ int         _plCNT0     = 0         ;  // play Counter total , awake    wav
 int         _plCNT1     = 0         ;  // play Counter total , sentence wav
 int       * _plList0    = NULL      ;  // play Counter for each item , awake 
 int       * _plList1    = NULL      ;  // play Counter for each item , sentence 
-_STitemX  * _listAA     = _listA1 ;
+_STitemX  * _listAA     = NULL ;
 
 void _genCMD01( char * ___fnameBUF , char * ___systemBUF , int ___itemNO ) {
     snprintf( ___fnameBUF   , 99 , "/vt/VIOMI_test_wav/M2CHN02VM_AAQ0" "%s" ".wav" , _listAA[___itemNO] . _fname ) ;
@@ -223,27 +224,26 @@ void _ItemOk()
     if(0)  sleep( 2 ) ;
 } /* _ItemOk */
 
-void _init01() 
+void _initYMdbg() 
 {
-    _itemSize = sizeof( _STitemX ) ;
-    _listA1size = sizeof( _listAA ) / sizeof( _STitemX ) ;
-    _testSize = _listA1size - 2 ;
+    _listAAobjSize = _listAAbyteSize / _itemSize ;
+    _testSize = _listAAobjSize - 2 ;
     _activeItem = _listAA + _testSize  ;
 
-    _okList  = malloc( _listA1size * sizeof( int ) ) ;
-    _ngList  = malloc( _listA1size * sizeof( int ) ) ;
-    _diList  = malloc( _listA1size * sizeof( int ) ) ;
-    _plList0 = malloc( _listA1size * sizeof( int ) ) ;
-    _plList1 = malloc( _listA1size * sizeof( int ) ) ;
+    _okList  = malloc( _listAAobjSize * sizeof( int ) ) ;
+    _ngList  = malloc( _listAAobjSize * sizeof( int ) ) ;
+    _diList  = malloc( _listAAobjSize * sizeof( int ) ) ;
+    _plList0 = malloc( _listAAobjSize * sizeof( int ) ) ;
+    _plList1 = malloc( _listAAobjSize * sizeof( int ) ) ;
 
     _P1Dn( _itemSize );
-    _P1Dn( _listA1size );
+    _P1Dn( _listAAobjSize );
     _P1Dn( _testSize );
 
     _genCMD01( _wavFname0 , _playScmd0 , _testSize ) ;
     if(0) _P1n( " trying <%s>" , _playScmd0 ) ;
 
-} /* _init01 */
+} /* _initYMdbg */
 
 void _step1_enable_voice(){
     int __rt ;
@@ -268,8 +268,8 @@ void _dumpExtDebugInfo01()
         }
     }
 
-    //_plList0 = malloc( _listA1size * sizeof( int ) ) ;
-    //_plList1 = malloc( _listA1size * sizeof( int ) ) ;
+    //_plList0 = malloc( _listAAobjSize * sizeof( int ) ) ;
+    //_plList1 = malloc( _listAAobjSize * sizeof( int ) ) ;
 } /* _dumpExtDebugInfo01 */
 
 void _exit_and_dump_info01()
@@ -400,7 +400,7 @@ void _step2_get_voice_state(){
 } /* _step2_get_voice_state */
 
 #define _DevNameTTY1 "/dev/ttyS1" 
-void _debug01() {
+void _runYMdbg() {
 
     signal(SIGINT, _intHandler1) ; /* exit at once when ctrl+c */
 
@@ -435,9 +435,9 @@ void _debug01() {
         _step2_get_voice_state() ;
     }
 
-} // _debug01() ;
+} // _runYMdbg() ;
 
-void _argDebug0()    { 
+void _argDebugCMDline()    { 
     int __i01 ;
 
     _P1n( "argc : %d" , _argC ); 
@@ -447,7 +447,18 @@ void _argDebug0()    {
                 , __i01 , strlen(_argV[__i01]) , _argV[__i01] ); 
     } 
 
-} /* _argDebug0 */
+} /* _argDebugCMDline */
+
+void _showUsageExit()
+{
+} /* _showUsageExit */
+
+void _paraAnalyzeYmDbg()
+{
+    _listAA             = _listA1 ;
+    _listAAbyteSize     = sizeof( _listA1 ) ;
+    _itemSize           = sizeof( _STitemX ) ;
+} /* _paraAnalyzeYmDbg */
 
 int main(int ___argc,char** ___argv)
 {
@@ -456,10 +467,13 @@ int main(int ___argc,char** ___argv)
     _argV = ___argv ;
     _time0 = time(0) ;
 
-    _argDebug0();
+    _argDebugCMDline();
 
-    _init01();
-    _debug01();
+    _paraAnalyzeYmDbg();
+
+    _initYMdbg();
+
+    _runYMdbg();
 
     return 0;
 }
