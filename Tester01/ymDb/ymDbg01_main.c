@@ -39,6 +39,8 @@ _STitemX  * _listAA         = NULL ;
 int         _listAA_BSize   ; // the total size in byte
 int         _listAA_objSize ; // the total list item amount .
 int         _testSize       ; // the testing word amount.
+_STitemX  * _listBB         = NULL ; // the selected itemBuf.
+int         _listBB_objSize ;
 
 _STitemX  * _activeItem     ;
 int         _itemNO = 0     ;
@@ -107,6 +109,8 @@ void _initYMdbg()
     _listAA_objSize = _listAA_BSize / _itemSize ;
     _testSize = _listAA_objSize - 2 ;
     _activeItem = _listAA + _testSize  ;
+
+    _listBB  = malloc( _listAA_BSize ) ;
 
     _okList  = malloc( _listAA_objSize * sizeof( int ) ) ;
     _ngList  = malloc( _listAA_objSize * sizeof( int ) ) ;

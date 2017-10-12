@@ -80,6 +80,8 @@ void _showUsageExit()  ;
 
 extern _STitemX   * _listAA             ;
 extern int          _listAA_BSize       ; // the total size in byte
+extern _STitemX   * _listBB             ;
+extern int          _listBB_objSize     ;
 
 extern _STitemX     _listA1[]           ;
 extern int          _listA1_BSize       ;
