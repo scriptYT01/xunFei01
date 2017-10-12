@@ -144,7 +144,7 @@ void _dumpExtDebugInfo01()
     _P1n( " failed list : " );
     for ( __i01 = 0 ; __i01 < _testSize ; __i01 ++ ) {
         if ( _plList0[__i01] > 1 || _plList1[__i01] > 1 ) {
-            _P1n( "debug11 : [%s] : awake %d , try %d " 
+            _P1n( "debug11 : wav file name [%s] : awake play %d , word play %d " 
                     , _listAA[__i01] . _fname 
                     , _plList0[__i01]
                     , _plList1[__i01]
