@@ -1,6 +1,7 @@
 #ifndef     __BASE01_H
 #define     __BASE01_H
 
+#include <termios.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -20,6 +21,8 @@
 #include <sys/time.h>
 #include <netdb.h>
 #include <signal.h>
+#include <time.h>
+#include <getopt.h>
 
 //#include <include/asm/delay.h>
 //#include <include/linux/delay.h>

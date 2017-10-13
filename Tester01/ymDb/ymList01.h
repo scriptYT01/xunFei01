@@ -1,3 +1,7 @@
+#ifndef     __YMLIST01_H
+#define     __YMLIST01_H
+
+#if 0
 #include <errno.h>
 #include <fcntl.h> 
 #include <stdio.h>
@@ -9,6 +13,13 @@
 #include <signal.h>
 #include <getopt.h>
 #include <libgen.h>
+
+#else
+
+#include "base01.h"
+#endif
+
+/* kpvoice01/base01/_build_info.h */
 
 
 typedef struct { 
@@ -114,3 +125,4 @@ enum _ymDbgModeXX {
 extern int         _argC ;
 extern char    **  _argV ;
 
+#endif
