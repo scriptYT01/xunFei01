@@ -35,6 +35,7 @@
 
 #define _prOO(  fmt , ... ) printf( fmt      , ## __VA_ARGS__ )
 #define _prOOn( fmt , ... ) _prOO(  fmt "\n" , ## __VA_ARGS__ )
+#define _prOOf( fmt , ... ) { _prOO( fmt , ## __VA_ARGS__ ) ; fflush(stdout) ; }
 #define _prSF(  fmt , ... ) printf( "=-=:%s %d %s: " fmt , basename((char*)__FILE__), __LINE__, __func__ , ## __VA_ARGS__ )
 #define _prSFn( fmt , ... ) _prSF( fmt "\n" , ## __VA_ARGS__ )
 #define _ffstdout   fdatasync( 1 )
@@ -55,8 +56,12 @@
 #define _prFF(  fmt , pp , aa ) _prOO( "%s -> " fmt , _strX( aa ) , pp -> aa )
 #define _prFFn( fmt , ... ) _prFF( fmt "\n" , ## __VA_ARGS__ )
 
-#define _prD( aa ) _prSFn( "%d" , aa )
-#define _prDS( dd , ss ) _prSFn( "<%d:%s>" , dd , ss )
+#define _prD( aa )          _prSF ( "%d" , aa )
+#define _prDn( aa )         _prSFn( "%d" , aa )
+#define _prDN( aa )         _prSF ( _strX(ddd) " %d" , aa )
+#define _prDNn( aa )        _prSFn( _strX(ddd) " %d" , aa )
+#define _prDS(  dd , ss )   _prSF ( "<%d:%s>"   , dd , ss )
+#define _prDSn( dd , ss )   _prSFn( "<%d:%s>\n" , dd , ss )
 
 #define _prExit( fmt , ... ) { _prSFn( fmt "\n exit..." , ## __VA_ARGS__ ) ; exit( 32 ) ; }
 #define _zExit( mm , fmt , ... ) if ( 0 == mm ) _prExit( fmt , ## __VA_ARGS__ ) ;

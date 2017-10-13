@@ -116,12 +116,13 @@ void _initYMdbg()
     _plList0 = malloc( _listAA_objSize * sizeof( int ) ) ;
     _plList1 = malloc( _listAA_objSize * sizeof( int ) ) ;
 
-    _P1Dn( _itemSize );
-    _P1Dn( _listAA_objSize );
-    _P1Dn( _testSize );
+    _prDNn( _itemSize );
+    _prDNn( _listAA_objSize );
+    _prDNn( _testSize );
 
     _genCMD01( _wavFname0 , _playScmd0 , _testSize ) ;
-    if(0) _P1n( " trying <%s>" , _playScmd0 ) ;
+    if(0) _prOOn( " trying <%s>" , _playScmd0 ) ;
+
 
 } /* _initYMdbg */
 
@@ -139,12 +140,12 @@ void _dumpExtDebugInfo01()
 {
     int __i01 ;
 
-    if(1) _P1n( "_testSize %d " , _testSize ) ;
+    if(1) _prOOn( "_testSize %d " , _testSize ) ;
 
-    _P1n( " failed list : " );
+    _prOOn( " failed list : " );
     for ( __i01 = 0 ; __i01 < _testSize ; __i01 ++ ) {
         if ( _plList0[__i01] > 1 || _plList1[__i01] > 1 ) {
-            _P1n( "debug11 : wav file name [%s] : awake play %d , word play %d " 
+            _prOOn( "debug11 : wav file name [%s] : awake play %d , word play %d " 
                     , _listAA[__i01] . _fname 
                     , _plList0[__i01]
                     , _plList1[__i01]
@@ -161,7 +162,7 @@ void _exit_and_dump_info01()
     _Pmsg2( "end_report" );
     _time2 = time(0) ;
 
-    _P1n ( "\n\n\n" 
+    _prOOn ( "\n\n\n" 
             "###### total tested %d :  "
             " ok %d "
             "  %2.1f%%"
@@ -174,11 +175,11 @@ void _exit_and_dump_info01()
             , _ngCNT , ( 100.0 * _ngCNT / _testSize )
             , _diCNT , ( 100.0 * _diCNT / _testSize )
             ) ;
-    _P1n ( "######  play awake wav %d (%2.2f%%) , play sentence %d (%1.2f)"
+    _prOOn ( "######  play awake wav %d (%2.2f%%) , play sentence %d (%1.2f)"
             , _plCNT0 , ( 100.0 * _plCNT0 / _testSize )
             , _plCNT1 , ( 1.0 * _plCNT1 / _okCNT )
          );
-    _P1n ( "######  start %d , stop %d , used : %d" "\n\n" , _time0 , _time2 , _time2 - _time0 ) ;
+    _prOOn ( "######  start %d , stop %d , used : %d" "\n\n" , _time0 , _time2 , _time2 - _time0 ) ;
 
     if ( 1 ) { _dumpExtDebugInfo01() ; }
 
@@ -205,17 +206,17 @@ void _result_analyze1_inactive()
     _active1_inactive0 = 0 ;
     if ( _seq1 == 0 ) { // first , inactive , pring header.
         _genCMD01( _wavFname1 , _playScmd1 , _itemNO ) ;
-        _P1n( " trying %d : %s , wanted <%s> , _seq1 %d _seq2 %d " , _itemNO , _wavFname1 , _listAA[_itemNO] . _wanted , _seq1 , _seq2 ) ;
+        _prOOn( " trying %d : %s , wanted <%s> , _seq1 %d _seq2 %d " , _itemNO , _wavFname1 , _listAA[_itemNO] . _wanted , _seq1 , _seq2 ) ;
         _seq1 = 1 ;
         _seq2 = 0 ;
     } else if ( _seq1 >= 1 && _seq1 <= 3 ) { // play awake wav.  
         if ( _seq2 == 0 ) {
-            if(0) _P1n( " trying <%s>" , _playScmd0 ) ;
-            if(0) _P1n( " trying <%s>" , _playScmd1 ) ;
-            if(1) _P1f( "->-%d:AWAKE:start-<-" , _time2 );
+            if(0) _prOOn( " trying <%s>" , _playScmd0 ) ;
+            if(0) _prOOn( " trying <%s>" , _playScmd1 ) ;
+            if(1) _prOOf( "->-%d:AWAKE:start-<-" , _time2 );
             if(1) { system( _playScmd0 ); _plList0[_itemNO] ++ ; _plCNT0 ++ ; } 
             _time2 = time(0) ;
-            if(1) _P1n( "   ->-%d:AWAKE:end-<-" , _time2 );
+            if(1) _prOOn( "   ->-%d:AWAKE:end-<-" , _time2 );
             _time1 = _time2 ;
         }
         _seq2 ++ ;
@@ -224,7 +225,7 @@ void _result_analyze1_inactive()
             _seq2 = 0 ;
         }
     } else {
-        if(1) _P1n( "\n time %d : NG %d : %s , wanted <%s> " , _time2 , _itemNO , _wavFname1 , _listAA[_itemNO] . _wanted ) ;
+        if(1) _prOOn( "\n time %d : NG %d : %s , wanted <%s> " , _time2 , _itemNO , _wavFname1 , _listAA[_itemNO] . _wanted ) ;
         _ItemFailed();
 
         _seq1 = 0 ;
@@ -241,10 +242,10 @@ void _result_analyze2_active()
     }
 
     if ( _rec2 == 0 ) {
-        if(1) _P1f( "\n#now time %d #>#%s#<#" , _time2 , _wavFname1 );
+        if(1) _prOOf( "\n#now time %d #>#%s#<#" , _time2 , _wavFname1 );
         if(1) { system( _playScmd1 ); _plList1[_itemNO] ++ ;  _plCNT1 ++ ; } ;
         _time2 = time(0) ;
-        if(1) _P1n( "   #>#%d:play words:end#<#" , _time2 );
+        if(1) _prOOn( "   #>#%d:play words:end#<#" , _time2 );
         _time1 = _time2 ;
         _rec2 ++ ;
     } else if ( _rec2 >= 6 ) {
@@ -304,7 +305,7 @@ void _runYMdbg() {
 
     _fd_ttyS1 = open( _DevNameTTY1, O_RDWR | O_NOCTTY | O_SYNC);
     if (_fd_ttyS1 < 0) {
-        _P2n( "Error opening %s: %s",  _DevNameTTY1, strerror(errno));
+        _prEFn( "Error opening %s: %s",  _DevNameTTY1, strerror(errno));
         return ;
     }
 
@@ -331,10 +332,10 @@ void _runYMdbg() {
 void _argDebugCMDline()    { 
     int __i01 ;
 
-    _P1n( "argc : %d" , _argC ); 
+    _prOOn( "argc : %d" , _argC ); 
 
     for ( __i01 = 0 ; __i01 < _argC ; __i01 ++ ) { 
-        _P1n( "argV %d: len <%d> , content <%s>" 
+        _prOOn( "argV %d: len <%d> , content <%s>" 
                 , __i01 , strlen(_argV[__i01]) , _argV[__i01] ); 
     } 
 

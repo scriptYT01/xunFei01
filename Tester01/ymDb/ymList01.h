@@ -34,8 +34,8 @@ typedef struct {
     int             _listG_objSize  ;
 } _STlistGX ;
 
+#if 0
 #define _strX( aa ) # aa
-#define _write01( aa )      write( _fd_ttyS1 , aa , strlen(aa) ) 
 #define _P1( fmt , ... )    fprintf( stdout , fmt , ## __VA_ARGS__ )
 #define _P1n( fmt , ... )   _P1( fmt "\n" , ## __VA_ARGS__ )
 #define _P1f( fmt , ... )   { _P1( fmt , ## __VA_ARGS__ ) ; fflush(stdout) ; }
@@ -44,8 +44,12 @@ typedef struct {
 #define _P1Dn( ddd )         _P1( _strX(ddd) " %d\n" , ddd )
 #define _P2( fmt , ... )    fprintf( stderr , fmt , ## __VA_ARGS__ )
 #define _P2n( fmt , ... )   _P1( fmt "\n" , ## __VA_ARGS__ )
+_prOOn
+#endif
 
-#define _Pmsg1() _P1n ( "\n" \
+#define _write01( aa )      write( _fd_ttyS1 , aa , strlen(aa) ) 
+
+#define _Pmsg1() _prOOn ( "\n" \
         "line %d , time %d " \
         " : <%d> 0x%02x , <%c>" \
         " get <%s>" \
@@ -56,7 +60,7 @@ typedef struct {
         , _listAA[_itemNO] . _fname  \
         , _listAA[_itemNO] . _wanted  \
         );
-#define _Pmsg2( bbb ) _P1n ( "\n" \
+#define _Pmsg2( bbb ) _prOOn ( "\n" \
         "############## " bbb "1 ##############" \
         " seq1 %d,%d, rec1 %d,%d " \
         " get <%s> : %d " \
@@ -74,7 +78,7 @@ typedef struct {
         );
 #define _diff1() ( 0 != strncmp( _buf1020 , _listAA[_itemNO] . _wanted , 99 ) ) 
 #define _Pmsg3() \
-    _P1n ( "\n" \
+    _prOOn ( "\n" \
             "diff3 : %d :" \
             "         [%s]" \
             "    get  <%s>" \
@@ -85,9 +89,9 @@ typedef struct {
             , _listAA[_itemNO] . _wanted  \
             )
 
-#define _Pa0()   {_P1("\n") ; fflush( stdout ) ;}
-#define _Pa1()   {_P1(".") ; fflush( stdout ) ;}
-#define _Pa2()   {_P1("=") ; fflush( stdout ) ;}
+#define _Pa0()   {_prOO("\n") ; fflush( stdout ) ;}
+#define _Pa1()   {_prOO(".") ; fflush( stdout ) ;}
+#define _Pa2()   {_prOO("=") ; fflush( stdout ) ;}
 
 int _setTTY_ymDB01(int fd, int speed);
 void _printTTYinfo_ymDB01(char *portname, int speed);

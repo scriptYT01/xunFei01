@@ -70,17 +70,17 @@ void _listUse_4_play_list()
 
     __listG = _listGG + __i01 ;
     if ( NULL == __listG ) {
-            _P1n( "Group error 11 =%s %d: " , basename((char*)__FILE__), __LINE__ ) ; exit( 11 ) ;
+            _prOOn( "Group error 11 =%s %d: " , basename((char*)__FILE__), __LINE__ ) ; exit( 11 ) ;
     }
     __str2 = (char**) __listG -> _listG_item  ;
     if ( NULL == __str2 ) {
-            _P1n( "Group error 22 =%s %d: " , basename((char*)__FILE__), __LINE__ ) ; exit( 11 ) ;
+            _prOOn( "Group error 22 =%s %d: " , basename((char*)__FILE__), __LINE__ ) ; exit( 11 ) ;
     }
 
     __i02 = 0 ;
     while ( 1 ) {
         if ( __i02 > 100 ) {
-            _P1n( "Group error 44 =%s %d: " , basename((char*)__FILE__), __LINE__ ) ; exit( 11 ) ;
+            _prOOn( "Group error 44 =%s %d: " , basename((char*)__FILE__), __LINE__ ) ; exit( 11 ) ;
         }
         if ( __str2[__i02] == NULL ) {
             __gSize = __i02 ;
@@ -89,26 +89,26 @@ void _listUse_4_play_list()
         __i02 ++ ;
     }
     if ( __gSize != __listG -> _listG_objSize ) {
-        _P1n( "Group str amount %d != %d " , __gSize , __listG -> _listG_objSize ) ; exit( 91 ) ;
+        _prOOn( "Group str amount %d != %d " , __gSize , __listG -> _listG_objSize ) ; exit( 91 ) ;
     }
 
     if ( NULL == _listBB ) { 
         _listBB  = malloc( _listA1_BSize ) ; 
-        if(0) _P1n( " 11111 81 : %p , %p , %p , size %d " , _listAA , _listAA , _listBB , _listA1_BSize ) ;
+        if(0) _prOOn( " 11111 81 : %p , %p , %p , size %d " , _listAA , _listAA , _listBB , _listA1_BSize ) ;
     }
 
     for ( __i03 = 0 ; __i03 < __gSize ; __i03 ++ ) {
         __i04 = _ymDbsearchListItem( _listA1 , _listA1_objSize - 2 , __str2[__i03] ) ;
         if ( __i04 < 0 ) {
-            _P1n( "error str ? %d %d :" , __i03 , __i04 );
-            _P1n( "error str ? %s " , __str2[__i03] ) ;
+            _prOOn( "error str ? %d %d :" , __i03 , __i04 );
+            _prOOn( "error str ? %s " , __str2[__i03] ) ;
             exit( 82 ) ;
         }
 
         //_listBB[__i03] = _listA1[ __i03 ] ;
         _listBB[__i03] = _listA1[ __i04 ] ;
-        if(0) _P1( "%s %p \n" , _listA1[ __i03 ] . _fname , &(_listA1[ __i03 ]) ) ;
-        if(0) _P1( "%s %p \n" , _listBB[ __i03 ] . _fname , &(_listBB[ __i03 ]) ) ;
+        if(0) _prOO( "%s %p \n" , _listA1[ __i03 ] . _fname , &(_listA1[ __i03 ]) ) ;
+        if(0) _prOO( "%s %p \n" , _listBB[ __i03 ] . _fname , &(_listBB[ __i03 ]) ) ;
     }
     _listBB[__gSize]      = _listA1[ _listA1_objSize - 2 ] ;
     _listBB[__gSize+1]    = _listA1[ _listA1_objSize - 1 ] ;
@@ -116,7 +116,7 @@ void _listUse_4_play_list()
     _listAA             = _listBB ;
     _listAA_BSize       = (sizeof( _STitemX )) * ( __gSize + 2 )  ;
     
-    if(0) _P1n( " 11111 91 : %p , %d , %d " , _listAA , _listAA_BSize , __gSize ) ;
+    if(0) _prOOn( " 11111 91 : %p , %d , %d " , _listAA , _listAA_BSize , __gSize ) ;
 } /* _listUse_4_play_list */
 
 void _listUse_1_all()
@@ -237,7 +237,7 @@ void _paraAnalyzeYmDbg( int ___argc, char ** ___argv)
             return ;
             break ;
         default:
-            _P1n( "\n\n unknow mode %d \n" , _ymDbgMode ) ;
+            _prOOn( "\n\n unknow mode %d \n" , _ymDbgMode ) ;
             exit( 99 ) ;
             break ;
     }
