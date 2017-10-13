@@ -31,10 +31,12 @@ define XFdateHtempale
 endef
 export XFdateHtempale
 
-XFdateH:=srcXF10/include/_build_info.h
+XFdateH1:=srcXF10/include/_build_info.h
+XFdateH2:=kpvoice01/base01/_build_info.h
 XFgenDate:
-	 echo "$${XFdateHtempale}"     > 	$(XFdateH)
-#	 echo > 							$(XFdateH)
+	 echo "$${XFdateHtempale}"     > 	$(XFdateH1)
+	 echo "$${XFdateHtempale}"     > 	$(XFdateH2)
+#	 echo > 							$(XFdateH1)
 
 XFsrc1:=$(makePATH1)/srcXF10/
 XFsrc2:=$(makePATH1)/srcXF20/

@@ -8,6 +8,8 @@ date.now.txt
 *.bak
 srcXF[0-9]0/include/_build_info.h
 
+kpvoice01/base01/_build_info.h
+
 /[0-9]/
 /midXF21
 /srcXF20/libs/mipsX1000/libmsc.so.hex.txt
