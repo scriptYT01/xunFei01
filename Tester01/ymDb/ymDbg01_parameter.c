@@ -3,6 +3,7 @@
 static int _verbose_flag;
 int     _ymDbgMode = _ymMode_all ; 
 static char *  _ymDbgModeStr = NULL ;
+char *  _ymDbgLogFname = "/tmp/log.ymDbg.txt" ;
 
 int _ymDbsearchListItem( _STitemX * ___list , int ___size , char * ___wantWAVfname ) 
 {
@@ -145,8 +146,10 @@ void _paraAnalyzeYmDbg( int ___argc, char ** ___argv)
          * We distinguish them by their indices. */
         {"help",     no_argument,       0, 'h'},
         {"debug",    no_argument,       0, 'd'},
-        {"play",  required_argument,    0, 'p'},
-        {"list",  required_argument,    0, 'l'},
+        {"version",  no_argument,       0, 'V'},
+        {"play",    required_argument,  0, 'p'},
+        {"list",    required_argument,  0, 'l'},
+        {"logfile", required_argument,  0, 'L'},
         {0, 0, 0, 0}
     };
 
@@ -155,7 +158,7 @@ void _paraAnalyzeYmDbg( int ___argc, char ** ___argv)
         /* getopt_long stores the option index here. */
         int __option_index = 0;
 
-        __i01  = getopt_long (___argc, ___argv, "dhp:l:",
+        __i01  = getopt_long (___argc, ___argv, "dhp:l:VL:",
                 __long_options, &__option_index);
 
         /* Detect the end of the options. */
@@ -177,6 +180,16 @@ void _paraAnalyzeYmDbg( int ___argc, char ** ___argv)
             case 'h':
                 puts ("option -h\n");
                 _showUsageExit();
+                break;
+
+            case 'V':
+                puts ("option -V\n");
+                _showVersionExit( 1 );
+                break;
+
+            case 'L':
+                _ymDbgLogFname = strdup( optarg ) ;
+                printf ("option -L ( logfile ) with value `%s'\n", optarg);
                 break;
 
             case 'p':

@@ -71,20 +71,35 @@ void _showPlayListG()
 void _showUsageExit()
 {
     _prOOn( "\n\n\n" 
-            "Usage : "                                                                                        "\n"
-            " %s [<-d> | <-h> | <-p XX> | <-l YY> ]"                                                          "\n"
-            "     -h , --help   : show debug info / usage only. "                                             "\n"
+            "Usage : "                                                                                          "\n"
+            " %s [<-d> | <-h> | <-p XX> | <-l YY> | <-V> | <-L %s> ]"                                           "\n"
+            "     -h , --help    : show debug info / usage only. "                                              "\n"
+                                
+            "     -d , --debug   : listen only , waiting the use play the awake / words "                       "\n"
+            "     -p , --play    : awake , then play the specified word item only."                             "\n"
+            "     -pp            : list all single test can be use "                                            "\n"
+            "     -l , --list    : awake , then play the specified word list. "                                 "\n"
+            "     -ll            : list all list can be use "                                                   "\n"
+            "     -V , --version : show build version "                                                         "\n"
+            "     -L , --logfile : the log file , default is : %s"                                              "\n"
 
-            "     -d , --debug  : listen only , waiting the use play the awake / words "                      "\n"
-            "     -p , --play   : awake , then play the specified word item only."                            "\n"
-            "     -pp           : list all single test can be use "                                           "\n"
-            "     -l , --list   : awake , then play the specified word list. "                                "\n"
-            "     -ll           : list all list can be use "                                                  "\n"
-
-            "     no parameter  : play the default all word items , use about 10 - 15 minuts. "               "\n"
+            "     no parameter  : play the default all word items , use about 10 - 15 minuts. "                 "\n"
             "\n"
             , _argV[0] 
+            , _ymDbgLogFname , _ymDbgLogFname 
         );
     exit(33) ;
 } /* _showUsageExit */
+
+void _showVersionExit( int ___exitAtOnce )
+{
+    _prOOn( "\n"
+            "Version : %s"
+            , time_called
+        );
+    if ( ___exitAtOnce ) { 
+        _prOOn( "\n\n" );
+        exit(44) ; 
+    }
+} /* _showVersionExit */
 

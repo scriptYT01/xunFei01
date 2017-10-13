@@ -27,6 +27,7 @@
 //#include <include/asm/delay.h>
 //#include <include/linux/delay.h>
 
+#include "_build_info.h"
 
 #define _timeNow    ((int)time(0))
 

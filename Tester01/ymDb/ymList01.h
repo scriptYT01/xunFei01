@@ -73,6 +73,7 @@ void _showPlayNow()    ;
 void _showPlaySingle() ;
 void _showPlayListG()  ;
 void _showUsageExit()  ;
+void _showVersionExit( int ___exitAtOnce );
 
 extern _STitemX   * _listAA             ;
 extern int          _listAA_BSize       ; // the total size in byte
@@ -91,6 +92,8 @@ extern int          _itemSize           ;
 extern int          _testSize           ; // the testing word amount.
 
 extern int          _ymDbgMode          ;
+extern char *       _ymDbgLogFname      ;
+
 enum _ymDbgModeXX {
     _ymMode_all
         , _ymDbgMode_debuging
