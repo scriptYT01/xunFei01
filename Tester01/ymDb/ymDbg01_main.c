@@ -116,9 +116,11 @@ void _initYMdbg()
     _plList0 = malloc( _listAA_objSize * sizeof( int ) ) ;
     _plList1 = malloc( _listAA_objSize * sizeof( int ) ) ;
 
-    _prDNn( _itemSize );
-    _prDNn( _listAA_objSize );
-    _prDNn( _testSize );
+    if(1) {
+        _prDNn( _itemSize );
+        _prDNn( _listAA_objSize );
+        _prDNn( _testSize );
+    }
 
     _genCMD01( _wavFname0 , _playScmd0 , _testSize ) ;
     if(0) _prOOn( " trying <%s>" , _playScmd0 ) ;

@@ -59,8 +59,8 @@
 
 #define _prD( aa )          _prSF ( "%d" , aa )
 #define _prDn( aa )         _prSFn( "%d" , aa )
-#define _prDN( aa )         _prSF ( _strX(ddd) " %d" , aa )
-#define _prDNn( aa )        _prSFn( _strX(ddd) " %d" , aa )
+#define _prDN( aa )         _prSF ( _strX(aa)  " %d" , aa )
+#define _prDNn( aa )        _prSFn( _strX(aa)  " %d" , aa )
 #define _prDS(  dd , ss )   _prSF ( "<%d:%s>"   , dd , ss )
 #define _prDSn( dd , ss )   _prSFn( "<%d:%s>\n" , dd , ss )
 

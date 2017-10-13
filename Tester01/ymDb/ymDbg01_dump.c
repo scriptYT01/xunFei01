@@ -81,7 +81,7 @@ void _showUsageExit()
             "     -l , --list    : awake , then play the specified word list. "                                 "\n"
             "     -ll            : list all list can be use "                                                   "\n"
             "     -V , --version : show build version "                                                         "\n"
-            "     -L , --logfile : the log file , default is : %s"                                              "\n"
+            "     -L , --logfile : the log file , default is : %s" " (under constructing, unfinished.)"         "\n"
 
             "     no parameter  : play the default all word items , use about 10 - 15 minuts. "                 "\n"
             "\n"
