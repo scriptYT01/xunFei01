@@ -128,7 +128,7 @@ void _initYMdbg()
 
 void _step1_enable_voice(){
     int __rt ;
-    _write01( "voice voice_enable\r" ) ;
+    _writeTTYs1( "voice voice_enable\r" ) ;
     __rt = _read_a_line01( _fd_ttyS1 , _buf1020 ) ; _time1 = _time2 ; 
     if ( 1 && __rt > 0 ) {
         _Pmsg1();
@@ -275,7 +275,7 @@ void _result_analyze3_other()
 
 void _step2_get_voice_state(){
     int __rt ;
-     _write01( "voice get_down\r" ) ;
+     _writeTTYs1( "voice get_down\r" ) ;
 
      __rt = _read_a_line01( _fd_ttyS1 , _buf1020 ) ; _time1 = _time2 ; 
      if ( 1 && __rt > 0 ) {

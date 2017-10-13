@@ -1,23 +1,7 @@
 #ifndef     __YMLIST01_H
 #define     __YMLIST01_H
 
-#if 0
-#include <errno.h>
-#include <fcntl.h> 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <termios.h>
-#include <unistd.h>
-#include <time.h>
-#include <signal.h>
-#include <getopt.h>
-#include <libgen.h>
-
-#else
-
 #include "base01.h"
-#endif
 
 /* kpvoice01/base01/_build_info.h */
 
@@ -34,20 +18,8 @@ typedef struct {
     int             _listG_objSize  ;
 } _STlistGX ;
 
-#if 0
-#define _strX( aa ) # aa
-#define _P1( fmt , ... )    fprintf( stdout , fmt , ## __VA_ARGS__ )
-#define _P1n( fmt , ... )   _P1( fmt "\n" , ## __VA_ARGS__ )
-#define _P1f( fmt , ... )   { _P1( fmt , ## __VA_ARGS__ ) ; fflush(stdout) ; }
-#define _P1d( ddd )         _P1( "%d" , ddd )
-#define _P1D(  ddd )         _P1( _strX(ddd) " %d" , ddd )
-#define _P1Dn( ddd )         _P1( _strX(ddd) " %d\n" , ddd )
-#define _P2( fmt , ... )    fprintf( stderr , fmt , ## __VA_ARGS__ )
-#define _P2n( fmt , ... )   _P1( fmt "\n" , ## __VA_ARGS__ )
-_prOOn
-#endif
 
-#define _write01( aa )      write( _fd_ttyS1 , aa , strlen(aa) ) 
+#define _writeTTYs1( aa )      write( _fd_ttyS1 , aa , strlen(aa) ) 
 
 #define _Pmsg1() _prOOn ( "\n" \
         "line %d , time %d " \
